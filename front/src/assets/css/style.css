@@ -94,7 +94,7 @@ ion-icon {
 }
 
 .sidebar-wrapper .sidebar-header .logo-icon {
-    width: 5vw;
+    width: 50%; 
 }
 
 .sidebar-wrapper .sidebar-header  .logo-text {
