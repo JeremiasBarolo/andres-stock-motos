@@ -1,0 +1,13 @@
+
+    const express = require('express');
+    const router = express.Router();
+    const {UsuariosController }= require('../controllers');
+
+    router.get('/', UsuariosController.listAllUsuarios);
+    router.get('/:Usuarios_id', UsuariosController.listOneUsuarios);
+    router.post('/', UsuariosController.createUsuarios);
+    router.put('/:Usuarios_id', UsuariosController.updateUsuarios);
+    router.delete('/:Usuarios_id', UsuariosController.deleteUsuarios);
+
+    module.exports = router;
+    
