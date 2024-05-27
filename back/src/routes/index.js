@@ -7,6 +7,11 @@ const UsuariosRouter = require('./Usuarios');
 const LocalidadesRouter = require('./Localidades');
 const TipoPersonaRouter = require('./TipoPersona');
 const RolRouter = require('./Rol');
+const TipoMovimientosRouter = require('./TipoMovimientos');
+const MovimientosRouter = require('./Movimientos');
+const MarcaRouter = require('./Marca');
+const DatosServicioRouter = require('./DatosServicio');
+const MotosRouter = require('./Motos');
 
 
 module.exports = {
@@ -16,5 +21,10 @@ module.exports = {
     UsuariosRouter,
     LocalidadesRouter,
     TipoPersonaRouter,
-    RolRouter
+    RolRouter,
+    TipoMovimientosRouter,
+    MovimientosRouter,
+    MarcaRouter,
+    DatosServicioRouter,
+    MotosRouter
 };

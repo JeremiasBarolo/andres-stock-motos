@@ -15,7 +15,12 @@ const {
     UsuariosRouter,
     RolRouter,
     LocalidadesRouter,
-    TipoPersonaRouter
+    TipoPersonaRouter,
+    MovimientosRouter,
+    TipoMovimientosRouter,
+    MotosRouter,
+    DatosServicioRouter,
+    MarcaRouter
     
  } = require('./routes')
 
@@ -37,6 +42,12 @@ app.use("/usuarios", UsuariosRouter)
 app.use("/rol", RolRouter)
 app.use("/localidades", LocalidadesRouter)
 app.use("/tipo_personas", TipoPersonaRouter)
+app.use("/movimientos", MovimientosRouter)
+app.use("/tipo_movimientos", TipoMovimientosRouter)
+app.use("/motos", MotosRouter)
+app.use("/datos_servicio", DatosServicioRouter)
+app.use("/marca", MarcaRouter)
+
 
 
 

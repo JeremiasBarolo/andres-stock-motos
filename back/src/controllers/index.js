@@ -6,6 +6,12 @@ const UsuariosController = require('./Usuarios');
 const LocalidadesController = require('./Localidades');
 const RolController = require('./Rol');
 const TipoPersonaController = require('./TipoPersona');
+const TipoMovimientosController = require('./TipoMovimientos');
+const MovimientosController = require('./Movimientos');
+const MarcaController = require('./Marca');
+const DatosServicioController = require('./DatosServicio');
+const MotosController = require('./Motos');
+
 
 module.exports= {
     TipoArticuloController,
@@ -14,5 +20,10 @@ module.exports= {
     UsuariosController,
     LocalidadesController,
     RolController,
-    TipoPersonaController
+    TipoPersonaController,
+    TipoMovimientosController,
+    MovimientosController,
+    MarcaController,
+    DatosServicioController,
+    MotosController
 }

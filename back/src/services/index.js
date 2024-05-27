@@ -6,6 +6,11 @@ const UsuariosService = require('./Usuarios');
 const LocalidadesService = require('./Localidades');
 const RolService = require('./Rol');
 const TipoPersonaService = require('./TipoPersona');
+const TipoMovimientosService = require('./TipoMovimientos');
+const MovimientosService = require('./Movimientos');
+const MarcaService = require('./Marca');
+const DatosServicioService = require('./DatosServicio');
+const MotosService = require('./Motos');
 
 
 
@@ -19,5 +24,11 @@ module.exports = {
     UsuariosService,
     LocalidadesService,
     RolService,
-    TipoPersonaService
+    TipoPersonaService,
+    TipoMovimientosService,
+    MovimientosService,
+    MarcaService,
+    DatosServicioService,
+    MotosService
+
 };
