@@ -8,6 +8,22 @@ const { initializeDB } = require('./db/initializeDB');
 require('dotenv').config();
 const cors = require("cors");
 const {checkAdmin} = require('./db/createAdminEntity');
+const { 
+    TipoArticuloRouter,
+    StockRouter,
+    PersonasRouter,
+    UsuariosRouter,
+    RolRouter,
+    LocalidadesRouter,
+    TipoPersonaRouter,
+    MovimientosRouter,
+    TipoMovimientosRouter,
+    MotosRouter,
+    DatosServicioRouter,
+    MarcaRouter,
+    TipoMotoRouter
+    
+ } = require('./routes')
 
 
 
@@ -20,7 +36,20 @@ app.use(express.json())
 app.use(cors());
 
 // Routes
-// app.use("/tipo_articulo", TipoArticuloRouter)
+app.use("/tipo_articulo", TipoArticuloRouter)
+app.use("/stock", StockRouter)
+app.use("/personas", PersonasRouter)
+app.use("/usuarios", UsuariosRouter)
+app.use("/rol", RolRouter)
+app.use("/localidades", LocalidadesRouter)
+app.use("/tipo_personas", TipoPersonaRouter)
+app.use("/movimientos", MovimientosRouter)
+app.use("/tipo_movimientos", TipoMovimientosRouter)
+app.use("/motos", MotosRouter)
+app.use("/datos_servicio", DatosServicioRouter)
+app.use("/marca", MarcaRouter)
+app.use("/tipo_moto", TipoMotoRouter)
+
 
 
 

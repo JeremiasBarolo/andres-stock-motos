@@ -141,7 +141,11 @@ module.exports = {
     const listAll${resourceName}= async () => {
     try {
         const ${resourceName} = await models.${capitalizedResourceName}.findAll(
-        );
+        {
+                include: [
+                    {all:true}
+                ]
+            });
         console.log('✅ ${resourceName} were found');
         return ${resourceName};
     } catch (err) {
