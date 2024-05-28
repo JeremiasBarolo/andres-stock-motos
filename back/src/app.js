@@ -20,7 +20,8 @@ const {
     TipoMovimientosRouter,
     MotosRouter,
     DatosServicioRouter,
-    MarcaRouter
+    MarcaRouter,
+    TipoMotoRouter
     
  } = require('./routes')
 
@@ -47,7 +48,7 @@ app.use("/tipo_movimientos", TipoMovimientosRouter)
 app.use("/motos", MotosRouter)
 app.use("/datos_servicio", DatosServicioRouter)
 app.use("/marca", MarcaRouter)
-
+app.use("/tipo_moto", TipoMotoRouter)
 
 
 

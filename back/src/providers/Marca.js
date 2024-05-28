@@ -5,7 +5,11 @@
     const listAllMarca= async () => {
     try {
         const Marca = await models.Marca.findAll(
-        );
+        {
+                include: [
+                    {all:true}
+                ]
+            });
         console.log('✅ Marca were found');
         return Marca;
     } catch (err) {

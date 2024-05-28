@@ -11,6 +11,7 @@ const MovimientosController = require('./Movimientos');
 const MarcaController = require('./Marca');
 const DatosServicioController = require('./DatosServicio');
 const MotosController = require('./Motos');
+const TipoMotoController = require('./TipoMoto');
 
 
 module.exports= {
@@ -25,5 +26,6 @@ module.exports= {
     MovimientosController,
     MarcaController,
     DatosServicioController,
-    MotosController
+    MotosController,
+    TipoMotoController
 }

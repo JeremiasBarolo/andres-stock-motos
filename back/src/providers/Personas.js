@@ -5,6 +5,11 @@
     const listAllPersonas= async () => {
     try {
         const Personas = await models.Personas.findAll(
+            {
+                include: [
+                    {all:true}
+                ]
+            }
         );
         console.log('✅ Personas were found');
         return Personas;

@@ -5,7 +5,11 @@
     const listAllDatosServicio= async () => {
     try {
         const DatosServicio = await models.DatosServicio.findAll(
-        );
+        {
+                include: [
+                    {all:true}
+                ]
+            });
         console.log('✅ DatosServicio were found');
         return DatosServicio;
     } catch (err) {

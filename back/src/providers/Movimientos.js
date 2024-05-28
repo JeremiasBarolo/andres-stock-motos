@@ -5,7 +5,11 @@
     const listAllMovimientos= async () => {
     try {
         const Movimientos = await models.Movimientos.findAll(
-        );
+        {
+                include: [
+                    {all:true}
+                ]
+            });
         console.log('✅ Movimientos were found');
         return Movimientos;
     } catch (err) {

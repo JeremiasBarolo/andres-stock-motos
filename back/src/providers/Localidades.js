@@ -5,7 +5,11 @@
     const listAllLocalidades= async () => {
     try {
         const Localidades = await models.Localidades.findAll(
-        );
+        {
+                include: [
+                    {all:true}
+                ]
+            });
         console.log('✅ Localidades were found');
         return Localidades;
     } catch (err) {

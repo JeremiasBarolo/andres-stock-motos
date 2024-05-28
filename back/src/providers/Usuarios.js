@@ -5,7 +5,11 @@
     const listAllUsuarios= async () => {
     try {
         const Usuarios = await models.Usuarios.findAll(
-        );
+        {
+                include: [
+                    {all:true}
+                ]
+            });
         console.log('✅ Usuarios were found');
         return Usuarios;
     } catch (err) {

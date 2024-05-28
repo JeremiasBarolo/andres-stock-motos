@@ -5,7 +5,11 @@
     const listAllMotos= async () => {
     try {
         const Motos = await models.Motos.findAll(
-        );
+        {
+                include: [
+                    {all:true}
+                ]
+            });
         console.log('✅ Motos were found');
         return Motos;
     } catch (err) {

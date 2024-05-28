@@ -5,7 +5,11 @@
     const listAllStock= async () => {
     try {
         const Stock = await models.Stock.findAll(
-        );
+        {
+                include: [
+                    {all:true}
+                ]
+            });
         console.log('✅ Stock were found');
         return Stock;
     } catch (err) {

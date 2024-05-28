@@ -5,7 +5,11 @@
     const listAllTipoPersona= async () => {
     try {
         const TipoPersona = await models.TipoPersona.findAll(
-        );
+        {
+                include: [
+                    {all:true}
+                ]
+            });
         console.log('✅ TipoPersona were found');
         return TipoPersona;
     } catch (err) {

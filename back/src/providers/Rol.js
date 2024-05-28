@@ -5,7 +5,11 @@
     const listAllRol= async () => {
     try {
         const Rol = await models.Rol.findAll(
-        );
+        {
+                include: [
+                    {all:true}
+                ]
+            });
         console.log('✅ Rol were found');
         return Rol;
     } catch (err) {

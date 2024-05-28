@@ -11,6 +11,7 @@ const MovimientosService = require('./Movimientos');
 const MarcaService = require('./Marca');
 const DatosServicioService = require('./DatosServicio');
 const MotosService = require('./Motos');
+const TipoMotoService = require('./TipoMoto');
 
 
 
@@ -29,6 +30,7 @@ module.exports = {
     MovimientosService,
     MarcaService,
     DatosServicioService,
-    MotosService
+    MotosService,
+    TipoMotoService
 
 };
