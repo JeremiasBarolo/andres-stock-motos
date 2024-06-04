@@ -176,13 +176,13 @@ function theme8() {
 
 
 
-  new PerfectScrollbar(".header-notifications-list")
+  // new PerfectScrollbar(".header-notifications-list")
 
 
-    // Tooltops
-    $(function () {
-      $('[data-bs-toggle="tooltip"]').tooltip();
-    })
+  //   // Tooltops
+  //   $(function () {
+  //     $('[data-bs-toggle="tooltip"]').tooltip();
+  //   })
 
 
   
