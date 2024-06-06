@@ -5,6 +5,9 @@ import { TipoArticuloComponent } from './tipo-articulo/tipo-articulo.component';
 import { RouterModule, RouterOutlet } from '@angular/router';
 import { AdminRoutingModule } from './admin-routing.module';
 import { SharedModule } from '../../shared/shared.module';
+import { DialogModule } from 'primeng/dialog';
+import { ButtonModule } from 'primeng/button';
+
 
 
 
@@ -18,7 +21,10 @@ import { SharedModule } from '../../shared/shared.module';
     RouterModule,
     RouterOutlet,
     AdminRoutingModule,
-    SharedModule
+    SharedModule,
+    DialogModule,
+    ButtonModule,
+    
   ]
 })
 export class AdminModule { }

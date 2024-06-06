@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { TipoArticuloService } from '../../../services/tipo-articulo.service';
+import { DialogService } from 'primeng/dynamicdialog';
 
 @Component({
   selector: 'app-tipo-articulo',
@@ -10,21 +12,41 @@ export class TipoArticuloComponent implements OnInit{
 
   products: any[] = [];
   columns: any[] = [];
+  editVisible: boolean = false
+  editEliminar: boolean = false
 
 
+  constructor( 
+    private tipoArticuloService: TipoArticuloService,
+  
+  ){}
   
   ngOnInit(): void {
-    this.columns = [
-      { field: 'id', header: 'ID' },
-      { field: 'name', header: 'Name' },
-      { field: 'price', header: 'Price' }
-    ];
 
-    this.products = [
-      { id: 1, name: 'Product 1', price: 10 },
-      { id: 2, name: 'Product 2', price: 20 },
-      { id: 3, name: 'Product 3', price: 30 },
-    ];
+    this.tipoArticuloService.getAll().subscribe((data: any[]) => {
+      this.columns = [
+        { field: 'id', header: 'ID' },
+        { field: 'descripcion', header: 'Descripcion' },
+      ];
+
+      data.map((data)=>{
+        this.products.push({
+          id: data.id,
+          descripcion: data.descripcion
+        })
+      })
+    })
+
+   
+  }
+
+  editarItem() {
+    this.editVisible = true
+    
+  }
+
+  eliminarItem() {
+    this.editEliminar = true
   }
  
 }

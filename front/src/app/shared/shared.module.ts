@@ -6,6 +6,8 @@ import { FooterComponent } from './footer/footer.component';
 import { IonicModule } from '@ionic/angular';
 import { TablangComponent } from './tablang/tablang.component';
 import { TableModule } from 'primeng/table';
+import { ButtonModule } from 'primeng/button';
+
 
 
 
@@ -20,7 +22,9 @@ import { TableModule } from 'primeng/table';
   imports: [
     CommonModule,
     IonicModule,
-    TableModule
+    TableModule,
+    ButtonModule,
+    
     
     
   ],

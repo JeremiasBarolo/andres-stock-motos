@@ -1,4 +1,5 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
+
 
 @Component({
   selector: 'app-tablang',
@@ -9,8 +10,21 @@ export class TablangComponent {
   @Input() data: any[] = [];
   @Input() columns: any[] = [];
 
+  @Output() editarClick: EventEmitter<any> = new EventEmitter();
+  @Output() eliminarClick: EventEmitter<any> = new EventEmitter();
+
   constructor() { }
 
   ngOnInit(): void {
+    console.log(this.data);
+    
   }
+
+  editar() {
+    this.editarClick.emit();
+}
+
+eliminar() {
+    this.eliminarClick.emit();
+}
 }
