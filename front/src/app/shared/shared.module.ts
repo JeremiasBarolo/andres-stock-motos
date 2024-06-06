@@ -4,6 +4,8 @@ import { HeaderComponent } from './header/header.component';
 import { SidebarComponent } from './sidebar/sidebar.component';
 import { FooterComponent } from './footer/footer.component';
 import { IonicModule } from '@ionic/angular';
+import { TablangComponent } from './tablang/tablang.component';
+import { TableModule } from 'primeng/table';
 
 
 
@@ -11,18 +13,22 @@ import { IonicModule } from '@ionic/angular';
   declarations: [
     HeaderComponent,
     SidebarComponent,
-    FooterComponent
+    FooterComponent,
+    TablangComponent,
+
   ],
   imports: [
     CommonModule,
-    IonicModule
+    IonicModule,
+    TableModule
     
     
   ],
   exports:[
     HeaderComponent,
     SidebarComponent,
-    FooterComponent
+    FooterComponent,
+    TablangComponent
 
   ]
 })
