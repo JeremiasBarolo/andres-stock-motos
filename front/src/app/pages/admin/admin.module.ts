@@ -7,7 +7,7 @@ import { AdminRoutingModule } from './admin-routing.module';
 import { SharedModule } from '../../shared/shared.module';
 import { DialogModule } from 'primeng/dialog';
 import { ButtonModule } from 'primeng/button';
-
+import { ReactiveFormsModule } from '@angular/forms';
 
 
 
@@ -24,7 +24,7 @@ import { ButtonModule } from 'primeng/button';
     SharedModule,
     DialogModule,
     ButtonModule,
-    
+    ReactiveFormsModule
   ]
 })
 export class AdminModule { }

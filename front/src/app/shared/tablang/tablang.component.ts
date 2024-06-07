@@ -20,11 +20,11 @@ export class TablangComponent {
     
   }
 
-  editar() {
-    this.editarClick.emit();
+  editar(rowData:any) {
+    this.editarClick.emit(rowData);
 }
 
-eliminar() {
-    this.eliminarClick.emit();
+eliminar(rowdata:any) {
+    this.eliminarClick.emit(rowdata);
 }
 }

@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { TipoArticuloService } from '../../../services/tipo-articulo.service';
 import { DialogService } from 'primeng/dynamicdialog';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-tipo-articulo',
@@ -14,12 +16,26 @@ export class TipoArticuloComponent implements OnInit{
   columns: any[] = [];
   editVisible: boolean = false
   editEliminar: boolean = false
+  crearVisible: boolean = false
+  form: FormGroup;
+  tipo: any;
+  cardData: any;
+  id: number = 0
+
+
 
 
   constructor( 
     private tipoArticuloService: TipoArticuloService,
-  
-  ){}
+    private fb: FormBuilder,
+    private router: Router,
+    private aRoute: ActivatedRoute,
+  ){
+
+    this.form = this.fb.group({
+      descripcion: ['', Validators.required],
+    });
+  }
   
   ngOnInit(): void {
 
@@ -40,14 +56,66 @@ export class TipoArticuloComponent implements OnInit{
    
   }
 
-  editarItem() {
+  editarItem(data:any) {
     this.editVisible = true
+    this.id = data.id
+    this.form.setValue({
+      descripcion: data.descripcion,
+    });
+    console.log(data);
+    
     
   }
 
-  eliminarItem() {
+  eliminarItem(data:any) {
     this.editEliminar = true
+    this.id = data.id
   }
- 
-}
+  
+  onSubmit(){
+    
+      this.tipo = {
+        descripcion: this.form.value.descripcion,
+      }
 
+      if(this.id > 0){
+            // Es editar
+            try {
+              this.tipoArticuloService.update(this.id, this.tipo).subscribe(() => {
+                setTimeout(() => {
+                  window.location.reload();
+                }, 600)
+              });
+
+            } catch (error) {
+              console.log(error);
+            }
+      }else{
+        // Es crear
+        try {
+          this.tipoArticuloService.create(this.tipo ).subscribe(() => {
+            setTimeout(() => {
+              window.location.reload();
+            }, 600)
+          });
+          
+        } catch (error) {
+          console.log(error);
+        }
+      }
+  }
+
+  Eliminar(){
+    this.tipoArticuloService.delete(this.id).subscribe(() => {
+      setTimeout(() => {
+        window.location.reload();
+      }, 600)
+      // this.router.navigate(['dashboard/insumos']);
+    });
+  }
+
+  
+  
+  
+
+}
