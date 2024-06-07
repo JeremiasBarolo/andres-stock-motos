@@ -1,18 +1,17 @@
 import { Component, OnInit } from '@angular/core';
-import { TipoArticuloService } from '../../../services/tipo-articulo.service';
-import { DialogService } from 'primeng/dynamicdialog';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Subject, takeUntil } from 'rxjs';
+import { TipoPersonasService } from '../../../services/tipo-personas.service';
+
 
 @Component({
-  selector: 'app-tipo-articulo',
-  templateUrl: './tipo-articulo.component.html',
-  styleUrl: './tipo-articulo.component.css'
+  selector: 'app-tipo-persona',
+  templateUrl: './tipo-persona.component.html',
+  styleUrl: './tipo-persona.component.css'
 })
-export class TipoArticuloComponent implements OnInit{
+export class TipoPersonaComponent implements OnInit {
   
-
   products: any[] = [];
   columns: any[] = [];
   editVisible: boolean = false
@@ -22,14 +21,13 @@ export class TipoArticuloComponent implements OnInit{
   tipo: any;
   cardData: any;
   id: number = 0
-
   private destroy$ = new Subject<void>();
 
 
 
 
   constructor( 
-    private tipoArticuloService: TipoArticuloService,
+    private tipoPersonaService: TipoPersonasService,
     private fb: FormBuilder,
     private router: Router,
     private aRoute: ActivatedRoute,
@@ -42,7 +40,7 @@ export class TipoArticuloComponent implements OnInit{
   
   ngOnInit(): void {
 
-    this.tipoArticuloService.getAll().pipe(takeUntil(this.destroy$)).subscribe((data: any[]) => {
+    this.tipoPersonaService.getAll().pipe(takeUntil(this.destroy$)).subscribe((data: any[]) => {
       this.columns = [
         { field: 'id', header: 'ID' },
         { field: 'descripcion', header: 'Descripcion' },
@@ -84,7 +82,7 @@ export class TipoArticuloComponent implements OnInit{
       if(this.id > 0){
             // Es editar
             try {
-              this.tipoArticuloService.update(this.id, this.tipo).pipe(takeUntil(this.destroy$)).subscribe(() => {
+              this.tipoPersonaService.update(this.id, this.tipo).pipe(takeUntil(this.destroy$)).subscribe(() => {
                 setTimeout(() => {
                   window.location.reload();
                 }, 600)
@@ -96,7 +94,7 @@ export class TipoArticuloComponent implements OnInit{
       }else{
         // Es crear
         try {
-          this.tipoArticuloService.create(this.tipo ).pipe(takeUntil(this.destroy$)).subscribe(() => {
+          this.tipoPersonaService.create(this.tipo ).pipe(takeUntil(this.destroy$)).subscribe(() => {
             setTimeout(() => {
               window.location.reload();
             }, 600)
@@ -109,16 +107,12 @@ export class TipoArticuloComponent implements OnInit{
   }
 
   Eliminar(){
-    this.tipoArticuloService.delete(this.id).pipe(takeUntil(this.destroy$)).subscribe(() => {
+    this.tipoPersonaService.delete(this.id).pipe(takeUntil(this.destroy$)).subscribe(() => {
       setTimeout(() => {
         window.location.reload();
       }, 600)
       // this.router.navigate(['dashboard/insumos']);
     });
   }
-
-  
-  
-  
 
 }

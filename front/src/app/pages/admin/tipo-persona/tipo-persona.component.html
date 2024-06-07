@@ -1,5 +1,5 @@
 <div class="header-container">
-    <h3>Tipos de Artículos</h3>
+    <h3>Tipos de Personas</h3>
     <p-button icon="pi pi-plus" label="Agregar Tipo" [text]="true" (click)="crearVisible = true" styleClass="ml-auto"></p-button>
   </div>
 
@@ -11,7 +11,7 @@
 ></app-tablang>
 
 <!-- <============================================ CREAR ==================================================> -->
-<p-dialog header="Crear Tipo Articulo" [modal]="true" [(visible)]="crearVisible" [style]="{ width: '25rem' }">
+<p-dialog header="Crear Tipo Persona" [modal]="true" [(visible)]="crearVisible" [style]="{ width: '25rem' }">
     <form [formGroup]="form" (ngSubmit)="onSubmit()">
         
         <div class="flex align-items-center gap-3 mb-3">
@@ -28,7 +28,7 @@
 </p-dialog>
 
 <!-- <============================================ EDITAR ==================================================> -->
-<p-dialog header="Editar Tipo Articulo" [modal]="true" [(visible)]="editVisible" [style]="{ width: '25rem' }">
+<p-dialog header="Editar Tipo Persona" [modal]="true" [(visible)]="editVisible" [style]="{ width: '25rem' }">
     <form [formGroup]="form" (ngSubmit)="onSubmit()">
         
         <div class="flex align-items-center gap-3 mb-3">
@@ -45,7 +45,7 @@
 </p-dialog>
 
 <!-- <============================================ ELIMINAR ==================================================> -->
-<p-dialog header="Eliminar Tipo Articulo" [modal]="true" [(visible)]="editEliminar" [style]="{ width: '25rem' }">
+<p-dialog header="Eliminar Persona" [modal]="true" [(visible)]="editEliminar" [style]="{ width: '25rem' }">
     <span class="p-text-secondary block mb-5">Desea usted eliminar este objeto?</span>
     <br>
     <br>

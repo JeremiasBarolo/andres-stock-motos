@@ -8,13 +8,15 @@ import { SharedModule } from '../../shared/shared.module';
 import { DialogModule } from 'primeng/dialog';
 import { ButtonModule } from 'primeng/button';
 import { ReactiveFormsModule } from '@angular/forms';
+import { TipoPersonaComponent } from './tipo-persona/tipo-persona.component';
 
 
 
 @NgModule({
   declarations: [
     AdminComponent,
-    TipoArticuloComponent
+    TipoArticuloComponent,
+    TipoPersonaComponent
   ],
   imports: [
     CommonModule,
