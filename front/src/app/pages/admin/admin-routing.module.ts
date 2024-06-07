@@ -7,6 +7,7 @@ import { AdminComponent } from './admin.component';
 import { TipoArticuloComponent } from './tipo-articulo/tipo-articulo.component';
 import { TipoPersonaComponent } from './tipo-persona/tipo-persona.component';
 import { LocalidadesComponent } from './localidades/localidades.component';
+import { TipoMovimientosComponent } from './tipo-movimientos/tipo-movimientos.component';
 
 
 
@@ -19,7 +20,8 @@ const routes: Routes = [
     children: [
       { path: 'tipo-articulo', component: TipoArticuloComponent },
       { path: 'tipo-personas', component: TipoPersonaComponent },
-      { path: 'localidades', component: LocalidadesComponent }
+      { path: 'localidades', component: LocalidadesComponent },
+      { path: 'tipo-movimientos', component: TipoMovimientosComponent }
     ]
   },
   
