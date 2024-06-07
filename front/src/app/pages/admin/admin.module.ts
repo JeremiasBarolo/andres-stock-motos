@@ -11,6 +11,8 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { TipoPersonaComponent } from './tipo-persona/tipo-persona.component';
 import { LocalidadesComponent } from './localidades/localidades.component';
 import { TipoMovimientosComponent } from './tipo-movimientos/tipo-movimientos.component';
+import { RolesComponent } from './roles/roles.component';
+import { TooltipModule } from 'primeng/tooltip';
 
 
 
@@ -20,7 +22,8 @@ import { TipoMovimientosComponent } from './tipo-movimientos/tipo-movimientos.co
     TipoArticuloComponent,
     TipoPersonaComponent,
     LocalidadesComponent,
-    TipoMovimientosComponent
+    TipoMovimientosComponent,
+    RolesComponent
   ],
   imports: [
     CommonModule,
@@ -30,7 +33,8 @@ import { TipoMovimientosComponent } from './tipo-movimientos/tipo-movimientos.co
     SharedModule,
     DialogModule,
     ButtonModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    TooltipModule
   ]
 })
 export class AdminModule { }
