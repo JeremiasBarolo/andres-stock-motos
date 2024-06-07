@@ -9,6 +9,7 @@ import { DialogModule } from 'primeng/dialog';
 import { ButtonModule } from 'primeng/button';
 import { ReactiveFormsModule } from '@angular/forms';
 import { TipoPersonaComponent } from './tipo-persona/tipo-persona.component';
+import { LocalidadesComponent } from './localidades/localidades.component';
 
 
 
@@ -16,7 +17,8 @@ import { TipoPersonaComponent } from './tipo-persona/tipo-persona.component';
   declarations: [
     AdminComponent,
     TipoArticuloComponent,
-    TipoPersonaComponent
+    TipoPersonaComponent,
+    LocalidadesComponent
   ],
   imports: [
     CommonModule,
