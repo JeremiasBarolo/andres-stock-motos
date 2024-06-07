@@ -13,6 +13,7 @@ import { LocalidadesComponent } from './localidades/localidades.component';
 import { TipoMovimientosComponent } from './tipo-movimientos/tipo-movimientos.component';
 import { RolesComponent } from './roles/roles.component';
 import { TooltipModule } from 'primeng/tooltip';
+import { UsuariosComponent } from './usuarios/usuarios.component';
 
 
 
@@ -23,7 +24,8 @@ import { TooltipModule } from 'primeng/tooltip';
     TipoPersonaComponent,
     LocalidadesComponent,
     TipoMovimientosComponent,
-    RolesComponent
+    RolesComponent,
+    UsuariosComponent
   ],
   imports: [
     CommonModule,

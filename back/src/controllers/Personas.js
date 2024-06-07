@@ -5,7 +5,18 @@ const { PersonasService } = require("../services");
 
 const listAllPersonas = async (req, res) => {
   try {
+    console.log('estoy aca');
     const Personas = await PersonasService.listAllPersonas();
+    res.json(Personas);
+  } catch (err) {
+    res.status(500).json({ action: "listAll", error: err.message });
+  }
+};
+
+const listAllEmpleados = async (req, res) => {
+  try {
+    console.log('estoy aca');
+    const Personas = await PersonasService.listAllEmpleados();
     res.json(Personas);
   } catch (err) {
     res.status(500).json({ action: "listAll", error: err.message });
@@ -58,5 +69,5 @@ const deletePersonas = async (req, res) => {
 
 
 module.exports = {
-  listAllPersonas, listOnePersonas, createPersonas, updatePersonas, deletePersonas, 
+  listAllPersonas, listOnePersonas, createPersonas, updatePersonas, deletePersonas, listAllEmpleados
 };

@@ -9,5 +9,7 @@
     router.put('/:Personas_id', PersonasController.updatePersonas);
     router.delete('/:Personas_id', PersonasController.deletePersonas);
 
+    router.get('/empleados', PersonasController.listAllEmpleados);
+
     module.exports = router;
     

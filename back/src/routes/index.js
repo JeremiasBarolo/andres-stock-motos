@@ -13,6 +13,7 @@ const MarcaRouter = require('./Marca');
 const DatosServicioRouter = require('./DatosServicio');
 const MotosRouter = require('./Motos');
 const TipoMotoRouter = require('./TipoMoto');
+const EmpleadosRouter = require('./empleados');
 
 
 module.exports = {
@@ -28,5 +29,6 @@ module.exports = {
     MarcaRouter,
     DatosServicioRouter,
     MotosRouter,
-    TipoMotoRouter
+    TipoMotoRouter,
+    EmpleadosRouter
 };

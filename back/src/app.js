@@ -21,7 +21,8 @@ const {
     MotosRouter,
     DatosServicioRouter,
     MarcaRouter,
-    TipoMotoRouter
+    TipoMotoRouter,
+    EmpleadosRouter
     
  } = require('./routes')
 
@@ -39,6 +40,7 @@ app.use(cors());
 app.use("/tipo_articulo", TipoArticuloRouter)
 app.use("/stock", StockRouter)
 app.use("/personas", PersonasRouter)
+app.use("/empleados", EmpleadosRouter)
 app.use("/usuarios", UsuariosRouter)
 app.use("/rol", RolRouter)
 app.use("/localidades", LocalidadesRouter)
