@@ -61,6 +61,7 @@ class PersonasService {
       if (!oldPersonas) {
         return null;
       }
+      
       let newPersonas = await oldPersonas.update(dataUpdated);
       return newPersonas;
     } catch (err) {

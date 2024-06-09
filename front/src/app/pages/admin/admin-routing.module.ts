@@ -10,6 +10,7 @@ import { LocalidadesComponent } from './localidades/localidades.component';
 import { TipoMovimientosComponent } from './tipo-movimientos/tipo-movimientos.component';
 import { RolesComponent } from './roles/roles.component';
 import { UsuariosComponent } from './usuarios/usuarios.component';
+import { PersonasComponent } from './personas/personas.component';
 
 
 
@@ -25,7 +26,8 @@ const routes: Routes = [
       { path: 'localidades', component: LocalidadesComponent },
       { path: 'tipo-movimientos', component: TipoMovimientosComponent },
       { path: 'roles', component: RolesComponent },
-      { path: 'usuarios', component: UsuariosComponent }
+      { path: 'usuarios', component: UsuariosComponent },
+      { path: 'personas', component: PersonasComponent }
     ]
   },
   
