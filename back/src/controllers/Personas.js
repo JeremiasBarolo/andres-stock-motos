@@ -23,6 +23,18 @@ const listAllEmpleados = async (req, res) => {
   }
 };
 
+
+
+const listAllProveedores = async (req, res) => {
+  try {
+    console.log('estoy aca');
+    const Personas = await PersonasService.listAllProveedores();
+    res.json(Personas);
+  } catch (err) {
+    res.status(500).json({ action: "listAll", error: err.message });
+  }
+};
+
 const listOnePersonas = async (req, res) => {
   try {
     const id = req.params.Personas_id;
@@ -69,5 +81,11 @@ const deletePersonas = async (req, res) => {
 
 
 module.exports = {
-  listAllPersonas, listOnePersonas, createPersonas, updatePersonas, deletePersonas, listAllEmpleados
+  listAllPersonas, 
+  listOnePersonas, 
+  createPersonas, 
+  updatePersonas, 
+  deletePersonas, 
+  listAllEmpleados,
+  listAllProveedores
 };

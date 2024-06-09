@@ -11,6 +11,7 @@ import { TipoMovimientosComponent } from './tipo-movimientos/tipo-movimientos.co
 import { RolesComponent } from './roles/roles.component';
 import { UsuariosComponent } from './usuarios/usuarios.component';
 import { PersonasComponent } from './personas/personas.component';
+import { StockComponent } from './stock/stock.component';
 
 
 
@@ -27,7 +28,8 @@ const routes: Routes = [
       { path: 'tipo-movimientos', component: TipoMovimientosComponent },
       { path: 'roles', component: RolesComponent },
       { path: 'usuarios', component: UsuariosComponent },
-      { path: 'personas', component: PersonasComponent }
+      { path: 'personas', component: PersonasComponent },
+      { path: 'stock', component: StockComponent },
     ]
   },
   

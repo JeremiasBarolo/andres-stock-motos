@@ -10,7 +10,9 @@
             return await PersonasProvider.listAllEmpleados();
         };
 
-
+        const listAllProveedores = async () => {
+            return await PersonasProvider.listAllProveedores();
+        };
 
         const listOnePersonas = async (Personas_id) => {
             return await PersonasProvider.listOnePersonas(Personas_id);
@@ -31,6 +33,12 @@
 
 
         module.exports = {
-        listAllPersonas, listOnePersonas, createPersonas, updatePersonas, deletePersonas, listAllEmpleados
+        listAllPersonas, 
+        listOnePersonas, 
+        createPersonas, 
+        updatePersonas, 
+        deletePersonas, 
+        listAllEmpleados, 
+        listAllProveedores
         };
 

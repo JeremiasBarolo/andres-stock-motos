@@ -30,6 +30,20 @@ class Formatter {
         LocalidadId: user.Localidade.id
       }))
     }
+
+    Stock(data) {
+      return data.map(stock => ({
+        id: stock.id,
+        nombre_articulo: stock.nombre,
+        descripcion: stock.descripcion,
+        costo: stock.costo,
+        tipoArticulo: stock.Tipo_Articulo.descripcion,
+        tipoArticuloId: stock.Tipo_Articulo.id,
+        proveedor: `${stock.Persona.nombre} ${stock.Persona.apellido}`,
+        proveedorId: stock.Persona.id,
+        
+      }))
+    }
    
     
   

@@ -9,6 +9,10 @@ const listAllEmpleados= async () => {
   return await personasService.listAllEmpleados();
 };
 
+const listAllProveedores= async () => {
+  return await personasService.listAllProveedores();
+};
+
 
 const listOnePersonas = async (Personas_id) => {
   return await personasService.listOnePersonas(Personas_id);
@@ -32,5 +36,6 @@ module.exports = {
   createPersonas,
   updatePersonas,
   deletePersonas,
-  listAllEmpleados
+  listAllEmpleados,
+  listAllProveedores
 };

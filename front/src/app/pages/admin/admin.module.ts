@@ -15,6 +15,7 @@ import { RolesComponent } from './roles/roles.component';
 import { TooltipModule } from 'primeng/tooltip';
 import { UsuariosComponent } from './usuarios/usuarios.component';
 import { PersonasComponent } from './personas/personas.component';
+import { StockComponent } from './stock/stock.component';
 
 
 
@@ -27,7 +28,8 @@ import { PersonasComponent } from './personas/personas.component';
     TipoMovimientosComponent,
     RolesComponent,
     UsuariosComponent,
-    PersonasComponent
+    PersonasComponent,
+    StockComponent
   ],
   imports: [
     CommonModule,

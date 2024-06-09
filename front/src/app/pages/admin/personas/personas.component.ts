@@ -156,7 +156,7 @@ export class PersonasComponent {
       dni: this.form.value.dni,
       cuit: this.form.value.cuit,
       mail: this.form.value.mail,
-      fecha_nacimiento: this.datePipe.transform(fechaNacimiento, 'dd/MM/yy'),
+      fecha_nacimiento: fechaNacimiento,
       telefono: this.form.value.telefono,
       direccion: this.form.value.direccion,
       nro_direccion: this.form.value.nro_direccion,

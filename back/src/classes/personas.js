@@ -24,8 +24,23 @@ class PersonasService {
       });
       console.log('✅ Personas were found');
       let data = await format.Personas(Personas);
-      console.log(data);
+      
       return data.filter((item) => item.tipoPersona === 'Empleado');
+    } catch (err) {
+      console.error('🛑 Error when fetching Personas', err);
+      throw err;
+    }
+  }
+
+  async listAllProveedores() {
+    try {
+      const Personas = await models.Personas.findAll({
+        include: [{ all: true }]
+      });
+      console.log('✅ Personas were found');
+      let data = await format.Personas(Personas);
+      
+      return data.filter((item) => item.tipoPersona === 'Proveedor');
     } catch (err) {
       console.error('🛑 Error when fetching Personas', err);
       throw err;
@@ -61,7 +76,7 @@ class PersonasService {
       if (!oldPersonas) {
         return null;
       }
-      
+
       let newPersonas = await oldPersonas.update(dataUpdated);
       return newPersonas;
     } catch (err) {
