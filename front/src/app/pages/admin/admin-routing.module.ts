@@ -13,6 +13,8 @@ import { UsuariosComponent } from './usuarios/usuarios.component';
 import { PersonasComponent } from './personas/personas.component';
 import { StockComponent } from './stock/stock.component';
 import { MotosComponent } from './motos/motos.component';
+import { TipoMotosComponent } from './tipo-motos/tipo-motos.component';
+import { MarcaComponent } from './marca/marca.component';
 
 
 
@@ -32,6 +34,8 @@ const routes: Routes = [
       { path: 'personas', component: PersonasComponent },
       { path: 'stock', component: StockComponent },
       { path: 'motos', component: MotosComponent },
+      { path: 'tipo-motos', component: TipoMotosComponent },
+      { path: 'marcas', component: MarcaComponent },
     ]
   },
   

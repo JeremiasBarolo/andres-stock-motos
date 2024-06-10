@@ -17,6 +17,8 @@ import { UsuariosComponent } from './usuarios/usuarios.component';
 import { PersonasComponent } from './personas/personas.component';
 import { StockComponent } from './stock/stock.component';
 import { MotosComponent } from './motos/motos.component';
+import { TipoMotosComponent } from './tipo-motos/tipo-motos.component';
+import { MarcaComponent } from './marca/marca.component';
 
 
 
@@ -31,7 +33,9 @@ import { MotosComponent } from './motos/motos.component';
     UsuariosComponent,
     PersonasComponent,
     StockComponent,
-    MotosComponent
+    MotosComponent,
+    TipoMotosComponent,
+    MarcaComponent
   ],
   imports: [
     CommonModule,
