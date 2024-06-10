@@ -44,6 +44,24 @@ class Formatter {
         
       }))
     }
+
+    Motos(data) {
+      return data.map(moto => ({
+        id: moto.id,
+        modelo: moto.modelo,
+        year: moto.year,
+        num_motor: moto.num_motor,
+        num_cuadro: moto.num_cuadro,
+        cilindrada: moto.cilindrada,
+        cert_num_fabrica: moto.cert_num_fabrica,
+        precio: moto.precio,
+        marcaId: moto.marcaId,
+        tipoMotoId: moto.tipoMotoId,
+        Marca: moto.Marca.descripcion,
+        TipoMoto: moto.TipoMoto.descripcion
+        
+      }))
+    }
    
     
   

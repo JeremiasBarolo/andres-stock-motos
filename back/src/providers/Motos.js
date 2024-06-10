@@ -1,92 +1,30 @@
+const MotosService = require('../classes/motos');
+const motosService = new MotosService();
 
+const listAllMotos = async () => {
+  return await motosService.listAllMotos();
+};
 
-    var models = require('../models');
+const listOneMotos = async (Motos_id) => {
+  return await motosService.listOneMotos(Motos_id);
+};
 
-    const listAllMotos= async () => {
-    try {
-        const Motos = await models.Motos.findAll(
-        {
-                include: [
-                    {all:true}
-                ]
-            });
-        console.log('✅ Motos were found');
-        return Motos;
-    } catch (err) {
-        console.error('🛑 Error when fetching Motos', err);
-        throw err;
-    }
-    };
+const createMotos = async (MotosData) => {
+  return await motosService.createMotos(MotosData);
+};
 
-    const listOneMotos= async (Motos_id) => {
-    try {
-        const oneMotos= await models.Motos.findByPk(Motos_id, 
-        );
-        if (!oneMotos) {
-        
-        return null;
-        }
-        return oneMotos;
-    } catch (err) {
-        
-        throw err;
-    }
-    };
+const updateMotos = async (Motos_id, dataUpdated) => {
+  return await motosService.updateMotos(Motos_id, dataUpdated);
+};
 
-    const createMotos= async (DataMotos) => {
-    
+const deleteMotos = async (Motos_id) => {
+  return await motosService.deleteMotos(Motos_id);
+};
 
-    try {
-        
-        const newMotos= await models.Motos.create(DataMotos);
-        
-        return newMotos;
-        
-    } catch (err) {
-        console.error('🛑 Error when creating Motos', err);
-        throw err;
-    }
-    };
-
-    const updateMotos= async (Motos_id, dataUpdated) => {
-    
-
-    try {
-
-        const oldMotos= await models.Motos.findByPk(Motos_id);
-        
-        let newMotos = await oldMotos.update(dataUpdated);
-
-        return newMotos;
-    } catch (err) {
-        console.error('🛑 Error when updating Motos', err);
-        throw err;
-    }
-    
-    };
-
-
-    const deleteMotos = async (Motos_id) => {
-    try {
-        const deletedMotos = await models.Motos.findByPk(Motos_id, 
-        );
-
-        if (!deletedMotos) {
-        return null;
-        }
-        
-        await models.Motos.destroy({ where: { id: Motos_id } });
-
-
-        return deletedMotos;
-    } catch (err) {
-        console.error('🛑 Error when deleting Motos', err);
-        throw err;
-    }
-    };
-
-
-    module.exports = {
-    listAllMotos, listOneMotos, createMotos, updateMotos, deleteMotos,
-    };
-
+module.exports = {
+  listAllMotos,
+  listOneMotos,
+  createMotos,
+  updateMotos,
+  deleteMotos,
+};

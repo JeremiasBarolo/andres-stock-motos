@@ -12,6 +12,7 @@ import { RolesComponent } from './roles/roles.component';
 import { UsuariosComponent } from './usuarios/usuarios.component';
 import { PersonasComponent } from './personas/personas.component';
 import { StockComponent } from './stock/stock.component';
+import { MotosComponent } from './motos/motos.component';
 
 
 
@@ -30,6 +31,7 @@ const routes: Routes = [
       { path: 'usuarios', component: UsuariosComponent },
       { path: 'personas', component: PersonasComponent },
       { path: 'stock', component: StockComponent },
+      { path: 'motos', component: MotosComponent },
     ]
   },
   

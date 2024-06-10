@@ -16,6 +16,7 @@ import { TooltipModule } from 'primeng/tooltip';
 import { UsuariosComponent } from './usuarios/usuarios.component';
 import { PersonasComponent } from './personas/personas.component';
 import { StockComponent } from './stock/stock.component';
+import { MotosComponent } from './motos/motos.component';
 
 
 
@@ -29,7 +30,8 @@ import { StockComponent } from './stock/stock.component';
     RolesComponent,
     UsuariosComponent,
     PersonasComponent,
-    StockComponent
+    StockComponent,
+    MotosComponent
   ],
   imports: [
     CommonModule,

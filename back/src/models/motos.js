@@ -11,7 +11,8 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       Motos.hasMany(models.Movimientos, {
-        foreignKey: 'motoId'
+        foreignKey: 'motoId',
+        onUpdate: 'CASCADE',
       })
 
       Motos.belongsTo(models.Marca, {
