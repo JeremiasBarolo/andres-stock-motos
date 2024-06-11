@@ -11,7 +11,7 @@
     <!--navigation-->
     <ul class="metismenu" id="menu">
       <li>
-        <a href="index.html">
+        <a (click)="navigateTo('admin')">
           <div class="parent-icon">
             <ion-icon name="home-outline"></ion-icon>
           </div>
@@ -28,7 +28,7 @@
           <div class="menu-title">Stock</div>
         </a>
         <ul>
-          <li><a href="admin/stock">
+          <li><a (click)="navigateTo('admin/stock')">
             <ion-icon name="ellipse-outline"></ion-icon> Listado stock
           </a>
           </li>
@@ -111,7 +111,7 @@
           <div class="menu-title">Personas</div>
         </a>
         <ul>
-          <li> <a href="admin/tipo-personas">
+          <li> <a (click)="navigateTo('admin/tipo-personas')">
               <ion-icon name="ellipse-outline"></ion-icon>Tipo de Personas
             </a>
           </li>
@@ -129,7 +129,7 @@
           </a>
           </li>
 
-          <li> <a href="admin/usuarios">
+          <li> <a (click)="navigateTo('admin/usuarios')">
             <ion-icon name="ellipse-outline"></ion-icon> Usuarios
           </a>
           </li>
@@ -146,11 +146,11 @@
           <div class="menu-title">Motos</div>
         </a>
         <ul>
-          <li> <a href="admin/tipo-motos">
+          <li> <a (click)="navigateTo('admin/tipo-motos')">
               <ion-icon name="ellipse-outline"></ion-icon>Tipo de Motos
             </a>
           </li>
-          <li> <a href="admin/motos">
+          <li> <a (click)="navigateTo('admin/motos')">
               <ion-icon name="ellipse-outline"></ion-icon> Motos
             </a>
           </li>
@@ -166,20 +166,20 @@
           <div class="menu-title">Para Personas</div>
         </a>
         <ul>
-          <li> <a href="admin/tipo-personas">
+          <li> <a (click)="navigateTo('admin/tipo-personas')">
               <ion-icon name="ellipse-outline"></ion-icon>Tipo de Personas
             </a>
           </li>
-          <li> <a href="admin/roles">
+          <li> <a (click)="navigateTo('admin/roles')">
               <ion-icon name="ellipse-outline"></ion-icon> Roles
             </a>
           </li>
-          <li> <a href="admin/usuarios">
+          <li> <a (click)="navigateTo('admin/usuarios')">
               <ion-icon name="ellipse-outline"></ion-icon> Usuarios
             </a>
           </li>
 
-          <li> <a href="admin/localidades">
+          <li> <a (click)="navigateTo('admin/localidades')">
             <ion-icon name="ellipse-outline"></ion-icon> Localidades
           </a>
           </li>
@@ -196,15 +196,15 @@
           <div class="menu-title">Para Motos</div>
         </a>
         <ul>
-          <li> <a href="admin/marcas">
+          <li> <a (click)="navigateTo('admin/marcas')">
               <ion-icon name="ellipse-outline"></ion-icon>Marcas
             </a>
           </li>
-          <li> <a href="admin/tipo-motos">
+          <li> <a (click)="navigateTo('admin/tipo-motos')">
               <ion-icon name="ellipse-outline"></ion-icon> Tipo de Motos
             </a>
           </li>
-          <li> <a href="admin/datos-servicio">
+          <li> <a (click)="navigateTo('admin/datos-servicio')">
               <ion-icon name="ellipse-outline"></ion-icon> Datos de Servicio
             </a>
           </li>
@@ -220,12 +220,12 @@
           <div class="menu-title">Para Stock</div>
         </a>
         <ul>
-          <li> <a href="admin/tipo-articulo">
+          <li> <a (click)="navigateTo('admin/tipo-articulo')">
               <ion-icon name="ellipse-outline"></ion-icon>Tipo de Articulos
             </a>
           </li>
 
-          <li> <a href="admin/tipo-movimientos">
+          <li> <a (click)="navigateTo('admin/tipo-movimientos')">
             <ion-icon name="ellipse-outline"></ion-icon>Tipo de Movimientos
           </a>
         </li>
