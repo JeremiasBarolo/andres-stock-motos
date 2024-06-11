@@ -19,6 +19,7 @@ import { StockComponent } from './stock/stock.component';
 import { MotosComponent } from './motos/motos.component';
 import { TipoMotosComponent } from './tipo-motos/tipo-motos.component';
 import { MarcaComponent } from './marca/marca.component';
+import { DatosServicioComponent } from './datos-servicio/datos-servicio.component';
 
 
 
@@ -35,7 +36,8 @@ import { MarcaComponent } from './marca/marca.component';
     StockComponent,
     MotosComponent,
     TipoMotosComponent,
-    MarcaComponent
+    MarcaComponent,
+    DatosServicioComponent
   ],
   imports: [
     CommonModule,

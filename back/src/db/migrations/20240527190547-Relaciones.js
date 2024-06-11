@@ -202,11 +202,41 @@ module.exports = {
   },
 
   async down (queryInterface, Sequelize) {
-    /**
-     * Add reverting commands here.
-     *
-     * Example:
-     * await queryInterface.dropTable('users');
-     */
+    // <=============================== Stock ===============================> 
+      await queryInterface.removeColumn('Stocks', 'tipoId');
+    await queryInterface.removeColumn('Stocks', 'personaId');
+    // <=============================== Fin Stock ===============================> 
+
+    // <=============================== Personas ===============================> 
+    await queryInterface.removeColumn('Personas', 'tipoPersonaId');
+    await queryInterface.removeColumn('Personas', 'localidadId');
+    // <=============================== Fin Personas ===============================> 
+
+    // <=============================== Usuarios ===============================> 
+    await queryInterface.removeColumn('Usuarios', 'personaId');
+    await queryInterface.removeColumn('Usuarios', 'rolId');
+    // <=============================== Fin Usuarios ===============================>   
+
+    // <=============================== StockMovimientos ===============================> 
+    await queryInterface.removeColumn('StockMoviminetos', 'stockId');
+    await queryInterface.removeColumn('StockMoviminetos', 'movimientosId');
+    // <=============================== Fin StockMovimientos ===============================>
+    
+    // <=============================== Movimientos ===============================> 
+    await queryInterface.removeColumn('Movimientos', 'tipoMovimientoId');
+    await queryInterface.removeColumn('Movimientos', 'personaId');
+    await queryInterface.removeColumn('Movimientos', 'usuarioId');
+    await queryInterface.removeColumn('Movimientos', 'motoId');
+    await queryInterface.removeColumn('Movimientos', 'datosServiciosId');
+    // <=============================== Fin Movimientos ===============================>     
+
+    // <=============================== Motos ===============================> 
+    await queryInterface.removeColumn('Motos', 'marcaId');
+    await queryInterface.removeColumn('Motos', 'tipoMotoId');
+    // <=============================== Fin Motos ===============================>
+
+    // <=============================== DatosServicios ===============================> 
+    await queryInterface.removeColumn('DatosServicios', 'recepcionistaId');
+    // <=============================== Fin DatosServicios ===============================>   
   }
 };

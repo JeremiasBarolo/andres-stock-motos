@@ -1,0 +1,275 @@
+<div class="header-container">
+    <h3>Datos para Servicio</h3>
+    <p-button icon="pi pi-plus" label="Agregar Datos para Servicio" [text]="true" (click)="crearVisible = true" styleClass="ml-auto"></p-button>
+</div>
+
+<app-tablang
+    [data]="products"
+    [columns]="columns"
+    (editarClick)="editarItem($event)" 
+    (eliminarClick)="eliminarItem($event)"
+    (modalOpenClick)="modalOpen($event)"
+></app-tablang>
+
+<!-- <============================================ CREAR ==================================================> -->
+<p-dialog header="Crear Datos para Servicio" [modal]="true" [(visible)]="crearVisible" [style]="{ width: '25rem' }">
+    <form [formGroup]="form" (ngSubmit)="onSubmit()">
+        
+        <div class="flex align-items-center gap-3 mb-3">
+            <label for="modelo" class="font-semibold w-6rem"><strong>Modelo</strong></label>
+            <br>
+            <input id="modelo" class="flex-auto" formControlName="modelo" />
+        </div>
+
+        <div class="flex align-items-center gap-3 mb-3">
+            <label for="patente" class="font-semibold w-6rem"><strong>Patente</strong></label>
+            <br>
+            <input id="patente" class="flex-auto" formControlName="patente" />
+        </div>
+
+        <div class="flex align-items-center gap-3 mb-3">
+            <label for="color" class="font-semibold w-6rem"><strong>Color</strong></label>
+            <br>
+            <input id="color" class="flex-auto" formControlName="color" />
+        </div>
+
+        <div class="flex align-items-center gap-3 mb-3">
+            <label for="num_motor" class="font-semibold w-6rem"><strong>Numero de Motor</strong></label>
+            <br>
+            <input id="num_motor" class="flex-auto" formControlName="num_motor" />
+        </div>
+
+        <div class="flex align-items-center gap-3 mb-3">
+            <label for="tipo_serivio" class="font-semibold w-6rem"><strong>Tipo de Servicio</strong></label>
+            <br>
+            <input id="tipo_serivio" class="flex-auto" formControlName="tipo_serivio" />
+        </div>
+
+        <div class="flex align-items-center gap-3 mb-3">
+            <label for="kilometros" class="font-semibold w-6rem"><strong>Kilometros</strong></label>
+            <br>
+            <input id="kilometros" class="flex-auto" type="number" formControlName="kilometros" />
+        </div>
+
+        <div class="flex align-items-center gap-3 mb-3">
+            <label for="estado_general" class="font-semibold w-6rem"><strong>Estado General</strong></label>
+            <br>
+            <input id="estado_general" class="flex-auto"  formControlName="estado_general" />
+        </div>
+
+        <div class="flex align-items-center gap-3 mb-3">
+            <label for="observaciones" class="font-semibold w-6rem"><strong>Observaciones</strong></label>
+            <br>
+            <input id="observaciones" class="flex-auto"  formControlName="observaciones" />
+        </div>
+
+        <div class="flex align-items-center gap-3 mb-3">
+            <label for="recepcionistaId" class="font-semibold w-6rem"><strong> Recepcionista</strong></label>
+            <br>
+            <select id="recepcionistaId" class="flex-auto" formControlName="recepcionistaId">
+                <option *ngFor="let persona of empleados" [value]="persona.id">{{persona.nombre}} {{persona.apellido}}  </option>
+            </select>
+        </div>
+
+        <div class="flex align-items-center gap-3 mb-3">
+            <label for="fecha_recepcion" class="font-semibold w-6rem"><strong>Fecha de Recepcion</strong></label>
+            <br>
+            <input id="fecha_recepcion" type="date" class="flex-auto" formControlName="fecha_recepcion" />
+        </div>
+
+        <div class="flex align-items-center gap-3 mb-3">
+            <label for="fecha_est_entrega" class="font-semibold w-6rem"><strong>Fecha Estimadad de Entrega</strong></label>
+            <br>
+            <input id="fecha_est_entrega" type="date" class="flex-auto" formControlName="fecha_est_entrega" />
+        </div>
+
+        <div class="flex align-items-center gap-3 mb-3">
+            <label for="hora_est_entrega" class="font-semibold w-6rem"><strong>Hora Estimada de Entrega</strong></label>
+            <br>
+            <input id="hora_est_entrega" type="time" class="flex-auto" formControlName="hora_est_entrega" />
+        </div>
+
+        
+        
+        <div class="flex justify-content-end gap-2">
+            <p-button class="mr-1" icon="pi pi-check"  [text]="true" severity="success" (click)="onSubmit()" />
+            <p-button icon="pi pi-times"  [text]="true" severity="danger" (click)="crearVisible = false" />
+        </div>
+    </form>
+</p-dialog>
+
+<!-- <============================================ EDITAR ==================================================> -->
+<p-dialog header="Editar Datos para Servicio" [modal]="true" [(visible)]="editVisible" [style]="{ width: '25rem' }">
+    <form [formGroup]="form" (ngSubmit)="onSubmit()">
+        
+        <div class="flex align-items-center gap-3 mb-3">
+            <label for="modelo" class="font-semibold w-6rem"><strong>Modelo</strong></label>
+            <br>
+            <input id="modelo" class="flex-auto" formControlName="modelo" />
+        </div>
+
+        <div class="flex align-items-center gap-3 mb-3">
+            <label for="patente" class="font-semibold w-6rem"><strong>Patente</strong></label>
+            <br>
+            <input id="patente" class="flex-auto" formControlName="patente" />
+        </div>
+
+        <div class="flex align-items-center gap-3 mb-3">
+            <label for="color" class="font-semibold w-6rem"><strong>Color</strong></label>
+            <br>
+            <input id="color" class="flex-auto" formControlName="color" />
+        </div>
+
+        <div class="flex align-items-center gap-3 mb-3">
+            <label for="num_motor" class="font-semibold w-6rem"><strong>Numero de Motor</strong></label>
+            <br>
+            <input id="num_motor" class="flex-auto" formControlName="num_motor" />
+        </div>
+
+        <div class="flex align-items-center gap-3 mb-3">
+            <label for="tipo_serivio" class="font-semibold w-6rem"><strong>Tipo de Servicio</strong></label>
+            <br>
+            <input id="tipo_serivio" class="flex-auto" formControlName="tipo_serivio" />
+        </div>
+
+        <div class="flex align-items-center gap-3 mb-3">
+            <label for="kilometros" class="font-semibold w-6rem"><strong>Kilometros</strong></label>
+            <br>
+            <input id="kilometros" class="flex-auto" type="number" formControlName="kilometros" />
+        </div>
+
+        <div class="flex align-items-center gap-3 mb-3">
+            <label for="estado_general" class="font-semibold w-6rem"><strong>Estado General</strong></label>
+            <br>
+            <input id="estado_general" class="flex-auto"  formControlName="estado_general" />
+        </div>
+
+        <div class="flex align-items-center gap-3 mb-3">
+            <label for="observaciones" class="font-semibold w-6rem"><strong>Observaciones</strong></label>
+            <br>
+            <input id="observaciones" class="flex-auto"  formControlName="observaciones" />
+        </div>
+
+        <div class="flex align-items-center gap-3 mb-3">
+            <label for="recepcionistaId" class="font-semibold w-6rem"><strong> Recepcionista</strong></label>
+            <br>
+            <select id="recepcionistaId" class="flex-auto" formControlName="recepcionistaId">
+                <option *ngFor="let persona of empleados" [value]="persona.id">{{persona.nombre}} {{persona.apellido}}  </option>
+            </select>
+        </div>
+
+        <div class="flex align-items-center gap-3 mb-3">
+            <label for="fecha_recepcion" class="font-semibold w-6rem"><strong>Fecha de Recepcion</strong></label>
+            <br>
+            <input id="fecha_recepcion" type="date" class="flex-auto" formControlName="fecha_recepcion" />
+        </div>
+
+        <div class="flex align-items-center gap-3 mb-3">
+            <label for="fecha_est_entrega" class="font-semibold w-6rem"><strong>Fecha Estimadad de Entrega</strong></label>
+            <br>
+            <input id="fecha_est_entrega" type="date" class="flex-auto" formControlName="fecha_est_entrega" />
+        </div>
+
+        <div class="flex align-items-center gap-3 mb-3">
+            <label for="hora_est_entrega" class="font-semibold w-6rem"><strong>Hora Estimada de Entrega</strong></label>
+            <br>
+            <input id="hora_est_entrega" type="time" class="flex-auto" formControlName="hora_est_entrega" />
+        </div>
+
+        
+        
+        <div class="flex justify-content-end gap-2">
+            <p-button class="mr-1" icon="pi pi-check"  [text]="true" severity="success" (click)="onSubmit()" />
+            <p-button icon="pi pi-times"  [text]="true" severity="danger" (click)="crearVisible = false" />
+        </div>
+    </form>
+</p-dialog>
+
+<!-- <============================================ ELIMINAR ==================================================> -->
+<p-dialog header="Eliminar Datos para Servicio" [modal]="true" [(visible)]="editEliminar" [style]="{ width: '25rem' }">
+    <span class="p-text-secondary block mb-5">Desea usted eliminar este objeto?</span>
+    <br>
+    <br>
+    <div class="flex justify-content-end gap-2">
+        <p-button class="mr-1" icon="pi pi-check"  [text]="true" severity="success" (click)="Eliminar()" />
+        <p-button icon="pi pi-times"  [text]="true" severity="danger" (click)="editEliminar = false" />
+    </div>
+</p-dialog>
+
+<!-- <============================================ ELIMINAR ==================================================> -->
+<p-dialog header="Detalles del Servicio" [modal]="true" [(visible)]="showModal" [style]="{ width: '25rem' }">
+    <div class="p-fluid">
+
+        <div class="field">
+            <label for="modelo"><strong>Modelo:</strong></label>
+            <span id="modelo"> {{ cardData?.modelo }}</span>
+        </div>
+        <br>
+
+        <div class="field">
+            <label for="patente"><strong>Patente:</strong></label>
+            <span id="patente"> {{ cardData?.patente }}</span>
+        </div>
+        <br>
+
+        <div class="field">
+            <label for="num_motor"><strong>Número de Motor:</strong></label>
+            <span id="num_motor"> {{ cardData?.num_motor }}</span>
+        </div>
+        <br>
+        <div class="field">
+            <label for="color"><strong>Color:</strong></label>
+            <span id="color"> {{ cardData?.color }}</span>
+        </div>
+        <br>
+
+        <div class="field">
+            <label for="kilometros"><strong>Kilómetros:</strong></label>
+            <span id="kilometros"> {{ cardData?.kilometros }}</span>
+        </div>
+        <br>
+        <div class="field">
+            <label for="estado_general"><strong>Estado General:</strong></label>
+            <span id="estado_general"> {{ cardData?.estado_general }}</span>
+        </div>
+        <br>
+        <div class="field">
+            <label for="observaciones"><strong>Observaciones:</strong></label>
+            <span id="observaciones"> {{ cardData?.observaciones }}</span>
+        </div>
+        <br>
+
+        <div class="field">
+            <label for="tipo_servicio"><strong>Tipo de Servicio:</strong></label>
+            <span id="tipo_servicio"> {{ cardData?.tipo_serivio }}</span>
+        </div>
+        <br>
+        <div class="field">
+            <label for="fecha_recepcion"><strong>Fecha de Recepción:</strong></label>
+            <span id="fecha_recepcion"> {{ cardData?.fecha_recepcion | date: 'dd/MM/yyyy' }}</span>
+        </div>
+        <br>
+        <div class="field">
+            <label for="fecha_est_entrega"><strong>Fecha Estimada de Entrega:</strong></label>
+            <span id="fecha_est_entrega"> {{ cardData?.fecha_est_entrega | date: 'dd/MM/yyyy' }}</span>
+        </div>
+        <br>
+        <div class="field">
+            <label for="hora_est_entrega"><strong>Hora Estimada de Entrega:</strong></label>
+            <span id="hora_est_entrega"> {{ cardData?.hora_est_entrega }}</span>
+        </div>
+        <br>
+        
+       
+        <div class="field">
+            <label for="recepcionista"><strong>Recepcionista:</strong></label>
+            <span id="recepcionista"> {{ cardData?.Recepcionista }}</span>
+        </div>
+        <br>
+    </div>
+
+    <div class="flex justify-content-end gap-2">
+        <p-button icon="pi pi-times" (click)="showModal = false"></p-button>
+    </div>
+</p-dialog>
+

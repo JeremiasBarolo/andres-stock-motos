@@ -6,8 +6,8 @@
             <th>Acciones</th>
         </tr>
     </ng-template>
-    <ng-template pTemplate="body" let-rowData>
-        <tr>
+    <ng-template pTemplate="body" let-rowData >
+        <tr (click)="modalOpen(rowData)">
             
             <td *ngFor="let col of columns">{{ rowData[col.field] }}</td>
               

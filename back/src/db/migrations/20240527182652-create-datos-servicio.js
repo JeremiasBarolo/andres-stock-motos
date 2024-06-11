@@ -19,8 +19,10 @@ module.exports = {
         type: Sequelize.DATE
       },
       hora_est_entrega: {
-        type: Sequelize.INTEGER
+        type: Sequelize.TIME,
+        allowNull: true,
       },
+      
       modelo: {
         type: Sequelize.STRING
       },

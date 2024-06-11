@@ -12,6 +12,7 @@ export class TablangComponent {
 
   @Output() editarClick: EventEmitter<any> = new EventEmitter();
   @Output() eliminarClick: EventEmitter<any> = new EventEmitter();
+  @Output() modalOpenClick: EventEmitter<any> = new EventEmitter();
 
   constructor() { }
 
@@ -22,6 +23,10 @@ export class TablangComponent {
 
   editar(rowData:any) {
     this.editarClick.emit(rowData);
+}
+
+modalOpen(rowdata:any) {
+  this.modalOpenClick.emit(rowdata);
 }
 
 eliminar(rowdata:any) {

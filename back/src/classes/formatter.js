@@ -62,6 +62,26 @@ class Formatter {
         
       }))
     }
+
+    DatosServicio(data) {
+      return data.map(moto => ({
+        id: moto.id,
+        tipo_serivio: moto.tipo_serivio,
+        fecha_recepcion: moto.fecha_recepcion,
+        fecha_est_entrega: moto.fecha_est_entrega,
+        hora_est_entrega: moto.hora_est_entrega,
+        modelo: moto.modelo,
+        num_motor: moto.num_motor,
+        color: moto.color,
+        patente: moto.patente,
+        kilometros: moto.kilometros,
+        estado_general: moto.estado_general,
+        observaciones: moto.observaciones,
+        recepcionistaId: moto.recepcionistaId,
+        Recepcionista: `${moto.Persona.nombre} ${moto.Persona.apellido}`
+        
+      }))
+    }
    
     
   
