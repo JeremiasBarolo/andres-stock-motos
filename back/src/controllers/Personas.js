@@ -15,7 +15,7 @@ const listAllPersonas = async (req, res) => {
 
 const listAllEmpleados = async (req, res) => {
   try {
-    console.log('estoy aca');
+
     const Personas = await PersonasService.listAllEmpleados();
     res.json(Personas);
   } catch (err) {
@@ -27,8 +27,18 @@ const listAllEmpleados = async (req, res) => {
 
 const listAllProveedores = async (req, res) => {
   try {
-    console.log('estoy aca');
+
     const Personas = await PersonasService.listAllProveedores();
+    res.json(Personas);
+  } catch (err) {
+    res.status(500).json({ action: "listAll", error: err.message });
+  }
+};
+
+const listAllClientes = async (req, res) => {
+  try {
+    console.log('estoy aca');
+    const Personas = await PersonasService.listAllClientes();
     res.json(Personas);
   } catch (err) {
     res.status(500).json({ action: "listAll", error: err.message });
@@ -87,5 +97,6 @@ module.exports = {
   updatePersonas, 
   deletePersonas, 
   listAllEmpleados,
-  listAllProveedores
+  listAllProveedores,
+  listAllClientes
 };

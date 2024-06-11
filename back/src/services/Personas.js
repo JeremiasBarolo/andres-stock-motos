@@ -14,6 +14,10 @@
             return await PersonasProvider.listAllProveedores();
         };
 
+        const listAllClientes = async () => {
+            return await PersonasProvider.listAllClientes();
+        };
+
         const listOnePersonas = async (Personas_id) => {
             return await PersonasProvider.listOnePersonas(Personas_id);
         };
@@ -39,6 +43,7 @@
         updatePersonas, 
         deletePersonas, 
         listAllEmpleados, 
-        listAllProveedores
+        listAllProveedores,
+        listAllClientes
         };
 

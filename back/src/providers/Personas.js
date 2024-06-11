@@ -13,6 +13,9 @@ const listAllProveedores= async () => {
   return await personasService.listAllProveedores();
 };
 
+const listAllClientes= async () => {
+  return await personasService.listAllClientes();
+};
 
 const listOnePersonas = async (Personas_id) => {
   return await personasService.listOnePersonas(Personas_id);
@@ -37,5 +40,6 @@ module.exports = {
   updatePersonas,
   deletePersonas,
   listAllEmpleados,
-  listAllProveedores
+  listAllProveedores,
+  listAllClientes
 };

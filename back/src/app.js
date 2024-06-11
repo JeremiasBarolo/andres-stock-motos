@@ -23,7 +23,8 @@ const {
     MarcaRouter,
     TipoMotoRouter,
     EmpleadosRouter,
-    ProveedoresRouter
+    ProveedoresRouter,
+    ClientesRouter
     
  } = require('./routes')
 
@@ -43,6 +44,7 @@ app.use("/stock", StockRouter)
 app.use("/personas", PersonasRouter)
 app.use("/empleados", EmpleadosRouter)
 app.use("/proveedores", ProveedoresRouter)
+app.use("/clientes", ClientesRouter)
 app.use("/usuarios", UsuariosRouter)
 app.use("/rol", RolRouter)
 app.use("/localidades", LocalidadesRouter)

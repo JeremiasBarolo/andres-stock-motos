@@ -24,6 +24,9 @@ export class PersonasService {
   getAllProveedores(): Observable<any[]> {
     return this.http.get<any[]>(`http://localhost:8081/proveedores`); 
   }
+  getAllClientes(): Observable<any[]> {
+    return this.http.get<any[]>(`http://localhost:8081/clientes`); 
+  }
 
   // get by id
   getById(id: number): Observable<any> {

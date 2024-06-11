@@ -47,6 +47,23 @@ class PersonasService {
     }
   }
 
+  async listAllClientes() {
+    try {
+      const Personas = await models.Personas.findAll({
+        include: [{ all: true }]
+      });
+      console.log('✅ Personas were found');
+      let data = await format.Personas(Personas);
+      
+      return data.filter((item) => item.tipoPersona === 'Cliente');
+    } catch (err) {
+      console.error('🛑 Error when fetching Personas', err);
+      throw err;
+    }
+  }
+
+  
+
   async listOnePersonas(Personas_id) {
     try {
       const onePersonas = await models.Personas.findByPk(Personas_id);
