@@ -110,7 +110,7 @@ export class LocalidadesComponent {
     this.localidadesService.delete(this.id).pipe(takeUntil(this.destroy$)).subscribe(() => {
       setTimeout(() => {
         window.location.reload();
-      }, 600)
+      }, 1000)
       // this.router.navigate(['dashboard/insumos']);
     });
   }

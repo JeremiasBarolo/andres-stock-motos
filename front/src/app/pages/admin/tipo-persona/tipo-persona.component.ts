@@ -110,7 +110,7 @@ export class TipoPersonaComponent implements OnInit {
     this.tipoPersonaService.delete(this.id).pipe(takeUntil(this.destroy$)).subscribe(() => {
       setTimeout(() => {
         window.location.reload();
-      }, 600)
+      }, 1000)
       // this.router.navigate(['dashboard/insumos']);
     });
   }

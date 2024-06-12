@@ -24,7 +24,7 @@ class MotosService {
       });
       console.log('✅ Motos were found');
       let data = await format.Motos(Motos);
-      console.log(data);
+      
       return data.filter((item) => item.tipoMotoId === 1);
     } catch (err) {
       console.error('🛑 Error when fetching Motos', err);
