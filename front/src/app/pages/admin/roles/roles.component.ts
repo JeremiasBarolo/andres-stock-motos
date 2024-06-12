@@ -51,11 +51,12 @@ export class RolesComponent {
       ];
 
       data.map((data)=>{
-
+        console.log(data);
+        
         this.products.push({
           id: data.id,
           descripcion: data.descripcion,
-          isAdmin: data.isAdmin,
+          isAdmin: this.isAdmin(data.isAdmin),
         })
       })
     })
@@ -66,7 +67,7 @@ export class RolesComponent {
   editarItem(data:any) {
     this.editVisible = true
     this.id = data.id
-    if(data.isAdmin == 1){
+    if(data.isAdmin == "Si"){
       this.form.setValue({
         descripcion: data.descripcion,
         isAdmin: 1
@@ -139,7 +140,13 @@ export class RolesComponent {
     });
   }
 
-  
+  isAdmin(data:any){
+    if(data == 1){
+      return "Si"
+    }else{
+      return "No"
+    }
+  }
   
 }
 

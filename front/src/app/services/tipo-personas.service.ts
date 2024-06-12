@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable, catchError, tap } from 'rxjs';
+import { Observable, catchError, of, tap } from 'rxjs';
+import { MessageService } from 'primeng/api';
 
 @Injectable({
   providedIn: 'root'
@@ -8,7 +9,7 @@ import { Observable, catchError, tap } from 'rxjs';
 export class TipoPersonasService {
 
   
-  constructor(private http: HttpClient ) { }
+  constructor(private http: HttpClient, private messageService: MessageService ) { }
 
 
   private apiUrl = 'http://localhost:8081/tipo_personas';
@@ -39,6 +40,21 @@ export class TipoPersonasService {
 
   // delete
   delete(id: number): Observable<any> {
-    return this.http.delete<any>(`${this.apiUrl}/${id}`)
+    if (id >= 1 && id <= 3) {
+      
+      this.messageService.add({
+        severity: 'error',
+        summary: 'Error',
+        detail: 'Este ID es necesario para el funcionamiento del sistema y no puede ser eliminado.',
+        life: 10000
+      });
+      return of(null);  
+    } else {
+      return this.http.delete<any>(`${this.apiUrl}/${id}`);
+    }
   }
+
+    
+    
 }
+
