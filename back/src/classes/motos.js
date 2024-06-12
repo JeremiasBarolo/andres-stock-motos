@@ -17,22 +17,22 @@ class MotosService {
     }
   }
 
-  async listAllEmpleados() {
+  async listAllMotosUsadas() {
     try {
       const Motos = await models.Motos.findAll({
         include: [{ all: true }]
       });
       console.log('✅ Motos were found');
       let data = await format.Motos(Motos);
-      
-      return data.filter((item) => item.tipoPersona === 'Empleado');
+      console.log(data);
+      return data.filter((item) => item.tipoMotoId === 1);
     } catch (err) {
       console.error('🛑 Error when fetching Motos', err);
       throw err;
     }
   }
 
-  async listAllProveedores() {
+  async listAllMotosNuevas() {
     try {
       const Motos = await models.Motos.findAll({
         include: [{ all: true }]
@@ -40,7 +40,7 @@ class MotosService {
       console.log('✅ Motos were found');
       let data = await format.Motos(Motos);
       
-      return data.filter((item) => item.tipoPersona === 'Proveedor');
+      return data.filter((item) => item.tipoMotoId === 2);
     } catch (err) {
       console.error('🛑 Error when fetching Motos', err);
       throw err;

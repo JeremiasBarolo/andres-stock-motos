@@ -18,6 +18,8 @@ import { MarcaComponent } from './marca/marca.component';
 import { DatosServicioComponent } from './datos-servicio/datos-servicio.component';
 import { ClientesComponent } from './clientes/clientes.component';
 import { ProveedoresComponent } from './proveedores/proveedores.component';
+import { MotosNuevasComponent } from './motos-nuevas/motos-nuevas.component';
+import { MotosUsadasComponent } from './motos-usadas/motos-usadas.component';
 
 
 
@@ -37,6 +39,8 @@ const routes: Routes = [
       { path: 'personas', component: PersonasComponent },
       { path: 'stock', component: StockComponent },
       { path: 'motos', component: MotosComponent },
+      { path: 'motos-usadas', component: MotosUsadasComponent },
+      { path: 'motos-nuevas', component: MotosNuevasComponent },
       { path: 'tipo-motos', component: TipoMotosComponent },
       { path: 'marcas', component: MarcaComponent },
       { path: 'datos-servicio', component: DatosServicioComponent },

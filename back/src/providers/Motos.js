@@ -5,6 +5,14 @@ const listAllMotos = async () => {
   return await motosService.listAllMotos();
 };
 
+const listAllMotosUsadas = async () => {
+  return await motosService.listAllMotosUsadas();
+};
+
+const listAllMotosNuevas = async () => {
+  return await motosService.listAllMotosNuevas();
+};
+
 const listOneMotos = async (Motos_id) => {
   return await motosService.listOneMotos(Motos_id);
 };
@@ -27,4 +35,6 @@ module.exports = {
   createMotos,
   updateMotos,
   deleteMotos,
+  listAllMotosUsadas,
+  listAllMotosNuevas
 };
