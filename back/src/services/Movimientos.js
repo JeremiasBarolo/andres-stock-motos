@@ -6,6 +6,10 @@
             return await MovimientosProvider.listAllMovimientos();
         };
 
+        const listAllVentas = async () => {
+            return await MovimientosProvider.listAllVentas();
+        };
+
         const listOneMovimientos = async (Movimientos_id) => {
             return await MovimientosProvider.listOneMovimientos(Movimientos_id);
         };
@@ -25,6 +29,6 @@
 
 
         module.exports = {
-        listAllMovimientos, listOneMovimientos, createMovimientos, updateMovimientos, deleteMovimientos, 
+        listAllMovimientos, listOneMovimientos, createMovimientos, updateMovimientos, deleteMovimientos, listAllVentas
         };
 

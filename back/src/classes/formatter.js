@@ -24,7 +24,7 @@ class Formatter {
         nro_direccion: user.nro_direccion,
         mail: user.mail,
         dni: user.dni,
-        tipoPersona: user.TipoPersona.descripcion,
+        tipoPersona: user.TipoPersona?.descripcion,
         tipoPersonaId: user.TipoPersona.id,
         Localidad: user.Localidade.descripcion,
         LocalidadId: user.Localidade.id
@@ -80,6 +80,25 @@ class Formatter {
         recepcionistaId: moto.recepcionistaId,
         Recepcionista: `${moto.Persona.nombre} ${moto.Persona.apellido}`
         
+      }))
+    }
+
+    Ventas(data) {
+      return data.map(venta => ({
+        id: venta.id,
+        createdAt: venta.createdAt,
+        updatedAt: venta.updatedAt,
+        cliente: `${venta.Persona.nombre} ${venta.Persona.apellido}`,
+        usuario:venta.Usuario.user,
+        usuarioId: venta.Usuario.id,
+        personaId: venta.Persona.id,
+        subtotal: venta.subtotal,
+        stock: venta.Stocks.map(stock => ({
+          id: stock.id,
+          nombre: stock.nombre,
+          cantidad: stock.StockMoviminetos.cantidad,
+          costo: stock.costo
+        }))
       }))
     }
    

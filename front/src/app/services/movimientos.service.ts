@@ -2,16 +2,15 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, catchError, tap } from 'rxjs';
 
-
 @Injectable({
   providedIn: 'root'
 })
-export class StockService {
-
+export class MovimientosService {
+ 
   constructor(private http: HttpClient ) { }
 
 
-  private apiUrl = 'http://localhost:8081/stock';
+  private apiUrl = 'http://localhost:8081/movimientos';
   
  
   //get all
@@ -19,8 +18,8 @@ export class StockService {
     return this.http.get<any[]>(`${this.apiUrl}`); 
   }
 
-  getAllRepuestos(): Observable<any[]> {
-    return this.http.get<any[]>(`${this.apiUrl}/repuestos`); 
+  getAllVentas(): Observable<any[]> {
+    return this.http.get<any[]>(`${this.apiUrl}/ventas`); 
   }
 
   // get by id

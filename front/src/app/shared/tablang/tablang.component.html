@@ -7,9 +7,9 @@
         </tr>
     </ng-template>
     <ng-template pTemplate="body" let-rowData >
-        <tr (click)="modalOpen(rowData)">
+        <tr >
             
-            <td *ngFor="let col of columns">{{ rowData[col.field] }}</td>
+            <td (click)="modalOpen(rowData)" *ngFor="let col of columns">{{ rowData[col.field] }}</td>
               
         
         <td> 

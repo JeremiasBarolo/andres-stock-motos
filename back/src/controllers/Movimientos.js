@@ -3,9 +3,19 @@
 const { MovimientosService } = require("../services");
 
 
+
 const listAllMovimientos = async (req, res) => {
   try {
     const Movimientos = await MovimientosService.listAllMovimientos();
+    res.json(Movimientos);
+  } catch (err) {
+    res.status(500).json({ action: "listAll", error: err.message });
+  }
+};
+
+const listAllVentas = async (req, res) => {
+  try {
+    const Movimientos = await MovimientosService.listAllVentas();
     res.json(Movimientos);
   } catch (err) {
     res.status(500).json({ action: "listAll", error: err.message });
@@ -58,5 +68,5 @@ const deleteMovimientos = async (req, res) => {
 
 
 module.exports = {
-  listAllMovimientos, listOneMovimientos, createMovimientos, updateMovimientos, deleteMovimientos, 
+  listAllMovimientos, listOneMovimientos, createMovimientos, updateMovimientos, deleteMovimientos, listAllVentas
 };

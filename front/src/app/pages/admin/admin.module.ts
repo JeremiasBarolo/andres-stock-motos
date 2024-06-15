@@ -24,6 +24,9 @@ import { ClientesComponent } from './clientes/clientes.component';
 import { ProveedoresComponent } from './proveedores/proveedores.component';
 import { MotosNuevasComponent } from './motos-nuevas/motos-nuevas.component';
 import { MotosUsadasComponent } from './motos-usadas/motos-usadas.component';
+import { VentaComponent } from './venta/venta.component';
+import { PickListModule } from 'primeng/picklist';
+import { DragDropModule } from '@angular/cdk/drag-drop';
 
 
 
@@ -45,7 +48,9 @@ import { MotosUsadasComponent } from './motos-usadas/motos-usadas.component';
     ClientesComponent,
     ProveedoresComponent,
     MotosNuevasComponent,
-    MotosUsadasComponent
+    MotosUsadasComponent,
+    VentaComponent,
+   
   ],
   imports: [
     CommonModule,
@@ -56,7 +61,9 @@ import { MotosUsadasComponent } from './motos-usadas/motos-usadas.component';
     DialogModule,
     ButtonModule,
     ReactiveFormsModule,
-    TooltipModule
+    TooltipModule,
+    PickListModule,
+    DragDropModule 
   ]
 })
 export class AdminModule { }
