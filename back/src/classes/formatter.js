@@ -92,6 +92,8 @@ class Formatter {
         usuario:venta.Usuario.user,
         usuarioId: venta.Usuario.id,
         personaId: venta.Persona.id,
+        TipoMovimiento: venta.TipoMovimiento.descripcion,
+        tipoMovimientoId: venta.TipoMovimiento.id,
         subtotal: venta.subtotal,
         stock: venta.Stocks.map(stock => ({
           id: stock.id,
