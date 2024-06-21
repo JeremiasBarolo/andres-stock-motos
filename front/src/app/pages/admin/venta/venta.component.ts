@@ -76,7 +76,8 @@ export class VentaComponent implements OnInit, OnDestroy {
           usuarioId: data.usuarioId,
           personaId: data.personaId,
           stock: data.stock,
-          cantArt: data.stock.length
+          cantArt: data.stock.length,
+          tipoMovimientoId: data.tipoMovimientoId
         });
       });
     });
@@ -118,9 +119,9 @@ export class VentaComponent implements OnInit, OnDestroy {
     const productoForm = this.fb.group({
       id: [producto.id, Validators.required],
       nombre_articulo: [producto.nombre_articulo, Validators.required],
-      cantidad: [1, [Validators.required, Validators.min(1)]]
+      cantidad: [producto.cantidad, [Validators.required, Validators.min(1)]]
     });
-
+  
     this.productos.push(productoForm);
   }
 
@@ -146,10 +147,37 @@ export class VentaComponent implements OnInit, OnDestroy {
   editarItem(data: any) {
     this.editVisible = true;
     this.id = data.id;
+    
+    
     this.form.patchValue({
       usuarioId: data.usuarioId,
       personaId: data.personaId
     });
+  
+    
+    this.productos.clear();
+  
+    if (data.tipoMovimientoId == 3) {
+      
+      this.stockService.getAllRepuestos().subscribe(repuestos => {
+        
+        this.repuestos = repuestos;
+  
+        
+        data.stock.forEach((item: any) => {
+          this.agregarProducto({
+            id: item.id,
+            nombre_articulo: item.nombre,
+            cantidad: item.cantidad
+          });
+  
+          
+          this.repuestos = this.repuestos.filter(repuesto => repuesto.id !== item.id);
+        });
+      });
+    } else {
+      this.selectTipoArticulo('moto');
+    }
   }
 
   eliminarItem(data: any) {
@@ -179,26 +207,18 @@ export class VentaComponent implements OnInit, OnDestroy {
 
     if (this.id > 0) {
       // Es editar
-      try {
-        this.movimientosService.update(this.id, this.tipo).pipe(takeUntil(this.destroy$)).subscribe(() => {
-          setTimeout(() => {
-            window.location.reload();
-          }, 600);
-        });
-      } catch (error) {
-        console.log(error);
-      }
+      this.movimientosService.update(this.id, this.tipo).pipe(takeUntil(this.destroy$)).subscribe(() => {
+        setTimeout(() => {
+          window.location.reload();
+        }, 600);
+      });
     } else {
       // Es crear
-      try {
-        this.movimientosService.create(this.tipo).pipe(takeUntil(this.destroy$)).subscribe(() => {
-          setTimeout(() => {
-            window.location.reload();
-          }, 600);
-        });
-      } catch (error) {
-        console.log(error);
-      }
+      this.movimientosService.create(this.tipo).pipe(takeUntil(this.destroy$)).subscribe(() => {
+        setTimeout(() => {
+          window.location.reload();
+        }, 600);
+      });
     }
   }
 
@@ -226,6 +246,12 @@ export class VentaComponent implements OnInit, OnDestroy {
 
   openCantidadDialog() {
     if (this.productos.length > 0) {
+      this.productos.controls.forEach((control) => {
+        if (!control.get('cantidad')?.value) {
+          control.get('cantidad')?.setValue(1);
+        }
+      });
+  
       this.crearVisible = false;
       this.cantidadVisible = true;
     } else {

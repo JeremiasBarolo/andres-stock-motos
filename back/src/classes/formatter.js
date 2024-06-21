@@ -103,6 +103,27 @@ class Formatter {
         }))
       }))
     }
+
+    OneVentas(data) {
+      return {
+        id: data.id,
+        createdAt: data.createdAt,
+        updatedAt: data.updatedAt,
+        cliente: `${data.Persona.nombre} ${data.Persona.apellido}`,
+        usuario:data.Usuario.user,
+        usuarioId: data.Usuario.id,
+        personaId: data.Persona.id,
+        TipoMovimiento: data.TipoMovimiento.descripcion,
+        tipoMovimientoId: data.TipoMovimiento.id,
+        subtotal: data.subtotal,
+        stock: data.Stocks.map(stock => ({
+          id: stock.id,
+          nombre: stock.nombre,
+          cantidad: stock.StockMoviminetos.cantidad,
+          costo: stock.costo
+        }))
+      }
+    }
    
     
   
