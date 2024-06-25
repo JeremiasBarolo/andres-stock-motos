@@ -30,6 +30,9 @@ module.exports = {
       precio: {
         type: Sequelize.BIGINT(100)
       },
+      kilometros: {
+        type: Sequelize.BIGINT(100)
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE

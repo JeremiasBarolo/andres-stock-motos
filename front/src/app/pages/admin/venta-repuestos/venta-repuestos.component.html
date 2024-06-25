@@ -1,0 +1,185 @@
+<div class="header-container">
+    <h3>Ventas de Repuestos</h3>
+    <p-button icon="pi pi-plus" label="Agregar Venta" [text]="true" (click)="openCrearVentaDialog()" styleClass="ml-auto"></p-button>
+</div>
+  
+  <app-tablang
+      [data]="products"
+      [columns]="columns"
+      (editarClick)="editarItem($event)" 
+      (eliminarClick)="eliminarItem($event)"
+      (modalOpenClick)="modalOpen($event)"
+  ></app-tablang>
+  
+  <!-- <============================================ CREAR ==================================================> -->
+  <p-dialog header="Crear Venta" [modal]="true" [(visible)]="crearVisible" [style]="{ width: '50rem' }">
+    <form [formGroup]="form" (ngSubmit)="openCantidadDialog()">
+      <div class="flex align-items-center gap-3 mb-3">
+        <label for="usuarioId" class="font-semibold w-6rem"><strong>Recepcionista</strong></label>
+        <select id="usuarioId" class="flex-auto" formControlName="usuarioId">
+          <option *ngFor="let persona of usuarios" [value]="persona.id">{{ persona.name }} {{ persona.lastname }}</option>
+        </select>
+      </div>
+  
+      <div class="flex align-items-center gap-3 mb-3">
+        <label for="personaId" class="font-semibold w-6rem"><strong>Cliente</strong></label>
+        <select id="personaId" class="flex-auto" formControlName="personaId">
+          <option *ngFor="let persona of clientes" [value]="persona.id">{{ persona.nombre }} {{ persona.apellido }}</option>
+        </select>
+      </div>
+  
+      <p-pickList 
+        [source]="repuestos" 
+        [target]="productos.value" 
+        sourceHeader="Disponibles" 
+        targetHeader="Seleccionados" 
+        dragdrop="true" 
+        sourceStyle="" 
+        targetStyle="" 
+        (onMoveToTarget)="agregarProductoDesdePickList($event)" 
+        (onMoveToSource)="eliminarProductoDesdePickList($event)">
+        <ng-template let-item pTemplate="item">
+          <div class="product-item">
+            <h5>{{ item.nombre_articulo }}</h5>
+          </div>
+        </ng-template>
+      </p-pickList>
+  
+      <div class="flex justify-content-end gap-2 mt-3">
+        <p-button class="mr-1" label="Siguiente" icon="pi pi-arrow-right" [text]="true" severity="success" type="submit"></p-button>
+        <p-button label="Cancelar" icon="pi pi-times" [text]="true" severity="danger" (click)="crearVisible = false"></p-button>
+      </div>
+    </form>
+  </p-dialog>
+  
+  <p-dialog header="Especificar Cantidad" [modal]="true" [(visible)]="cantidadVisible" [style]="{ width: '50rem' }">
+    <form [formGroup]="form" (ngSubmit)="onSubmit()">
+      <div formArrayName="productos">
+        <div *ngFor="let producto of productos.controls; let i = index" [formGroupName]="i" class="flex align-items-center gap-3 mb-3">
+          <label>{{ producto.get('nombre_articulo')?.value }}</label>
+          <br>
+          <input type="number" formControlName="cantidad" min="1" class="flex-auto" />
+          <button type="button" class="p-button p-component p-button-danger" (click)="eliminarProducto(i)" style="margin-left: 1em;">
+            <span class="p-button-icon pi pi-times"></span>
+          </button>
+        </div>
+      </div>
+      <div class="flex justify-content-end gap-2 mt-3">
+        <p-button class="mr-1" label="Guardar" icon="pi pi-check" [text]="true" severity="success" type="submit"></p-button>
+        <p-button label="Cancelar" icon="pi pi-times" [text]="true" severity="danger" (click)="cantidadVisible = false"></p-button>
+      </div>
+    </form>
+  </p-dialog>
+  
+  
+  <!-- <============================================ EDITAR ==================================================> -->
+  <p-dialog header="Editar Venta" [modal]="true" [(visible)]="editVisible" [style]="{ width: '50rem' }">
+    <form [formGroup]="form" (ngSubmit)="openCantidadDialog()">
+      <div class="flex align-items-center gap-3 mb-3">
+        <label for="usuarioId" class="font-semibold w-6rem"><strong>Recepcionista</strong></label>
+        <select id="usuarioId" class="flex-auto" formControlName="usuarioId">
+          <option *ngFor="let persona of usuarios" [value]="persona.id">{{ persona.name }} {{ persona.lastname }}</option>
+        </select>
+      </div>
+  
+      <div class="flex align-items-center gap-3 mb-3">
+        <label for="personaId" class="font-semibold w-6rem"><strong>Cliente</strong></label>
+        <select id="personaId" class="flex-auto" formControlName="personaId">
+          <option *ngFor="let persona of clientes" [value]="persona.id">{{ persona.nombre }} {{ persona.apellido }}</option>
+        </select>
+      </div>
+  
+      <p-pickList 
+        [source]="repuestos" 
+        [target]="productos.value" 
+        sourceHeader="Disponibles" 
+        targetHeader="Seleccionados" 
+        dragdrop="true" 
+        sourceStyle="" 
+        targetStyle="" 
+        (onMoveToTarget)="agregarProductoDesdePickList($event)" 
+        (onMoveToSource)="eliminarProductoDesdePickList($event)">
+        <ng-template let-item pTemplate="item">
+          <div class="product-item">
+            <h5>{{ item.nombre_articulo }}</h5>
+          </div>
+        </ng-template>
+      </p-pickList>
+  
+      <div class="flex justify-content-end gap-2 mt-3">
+        <p-button class="mr-1" label="Continuar" icon="pi pi-check" [text]="true" severity="success" type="submit"></p-button>
+        <p-button label="Cancelar" icon="pi pi-times" [text]="true" severity="danger" (click)="editVisible = false"></p-button>
+      </div>
+    </form>
+  </p-dialog>
+  
+  
+  <!-- <============================================ ELIMINAR ==================================================> -->
+  <p-dialog header="Eliminar Venta" [modal]="true" [(visible)]="editEliminar" [style]="{ width: '25rem' }">
+      <span class="p-text-secondary block mb-5">Desea usted eliminar este objeto?</span>
+      <br>
+      <br>
+      <div class="flex justify-content-end gap-2">
+          <p-button class="mr-1" icon="pi pi-check"  [text]="true" severity="success" (click)="Eliminar()" />
+          <p-button icon="pi pi-times"  [text]="true" severity="danger" (click)="editEliminar = false" />
+      </div>
+  </p-dialog>
+  
+  
+  <!-- <============================================ MOSTRAR DATA ==================================================> -->
+  <p-dialog header="Detalles del Venta" [modal]="true" [(visible)]="detailModal" [style]="{ width: '25rem' }">
+    <div class="p-fluid">
+        <div class="field">
+            <label for="cliente"><strong>Cliente:</strong></label>
+            <span id="cliente"> {{ cardData?.cliente }}</span>
+        </div>
+        <br>
+  
+        <div class="field">
+            <label for="usuario"><strong>Recepcionista:</strong></label>
+            <span id="usuario"> {{ cardData?.usuario }}</span>
+        </div>
+        <br>
+  
+        <div class="field">
+            <label for="createdAt"><strong>Fecha de Realización:</strong></label>
+            <span id="createdAt"> {{ cardData?.createdAt  }}</span>
+        </div>
+        <br>
+  
+        <div class="field">
+            <label for="subtotal"><strong>Costo Total:</strong></label>
+            <span id="subtotal"> {{ cardData?.subtotal | currency }}</span>
+        </div>
+        <br>
+  
+        <br>
+        <br>
+  
+        <div class="field">
+            <label for="stock"><strong>Detalles de los Artículos:</strong></label>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Nombre</th>
+                        <th>Costo</th>
+                        <th>Cantidad</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let item of cardData?.stock">
+                        <td>{{ item.nombre }}</td>
+                        <td>{{ item.costo | currency }}</td>
+                        <td>{{ item.cantidad }}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <br>
+    </div>
+  
+    <div class="flex justify-content-end gap-2">
+        <p-button icon="pi pi-times" (click)="detailModal = false"></p-button>
+    </div>
+  </p-dialog>
+  

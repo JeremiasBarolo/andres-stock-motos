@@ -36,6 +36,35 @@ class MovimientosService {
     }
   }
 
+  async listAllMotosMovimientos() {
+    try {
+      const Ventas = await models.Movimientos.findAll({
+        include: [
+          { all: true },
+          {
+            model: models.Motos,
+            include: [
+              {
+                model: models.Marca
+              }
+            ]
+          }
+        ],
+        where: {
+          tipoMovimientoId: 2
+        }
+        
+      });
+      console.log('✅ Ventas were found');
+      let data = await format.MotosVenta(Ventas.filter((item) => item.tipoMovimientoId === 2));
+
+      return data
+    } catch (err) {
+      console.error('🛑 Error when fetching Ventas', err);
+      throw err;
+    }
+  }
+
   async listAllProveedores() {
     try {
       const Ventas = await models.Movimientos.findAll({
@@ -110,8 +139,6 @@ class MovimientosService {
 
   async updateMovimientos(Ventas_id, dataUpdated) {
     try {
-      // si es venta de motos o repuestos
-      if (dataUpdated.tipoMovimientoId == 3) {
         const oneVentas = await models.Movimientos.findByPk(Ventas_id, {
           include: [{ all: true }]
         });
@@ -119,67 +146,86 @@ class MovimientosService {
         if (!oneVentas) {
           return null;
         }
-  
-        
-        let oldStock = oneVentas.Stocks;
-        let newStock = dataUpdated.productos;
-        let toAdd = [];
-        let toUpdate = [];
-        let toDelete = [];
-  
-        
-        let oldStockMap = new Map();
-        oldStock.forEach(item => {
-          oldStockMap.set(item.id, item.cantidad);
-        });
-  
-        
-        
-  
-        
-        newStock.forEach(newItem => {
-          if (oldStockMap.has(newItem.id)) {
-            if (oldStockMap.get(newItem.id) !== newItem.cantidad) {
-              toUpdate.push(newItem);
-            }
-            oldStockMap.delete(newItem.id); 
-          } else {
-            toAdd.push(newItem);
-          }
-        });
-  
-        
-        toDelete = Array.from(oldStockMap.keys());
-  
-        
-        for (let item of toUpdate) {
-          await models.StockMoviminetos.update(
-            { cantidad: item.cantidad },
-            { where: { stockId: item.id, movimientosId: Ventas_id } }
-          );
-        }
-  
-        
-        for (let id of toDelete) {
-          await models.StockMoviminetos.destroy({
-            where: { stockId: id, movimientosId: Ventas_id }
-          });
-        }
-  
-        
-        for (let item of toAdd) {
-          await models.StockMoviminetos.create({
-            stockId: item.id,
-            movimientosId: Ventas_id,
-            cantidad: item.cantidad
-          });
-        }
-  
-        let subtotal = await this.getTotalPrice(dataUpdated.productos)
-
-        let newVentas = await oneVentas.update({...dataUpdated, subtotal: subtotal});
+        let newVentas = await oneVentas.update(dataUpdated);
         return newVentas;
+      
+  
+    } catch (err) {
+      console.error('🛑 Error when updating Ventas', err);
+      throw err;
+    }
+  }
+
+  async updateVentaRepuestos(Ventas_id, dataUpdated) {
+    try {
+      const oneVentas = await models.Movimientos.findByPk(Ventas_id, {
+        include: [{ all: true }]
+      });
+
+      if (!oneVentas) {
+        return null;
       }
+
+      
+      let oldStock = oneVentas.Stocks;
+      let newStock = dataUpdated.productos;
+      let toAdd = [];
+      let toUpdate = [];
+      let toDelete = [];
+
+      
+      let oldStockMap = new Map();
+      oldStock.forEach(item => {
+        oldStockMap.set(item.id, item.cantidad);
+      });
+
+      
+      
+
+      
+      newStock.forEach(newItem => {
+        if (oldStockMap.has(newItem.id)) {
+          if (oldStockMap.get(newItem.id) !== newItem.cantidad) {
+            toUpdate.push(newItem);
+          }
+          oldStockMap.delete(newItem.id); 
+        } else {
+          toAdd.push(newItem);
+        }
+      });
+
+      
+      toDelete = Array.from(oldStockMap.keys());
+
+      
+      for (let item of toUpdate) {
+        await models.StockMoviminetos.update(
+          { cantidad: item.cantidad },
+          { where: { stockId: item.id, movimientosId: Ventas_id } }
+        );
+      }
+
+      
+      for (let id of toDelete) {
+        await models.StockMoviminetos.destroy({
+          where: { stockId: id, movimientosId: Ventas_id }
+        });
+      }
+
+      
+      for (let item of toAdd) {
+        await models.StockMoviminetos.create({
+          stockId: item.id,
+          movimientosId: Ventas_id,
+          cantidad: item.cantidad
+        });
+      }
+
+      let subtotal = await this.getTotalPrice(dataUpdated.productos)
+
+      let newVentas = await oneVentas.update({...dataUpdated, subtotal: subtotal});
+      return newVentas;
+      
   
     } catch (err) {
       console.error('🛑 Error when updating Ventas', err);

@@ -22,6 +22,15 @@ const listAllVentas = async (req, res) => {
   }
 };
 
+const listAllMotosMovimientos = async (req, res) => {
+  try {
+    const Movimientos = await MovimientosService.listAllMotosMovimientos();
+    res.json(Movimientos);
+  } catch (err) {
+    res.status(500).json({ action: "listAll", error: err.message });
+  }
+};
+
 const listOneMovimientos = async (req, res) => {
   try {
     const id = req.params.Movimientos_id;
@@ -55,6 +64,16 @@ const updateMovimientos = async (req, res) => {
   }
 };
 
+const updateVentaRepuestos = async (req, res) => {
+
+  try {
+    const MovimientosUpdate = await MovimientosService.updateVentaRepuestos(req.params.Movimientos_id, req.body);
+    res.json(MovimientosUpdate);
+  } catch (err) {
+    res.status(500).json({ action: 'updateMovimientos', error: err.message });
+  }
+};
+
 const deleteMovimientos = async (req, res) => {
   const id = req.params.Movimientos_id;
   try {
@@ -68,5 +87,12 @@ const deleteMovimientos = async (req, res) => {
 
 
 module.exports = {
-  listAllMovimientos, listOneMovimientos, createMovimientos, updateMovimientos, deleteMovimientos, listAllVentas
+  listAllMovimientos, 
+  listOneMovimientos, 
+  createMovimientos, 
+  updateMovimientos, 
+  deleteMovimientos, 
+  listAllVentas,
+  updateVentaRepuestos,
+  listAllMotosMovimientos
 };

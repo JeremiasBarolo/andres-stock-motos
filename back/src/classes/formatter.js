@@ -104,6 +104,36 @@ class Formatter {
       }))
     }
 
+    MotosVenta(data) {
+      return data.map(moto => ({
+        id: moto.id,
+        createdAt: moto.createdAt,
+        updatedAt: moto.updatedAt,
+        cliente: `${moto.Persona.nombre} ${moto.Persona.apellido}`,
+        usuario:moto.Usuario.user,
+        usuarioId: moto.Usuario.id,
+        personaId: moto.Persona.id,
+        TipoMovimiento: moto.TipoMovimiento.descripcion,
+        tipoMovimientoId: moto.TipoMovimiento.id,
+        subtotal: moto.subtotal,
+        Moto: {
+          id: moto.Moto.id,
+          marcaId: moto.Moto.marcaId,
+          marca: moto.Moto.Marca.descripcion,
+          modelo: moto.Moto.modelo,
+          year: moto.Moto.year,
+          num_motor: moto.Moto.num_motor,
+          num_cuadro: moto.Moto.num_cuadro,
+          cilindrada: moto.Moto.cilindrada,
+          cert_num_fabrica: moto.Moto.cert_num_fabrica,
+          precio: moto.Moto.precio,
+          tipoMotoId: moto.Moto.tipoMotoId,
+          kilometros: moto.Moto.kilometros
+
+        }
+      }))
+    }
+
     OneVentas(data) {
       return {
         id: data.id,

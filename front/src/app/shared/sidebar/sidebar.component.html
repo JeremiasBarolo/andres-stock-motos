@@ -82,11 +82,11 @@
           <div class="menu-title">Diagnostico</div>
         </a>
         <ul>
-          <li> <a href="widgets-static-widgets.html">
+          <li> <a>
               <ion-icon name="ellipse-outline"></ion-icon>Presupuesto
             </a>
           </li>
-          <li> <a href="widgets-data-widgets.html">
+          <li> <a >
               <ion-icon name="ellipse-outline"></ion-icon>Orden de Reaparacion
             </a>
           </li>
@@ -102,11 +102,11 @@
           <div class="menu-title">Services</div>
         </a>
         <ul>
-          <li> <a href="widgets-static-widgets.html">
+          <li> <a >
               <ion-icon name="ellipse-outline"></ion-icon>Presupuesto
             </a>
           </li>
-          <li> <a href="widgets-data-widgets.html">
+          <li> <a >
               <ion-icon name="ellipse-outline"></ion-icon>Orden de Reaparacion
             </a>
           </li>
@@ -114,10 +114,27 @@
         </ul>
       </li>
 
-      <a href="javascript:;">
-        <ion-icon name="bag-handle-outline"></ion-icon>
-        <div class="menu-title">Ventas</div>
-      </a>
+      <li>
+        <a href="javascript:;" class="has-arrow">
+          <div class="parent-icon">
+            <ion-icon name="briefcase-outline"></ion-icon>
+          </div>
+          <div class="menu-title">Ventas</div>
+        </a>
+        <ul>
+          <li> <a (click)="navigateTo('admin/venta-respuestos')">
+              <ion-icon name="ellipse-outline"></ion-icon>Repuestos
+            </a>
+          </li>
+          <li> <a (click)="navigateTo('admin/venta-motos')">
+              <ion-icon name="ellipse-outline"></ion-icon> Motos
+            </a>
+          </li>
+
+        </ul>
+      </li>
+
+      
 
       <a href="javascript:;">
         <ion-icon name="cash-outline"></ion-icon>

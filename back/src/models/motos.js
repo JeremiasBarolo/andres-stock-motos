@@ -35,7 +35,8 @@ module.exports = (sequelize, DataTypes) => {
     num_cuadro: DataTypes.INTEGER,
     cilindrada: DataTypes.INTEGER,
     cert_num_fabrica: DataTypes.INTEGER,
-    precio: DataTypes.INTEGER
+    precio: DataTypes.INTEGER,
+    kilometros: DataTypes.INTEGER
   }, {
     sequelize,
     modelName: 'Motos',

@@ -22,6 +22,10 @@ export class MovimientosService {
     return this.http.get<any[]>(`${this.apiUrl}/ventas`); 
   }
 
+  getAllVentasMoto(): Observable<any[]> {
+    return this.http.get<any[]>(`${this.apiUrl}/ventas/motos`); 
+  }
+
   // get by id
   getById(id: number): Observable<any> {
     return this.http.get<any>(`${this.apiUrl}/${id}`)
@@ -37,6 +41,12 @@ export class MovimientosService {
   // update
   update(id: number, Entity: FormData): Observable<any> {
     return this.http.put<any>(`${this.apiUrl}/${id}`, Entity)
+
+  }
+
+  // update
+  updateVentaRepuestos(id: number, Entity: FormData): Observable<any> {
+    return this.http.put<any>(`${this.apiUrl}/repuestos/${id}`, Entity);
 
   }
 

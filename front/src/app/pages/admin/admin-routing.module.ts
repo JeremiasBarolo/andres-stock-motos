@@ -20,7 +20,9 @@ import { ClientesComponent } from './clientes/clientes.component';
 import { ProveedoresComponent } from './proveedores/proveedores.component';
 import { MotosNuevasComponent } from './motos-nuevas/motos-nuevas.component';
 import { MotosUsadasComponent } from './motos-usadas/motos-usadas.component';
-import { VentaComponent } from './venta/venta.component';
+
+import { VentaRepuestosComponent } from './venta-repuestos/venta-repuestos.component';
+import { VentaMotosComponent } from './venta-motos/venta-motos.component';
 
 
 
@@ -47,7 +49,8 @@ const routes: Routes = [
       { path: 'datos-servicio', component: DatosServicioComponent },
       { path: 'clientes', component: ClientesComponent },
       { path: 'proveedor', component: ProveedoresComponent },
-      { path: 'venta', component: VentaComponent },
+      { path: 'venta-respuestos', component: VentaRepuestosComponent },
+      { path: 'venta-motos', component: VentaMotosComponent },
     ]
   },
   

@@ -10,6 +10,10 @@
             return await MovimientosProvider.listAllVentas();
         };
 
+        const listAllMotosMovimientos = async () => {
+            return await MovimientosProvider.listAllMotosMovimientos();
+        };
+
         const listOneMovimientos = async (Movimientos_id) => {
             return await MovimientosProvider.listOneMovimientos(Movimientos_id);
         };
@@ -23,12 +27,23 @@
             return await MovimientosProvider.updateMovimientos(Movimientos_id, updateMovimientos);
         };
 
+        const updateVentaRepuestos = async (Movimientos_id, updateMovimientos) => {
+            return await MovimientosProvider.updateVentaRepuestos(Movimientos_id, updateMovimientos);
+        };
+
         const deleteMovimientos = async (Movimientos_id) => {
             return await MovimientosProvider.deleteMovimientos(Movimientos_id);
         };
 
 
         module.exports = {
-        listAllMovimientos, listOneMovimientos, createMovimientos, updateMovimientos, deleteMovimientos, listAllVentas
+        listAllMovimientos, 
+        listOneMovimientos, 
+        createMovimientos, 
+        updateMovimientos, 
+        deleteMovimientos, 
+        listAllVentas,
+        updateVentaRepuestos,
+        listAllMotosMovimientos
         };
 

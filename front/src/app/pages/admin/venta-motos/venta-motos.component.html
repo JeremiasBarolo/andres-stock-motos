@@ -1,0 +1,38 @@
+<div class="header-container">
+    <h3>Ventas de Motos</h3>
+    <p-button icon="pi pi-plus" label="Agregar Venta" [text]="true" (click)="openCrearVentaDialog()" styleClass="ml-auto"></p-button>
+</div>
+  
+  <app-tablang
+      [data]="products"
+      [columns]="columns"
+      (editarClick)="editarItem($event)" 
+      (eliminarClick)="eliminarItem($event)"
+      (modalOpenClick)="modalOpen($event)"
+  ></app-tablang>
+
+
+ <!-- <============================================ CREAR ==================================================> -->
+ <p-dialog header="Crear Venta" [modal]="true" [(visible)]="crearVisible" [style]="{ width: '50rem' }">
+    <form [formGroup]="form" (ngSubmit)="onSubmit()">
+      <div class="flex align-items-center gap-3 mb-3">
+        <label for="usuarioId" class="font-semibold w-6rem"><strong>Recepcionista</strong></label>
+        <select id="usuarioId" class="flex-auto" formControlName="usuarioId">
+          <option *ngFor="let persona of usuarios" [value]="persona.id">{{ persona.name }} {{ persona.lastname }}</option>
+        </select>
+      </div>
+  
+      <div class="flex align-items-center gap-3 mb-3">
+        <label for="personaId" class="font-semibold w-6rem"><strong>Cliente</strong></label>
+        <select id="personaId" class="flex-auto" formControlName="personaId">
+          <option *ngFor="let persona of clientes" [value]="persona.id">{{ persona.nombre }} {{ persona.apellido }}</option>
+        </select>
+      </div>
+  
+  
+      <div class="flex justify-content-end gap-2 mt-3">
+        <p-button class="mr-1" label="Siguiente" icon="pi pi-arrow-right" [text]="true" severity="success" type="submit"></p-button>
+        <p-button label="Cancelar" icon="pi pi-times" [text]="true" severity="danger" (click)="crearVisible = false"></p-button>
+      </div>
+    </form>
+  </p-dialog>

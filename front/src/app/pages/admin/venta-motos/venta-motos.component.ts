@@ -10,30 +10,25 @@ import { MovimientosService } from '../../../services/movimientos.service';
 import { DatePipe } from '@angular/common';
 
 @Component({
-  selector: 'app-venta',
-  templateUrl: './venta.component.html',
-  styleUrls: ['./venta.component.css'],
+  selector: 'app-venta-motos',
+  templateUrl: './venta-motos.component.html',
+  styleUrl: './venta-motos.component.css',
   providers: [DatePipe]
 })
-export class VentaComponent implements OnInit, OnDestroy {
+export class VentaMotosComponent implements OnDestroy, OnInit {
   products: any[] = [];
   columns: any[] = [];
   editVisible: boolean = false;
   editEliminar: boolean = false;
   crearVisible: boolean = false;
-  cantidadVisible: boolean = false;
   detailModal: boolean = false
-  selectTipoArticuloVisible: boolean = false
   form: FormGroup;
   tipo: any;
   cardData: any;
   id: number = 0;
-  proveedores: any[] = [];
-  tipoArticulos: any[] = [];
   usuarios: any[] = [];
   clientes: any[] = [];
-  seleccionados: any[] = [];
-  repuestos: any[] = [];
+  motos: any[] = [];
 
 
   private destroy$ = new Subject<void>();
@@ -56,14 +51,15 @@ export class VentaComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.movimientosService.getAllVentas().pipe(takeUntil(this.destroy$)).subscribe((data: any[]) => {
+    this.movimientosService.getAllVentasMoto().pipe(takeUntil(this.destroy$)).subscribe((data: any[]) => {
       this.columns = [
         { field: 'id', header: 'ID' },
+        { field: 'nombreMoto', header: 'Moto' },
         { field: 'createdAt', header: 'Fecha de Realizacion' },
         { field: 'cliente', header: 'Cliente' },
         { field: 'usuario', header: 'Recepcionista' },
         { field: 'subtotal', header: 'Subtotal' },
-        { field: 'cantArt', header: 'Articulos Vendidos' },
+        
       ];
 
       data.forEach((data) => {
@@ -75,9 +71,9 @@ export class VentaComponent implements OnInit, OnDestroy {
           subtotal: data.subtotal,
           usuarioId: data.usuarioId,
           personaId: data.personaId,
-          stock: data.stock,
-          cantArt: data.stock.length,
-          tipoMovimientoId: data.tipoMovimientoId
+          Moto: data.Moto,
+          tipoMovimientoId: data.tipoMovimientoId,
+          nombreMoto: `${data.Moto.marca} ${data.Moto.modelo}`
         });
       });
     });
@@ -98,51 +94,8 @@ export class VentaComponent implements OnInit, OnDestroy {
     this.destroy$.complete();
   }
 
-  cantidadesModal(){
-    this.crearVisible = false;
-    const formValue = this.form.value;
-
-    this.tipo = {
-      
-      usuarioId: formValue.usuarioId,
-      personaId: formValue.personaId,
-      
-    };
   
-  }
 
-  get productos(): FormArray {
-    return this.form.get('productos') as FormArray;
-  }
-
-  agregarProducto(producto: any) {
-    const productoForm = this.fb.group({
-      id: [producto.id, Validators.required],
-      nombre_articulo: [producto.nombre_articulo, Validators.required],
-      cantidad: [producto.cantidad, [Validators.required, Validators.min(1)]]
-    });
-  
-    this.productos.push(productoForm);
-  }
-
-  eliminarProducto(index: number) {
-    this.productos.removeAt(index);
-  }
-
-  agregarProductoDesdePickList(event: any) {
-    event.items.forEach((producto: any) => {
-      this.agregarProducto(producto);
-    });
-  }
-
-  eliminarProductoDesdePickList(event: any) {
-    event.items.forEach((producto: any) => {
-      const index = this.productos.controls.findIndex((control: any) => control.value.id === producto.id);
-      if (index > -1) {
-        this.eliminarProducto(index);
-      }
-    });
-  }
 
   editarItem(data: any) {
     this.editVisible = true;
@@ -153,31 +106,8 @@ export class VentaComponent implements OnInit, OnDestroy {
       usuarioId: data.usuarioId,
       personaId: data.personaId
     });
-  
-    
-    this.productos.clear();
-  
-    if (data.tipoMovimientoId == 3) {
-      
-      this.stockService.getAllRepuestos().subscribe(repuestos => {
-        
-        this.repuestos = repuestos;
-  
-        
-        data.stock.forEach((item: any) => {
-          this.agregarProducto({
-            id: item.id,
-            nombre_articulo: item.nombre,
-            cantidad: item.cantidad
-          });
-  
-          
-          this.repuestos = this.repuestos.filter(repuesto => repuesto.id !== item.id);
-        });
-      });
-    } else {
-      this.selectTipoArticulo('moto');
-    }
+
+   
   }
 
   eliminarItem(data: any) {
@@ -185,29 +115,22 @@ export class VentaComponent implements OnInit, OnDestroy {
     this.id = data.id;
   }
 
-  onSubmit(a:any) {
+  onSubmit() {
     const formValue = this.form.value;
-    if(a == 'repuesto'){
+   
       this.tipo = {
         usuarioId: formValue.usuarioId,
         personaId: formValue.personaId,
         productos: formValue.productos,
-        tipoMovimientoId: 3
+        tipoMovimientoId: 2
       };
-    }else{
-      this.tipo = {
-        usuarioId: formValue.usuarioId,
-        personaId: formValue.personaId,
-        productos: formValue.productos,
-        tipoMovimientoId: 3
-      };
-    }
+    
 
     
 
     if (this.id > 0) {
       // Es editar
-      this.movimientosService.update(this.id, this.tipo).pipe(takeUntil(this.destroy$)).subscribe(() => {
+      this.movimientosService.updateVentaRepuestos(this.id, this.tipo).pipe(takeUntil(this.destroy$)).subscribe(() => {
         setTimeout(() => {
           window.location.reload();
         }, 600);
@@ -230,34 +153,13 @@ export class VentaComponent implements OnInit, OnDestroy {
     });
   }
 
-  selectTipoArticulo(tipo:any){
-    if(tipo == 'repuesto'){
-      this.selectTipoArticuloVisible = false;
-      this.crearVisible = true
-      this.stockService.getAllRepuestos().pipe(takeUntil(this.destroy$)).subscribe(data => {
-        this.repuestos = data;
-      });
-    }
-  }
+  
 
   openCrearVentaDialog(): void {
-    this.selectTipoArticuloVisible = true;
+    this.crearVisible = true;
   }
 
-  openCantidadDialog() {
-    if (this.productos.length > 0) {
-      this.productos.controls.forEach((control) => {
-        if (!control.get('cantidad')?.value) {
-          control.get('cantidad')?.setValue(1);
-        }
-      });
-  
-      this.crearVisible = false;
-      this.cantidadVisible = true;
-    } else {
-      alert('Debe seleccionar al menos un producto.');
-    }
-  }
+ 
 
   modalOpen(data:any){
     this.detailModal = true
