@@ -1,6 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { FormGroup, FormBuilder, Validators, FormArray } from '@angular/forms';
-import { Router, ActivatedRoute } from '@angular/router';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { PersonasService } from '../../../services/personas.service';
@@ -8,11 +7,12 @@ import { StockService } from '../../../services/stock.service';
 import { UsuariosService } from '../../../services/usuarios.service';
 import { MovimientosService } from '../../../services/movimientos.service';
 import { DatePipe } from '@angular/common';
+import { MotosService } from '../../../services/motos.service';
 
 @Component({
   selector: 'app-venta-motos',
   templateUrl: './venta-motos.component.html',
-  styleUrl: './venta-motos.component.css',
+  styleUrls: ['./venta-motos.component.css'],
   providers: [DatePipe]
 })
 export class VentaMotosComponent implements OnDestroy, OnInit {
@@ -21,7 +21,7 @@ export class VentaMotosComponent implements OnDestroy, OnInit {
   editVisible: boolean = false;
   editEliminar: boolean = false;
   crearVisible: boolean = false;
-  detailModal: boolean = false
+  detailModal: boolean = false;
   form: FormGroup;
   tipo: any;
   cardData: any;
@@ -29,28 +29,35 @@ export class VentaMotosComponent implements OnDestroy, OnInit {
   usuarios: any[] = [];
   clientes: any[] = [];
   motos: any[] = [];
-
-
+  motosDisponibles: any[] = [];
   private destroy$ = new Subject<void>();
 
   constructor(
     private usuariosService: UsuariosService,
     private personasService: PersonasService,
-    private stockService: StockService,
+    private motoService: MotosService,
     private movimientosService: MovimientosService,
     private fb: FormBuilder,
-    private router: Router,
-    private aRoute: ActivatedRoute,
     private datePipe: DatePipe
   ) {
     this.form = this.fb.group({
       usuarioId: ['', Validators.required],
       personaId: ['', Validators.required],
-      productos: this.fb.array([]) 
+      motoId: ['', Validators.required],
+      productos: this.fb.array([])
     });
   }
 
   ngOnInit(): void {
+    this.loadData();
+  }
+
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
+  }
+
+  loadData(): void {
     this.movimientosService.getAllVentasMoto().pipe(takeUntil(this.destroy$)).subscribe((data: any[]) => {
       this.columns = [
         { field: 'id', header: 'ID' },
@@ -59,26 +66,25 @@ export class VentaMotosComponent implements OnDestroy, OnInit {
         { field: 'cliente', header: 'Cliente' },
         { field: 'usuario', header: 'Recepcionista' },
         { field: 'subtotal', header: 'Subtotal' },
-        
       ];
-
-      data.forEach((data) => {
-        this.products.push({
-          id: data.id,
-          createdAt: this.datePipe.transform(data.createdAt, 'dd/MM/yy'),
-          cliente: data.cliente,
-          usuario: data.usuario,
-          subtotal: data.subtotal,
-          usuarioId: data.usuarioId,
-          personaId: data.personaId,
-          Moto: data.Moto,
-          tipoMovimientoId: data.tipoMovimientoId,
-          nombreMoto: `${data.Moto.marca} ${data.Moto.modelo}`
-        });
-      });
+      this.products = data.map(item => ({
+        id: item.id,
+        createdAt: this.datePipe.transform(item.createdAt, 'dd/MM/yy'),
+        cliente: item.cliente,
+        usuario: item.usuario,
+        subtotal: item.subtotal,
+        usuarioId: item.usuarioId,
+        personaId: item.personaId,
+        Moto: item.Moto,
+        motoId: item.Moto.id,
+        tipoMovimientoId: item.tipoMovimientoId,
+        nombreMoto: `${item.Moto.marca} ${item.Moto.modelo}`
+      }));
     });
 
     this.usuariosService.getAll().pipe(takeUntil(this.destroy$)).subscribe(data => {
+      
+      
       this.usuarios = data;
     });
 
@@ -86,28 +92,29 @@ export class VentaMotosComponent implements OnDestroy, OnInit {
       this.clientes = data;
     });
 
-    
+    this.motoService.getAll().pipe(takeUntil(this.destroy$)).subscribe(data => {
+      this.motosDisponibles = data.map(moto => ({
+        ...moto,
+        nombreMoto: `${moto.Marca} ${moto.modelo}`,
+        motoId: moto.id
+      }));
+    });
   }
 
-  ngOnDestroy(): void {
-    this.destroy$.next();
-    this.destroy$.complete();
+  openCrearVentaDialog(): void {
+    this.crearVisible = true;
   }
-
-  
-
 
   editarItem(data: any) {
+    console.log(data);
+    
     this.editVisible = true;
     this.id = data.id;
-    
-    
     this.form.patchValue({
       usuarioId: data.usuarioId,
-      personaId: data.personaId
+      personaId: data.personaId,
+      motoId: data.motoId
     });
-
-   
   }
 
   eliminarItem(data: any) {
@@ -117,27 +124,21 @@ export class VentaMotosComponent implements OnDestroy, OnInit {
 
   onSubmit() {
     const formValue = this.form.value;
-   
-      this.tipo = {
-        usuarioId: formValue.usuarioId,
-        personaId: formValue.personaId,
-        productos: formValue.productos,
-        tipoMovimientoId: 2
-      };
-    
-
-    
+    this.tipo = {
+      usuarioId: formValue.usuarioId,
+      personaId: formValue.personaId,
+      motoId: formValue.motoId, 
+      tipoMovimientoId: 2
+    };
 
     if (this.id > 0) {
-      // Es editar
-      this.movimientosService.updateVentaRepuestos(this.id, this.tipo).pipe(takeUntil(this.destroy$)).subscribe(() => {
+      this.movimientosService.updateVentaMoto(this.id, this.tipo).pipe(takeUntil(this.destroy$)).subscribe(() => {
         setTimeout(() => {
           window.location.reload();
         }, 600);
       });
     } else {
-      // Es crear
-      this.movimientosService.create(this.tipo).pipe(takeUntil(this.destroy$)).subscribe(() => {
+      this.movimientosService.createVentaMoto(this.tipo).pipe(takeUntil(this.destroy$)).subscribe(() => {
         setTimeout(() => {
           window.location.reload();
         }, 600);
@@ -153,16 +154,8 @@ export class VentaMotosComponent implements OnDestroy, OnInit {
     });
   }
 
-  
-
-  openCrearVentaDialog(): void {
-    this.crearVisible = true;
-  }
-
- 
-
-  modalOpen(data:any){
-    this.detailModal = true
-    this.cardData = data
+  modalOpen(data: any) {
+    this.detailModal = true;
+    this.cardData = data;
   }
 }

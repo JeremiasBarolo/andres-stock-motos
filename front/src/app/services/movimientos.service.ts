@@ -38,9 +38,21 @@ export class MovimientosService {
       
   }
 
+  // create
+  createVentaMoto(Entity: any): Observable<any> {
+    return this.http.post<any>(`${this.apiUrl}/venta/motos`, Entity)
+      
+  }
+
   // update
   update(id: number, Entity: FormData): Observable<any> {
     return this.http.put<any>(`${this.apiUrl}/${id}`, Entity)
+
+  }
+
+  // update
+  updateVentaMoto(id: number, Entity: FormData): Observable<any> {
+    return this.http.put<any>(`${this.apiUrl}/venta/motos/${id}`, Entity)
 
   }
 

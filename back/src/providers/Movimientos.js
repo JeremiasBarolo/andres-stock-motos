@@ -22,8 +22,16 @@ const createMovimientos = async (MovimientosData) => {
   return await movimientosService.createMovimientos(MovimientosData);
 };
 
+const createVentaMoto = async (MovimientosData) => {
+  return await movimientosService.createVentaMoto(MovimientosData);
+};
+
 const updateMovimientos = async (Movimientos_id, dataUpdated) => {
   return await movimientosService.updateMovimientos(Movimientos_id, dataUpdated);
+};
+
+const updateVentaMotos = async (Movimientos_id, dataUpdated) => {
+  return await movimientosService.updateVentaMotos(Movimientos_id, dataUpdated);
 };
 
 const updateVentaRepuestos = async (Movimientos_id, dataUpdated) => {
@@ -42,5 +50,7 @@ module.exports = {
   deleteMovimientos,
   listAllVentas,
   updateVentaRepuestos,
-  listAllMotosMovimientos
+  listAllMotosMovimientos,
+  createVentaMoto,
+  updateVentaMotos
 };

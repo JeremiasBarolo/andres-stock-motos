@@ -137,6 +137,30 @@ class MovimientosService {
     }
   }
 
+  async createVentaMoto(DataVentas) {
+    try {
+
+        let subtotal = await models.Motos.findByPk(DataVentas.motoId)
+
+      
+        await models.Movimientos.create({
+          subtotal: subtotal.precio,
+          tipoMovimientoId: DataVentas.tipoMovimientoId,
+          personaId: DataVentas.personaId,
+          usuarioId: DataVentas.usuarioId,
+          motoId: DataVentas.motoId
+        });
+      
+      
+
+
+      return true;
+    } catch (err) {
+      console.error('🛑 Error when creating Ventas', err);
+      throw err;
+    }
+  }
+
   async updateMovimientos(Ventas_id, dataUpdated) {
     try {
         const oneVentas = await models.Movimientos.findByPk(Ventas_id, {
@@ -146,6 +170,36 @@ class MovimientosService {
         if (!oneVentas) {
           return null;
         }
+        let newVentas = await oneVentas.update(dataUpdated);
+        return newVentas;
+      
+  
+    } catch (err) {
+      console.error('🛑 Error when updating Ventas', err);
+      throw err;
+    }
+  }
+
+  async updateVentaMotos(Ventas_id, dataUpdated) {
+    try {
+        const oneVentas = await models.Movimientos.findByPk(Ventas_id, {
+          include: [{ all: true }]
+        });
+  
+        if (!oneVentas) {
+          return null;
+        }
+
+        let subtotal = await models.Motos.findByPk(dataUpdated.motoId)
+
+        await oneVentas.update({
+          subtotal: subtotal.precio,
+          tipoMovimientoId: dataUpdated.tipoMovimientoId,
+          personaId: dataUpdated.personaId,
+          usuarioId: dataUpdated.usuarioId,
+          motoId: dataUpdated.motoId
+        });
+        
         let newVentas = await oneVentas.update(dataUpdated);
         return newVentas;
       

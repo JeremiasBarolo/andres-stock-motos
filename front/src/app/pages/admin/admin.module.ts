@@ -24,11 +24,11 @@ import { ClientesComponent } from './clientes/clientes.component';
 import { ProveedoresComponent } from './proveedores/proveedores.component';
 import { MotosNuevasComponent } from './motos-nuevas/motos-nuevas.component';
 import { MotosUsadasComponent } from './motos-usadas/motos-usadas.component';
-
 import { PickListModule } from 'primeng/picklist';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { VentaRepuestosComponent } from './venta-repuestos/venta-repuestos.component';
 import { VentaMotosComponent } from './venta-motos/venta-motos.component';
+import { DropdownModule } from 'primeng/dropdown';
 
 
 
@@ -69,7 +69,8 @@ import { VentaMotosComponent } from './venta-motos/venta-motos.component';
     ReactiveFormsModule,
     TooltipModule,
     PickListModule,
-    DragDropModule 
+    DragDropModule,
+    DropdownModule 
   ]
 })
 export class AdminModule { }

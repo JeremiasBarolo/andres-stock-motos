@@ -54,6 +54,28 @@ const createMovimientos = async (req, res) => {
   }
 };
 
+
+const createVentaMoto = async (req, res) => {
+
+  try {
+    const newMovimientos = await MovimientosService.createVentaMoto(req.body);
+
+    res.json(newMovimientos);
+  } catch (error) {
+    res.status(500).json({ error: 'Unable to create Movimientos.' });
+  }
+};
+
+const updateVentaMotos = async (req, res) => {
+
+  try {
+    const MovimientosUpdate = await MovimientosService.updateVentaMotos(req.params.Movimientos_id, req.body);
+    res.json(MovimientosUpdate);
+  } catch (err) {
+    res.status(500).json({ action: 'updateMovimientos', error: err.message });
+  }
+};
+
 const updateMovimientos = async (req, res) => {
 
   try {
@@ -94,5 +116,7 @@ module.exports = {
   deleteMovimientos, 
   listAllVentas,
   updateVentaRepuestos,
-  listAllMotosMovimientos
+  listAllMotosMovimientos,
+  createVentaMoto,
+  updateVentaMotos
 };

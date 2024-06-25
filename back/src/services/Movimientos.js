@@ -22,7 +22,13 @@
             return await MovimientosProvider.createMovimientos(MovimientosData);
         };
 
+        const createVentaMoto = async (MovimientosData) => {
+            return await MovimientosProvider.createVentaMoto(MovimientosData);
+        };
 
+        const updateVentaMotos = async (Movimientos_id, updateMovimientos) => {
+            return await MovimientosProvider.updateVentaMotos(Movimientos_id, updateMovimientos);
+        };
         const updateMovimientos = async (Movimientos_id, updateMovimientos) => {
             return await MovimientosProvider.updateMovimientos(Movimientos_id, updateMovimientos);
         };
@@ -44,6 +50,8 @@
         deleteMovimientos, 
         listAllVentas,
         updateVentaRepuestos,
-        listAllMotosMovimientos
+        listAllMotosMovimientos,
+        createVentaMoto,
+        updateVentaMotos
         };
 

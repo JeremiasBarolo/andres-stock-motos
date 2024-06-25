@@ -7,9 +7,14 @@
     router.get('/ventas', MovimientosController.listAllVentas);
     router.get('/ventas/motos', MovimientosController.listAllMotosMovimientos);
     router.get('/:Movimientos_id', MovimientosController.listOneMovimientos);
+
     router.post('/', MovimientosController.createMovimientos);
+    router.post('/venta/motos', MovimientosController.createVentaMoto);
+
     router.put('/:Movimientos_id', MovimientosController.updateMovimientos);
     router.put('/repuestos/:Movimientos_id', MovimientosController.updateVentaRepuestos);
+    router.put('/venta/motos/:Movimientos_id', MovimientosController.updateVentaMotos);
+
     router.delete('/:Movimientos_id', MovimientosController.deleteMovimientos);
     
 

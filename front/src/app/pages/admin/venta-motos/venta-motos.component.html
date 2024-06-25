@@ -2,37 +2,107 @@
     <h3>Ventas de Motos</h3>
     <p-button icon="pi pi-plus" label="Agregar Venta" [text]="true" (click)="openCrearVentaDialog()" styleClass="ml-auto"></p-button>
 </div>
-  
-  <app-tablang
-      [data]="products"
-      [columns]="columns"
-      (editarClick)="editarItem($event)" 
-      (eliminarClick)="eliminarItem($event)"
-      (modalOpenClick)="modalOpen($event)"
-  ></app-tablang>
+
+<app-tablang
+    [data]="products"
+    [columns]="columns"
+    (editarClick)="editarItem($event)" 
+    (eliminarClick)="eliminarItem($event)"
+    (modalOpenClick)="modalOpen($event)"
+></app-tablang>
 
 
- <!-- <============================================ CREAR ==================================================> -->
- <p-dialog header="Crear Venta" [modal]="true" [(visible)]="crearVisible" [style]="{ width: '50rem' }">
+<!-- <================================ CREATE =======================================> -->
+<p-dialog header="Crear Venta" [modal]="true" [(visible)]="crearVisible" [style]="{ width: '50rem' }">
     <form [formGroup]="form" (ngSubmit)="onSubmit()">
-      <div class="flex align-items-center gap-3 mb-3">
-        <label for="usuarioId" class="font-semibold w-6rem"><strong>Recepcionista</strong></label>
-        <select id="usuarioId" class="flex-auto" formControlName="usuarioId">
-          <option *ngFor="let persona of usuarios" [value]="persona.id">{{ persona.name }} {{ persona.lastname }}</option>
-        </select>
-      </div>
-  
-      <div class="flex align-items-center gap-3 mb-3">
-        <label for="personaId" class="font-semibold w-6rem"><strong>Cliente</strong></label>
-        <select id="personaId" class="flex-auto" formControlName="personaId">
-          <option *ngFor="let persona of clientes" [value]="persona.id">{{ persona.nombre }} {{ persona.apellido }}</option>
-        </select>
-      </div>
-  
-  
-      <div class="flex justify-content-end gap-2 mt-3">
-        <p-button class="mr-1" label="Siguiente" icon="pi pi-arrow-right" [text]="true" severity="success" type="submit"></p-button>
-        <p-button label="Cancelar" icon="pi pi-times" [text]="true" severity="danger" (click)="crearVisible = false"></p-button>
-      </div>
+        <div class="flex align-items-center gap-3 mb-3">
+            <label for="usuarioId" class="font-semibold w-6rem"><strong>Recepcionista</strong></label>
+            <br>
+            <select id="usuarioId" class="flex-auto" formControlName="usuarioId">
+                <option *ngFor="let persona of usuarios" [value]="persona.id">{{ persona.user }} </option>
+            </select>
+        </div>
+        
+        <div class="flex align-items-center gap-3 mb-3">
+            <label for="personaId" class="font-semibold w-6rem"><strong>Cliente</strong></label>
+            <br>
+            <select id="personaId" class="flex-auto" formControlName="personaId">
+                <option *ngFor="let persona of clientes" [value]="persona.id">{{ persona.nombre }} {{ persona.apellido }}</option>
+            </select>
+        </div>
+        
+        <div class="flex align-items-center gap-3 mb-3">
+            <label for="motos" class="font-semibold w-6rem"><strong>Motos</strong></label>
+            <div class="flex align-items-center gap-3 mb-3">
+                <p-dropdown 
+                id="motoId" 
+                [options]="motosDisponibles" 
+                formControlName="motoId" 
+                optionValue="motoId"
+                optionLabel="nombreMoto" 
+                placeholder="Selecciona una moto"
+                [style]="{ width: '100%' }">
+              </p-dropdown>
+            </div>
+        </div>
+        
+        <div class="flex justify-content-end gap-2 mt-3">
+            <p-button class="mr-1" label="Siguiente" icon="pi pi-arrow-right" [text]="true" severity="success" type="submit"></p-button>
+            <p-button label="Cancelar" icon="pi pi-times" [text]="true" severity="danger" (click)="crearVisible = false"></p-button>
+        </div>
     </form>
-  </p-dialog>
+</p-dialog>
+
+
+<!-- <================================ UPDATE =======================================> -->
+<p-dialog header="Editar Venta" [modal]="true" [(visible)]="editVisible" [style]="{ width: '50rem' }">
+    <form [formGroup]="form" (ngSubmit)="onSubmit()">
+        <div class="flex align-items-center gap-3 mb-3">
+            <label for="usuarioId" class="font-semibold w-6rem"><strong>Recepcionista</strong></label>
+            <br>
+            <select id="usuarioId" class="flex-auto" formControlName="usuarioId">
+                <option *ngFor="let persona of usuarios" [value]="persona.id">{{ persona.user }} </option>
+            </select>
+        </div>
+        
+        <div class="flex align-items-center gap-3 mb-3">
+            <label for="personaId" class="font-semibold w-6rem"><strong>Cliente</strong></label>
+            <br>
+            <select id="personaId" class="flex-auto" formControlName="personaId">
+                <option *ngFor="let persona of clientes" [value]="persona.id"> {{ persona.nombre }} {{ persona.apellido }}  </option>
+            </select>
+        </div>
+        
+        <div class="flex align-items-center gap-3 mb-3">
+            <label for="motos" class="font-semibold w-6rem"><strong>Motos</strong></label>
+            <div class="flex align-items-center gap-3 mb-3">
+                <p-dropdown 
+                id="motoId" 
+                [options]="motosDisponibles" 
+                formControlName="motoId" 
+                optionValue="motoId"
+                optionLabel="nombreMoto" 
+                placeholder="Selecciona una moto"
+                [style]="{ width: '100%' }">
+              </p-dropdown>
+            </div>
+        </div>
+        
+        <div class="flex justify-content-end gap-2 mt-3">
+            <p-button class="mr-1" label="Siguiente" icon="pi pi-arrow-right" [text]="true" severity="success" type="submit"></p-button>
+            <p-button label="Cancelar" icon="pi pi-times" [text]="true" severity="danger" (click)="editVisible = false"></p-button>
+        </div>
+    </form>
+</p-dialog>
+
+
+ <!-- <============================================ ELIMINAR ==================================================> -->
+ <p-dialog header="Eliminar Venta" [modal]="true" [(visible)]="editEliminar" [style]="{ width: '25rem' }">
+    <span class="p-text-secondary block mb-5">Desea usted eliminar este objeto?</span>
+    <br>
+    <br>
+    <div class="flex justify-content-end gap-2">
+        <p-button class="mr-1" icon="pi pi-check"  [text]="true" severity="success" (click)="Eliminar()" />
+        <p-button icon="pi pi-times"  [text]="true" severity="danger" (click)="editEliminar = false" />
+    </div>
+</p-dialog>
