@@ -34,6 +34,7 @@ import { HistorialClientesComponent } from './historial-clientes/historial-clien
 
 
 
+
 @NgModule({
   declarations: [
     AdminComponent,
@@ -53,10 +54,9 @@ import { HistorialClientesComponent } from './historial-clientes/historial-clien
     ProveedoresComponent,
     MotosNuevasComponent,
     MotosUsadasComponent,
-
     VentaRepuestosComponent,
-      VentaMotosComponent,
-      HistorialClientesComponent
+    VentaMotosComponent,
+    HistorialClientesComponent
 
    
   ],
@@ -72,7 +72,8 @@ import { HistorialClientesComponent } from './historial-clientes/historial-clien
     TooltipModule,
     PickListModule,
     DragDropModule,
-    DropdownModule 
+    DropdownModule,
+  
   ]
 })
 export class AdminModule { }

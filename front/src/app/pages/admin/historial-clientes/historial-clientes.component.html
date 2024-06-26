@@ -1,11 +1,30 @@
 <div class="header-container">
-    <h3>Historial del cliente</h3>
+    <h3>Historial de Clientes</h3>
+    
+    <p-dropdown 
+      [options]="clientes" 
+      formControlName="selectedClient" 
+      optionLabel="nombre" 
+      placeholder="Seleccionar Cliente"
+      (onChange)="onClientChange($event)">
+    </p-dropdown>
 </div>
 
 <app-tablang
     [data]="products"
     [columns]="columns"
-    (editarClick)="editarItem($event)" 
-    (eliminarClick)="eliminarItem($event)"
+    [accionesVisible]="false"
 ></app-tablang>
 
+
+
+
+  
+<p-dialog header="Historial del Cliente" [(visible)]="showTable" [modal]="true" [style]="{width: '75vw'}">
+    <app-tablang
+      [data]="movements"
+      [columns]="columns"
+      [accionesVisible]="false"
+    ></app-tablang>
+</p-dialog>
+  

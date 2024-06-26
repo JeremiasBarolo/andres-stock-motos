@@ -158,9 +158,4 @@ export class VentaMotosComponent implements OnDestroy, OnInit {
     this.detailModal = true;
     this.cardData = data;
   }
-
-  ngOnDestroy(): void {
-    this.destroy$.next();
-    this.destroy$.complete();
-  }
 }

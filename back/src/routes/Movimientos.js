@@ -5,6 +5,7 @@
 
     router.get('/', MovimientosController.listAllMovimientos);
     router.get('/ventas', MovimientosController.listAllVentas);
+    router.get('/historiales', MovimientosController.listHistorial);
     router.get('/ventas/motos', MovimientosController.listAllMotosMovimientos);
     router.get('/:Movimientos_id', MovimientosController.listOneMovimientos);
 

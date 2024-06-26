@@ -154,9 +154,50 @@ class Formatter {
         }))
       }
     }
-   
+
+
+    Hostorial(data) {
+     
+
+      return data.map(venta => 
+        ({
+        id: venta.id,
+        createdAt: venta.createdAt,
+        updatedAt: venta.updatedAt,
+        cliente: `${venta.Persona.nombre} ${venta.Persona.apellido}`,
+        usuario: venta.Usuario.user,
+        usuarioId: venta.Usuario.id,
+        personaId: venta.Persona.id,
+        TipoMovimiento: venta.TipoMovimiento.descripcion,
+        tipoMovimientoId: venta.TipoMovimiento.id,
+        subtotal: venta.subtotal,
+        FechaRealizacion: this.formatDateAndTime(venta.createdAt).formattedDate,
+        hora: this.formatDateAndTime(venta.createdAt).formattedTime,
+      }))
+    }
+
+    formatDateAndTime(dateTimeString) {
+       
+      const date = new Date(dateTimeString);
     
-  
+    
+      const day = String(date.getDate()).padStart(2, '0');
+      const month = String(date.getMonth() + 1).padStart(2, '0'); 
+      const year = String(date.getFullYear()).slice(-2); 
+    
+      
+      const formattedDate = `${day}/${month}/${year}`;
+    
+      
+      const hours = String(date.getHours()).padStart(2, '0');
+      const minutes = String(date.getMinutes()).padStart(2, '0');
+      const seconds = String(date.getSeconds()).padStart(2, '0');
+    
+      
+      const formattedTime = `${hours}:${minutes}:${seconds}`;
+    
+      return { formattedDate, formattedTime };
+    }
   }
   
   module.exports = Formatter;

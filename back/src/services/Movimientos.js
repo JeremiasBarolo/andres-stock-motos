@@ -2,6 +2,10 @@
 
         const { MovimientosProvider } = require('../providers');
 
+        const listHistorial = async () => {
+            return await MovimientosProvider.listHistorial();
+        };
+
         const listAllMovimientos = async () => {
             return await MovimientosProvider.listAllMovimientos();
         };
@@ -52,6 +56,7 @@
         updateVentaRepuestos,
         listAllMotosMovimientos,
         createVentaMoto,
-        updateVentaMotos
+        updateVentaMotos,
+        listHistorial    
         };
 

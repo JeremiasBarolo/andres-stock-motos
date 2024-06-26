@@ -23,6 +23,7 @@ import { MotosUsadasComponent } from './motos-usadas/motos-usadas.component';
 
 import { VentaRepuestosComponent } from './venta-repuestos/venta-repuestos.component';
 import { VentaMotosComponent } from './venta-motos/venta-motos.component';
+import { HistorialClientesComponent } from './historial-clientes/historial-clientes.component';
 
 
 
@@ -51,6 +52,7 @@ const routes: Routes = [
       { path: 'proveedor', component: ProveedoresComponent },
       { path: 'venta-respuestos', component: VentaRepuestosComponent },
       { path: 'venta-motos', component: VentaMotosComponent },
+      { path: 'historial-clientes', component: HistorialClientesComponent },
     ]
   },
   

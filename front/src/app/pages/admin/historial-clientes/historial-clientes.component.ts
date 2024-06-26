@@ -1,10 +1,9 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { TipoArticuloService } from '../../../services/tipo-articulo.service';
-import { DialogService } from 'primeng/dynamicdialog';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { FormBuilder, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Subject, takeUntil } from 'rxjs';
-import { MarcaService } from '../../../services/marca.service';
+
+import { MovimientosService } from '../../../services/movimientos.service';
 
 @Component({
   selector: 'app-historial-clientes',
@@ -15,26 +14,21 @@ export class HistorialClientesComponent implements OnInit, OnDestroy {
 
   products: any[] = [];
   columns: any[] = [];
-  form: FormGroup;
-  tipo: any;
-  cardData: any;
-  id: number = 0
+  showTable = false;
+  showDropdownDialog = false;
+  movements: any[] = [];
+  clientes: any[] = [];
+  selectedClient: any;
 
   private destroy$ = new Subject<void>();
 
-
-
-
   constructor( 
-    private marcasService: MarcaService,
+    private movimientosService: MovimientosService,
     private fb: FormBuilder,
     private router: Router,
     private aRoute: ActivatedRoute,
   ){
 
-    this.form = this.fb.group({
-      descripcion: ['', Validators.required],
-    });
   }
   
   ngOnDestroy(): void {
@@ -44,29 +38,60 @@ export class HistorialClientesComponent implements OnInit, OnDestroy {
   
   ngOnInit(): void {
 
-    this.marcasService.getAll().pipe(takeUntil(this.destroy$)).subscribe((data: any[]) => {
+    this.movimientosService.getAllHistorial().pipe(takeUntil(this.destroy$)).subscribe((data: any[]) => {
       this.columns = [
         { field: 'id', header: 'ID' },
-        { field: 'descripcion', header: 'Descripcion' },
+        { field: 'cliente', header: 'Cliente' },
+        { field: 'TipoMovimiento', header: 'Tipo Movimiento' },
+        { field: 'subtotal', header: 'Monto Final' },
+        { field: 'FechaRealizacion', header: 'Fecha Realizacion' },
+        { field: 'hora', header: 'Hora' },
+        { field: 'usuario', header: 'Recepcionista' },
       ];
 
       data.map((data)=>{
         this.products.push({
           id: data.id,
-          descripcion: data.descripcion
+          cliente: data.cliente,
+          TipoMovimiento: data.TipoMovimiento,
+          subtotal: data.subtotal,
+          FechaRealizacion: data.FechaRealizacion,
+          hora: data.hora,
+          usuario: data.usuario,
+          tipoMovimientoId: data.tipoMovimientoId,
+          usuarioId: data.usuarioId,
+          personaId: data.personaId,
+          createdAt: data.createdAt,
+          updatedAt: data.updatedAt
+        })
+
+        this.clientes.push({
+          id: data.personaId,
+          nombre: data.cliente
         })
       })
     })
 
    
   }
+ 
 
-  editarItem(data:any) {
-  }
-
-  eliminarItem(data:any) {
+  searchClientMovements() {
+    if (this.selectedClient) {
+      this.movements = this.products.filter(movement => movement.personaId === this.selectedClient.id);
+      this.showTable = true;
+    }
   }
   
+  showClientDropdown() {
+    this.showDropdownDialog = true;
+  }
+
+  onClientChange(event: any) {
+    this.selectedClient = event.value;
+    this.showDropdownDialog = false;
+    this.searchClientMovements();
+  }
  
 
   

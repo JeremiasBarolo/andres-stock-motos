@@ -7,8 +7,10 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
   styleUrl: './tablang.component.css'
 })
 export class TablangComponent {
+  acciones: boolean = true
   @Input() data: any[] = [];
   @Input() columns: any[] = [];
+  @Input() accionesVisible: boolean = true;
 
   @Output() editarClick: EventEmitter<any> = new EventEmitter();
   @Output() eliminarClick: EventEmitter<any> = new EventEmitter();
@@ -17,7 +19,9 @@ export class TablangComponent {
   constructor() { }
 
   ngOnInit(): void {
-    console.log(this.data);
+    if (this.accionesVisible === false) {
+     this.acciones = false
+    }
     
   }
 

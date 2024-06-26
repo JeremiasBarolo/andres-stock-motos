@@ -36,6 +36,21 @@ class MovimientosService {
     }
   }
 
+  async listHistorial() {
+    try {
+      const Ventas = await models.Movimientos.findAll({
+        include: [{ all: true }]
+      });
+      console.log('✅ Ventas were found');
+      let data = await format.Hostorial(Ventas);
+
+      return data
+    } catch (err) {
+      console.error('🛑 Error when fetching Ventas', err);
+      throw err;
+    }
+  }
+
   async listAllMotosMovimientos() {
     try {
       const Ventas = await models.Movimientos.findAll({
