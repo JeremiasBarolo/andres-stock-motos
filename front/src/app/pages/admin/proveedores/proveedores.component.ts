@@ -186,6 +186,11 @@ export class ProveedoresComponent {
       }
   }
 
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
+  }
+
   Eliminar(){
     this.personasService.delete(this.id).pipe(takeUntil(this.destroy$)).subscribe(() => {
       setTimeout(() => {

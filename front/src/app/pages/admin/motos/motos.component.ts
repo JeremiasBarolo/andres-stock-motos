@@ -108,6 +108,11 @@ export class MotosComponent {
    
   }
 
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
+  }
+
   editarItem(data:any) {
     this.editVisible = true
     this.id = data.id

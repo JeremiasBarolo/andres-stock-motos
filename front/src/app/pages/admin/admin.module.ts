@@ -29,6 +29,7 @@ import { DragDropModule } from '@angular/cdk/drag-drop';
 import { VentaRepuestosComponent } from './venta-repuestos/venta-repuestos.component';
 import { VentaMotosComponent } from './venta-motos/venta-motos.component';
 import { DropdownModule } from 'primeng/dropdown';
+import { HistorialClientesComponent } from './historial-clientes/historial-clientes.component';
 
 
 
@@ -54,7 +55,8 @@ import { DropdownModule } from 'primeng/dropdown';
     MotosUsadasComponent,
 
     VentaRepuestosComponent,
-      VentaMotosComponent
+      VentaMotosComponent,
+      HistorialClientesComponent
 
    
   ],

@@ -131,6 +131,11 @@ export class RolesComponent {
       }
   }
 
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
+  }
+
   Eliminar(){
     this.rolesService.delete(this.id).pipe(takeUntil(this.destroy$)).subscribe(() => {
       setTimeout(() => {

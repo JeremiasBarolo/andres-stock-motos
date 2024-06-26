@@ -90,6 +90,11 @@ export class StockComponent {
 
    
   }
+  
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
+  }
 
   editarItem(data:any) {
     this.editVisible = true

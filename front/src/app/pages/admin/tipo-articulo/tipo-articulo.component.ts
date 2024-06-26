@@ -117,7 +117,10 @@ export class TipoArticuloComponent implements OnInit{
     });
   }
 
-  
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
+  }
   
   
 

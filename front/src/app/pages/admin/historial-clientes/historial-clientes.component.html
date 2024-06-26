@@ -1,0 +1,11 @@
+<div class="header-container">
+    <h3>Historial del cliente</h3>
+</div>
+
+<app-tablang
+    [data]="products"
+    [columns]="columns"
+    (editarClick)="editarItem($event)" 
+    (eliminarClick)="eliminarItem($event)"
+></app-tablang>
+

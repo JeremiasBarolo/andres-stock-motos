@@ -161,4 +161,9 @@ export class UsuariosComponent {
     });
   }
 
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
+  }
+
 }
