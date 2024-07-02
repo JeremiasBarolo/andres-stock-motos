@@ -195,7 +195,36 @@ module.exports = {
   });
 
  
-// <=============================== Fin DatosServicios ===============================>   
+// <=============================== Fin DatosServicios ===============================>
+  
+  
+
+
+// <=============================== Pedidos Stock ===============================> 
+    await queryInterface.addColumn('PedidosStocks', 'pedidoId', {
+      type: Sequelize.INTEGER,
+      allowNull: true,
+      references: {
+        model: 'Pedidos',
+        key: 'id'
+      },
+      onUpdate: 'CASCADE',
+      onDelete: 'CASCADE'
+    });
+
+    await queryInterface.addColumn('PedidosStocks', 'stockId', {
+      type: Sequelize.INTEGER,
+      allowNull: true,
+      references: {
+        model: 'Stocks',
+        key: 'id'
+      },
+      onUpdate: 'CASCADE',
+      onDelete: 'CASCADE'
+    });
+  
+   
+// <=============================== Fin Pedidos Stock ===============================>   
 
 
 
@@ -237,6 +266,11 @@ module.exports = {
 
     // <=============================== DatosServicios ===============================> 
     await queryInterface.removeColumn('DatosServicios', 'recepcionistaId');
-    // <=============================== Fin DatosServicios ===============================>   
+    // <=============================== Fin DatosServicios ===============================>
+      
+    // <=============================== Motos ===============================> 
+    await queryInterface.removeColumn('PedidosStocks', 'pedidoId');
+      await queryInterface.removeColumn('PedidosStocks', 'stockId');
+    // <=============================== Fin Motos ===============================>
   }
 };

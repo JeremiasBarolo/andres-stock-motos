@@ -23,12 +23,19 @@ module.exports = (sequelize, DataTypes) => {
           foreignKey: 'stockId',
         
       });
+
+      Stock.hasMany(models.PedidosStock, {
+        foreignKey: 'stockId',
+        onDelete: 'CASCADE',
+        onUpdate: 'CASCADE'
+      });
     }
   }
   Stock.init({
     nombre: DataTypes.STRING,
     descripcion: DataTypes.STRING,
-    costo: DataTypes.INTEGER
+    costo: DataTypes.INTEGER,
+    cantidad: DataTypes.INTEGER
   }, {
     sequelize,
     modelName: 'Stock',

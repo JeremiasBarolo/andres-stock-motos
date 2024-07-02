@@ -44,6 +44,7 @@ export class StockComponent {
       tipoArticuloId: ['', Validators.required],
       personaId: ['', Validators.required],
       costo: ['', Validators.required],
+      cantidad: ['', Validators.required],
     });
   }
   
@@ -57,6 +58,7 @@ export class StockComponent {
         { field: 'tipoArticulo', header: 'Tipo Articulo' },
         { field: 'proveedor', header: 'Proveedor' },
         { field: 'costo', header: 'Costo' },
+        { field: 'cantidad', header: 'Cantidad' },
         // { field: 'id_codigo_barra', header: 'Codigo Barra' },
         
 
@@ -73,6 +75,8 @@ export class StockComponent {
           costo: data.costo,
           proveedorId: data.proveedorId,
           tipoArticuloId: data.tipoArticuloId,
+          cantidad: data.cantidad,
+        
           
         })
       })
@@ -105,6 +109,7 @@ export class StockComponent {
       tipoArticuloId: data.tipoArticuloId,
       personaId: data.proveedorId,
       costo: data.costo,
+      cantidad: data.cantidad,
     })
     
     
@@ -125,6 +130,7 @@ export class StockComponent {
       tipoId: this.form.value.tipoArticuloId,
       personaId: this.form.value.personaId,
       costo: this.form.value.costo,
+      cantidad: this.form.value.cantidad,
     }
 
       if(this.id > 0){
