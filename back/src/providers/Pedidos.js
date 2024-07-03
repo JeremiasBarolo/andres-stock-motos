@@ -1,0 +1,30 @@
+const PedidosService = require('../classes/pedidos');
+const pedidosService = new PedidosService();
+
+const listAllPedidos = async () => {
+  return await pedidosService.listAllPedidos();
+};
+
+const listOnePedidos = async (Pedidos_id) => {
+  return await pedidosService.listOnePedidos(Pedidos_id);
+};
+
+const createPedidos = async (PedidosData) => {
+  return await pedidosService.createPedidos(PedidosData);
+};
+
+const updatePedidos = async (Pedidos_id, dataUpdated) => {
+  return await pedidosService.updatePedidos(Pedidos_id, dataUpdated);
+};
+
+const deletePedidos = async (Pedidos_id) => {
+  return await pedidosService.deletePedidos(Pedidos_id);
+};
+
+module.exports = {
+  listAllPedidos,
+  listOnePedidos,
+  createPedidos,
+  updatePedidos,
+  deletePedidos
+};

@@ -30,6 +30,7 @@ import { VentaRepuestosComponent } from './venta-repuestos/venta-repuestos.compo
 import { VentaMotosComponent } from './venta-motos/venta-motos.component';
 import { DropdownModule } from 'primeng/dropdown';
 import { HistorialClientesComponent } from './historial-clientes/historial-clientes.component';
+import { PedidosStockComponent } from './pedidos-stock/pedidos-stock.component';
 
 
 
@@ -56,7 +57,8 @@ import { HistorialClientesComponent } from './historial-clientes/historial-clien
     MotosUsadasComponent,
     VentaRepuestosComponent,
     VentaMotosComponent,
-    HistorialClientesComponent
+    HistorialClientesComponent,
+    PedidosStockComponent
 
    
   ],

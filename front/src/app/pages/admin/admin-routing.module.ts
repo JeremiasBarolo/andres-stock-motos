@@ -24,6 +24,7 @@ import { MotosUsadasComponent } from './motos-usadas/motos-usadas.component';
 import { VentaRepuestosComponent } from './venta-repuestos/venta-repuestos.component';
 import { VentaMotosComponent } from './venta-motos/venta-motos.component';
 import { HistorialClientesComponent } from './historial-clientes/historial-clientes.component';
+import { PedidosStockComponent } from './pedidos-stock/pedidos-stock.component';
 
 
 
@@ -53,6 +54,7 @@ const routes: Routes = [
       { path: 'venta-respuestos', component: VentaRepuestosComponent },
       { path: 'venta-motos', component: VentaMotosComponent },
       { path: 'historial-clientes', component: HistorialClientesComponent },
+      { path: 'pedidos-stock', component: PedidosStockComponent },
     ]
   },
   
