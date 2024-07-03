@@ -30,6 +30,7 @@ export class PedidosStockComponent {
   tipoArticulos: any[] = [];
   seleccionados: any[] = [];
   Articulos: any[] = [];
+  repuestos: any[] = [];
   
 
   private destroy$ = new Subject<void>();
@@ -93,7 +94,7 @@ export class PedidosStockComponent {
       })
 
       this.Articulos = dataReal;
-
+      this.repuestos = dataReal;
     })
 
    
@@ -116,21 +117,19 @@ export class PedidosStockComponent {
     
     this.productos.clear();
   
-    // aca deberiamos de crear el solo traer los de este edit
-    this.stockService.getAll().subscribe(repuestos => {
+    
+    this.pedidosService.getStockPedido(this.id).subscribe(repuestos => {
       
-      this.Articulos = repuestos;
+      console.log('respuests',repuestos);
 
-      
-      data.stock.forEach((item: any) => {
+      repuestos.forEach((item: any) => {
         this.agregarProducto({
-          id: item.id,
+          id: item.stockId,
           nombre_articulo: item.nombre,
           cantidad: item.cantidad
         });
 
-        
-        this.Articulos = this.Articulos.filter(repuesto => repuesto.id !== item.id);
+        this.Articulos = this.Articulos.filter(repuesto => repuesto.id !== item.stockId);
       });
     });
     
@@ -141,7 +140,7 @@ export class PedidosStockComponent {
     this.id = data.id
   }
   
-  onSubmit(){
+  onSubmit(edit?:any){
 
     this.tipo = {
       descripcion: this.form.value.descripcion,
@@ -149,19 +148,26 @@ export class PedidosStockComponent {
     }
 
       if(this.id > 0){
-            
-            try {
-              this.pedidosService.update(this.id, this.tipo).pipe(takeUntil(this.destroy$)).subscribe(() => {
-                setTimeout(() => {
-                  window.location.reload();
-                }, 600)
-              });
+        if(edit){
+          this.pedidosService.SumarCantidades(this.id, {estado: 'Finalizado'}).pipe(takeUntil(this.destroy$)).subscribe(() => {
+            setTimeout(() => {
+              window.location.reload();
+            }, 600)
+          });
+        }else{
+          try {
+            this.pedidosService.updatePedidoStock(this.id, this.tipo).pipe(takeUntil(this.destroy$)).subscribe(() => {
+              setTimeout(() => {
+                window.location.reload();
+              }, 600)
+            });
 
-            } catch (error) {
-              console.log(error);
-            }
+          } catch (error) {
+            console.log(error);
+          }
+        }
+          
       }else{
-        // Es crear
         try {
           this.pedidosService.create(this.tipo ).pipe(takeUntil(this.destroy$)).subscribe(() => {
             setTimeout(() => {
@@ -190,6 +196,8 @@ export class PedidosStockComponent {
   }
 
   agregarProducto(producto: any) {
+    
+    
     const productoForm = this.fb.group({
       id: [producto.id, Validators.required],
       nombre_articulo: [producto.nombre_articulo, Validators.required],
@@ -239,6 +247,26 @@ export class PedidosStockComponent {
 
     modalOpen(data:any){
       this.detailModal = true
+      this.id = data.id
       this.cardData = data
+    }
+
+    modalClose(){
+      this.detailModal = false
+      this.id = 0
+      this.cardData = []
+    }
+
+    modalCreateClose(total?:any) {
+      this.editVisible = false;
+      this.crearVisible = false;
+      if(total){
+        this.productos.clear();
+        this.Articulos = [...this.repuestos]; 
+        this.form.reset({
+          descripcion: '',
+        });
+      }
+      
     }
 }

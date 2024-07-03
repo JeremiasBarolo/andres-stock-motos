@@ -2,6 +2,8 @@ const { where } = require('sequelize');
 var models = require('../models');
 const Formatter = require('./formatter');
 const format = new Formatter();
+const stockService = require('./stock');
+const StockService = new stockService();
 
 class PedidosService {
   async listAllPedidos() {
@@ -47,6 +49,34 @@ class PedidosService {
     }
   }
 
+  async listStockOnePedidos(Pedidos_id) {
+    try {
+      const onePedidos = await models.PedidosStock.findAll(
+        {
+          where: { pedidoId: Pedidos_id },
+          include: [
+            {
+              model: models.Stock,
+              include: [
+                {
+                  model: models.Personas,
+
+                }
+              ]
+            }
+          ]
+        }
+      );
+      if (!onePedidos) {
+        return null;
+      }
+      return format.StockDePedidos(onePedidos);
+    } catch (err) {
+      console.error('🛑 Error when fetching a single Usuario', err);
+      throw err;
+    }
+  }
+
   async createPedidos(DataPedidos) {
     try {
       const newPedidos = await models.Pedidos.create({
@@ -84,6 +114,105 @@ class PedidosService {
     }
   }
 
+  async SumarCantidades(Pedidos_id, dataUpdated) {
+    try {
+      const oldPedidos = await models.Pedidos.findByPk(Pedidos_id, {
+        include: [{ all: true }]
+      });
+      if (!oldPedidos) {
+        return null;
+      }
+      
+      const productos = oldPedidos.PedidosStocks;
+      for (const item of productos) {
+        let cantidad = parseInt(item.cantidad, 10)
+        let stock = await StockService.listOneStock(item.stockId)
+        await stock.update({ cantidad: stock.cantidad + cantidad })
+      }
+
+      let newPedidos = await oldPedidos.update(dataUpdated);
+      return newPedidos;
+    } catch (err) {
+      console.error('🛑 Error when updating Pedidos', err);
+      throw err;
+    }
+  }
+
+  async updatePedidosStock(Pedidos_id, dataUpdated) {
+    try {
+      const onePedido = await models.Pedidos.findByPk(Pedidos_id, {
+        include: [{ all: true }]
+      });
+
+      if (!onePedido) {
+        return null;
+      }
+
+      
+      let oldStock = onePedido.PedidosStocks;
+      let newStock = dataUpdated.productos;
+      let toAdd = [];
+      let toUpdate = [];
+      let toDelete = [];
+
+      
+      let oldStockMap = new Map();
+      oldStock.forEach(item => {
+        oldStockMap.set(item.stockId, item.cantidad);
+      });
+
+      
+      
+
+      
+      newStock.forEach(newItem => {
+        if (oldStockMap.has(newItem.id)) {
+          if (oldStockMap.get(newItem.id) !== newItem.cantidad) {
+            toUpdate.push(newItem);
+          }
+          oldStockMap.delete(newItem.id); 
+        } else {
+          toAdd.push(newItem);
+        }
+      });
+
+      
+      toDelete = Array.from(oldStockMap.keys());
+
+      
+      for (let item of toUpdate) {
+        await models.PedidosStock.update(
+          { cantidad: item.cantidad },
+          { where: { stockId: item.id, pedidoId: Pedidos_id } }
+        );
+      }
+
+      
+      for (let id of toDelete) {
+        await models.PedidosStock.destroy({
+          where: { stockId: id, pedidoId: Pedidos_id }
+        });
+      }
+
+      
+      for (let item of toAdd) {
+        await models.PedidosStock.create({
+          stockId: item.id,
+          pedidoId: Pedidos_id,
+          cantidad: item.cantidad
+        });
+      }
+
+      // let subtotal = await this.getTotalPricePedidos(dataUpdated.productos)
+
+      let newVentas = await onePedido.update(dataUpdated);
+      return newVentas;
+    } catch (err) {
+      console.error('🛑 Error when updating Pedidos', err);
+      throw err;
+    }
+  }
+
   async deletePedidos(Pedidos_id) {
     try {
       const deletedPedidos = await models.Pedidos.findByPk(Pedidos_id);
@@ -94,6 +223,30 @@ class PedidosService {
       return deletedPedidos;
     } catch (err) {
       console.error('🛑 Error when deleting Pedidos', err);
+      throw err;
+    }
+  }
+
+  async getTotalPricePedidos(productos) {
+    try {
+      let subtotal = 0;
+  
+     
+      for (const producto of productos) {
+       
+        const articuloEnStock = await StockService.listOneStock(producto.id); 
+  
+        if (articuloEnStock) {
+          const costoTotal = articuloEnStock.costo * producto.cantidad;
+          subtotal += costoTotal;
+        } else {
+          throw new Error(`No se encontró el artículo con id ${producto.id} en el stock.`);
+        }
+      }
+  
+      return subtotal;
+    } catch (err) {
+      console.error('🛑 Error al calcular el subtotal de la lista de productos', err);
       throw err;
     }
   }

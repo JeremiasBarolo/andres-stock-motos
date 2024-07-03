@@ -24,6 +24,18 @@ const listOnePedidos = async (req, res) => {
 
 };
 
+const listStockOnePedidos = async (req, res) => {
+  try {
+    const id = req.params.Pedidos_id;
+    const Pedidos = await PedidosService.listStockOnePedidos(id);
+    res.json(Pedidos);
+
+  } catch (err) {
+    res.status(500).json({ action: "listOnePedidos", error: err.message });
+  }
+
+};
+
 const createPedidos = async (req, res) => {
 
   try {
@@ -45,6 +57,26 @@ const updatePedidos = async (req, res) => {
   }
 };
 
+const SumarCantidades = async (req, res) => {
+
+  try {
+    const PedidosUpdate = await PedidosService.SumarCantidades(req.params.Pedidos_id, req.body);
+    res.json(PedidosUpdate);
+  } catch (err) {
+    res.status(500).json({ action: 'SumarCantidades', error: err.message });
+  }
+};
+
+const updatePedidosStock = async (req, res) => {
+
+  try {
+    const PedidosUpdate = await PedidosService.updatePedidosStock(req.params.Pedidos_id, req.body);
+    res.json(PedidosUpdate);
+  } catch (err) {
+    res.status(500).json({ action: 'updatePedidos', error: err.message });
+  }
+};
+
 const deletePedidos = async (req, res) => {
   const id = req.params.Pedidos_id;
   try {
@@ -58,5 +90,12 @@ const deletePedidos = async (req, res) => {
 
 
 module.exports = {
-  listAllPedidos, listOnePedidos, createPedidos, updatePedidos, deletePedidos, 
+  listAllPedidos, 
+  listOnePedidos, 
+  createPedidos, 
+  updatePedidos, 
+  deletePedidos, 
+  listStockOnePedidos,
+  updatePedidosStock,
+  SumarCantidades,
 };

@@ -10,6 +10,10 @@
             return await PedidosProvider.listOnePedidos(Pedidos_id);
         };
 
+        const listStockOnePedidos = async (Pedidos_id) => {
+            return await PedidosProvider.listStockOnePedidos(Pedidos_id);
+        };
+
         const createPedidos = async (PedidosData) => {
             return await PedidosProvider.createPedidos(PedidosData);
         };
@@ -19,12 +23,27 @@
             return await PedidosProvider.updatePedidos(Pedidos_id, updatePedidos);
         };
 
+        const SumarCantidades = async (Pedidos_id, updatePedidos) => {
+            return await PedidosProvider.SumarCantidades(Pedidos_id, updatePedidos);
+        };
+
+        const updatePedidosStock = async (Pedidos_id, updatePedidos) => {
+            return await PedidosProvider.updatePedidosStock(Pedidos_id, updatePedidos);
+        };
+
         const deletePedidos = async (Pedidos_id) => {
             return await PedidosProvider.deletePedidos(Pedidos_id);
         };
 
 
         module.exports = {
-        listAllPedidos, listOnePedidos, createPedidos, updatePedidos, deletePedidos, 
+        listAllPedidos, 
+        listOnePedidos, 
+        createPedidos, 
+        updatePedidos, 
+        deletePedidos, 
+        listStockOnePedidos,
+        updatePedidosStock,
+        SumarCantidades
         };
 

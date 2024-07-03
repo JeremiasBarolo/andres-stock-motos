@@ -24,6 +24,12 @@ export class PedidosService {
     
   }
 
+   // get by id
+   getStockPedido(id: number): Observable<any> {
+    return this.http.get<any>(`${this.apiUrl}/stock/${id}`)
+    
+  }
+
   // create
   create(Entity: any): Observable<any> {
     return this.http.post<any>(`${this.apiUrl}`, Entity)
@@ -31,8 +37,18 @@ export class PedidosService {
   }
 
   // update
-  update(id: number, Entity: FormData): Observable<any> {
+  update(id: number, Entity: any): Observable<any> {
     return this.http.put<any>(`${this.apiUrl}/${id}`, Entity)
+
+  }
+
+  SumarCantidades(id: number, Entity: any): Observable<any> {
+    return this.http.put<any>(`${this.apiUrl}/SumarCantidades/${id}`, Entity)
+
+  }
+
+  updatePedidoStock(id: number, Entity: any): Observable<any> {
+    return this.http.put<any>(`${this.apiUrl}/stock/${id}`, Entity)
 
   }
 

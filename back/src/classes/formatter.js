@@ -12,6 +12,20 @@ class Formatter {
       }))
     }
 
+    StockDePedidos(data) {
+      return data.map(pedido => ({
+        id: pedido.id,
+        cantidad: pedido.cantidad,
+        nombre: pedido.Stock.nombre,
+        pedidoId: pedido.pedidoId,
+        stockId: pedido.Stock.id,
+        proveedor: `${pedido.Stock.Persona.nombre} ${pedido.Stock.Persona.apellido}`,
+        costo: pedido.Stock.costo,
+        total: pedido.cantidad * pedido.Stock.costo
+       
+      }))
+    }
+
     Pedidos(data) {
       return data.map(pedido => ({
         id: pedido.id,

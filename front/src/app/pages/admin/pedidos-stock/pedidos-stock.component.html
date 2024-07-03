@@ -12,7 +12,7 @@
 ></app-tablang>
 
 <!-- <============================================ CREAR ==================================================> -->
-<p-dialog header="Crear Venta" [modal]="true" [(visible)]="crearVisible" [style]="{ width: '50rem' }">
+<p-dialog header="Crear Venta" [modal]="true" [(visible)]="crearVisible" [style]="{ width: '50rem' }" (onHide)="modalCreateClose()">
     <form [formGroup]="form" (ngSubmit)="openCantidadDialog()">
         <div class="flex align-items-center gap-3 mb-3">
             <label for="descripcion" class="font-semibold w-6rem"><strong>Nombre del Pedido</strong></label>
@@ -45,16 +45,16 @@
   </p-dialog>
 
 <!-- <============================================ ESPECIFICAR CANTIDAD ==================================================> -->
-  <p-dialog header="Especificar Cantidad" [modal]="true" [(visible)]="cantidadVisible" [style]="{ width: '50rem' }">
+  <p-dialog header="Especificar Cantidad" [modal]="true" [(visible)]="cantidadVisible" [style]="{ width: '50rem' }" (onHide)="modalCreateClose()">
     <form [formGroup]="form" (ngSubmit)="onSubmit()">
       <div formArrayName="productos">
         <div *ngFor="let producto of productos.controls; let i = index" [formGroupName]="i" class="flex align-items-center gap-3 mb-3">
           <label>{{ producto.get('nombre_articulo')?.value }}</label>
           <br>
           <input type="number" formControlName="cantidad" min="1" class="flex-auto" />
-          <button type="button" class="p-button p-component p-button-danger" (click)="eliminarProducto(i)" style="margin-left: 1em;">
+          <!-- <button type="button" class="p-button p-component p-button-danger" (click)="eliminarProducto(i)" style="margin-left: 1em;">
             <span class="p-button-icon pi pi-times"></span>
-          </button>
+          </button> -->
         </div>
       </div>
       <div class="flex justify-content-end gap-2 mt-3">
@@ -65,7 +65,7 @@
   </p-dialog>
 
 <!-- <============================================ EDITAR ==================================================> -->
-<p-dialog header="Crear Venta" [modal]="true" [(visible)]="editVisible" [style]="{ width: '50rem' }">
+<p-dialog header="Crear Venta" [modal]="true" [(visible)]="editVisible" [style]="{ width: '50rem' }" (onHide)="modalCreateClose('total')">
     <form [formGroup]="form" (ngSubmit)="openCantidadDialog()">
         <div class="flex align-items-center gap-3 mb-3">
             <label for="descripcion" class="font-semibold w-6rem"><strong>Nombre del Pedido</strong></label>
@@ -109,12 +109,16 @@
 </p-dialog>
 
  <!-- <============================================ MOSTRAR DATA ==================================================> -->
- <p-dialog header="Detalles del Pedido" [modal]="true" [(visible)]="detailModal" [style]="{ width: '50rem' }">
+ <p-dialog header="Detalles del Pedido" [modal]="true" [(visible)]="detailModal"  (onHide)="modalClose()" [style]="{ width: '50rem' }">
     <div class="p-fluid">
         <div class="field">
-            <label for="cliente"><strong>Descripcion:</strong></label>
-            <span id="cliente"> {{ cardData?.descripcion }}</span>
+            <label for="description"><strong>Descripcion:</strong></label>
+            <span id="description"> {{ cardData?.descripcion }}</span>
         </div>
+        <div class="field">
+          <label for="total"><strong>Total del Pedido:</strong></label>
+            <span id="total"> {{ cardData?.total | currency }}</span>
+      </div>
         <br>
         <br>
         <br>
@@ -144,8 +148,11 @@
         </div>
         <br>
     </div>
-  
-    <div class="flex justify-content-end gap-2">
-        <p-button icon="pi pi-times" (click)="detailModal = false"></p-button>
+    <div class="flex justify-content-end gap-2 mt-3">
+      <ng-container  *ngIf="cardData?.estado === 'En Preparacion'">
+        <p-button class="mr-1" label="Finalizar Pedido" icon="pi pi-arrow-right" [text]="true" severity="success" (onClick)="onSubmit(1)"></p-button>
+      </ng-container>
+      <p-button label="Cancelar" icon="pi pi-times" [text]="true" severity="danger" (click)="modalClose()"></p-button>
     </div>
+  
   </p-dialog>
