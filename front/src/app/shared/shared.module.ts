@@ -7,6 +7,7 @@ import { IonicModule } from '@ionic/angular';
 import { TablangComponent } from './tablang/tablang.component';
 import { TableModule } from 'primeng/table';
 import { ButtonModule } from 'primeng/button';
+import { DatosServicioPdfComponent } from './datos-servicio-pdf/datos-servicio-pdf.component';
 
 
 
@@ -17,6 +18,7 @@ import { ButtonModule } from 'primeng/button';
     SidebarComponent,
     FooterComponent,
     TablangComponent,
+    DatosServicioPdfComponent,
 
   ],
   imports: [

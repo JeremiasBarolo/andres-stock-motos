@@ -36,6 +36,7 @@ import { PedidosStockComponent } from './pedidos-stock/pedidos-stock.component';
 
 
 
+
 @NgModule({
   declarations: [
     AdminComponent,
@@ -58,7 +59,7 @@ import { PedidosStockComponent } from './pedidos-stock/pedidos-stock.component';
     VentaRepuestosComponent,
     VentaMotosComponent,
     HistorialClientesComponent,
-    PedidosStockComponent
+    PedidosStockComponent,
 
    
   ],

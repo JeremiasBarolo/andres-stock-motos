@@ -46,14 +46,15 @@ export class DatosServicioComponent {
       num_motor: ['', Validators.required],
       patente: ['', Validators.required],
       color: ['', Validators.required],
-      tipo_serivio: ['', Validators.required],
+      tipo_servicio: ['', Validators.required],
       kilometros: ['', Validators.required],
       estado_general: ['', Validators.required],
       observaciones: ['', Validators.required],
       recepcionistaId: ['', Validators.required],
       hora_est_entrega: ['', Validators.required],
       fecha_est_entrega: ['', Validators.required],
-      fecha_recepcion: ['', Validators.required]
+      fecha_recepcion: ['', Validators.required],
+      num_chasis: ['', Validators.required]
     });
   }
   
@@ -66,8 +67,8 @@ export class DatosServicioComponent {
         { field: 'patente', header: 'Patente' },
         { field: 'color', header: 'Color' },
         { field: 'num_motor', header: 'Nro. Motor' },
-        { field: 'num_motor', header: 'Nro. Motor' },
-        { field: 'tipo_serivio', header: 'Tipo de Servicio' },
+        { field: 'num_chasis', header: 'Nro. Chasis' },
+        { field: 'tipo_servicio', header: 'Tipo de Servicio' },
         { field: 'Recepcionista', header: 'Recepcionista' },
         { field: 'fecha_recepcion', header: 'Fecha de Recepcion' },
         { field: 'fecha_est_entrega', header: 'Fecha Estimadad de Entrega' },
@@ -82,9 +83,10 @@ export class DatosServicioComponent {
           id: data.id,
           modelo: data.modelo,
           num_motor: data.num_motor,
+          num_chasis: data.num_chasis,
           patente: data.patente,
           color: data.color,
-          tipo_serivio: data.tipo_serivio,
+          tipo_servicio: data.tipo_servicio,
           kilometros: data.kilometros,
           estado_general: data.estado_general,
           observaciones: data.observaciones,
@@ -114,8 +116,18 @@ export class DatosServicioComponent {
   editarItem(data:any) {
     this.editVisible = true
     this.id = data.id
-    const fecha_est_entrega = new Date(data.fecha_est_entrega).toISOString().split('T')[0];
+
+    console.log(data);
+
+   
+  
+    
+    const fecha_est_entrega_parts = data.fecha_est_entrega.split('/');
+    const fecha_est_entrega_iso = `20${fecha_est_entrega_parts[2]}-${fecha_est_entrega_parts[1]}-${fecha_est_entrega_parts[0]}`;
+    
     const fecha_recepcion = new Date(data.fecha_recepcion).toISOString().split('T')[0];
+    const hora_est_entrega = data.hora_est_entrega.slice(0, 5);
+    
     
     
     this.form.patchValue({
@@ -123,14 +135,15 @@ export class DatosServicioComponent {
       patente: data.patente,
       color: data.color,
       num_motor: data.num_motor,
-      tipo_serivio: data.tipo_serivio,
+      num_chasis: data.num_chasis,
+      tipo_servicio: data.tipo_servicio,
       kilometros: data.kilometros,
       estado_general: data.estado_general,
       observaciones: data.observaciones,
       recepcionistaId: data.recepcionistaId,
-      hora_est_entrega: data.hora_est_entrega,
-      fecha_est_entrega: fecha_est_entrega,
-      fecha_recepcion: fecha_recepcion
+      hora_est_entrega: hora_est_entrega,
+      fecha_est_entrega: fecha_est_entrega_iso,
+      fecha_recepcion: fecha_recepcion,
       
     })
     
@@ -146,14 +159,15 @@ export class DatosServicioComponent {
   
   onSubmit(){
 
-    const fechaNacimiento = this.form.value.fecha_nacimiento;
+    
     
     this.tipo = {
       modelo: this.form.value.modelo,
       color: this.form.value.color,
       patente: this.form.value.patente,
       num_motor: this.form.value.num_motor,
-      tipo_serivio: this.form.value.tipo_serivio,
+      num_chasis: this.form.value.num_chasis,
+      tipo_servicio: this.form.value.tipo_servicio,
       kilometros: this.form.value.kilometros,
       estado_general: this.form.value.estado_general,
       observaciones: this.form.value.observaciones,
@@ -203,6 +217,10 @@ export class DatosServicioComponent {
   modalOpen(data:any){
     this.showModal = true
     this.cardData = data
+  }
+
+  redirectToPDF(cardData: any) {
+    this.router.navigate(['admin/datos-servicio-pdf'], { queryParams: cardData });
   }
 
 }

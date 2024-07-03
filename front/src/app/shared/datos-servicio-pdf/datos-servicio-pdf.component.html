@@ -1,51 +1,23 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Orden de Servicio</title>
-  <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
-  <style>
-    body {
-        width: 21cm;
-        min-height: 29.7cm;
-        padding: 1cm;
-        margin: auto;
-        background-color: #ffffff;
-        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    }
-    .bordered {
-      border: 1px solid black;
-    }
-    .no-border {
-      border: none;
-    }
-    .table td, .table th {
-      border: 1px solid black;
-    }
-  </style>
-</head>
-<body>
-  <div class="container my-4">
+<div class="container my-4">
     <div class="row mb-2">
       <div class="col-6">
-        <img src="logo-sg-motos.png" alt="Logo" style="max-height: 10vw;">
+        <img src="../../../assets/images/logo-sg-motos.png" alt="Logo" style="max-height: 10vw;">
       </div>
       <div class="col-6 text-right">
         <h5>ORDEN DE SERVICIO</h5>
-        <p>Nº <span id="ordenNumeroLabel"></span></p>
+        <p>Nº <strong>{{cardData.id}}</strong></p>
       </div>
     </div>
     <div class="bordered p-3 mb-2">
       <h6>DATOS DEL CLIENTE</h6>
       <div class="row">
-        <div class="col-6 bordered p-1">Nombre y Apellido: <span id="nombreApellido"></span></div>
-        <div class="col-6 bordered p-1">DNI: <span id="dni"></span></div>
-        <div class="col-6 bordered p-1">Dirección: <span id="direccion"></span></div>
+        <div class="col-6 bordered p-1">Nombre y Apellido: <strong> {{recepcionista?.nombre}} {{recepcionista?.apellido}} </strong> </div>
+        <div class="col-6 bordered p-1">DNI: <strong>{{recepcionista?.dni}}</strong></div>
+        <div class="col-6 bordered p-1">Dirección:<strong> {{recepcionista?.direccion}} {{recepcionista?.nro_direccion}}</strong></div>
         <div class="col-3 bordered p-1">C.P.: <span id="cp"></span></div>
-        <div class="col-3 bordered p-1">Localidad: <span id="localidad"></span></div>
-        <div class="col-6 bordered p-1">Tel.: <span id="telefono"></span></div>
-        <div class="col-6 bordered p-1">E-mail: <span id="email"></span></div>
+        <div class="col-3 bordered p-1">Localidad: <strong>{{recepcionista?.Localidad}}</strong> </div>
+        <div class="col-6 bordered p-1">Tel.: <strong>{{recepcionista?.telefono}}</strong> </div>
+        <div class="col-6 bordered p-1">E-mail: <strong>{{recepcionista?.mail}}</strong></div>
       </div>
     </div>
     <div class="bordered p-1 mb-2">
@@ -54,48 +26,48 @@
         <div class="col-6">
             <div class="bordered pl-1">
               <input type="checkbox" id="servicioGarantia" disabled>
-              <label for="servicioGarantia" id="servicioGarantiaLabel">Servicio Garantia</label>
+              <label for="servicioGarantia" id="servicioGarantiaLabel"> Servicio Garantia</label>
             </div>
             <div class="bordered pl-1">
               <input type="checkbox" id="reparacionGral" disabled>
-              <label for="reparacionGral" id="reparacionGralLabel">Reparacion General</label>
+              <label for="reparacionGral" id="reparacionGralLabel"> Reparacion General</label>
             </div>
             <div class="bordered pl-1">
               <input type="checkbox" id="mantenimientoPeriodico" disabled>
-              <label for="mantenimientoPeriodico" id="mantenimientoPeriodicoLabel">mantenimiento Periodico</label>
+              <label for="mantenimientoPeriodico" id="mantenimientoPeriodicoLabel"> Mantenimiento Periodico</label>
             </div>
             <div class="bordered pl-1">
               <input type="checkbox" id="puestaMarcha" disabled>
-              <label for="puestaMarcha" id="puestaMarchaLabel">Puesta Marcha</label>
+              <label for="puestaMarcha" id="puestaMarchaLabel"> Puesta Marcha</label>
             </div>
             <div class="bordered pl-1">
               <input type="checkbox" id="otroServicio" disabled>
-              <label for="otroServicio" id="otroServicioLabel">Otro Servicio</label>
+              <label for="otroServicio" id="otroServicioLabel"> Otro Servicio</label>
             </div>
           </div>
         <div class="col-6">
-          <div class="bordered p-1">Fecha Recep.: <span id="fechaRecepcion"></span></div>
-          <div class="bordered p-1">Hora: <span id="horaRecepcion"></span></div>
-          <div class="bordered p-1">Recepcionista: <span id="recepcionista"></span></div>
-          <div class="bordered p-1">Fecha Est. Entrega: <span id="fechaEntrega"></span></div>
-          <div class="bordered p-1">Hora Est. Entrega: <span id="horaEntrega"></span></div>
+          <div class="bordered p-1">Fecha Recep.: <strong> {{cardData.fecha_recepcion}}</strong></div>
+          <!-- <div class="bordered p-1">Hora: <strong>XX:XX</strong></div> -->
+          <div class="bordered p-1">Recepcionista: <strong>{{cardData.Recepcionista}}</strong></div>
+          <div class="bordered p-1">Fecha Est. Entrega: <strong>{{cardData.fecha_est_entrega}}</strong></div>
+          <div class="bordered p-1">Hora Est. Entrega: <strong>{{cardData.hora_est_entrega}}</strong></div>
         </div>
       </div>
     </div>
     <div class="bordered p-3 mb-2">
       <h6>DATOS DEL VEHÍCULO</h6>
       <div class="row">
-        <div class="col-3 bordered p-1">Modelo: <span id="modelo"></span></div>
-        <div class="col-3 bordered p-1">Color: <span id="color"></span></div>
-        <div class="col-3 bordered p-1">Patente: <span id="patente"></span></div>
-        <div class="col-3 bordered p-1">Kms: <span id="kms"></span></div>
-        <div class="col-6 bordered p-1">Nº de Motor: <span id="numeroMotor"></span></div>
-        <div class="col-6 bordered p-1">Nº Chasis: <span id="numeroChasis"></span></div>
+        <div class="col-3 bordered p-1">Modelo: <strong>{{cardData.modelo}}</strong></div>
+        <div class="col-3 bordered p-1">Color: <strong>{{cardData.color}}</strong></div>
+        <div class="col-3 bordered p-1">Patente: <strong>{{cardData.patente}}</strong></div>
+        <div class="col-3 bordered p-1">Kms: <strong>{{cardData.kilometros}}</strong></div>
+        <div class="col-6 bordered p-1">Nº de Motor: <strong>{{cardData.num_motor}}</strong></div>
+        <div class="col-6 bordered p-1">Nº Chasis: <strong>{{cardData.num_chasis}}</strong></div>
       </div>
     </div>
     <div class="bordered p-2 mb-2">
       <h6>ESTADO GENERAL</h6>
-      <div class="bordered p-1" style="height: 50px;"><span id="estadoGeneral"></span></div>
+      <div class="bordered p-1" style="height: 50px;"><strong >{{cardData.estado_general}}</strong></div>
     </div>
     <div class="bordered p-2 mb-2">
       <h6>DESCRIPCIÓN DEL TRABAJO</h6>
@@ -134,7 +106,7 @@
     </div>
     <div class="bordered p-2">
       <h6>Observaciones:</h6>
-      <div class="bordered p-1" style="height: 50px;"><span id="observaciones"></span></div>
+      <div class="bordered p-1" style="height: 50px;"><strong>{{cardData.observaciones}}</strong></div>
     </div>
     <div class="bordered p-2 mb-2">
       <h6>CHECK LIST EGRESO SERVICIO</h6>
@@ -212,53 +184,5 @@
       </div>
     </div>
   </div>
-  <!-- <script>
-    const datos = {
-      ordenNumeroLabel: '0026',
-      nombreApellido: 'Juan Perez',
-      dni: '12345678',
-      direccion: 'Av. Siempre Viva 123',
-      cp: '5000',
-      localidad: 'Cordoba',
-      telefono: '3512345678',
-      email: 'juan.perez@example.com',
-      servicioGarantiaLabel: 'Servicio Garantía',
-      reparacionGralLabel: 'Reparación en Gral.',
-      mantenimientoPeriodicoLabel: 'Mantenimiento Periód.',
-      puestaMarchaLabel: 'Puesta en Marcha',
-      otroServicioLabel: 'Otro',
-      fechaRecepcion: '01/01/2024',
-      horaRecepcion: '10:00 AM',
-      recepcionista: 'Maria Lopez',
-      fechaEntrega: '02/01/2024',
-      horaEntrega: '05:00 PM',
-      modelo: 'Honda CB500',
-      color: 'Rojo',
-      patente: 'ABC123',
-      kms: '15000',
-      numeroMotor: 'HM500X123456',
-      numeroChasis: 'HCX500X123456',
-      estadoGeneral: 'Bueno',
-      codigo1: 'T001',
-      descripcionTrabajo1: 'Cambio de aceite',
-      costoMO1: '$500',
-      codigoRepuestos1: 'R001 - Filtro de aceite',
-      cantidad1: '1',
-      costoRep1: '$200',
-      totalMO: '$500',
-      totalRepuestos: '$200',
-      total: '$700',
-      observaciones: 'Ninguna',
-      
-      fechaRetiro: '02/01/2024',
-      
-      horaRetiro: '05:00 PM',
-      firmaCliente: 'Juan Perez'
-    };
 
-    for (const [key, value] of Object.entries(datos)) {
-      document.getElementById(key).textContent = value;
-    }
-  </script> -->
-</body>
-</html>
+

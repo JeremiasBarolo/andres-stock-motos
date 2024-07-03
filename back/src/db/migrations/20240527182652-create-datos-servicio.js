@@ -9,7 +9,7 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      tipo_serivio: {
+      tipo_servicio: {
         type: Sequelize.STRING
       },
       fecha_recepcion: {
@@ -27,7 +27,10 @@ module.exports = {
         type: Sequelize.STRING
       },
       num_motor: {
-        type: Sequelize.BIGINT(100)
+        type: Sequelize.STRING(100)
+      },
+      num_chasis: {
+        type: Sequelize.STRING(100)
       },
       color: {
         type: Sequelize.STRING

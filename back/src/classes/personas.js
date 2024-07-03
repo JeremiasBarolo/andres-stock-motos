@@ -66,11 +66,14 @@ class PersonasService {
 
   async listOnePersonas(Personas_id) {
     try {
-      const onePersonas = await models.Personas.findByPk(Personas_id);
+      const onePersonas = await models.Personas.findByPk(Personas_id,{
+        include: [{ all: true }]
+      }
+      );
       if (!onePersonas) {
         return null;
       }
-      return format.Personas(onePersonas);
+      return format.Persona(onePersonas);
     } catch (err) {
       console.error('🛑 Error when fetching a single Usuario', err);
       throw err;

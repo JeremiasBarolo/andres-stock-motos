@@ -40,9 +40,15 @@
         </div>
 
         <div class="flex align-items-center gap-3 mb-3">
-            <label for="tipo_serivio" class="font-semibold w-6rem"><strong>Tipo de Servicio</strong></label>
+            <label for="num_chasis" class="font-semibold w-6rem"><strong>Numero de Chasis</strong></label>
             <br>
-            <input id="tipo_serivio" class="flex-auto" formControlName="tipo_serivio" />
+            <input id="num_chasis" class="flex-auto" formControlName="num_chasis" />
+        </div>
+
+        <div class="flex align-items-center gap-3 mb-3">
+            <label for="tipo_servicio" class="font-semibold w-6rem"><strong>Tipo de Servicio</strong></label>
+            <br>
+            <input id="tipo_servicio" class="flex-auto" formControlName="tipo_servicio" />
         </div>
 
         <div class="flex align-items-center gap-3 mb-3">
@@ -127,9 +133,15 @@
         </div>
 
         <div class="flex align-items-center gap-3 mb-3">
-            <label for="tipo_serivio" class="font-semibold w-6rem"><strong>Tipo de Servicio</strong></label>
+            <label for="num_chasis" class="font-semibold w-6rem"><strong>Numero de Chasis</strong></label>
             <br>
-            <input id="tipo_serivio" class="flex-auto" formControlName="tipo_serivio" />
+            <input id="num_chasis" class="flex-auto" formControlName="num_chasis" />
+        </div>
+
+        <div class="flex align-items-center gap-3 mb-3">
+            <label for="tipo_servicio" class="font-semibold w-6rem"><strong>Tipo de Servicio</strong></label>
+            <br>
+            <input id="tipo_servicio" class="flex-auto" formControlName="tipo_servicio" />
         </div>
 
         <div class="flex align-items-center gap-3 mb-3">
@@ -196,7 +208,7 @@
     </div>
 </p-dialog>
 
-<!-- <============================================ ELIMINAR ==================================================> -->
+<!-- <============================================ DETALLES  ==================================================> -->
 <p-dialog header="Detalles del Servicio" [modal]="true" [(visible)]="showModal" [style]="{ width: '25rem' }">
     <div class="p-fluid">
 
@@ -241,7 +253,7 @@
 
         <div class="field">
             <label for="tipo_servicio"><strong>Tipo de Servicio:</strong></label>
-            <span id="tipo_servicio"> {{ cardData?.tipo_serivio }}</span>
+            <span id="tipo_servicio"> {{ cardData?.tipo_servicio }}</span>
         </div>
         <br>
         <div class="field">
@@ -268,8 +280,9 @@
         <br>
     </div>
 
-    <div class="flex justify-content-end gap-2">
-        <p-button icon="pi pi-times" (click)="showModal = false"></p-button>
+    <div class="flex justify-content-end gap-2 mt-3">
+        <p-button class="mr-1" label="Ver en PDF" icon="pi pi-arrow-right" [text]="true" (onClick)="redirectToPDF(cardData)"></p-button>
+        <p-button label="Volver" icon="pi pi-times" [text]="true" severity="danger" (click)="crearVisible = false"></p-button>
     </div>
 </p-dialog>
 

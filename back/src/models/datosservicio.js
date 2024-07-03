@@ -21,12 +21,13 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
   DatosServicio.init({
-    tipo_serivio: DataTypes.STRING,
+    tipo_servicio: DataTypes.STRING,
     fecha_recepcion: DataTypes.DATE,
     fecha_est_entrega: DataTypes.DATE,
     hora_est_entrega: DataTypes.INTEGER,
     modelo: DataTypes.STRING,
-    num_motor: DataTypes.INTEGER,
+    num_motor: DataTypes.STRING,
+    num_chasis: DataTypes.STRING,
     color: DataTypes.STRING,
     patente: DataTypes.STRING,
     kilometros: DataTypes.INTEGER,

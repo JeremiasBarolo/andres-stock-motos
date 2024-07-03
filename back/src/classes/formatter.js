@@ -63,6 +63,25 @@ class Formatter {
       }))
     }
 
+    Persona(user) {
+      return {
+        id: user.id,
+        nombre: user.nombre,
+        apellido: user.apellido,
+        cuit: user.cuit,
+        fecha_nacimiento: user.fecha_nacimiento,
+        telefono: user.telefono,
+        direccion: user.direccion,
+        nro_direccion: user.nro_direccion,
+        mail: user.mail,
+        dni: user.dni,
+        tipoPersona: user.TipoPersona?.descripcion,
+        tipoPersonaId: user.TipoPersona.id,
+        Localidad: user.Localidade.descripcion,
+        LocalidadId: user.Localidade.id
+      }
+    }
+
     Stock(data) {
       return data.map(stock => ({
         id: stock.id,
@@ -99,12 +118,13 @@ class Formatter {
     DatosServicio(data) {
       return data.map(moto => ({
         id: moto.id,
-        tipo_serivio: moto.tipo_serivio,
+        tipo_servicio: moto.tipo_servicio,
         fecha_recepcion: moto.fecha_recepcion,
         fecha_est_entrega: moto.fecha_est_entrega,
         hora_est_entrega: moto.hora_est_entrega,
         modelo: moto.modelo,
         num_motor: moto.num_motor,
+        num_chasis: moto.num_chasis,
         color: moto.color,
         patente: moto.patente,
         kilometros: moto.kilometros,
