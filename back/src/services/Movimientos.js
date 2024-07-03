@@ -45,6 +45,10 @@
             return await MovimientosProvider.deleteMovimientos(Movimientos_id);
         };
 
+        const deleteVentaRespuestos = async (Movimientos_id) => {
+            return await MovimientosProvider.deleteVentaRespuestos(Movimientos_id);
+        };
+
 
         module.exports = {
         listAllMovimientos, 
@@ -57,6 +61,7 @@
         listAllMotosMovimientos,
         createVentaMoto,
         updateVentaMotos,
-        listHistorial    
+        listHistorial,
+        deleteVentaRespuestos    
         };
 

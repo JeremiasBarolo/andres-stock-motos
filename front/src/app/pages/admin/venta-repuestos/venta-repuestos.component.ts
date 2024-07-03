@@ -86,6 +86,18 @@ export class VentaRepuestosComponent implements OnDestroy, OnInit {
       this.usuarios = data;
     });
 
+    this.stockService.getAll().pipe(takeUntil(this.destroy$)).subscribe((data)=>{
+      let dataReal = data.map((stock)=>{
+        return {
+          ...stock,
+          cantidad: 0,
+          cantidadActual: stock.cantidad
+        }
+      })
+
+      this.repuestos = dataReal;
+    })
+
     this.personasService.getAllClientes().pipe(takeUntil(this.destroy$)).subscribe(data => {
       this.clientes = data;
     });
@@ -200,7 +212,7 @@ export class VentaRepuestosComponent implements OnDestroy, OnInit {
   }
 
   Eliminar() {
-    this.movimientosService.delete(this.id).pipe(takeUntil(this.destroy$)).subscribe(() => {
+    this.movimientosService.deleteVentaRepuesto(this.id).pipe(takeUntil(this.destroy$)).subscribe(() => {
       setTimeout(() => {
         window.location.reload();
       }, 1000);

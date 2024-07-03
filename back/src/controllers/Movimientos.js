@@ -115,6 +115,16 @@ const deleteMovimientos = async (req, res) => {
   }
 };
 
+const deleteVentaRespuestos = async (req, res) => {
+  const id = req.params.Movimientos_id;
+  try {
+    await MovimientosService.deleteVentaRespuestos(id);
+    res.json('');
+  } catch (err) {
+    res.status(500).json({ action: 'deleteMovimientos', error: err.message });
+  }
+};
+
 
 
 module.exports = {
@@ -128,5 +138,6 @@ module.exports = {
   listAllMotosMovimientos,
   createVentaMoto,
   updateVentaMotos,
-  listHistorial
+  listHistorial,
+  deleteVentaRespuestos
 };

@@ -142,7 +142,13 @@ class MovimientosService {
           cantidad: producto.cantidad,
           movimientosId: movimiento.id
         })
+
+        let stock = await models.Stock.findByPk(producto.id)
+        await stock.update({
+          cantidad: stock.cantidad - parseInt(producto.cantidad, 10)
+        })
       }
+
 
 
       return movimiento;
@@ -268,11 +274,37 @@ class MovimientosService {
 
       
       for (let item of toUpdate) {
-        await models.StockMoviminetos.update(
-          { cantidad: item.cantidad },
-          { where: { stockId: item.id, movimientosId: Ventas_id } }
-        );
+       
+      let stock = await models.Stock.findByPk(item.id);
+
+      
+      let movimientoAnterior = await models.StockMoviminetos.findOne({
+        where: { stockId: item.id, movimientosId: Ventas_id },
+      });
+      
+      movimientoAnterior = movimientoAnterior ? parseInt(movimientoAnterior.cantidad, 10) : 0;
+      let nuevaCantidad = parseInt(item.cantidad, 10);
+
+      
+      if (nuevaCantidad > movimientoAnterior) {
+        let diferencia = nuevaCantidad - movimientoAnterior;
+        await stock.update({
+          cantidad: stock.cantidad - diferencia
+        });
       }
+      
+      else if (nuevaCantidad < movimientoAnterior) {
+        let diferencia = movimientoAnterior - nuevaCantidad;
+        await stock.update({
+          cantidad: stock.cantidad + diferencia
+        });
+      }
+
+      await models.StockMoviminetos.update(
+        { cantidad: item.cantidad },
+        { where: { stockId: item.id, movimientosId: Ventas_id } }
+      );
+    }
 
       
       for (let id of toDelete) {
@@ -309,6 +341,35 @@ class MovimientosService {
       if (!deletedVentas) {
         return null;
       }
+    
+      await models.Movimientos.destroy({ where: { id: Ventas_id } });
+      return deletedVentas;
+    } catch (err) {
+      console.error('🛑 Error when deleting Ventas', err);
+      throw err;
+    }
+
+    
+  }
+
+  async deleteVentaRespuestos(Ventas_id) {
+    try {
+      const deletedVentas = await models.Movimientos.findByPk(Ventas_id);
+      if (!deletedVentas) {
+        return null;
+      }
+      let stock = await models.StockMoviminetos.findAll({
+        where: { movimientosId: Ventas_id },
+      });
+
+      for(let item of stock){
+        let stockItem = await models.Stock.findByPk(item.stockId);
+        await stockItem.update({
+          cantidad: stockItem.cantidad + item.cantidad
+        })
+      }
+
+
       await models.Movimientos.destroy({ where: { id: Ventas_id } });
       return deletedVentas;
     } catch (err) {

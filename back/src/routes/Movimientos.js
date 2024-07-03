@@ -17,6 +17,7 @@
     router.put('/venta/motos/:Movimientos_id', MovimientosController.updateVentaMotos);
 
     router.delete('/:Movimientos_id', MovimientosController.deleteMovimientos);
+    router.delete('/venta-repuestos/:Movimientos_id', MovimientosController.deleteVentaRespuestos);
     
 
     module.exports = router;

@@ -70,5 +70,9 @@ export class MovimientosService {
   delete(id: number): Observable<any> {
     return this.http.delete<any>(`${this.apiUrl}/${id}`)
   }
+
+  deleteVentaRepuesto(id: number): Observable<any> {
+    return this.http.delete<any>(`${this.apiUrl}/venta-repuestos/${id}`)
+  }
 }
 
