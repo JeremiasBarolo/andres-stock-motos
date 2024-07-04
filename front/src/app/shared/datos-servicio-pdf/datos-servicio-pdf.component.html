@@ -1,48 +1,55 @@
-<div class="container my-4">
+<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+<div class="header-container">
+  <h3>Datos para {{cardData?.modelo}} </h3>
+  <p-button icon="pi pi-file-pdf" label="Generar PDF" [text]="true" (click)="generatePDF()" styleClass="ml-auto"></p-button>
+</div>
+
+<div class="container my-4" #pdfContent>
+
+  <div class="container my-4">
     <div class="row mb-2">
       <div class="col-6">
         <img src="../../../assets/images/logo-sg-motos.png" alt="Logo" style="max-height: 10vw;">
       </div>
       <div class="col-6 text-right">
-        <h5>ORDEN DE SERVICIO</h5>
+        <h5><strong>ORDEN DE SERVICIO</strong></h5>
         <p>Nº <strong>{{cardData.id}}</strong></p>
       </div>
     </div>
     <div class="bordered p-3 mb-2">
-      <h6>DATOS DEL CLIENTE</h6>
+      <h6><strong>DATOS DEL CLIENTE</strong></h6>
       <div class="row">
-        <div class="col-6 bordered p-1">Nombre y Apellido: <strong> {{recepcionista?.nombre}} {{recepcionista?.apellido}} </strong> </div>
+        <div class="col-6 bordered p-1 ">Nombre y Apellido: <strong>  {{recepcionista?.nombre}} {{recepcionista?.apellido}} </strong> </div>
         <div class="col-6 bordered p-1">DNI: <strong>{{recepcionista?.dni}}</strong></div>
         <div class="col-6 bordered p-1">Dirección:<strong> {{recepcionista?.direccion}} {{recepcionista?.nro_direccion}}</strong></div>
-        <div class="col-3 bordered p-1">C.P.: <span id="cp"></span></div>
-        <div class="col-3 bordered p-1">Localidad: <strong>{{recepcionista?.Localidad}}</strong> </div>
+        <div class="col-6 bordered p-1">Localidad: <strong>{{recepcionista?.Localidad}}</strong> </div>
         <div class="col-6 bordered p-1">Tel.: <strong>{{recepcionista?.telefono}}</strong> </div>
         <div class="col-6 bordered p-1">E-mail: <strong>{{recepcionista?.mail}}</strong></div>
       </div>
     </div>
     <div class="bordered p-1 mb-2">
-      <h6>TIPO DE SERVICIO</h6>
+      <h6><strong>TIPO DE SERVICIO</strong> </h6>
       <div class="row">
         <div class="col-6">
             <div class="bordered pl-1">
-              <input type="checkbox" id="servicioGarantia" disabled>
-              <label for="servicioGarantia" id="servicioGarantiaLabel"> Servicio Garantia</label>
+              <input type="checkbox"  id="servicioGarantia" disabled>
+              <label for="servicioGarantia" class="ml-2" id="servicioGarantiaLabel"> Servicio Garantia</label>
             </div>
             <div class="bordered pl-1">
               <input type="checkbox" id="reparacionGral" disabled>
-              <label for="reparacionGral" id="reparacionGralLabel"> Reparacion General</label>
+              <label for="reparacionGral" class="ml-2" id="reparacionGralLabel"> Reparacion General</label>
             </div>
             <div class="bordered pl-1">
               <input type="checkbox" id="mantenimientoPeriodico" disabled>
-              <label for="mantenimientoPeriodico" id="mantenimientoPeriodicoLabel"> Mantenimiento Periodico</label>
+              <label for="mantenimientoPeriodico" class="ml-2" id="mantenimientoPeriodicoLabel"> Mantenimiento Periodico</label>
             </div>
             <div class="bordered pl-1">
               <input type="checkbox" id="puestaMarcha" disabled>
-              <label for="puestaMarcha" id="puestaMarchaLabel"> Puesta Marcha</label>
+              <label for="puestaMarcha" class="ml-2" id="puestaMarchaLabel"> Puesta Marcha</label>
             </div>
             <div class="bordered pl-1">
               <input type="checkbox" id="otroServicio" disabled>
-              <label for="otroServicio" id="otroServicioLabel"> Otro Servicio</label>
+              <label for="otroServicio" class="ml-2" id="otroServicioLabel"> Otro Servicio</label>
             </div>
           </div>
         <div class="col-6">
@@ -55,7 +62,7 @@
       </div>
     </div>
     <div class="bordered p-3 mb-2">
-      <h6>DATOS DEL VEHÍCULO</h6>
+      <h6 class="blockquote"><strong>DATOS DEL VEHÍCULO</strong></h6>
       <div class="row">
         <div class="col-3 bordered p-1">Modelo: <strong>{{cardData.modelo}}</strong></div>
         <div class="col-3 bordered p-1">Color: <strong>{{cardData.color}}</strong></div>
@@ -65,12 +72,12 @@
         <div class="col-6 bordered p-1">Nº Chasis: <strong>{{cardData.num_chasis}}</strong></div>
       </div>
     </div>
-    <div class="bordered p-2 mb-2">
-      <h6>ESTADO GENERAL</h6>
+    <div class=" bordered p-2 mb-2">
+      <h6 class="blockquote"> <strong>ESTADO GENERAL</strong></h6>
       <div class="bordered p-1" style="height: 50px;"><strong >{{cardData.estado_general}}</strong></div>
     </div>
     <div class="bordered p-2 mb-2">
-      <h6>DESCRIPCIÓN DEL TRABAJO</h6>
+      <h6> <strong>DESCRIPCIÓN DEL TRABAJO</strong></h6>
       <table class="table table-bordered">
         <thead>
           <tr>
@@ -105,7 +112,7 @@
       <div class="bordered p-1" style="height: 50px;"><strong>{{cardData.observaciones}}</strong></div>
     </div>
     <div class="bordered p-2 mb-2">
-      <h6>CHECK LIST EGRESO SERVICIO</h6>
+      <h6><strong>CHECK LIST EGRESO SERVICIO</strong></h6>
       <div class="row">
         <div class="col-6">
           <div class="form-check">
@@ -182,3 +189,5 @@
   </div>
 
 
+
+</div>

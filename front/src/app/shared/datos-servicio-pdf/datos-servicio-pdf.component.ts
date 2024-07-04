@@ -1,6 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { PersonasService } from '../../services/personas.service';
+import jsPDF from 'jspdf';
+import html2canvas from 'html2canvas';
 
 @Component({
   selector: 'app-datos-servicio-pdf',
@@ -10,6 +12,10 @@ import { PersonasService } from '../../services/personas.service';
 export class DatosServicioPdfComponent implements OnInit {
   cardData: any;
   recepcionista: any;
+
+
+  @ViewChild('pdfContent', { static: false })
+  pdfContent!: ElementRef;
 
   constructor(
     private route: ActivatedRoute,
@@ -33,4 +39,29 @@ export class DatosServicioPdfComponent implements OnInit {
       }
     });
   }
+
+  generatePDF(): void {
+    const data = this.pdfContent.nativeElement;
+    const titles = data.querySelectorAll('h3, h5, h6'); 
+    titles.forEach((title: HTMLElement) => {
+      title.classList.add('pdf-title');
+    });
+  
+    html2canvas(data).then(canvas => {
+      const imgWidth = 208;
+      const imgHeight = canvas.height * imgWidth / canvas.width;
+      const contentDataURL = canvas.toDataURL('image/png');
+      let pdf = new jsPDF('p', 'mm', 'a4'); // Tamaño A4
+      pdf.addImage(contentDataURL, 'PNG', 0, 0, imgWidth, imgHeight);
+      pdf.save(`servicio-${this.cardData.modelo}-${this.cardData.fecha_est_entrega}.pdf`);
+  
+      // Restaurar estilos originales
+      titles.forEach((title: HTMLElement) => {
+        title.classList.remove('pdf-title');
+      });
+    });
+  }
+
 }
+
+
