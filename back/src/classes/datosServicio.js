@@ -32,7 +32,28 @@ class DatosServicioService {
 
   async createDatosServicio(DataDatosServicio) {
     try {
+      
+      let subtotal = await this.calcularSubtotal(DataDatosServicio.productos);
+
       const newDatosServicio = await models.DatosServicio.create(DataDatosServicio);
+
+      const movimiento = await models.Movimientos.create({
+        usuarioId: DataDatosServicio.usuarioId,
+        personaId: DataDatosServicio.personaId,
+        subtotal: subtotal,
+        tipoMovimientoId: 4,
+        datosServiciosId: newDatosServicio.id
+      });
+
+      for(const servicio of DataDatosServicio.productos){
+        await models.StockMoviminetos.create({
+          stockId: servicio.id,
+          cantidad: 1,
+          movimientosId: movimiento.id
+        })
+      }
+
+
       return newDatosServicio;
     } catch (err) {
       console.error('🛑 Error when creating DatosServicio', err);
@@ -67,6 +88,12 @@ class DatosServicioService {
       console.error('🛑 Error when deleting DatosServicio', err);
       throw err;
     }
+  }
+
+  async calcularSubtotal(DataDatosServicio) {
+    return DataDatosServicio.reduce((subtotal, producto) => {
+      return subtotal + (producto.costo); 
+    }, 0);
   }
 }
 

@@ -5,6 +5,7 @@
 
     router.get('/', StockController.listAllStock);
     router.get('/repuestos', StockController.listAllRepuestos);
+    router.get('/servicios', StockController.listAllServicios);
     router.get('/:Stock_id', StockController.listOneStock);
     router.post('/', StockController.createStock);
     router.put('/:Stock_id', StockController.updateStock);

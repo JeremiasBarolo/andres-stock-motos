@@ -54,6 +54,7 @@ class MovimientosService {
   async listAllMotosMovimientos() {
     try {
       const Ventas = await models.Movimientos.findAll({
+        where: { tipoMovimientoId: 2 },
         include: [
           { all: true },
           {
@@ -65,9 +66,7 @@ class MovimientosService {
             ]
           }
         ],
-        where: {
-          tipoMovimientoId: 2
-        }
+        
         
       });
       console.log('✅ Ventas were found');
@@ -80,15 +79,27 @@ class MovimientosService {
     }
   }
 
-  async listAllProveedores() {
+  async listAllServices() {
     try {
-      const Ventas = await models.Movimientos.findAll({
-        include: [{ all: true }]
+      const Service = await models.Movimientos.findAll({
+        where: { tipoMovimientoId: 4 },
+        include: [{ all: true }],
+        include: [
+          { all: true },
+          {
+            model: models.DatosServicio,
+            include: [
+              {
+                model: models.Personas
+              }
+            ]
+          }
+        ],
       });
       console.log('✅ Ventas were found');
-      let data = await format.Ventas(Ventas);
+      let data = await format.Service(Service);
       
-      return data.filter((item) => item.tipoPersona === 'Proveedor');
+      return data.filter((item) => item.TipoMovimiento === 'Servicio');
     } catch (err) {
       console.error('🛑 Error when fetching Ventas', err);
       throw err;

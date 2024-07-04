@@ -30,6 +30,10 @@ export class MovimientosService {
     return this.http.get<any[]>(`${this.apiUrl}/ventas/motos`); 
   }
 
+  getAllServices(): Observable<any[]> {
+    return this.http.get<any[]>(`${this.apiUrl}/services`); 
+  }
+
   // get by id
   getById(id: number): Observable<any> {
     return this.http.get<any>(`${this.apiUrl}/${id}`)

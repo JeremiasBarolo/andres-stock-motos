@@ -13,8 +13,21 @@
 
 <!-- <============================================ CREAR ==================================================> -->
 <p-dialog header="Crear Datos para Servicio" [modal]="true" [(visible)]="crearVisible" [style]="{ width: '25rem' }">
-    <form [formGroup]="form" (ngSubmit)="onSubmit()">
-        
+    <form [formGroup]="form" (ngSubmit)="openServiceDialog()">
+        <div class="flex align-items-center gap-3 mb-3">
+            <label for="usuarioId" class="font-semibold w-6rem"><strong>Recepcionista</strong></label>
+            <select id="usuarioId" class="flex-auto" formControlName="usuarioId">
+              <option *ngFor="let persona of usuarios" [value]="persona.id">{{ persona.name }} {{ persona.lastname }}</option>
+            </select>
+          </div>
+      
+          <div class="flex align-items-center gap-3 mb-3">
+            <label for="personaId" class="font-semibold w-6rem"><strong>Cliente</strong></label>
+            <select id="personaId" class="flex-auto" formControlName="personaId">
+              <option *ngFor="let persona of clientes" [value]="persona.id">{{ persona.nombre }} {{ persona.apellido }}</option>
+            </select>
+        </div>
+
         <div class="flex align-items-center gap-3 mb-3">
             <label for="modelo" class="font-semibold w-6rem"><strong>Modelo</strong></label>
             <br>
@@ -32,6 +45,8 @@
             <br>
             <input id="color" class="flex-auto" formControlName="color" />
         </div>
+
+        
 
         <div class="flex align-items-center gap-3 mb-3">
             <label for="num_motor" class="font-semibold w-6rem"><strong>Numero de Motor</strong></label>
@@ -97,16 +112,30 @@
 
         
         
-        <div class="flex justify-content-end gap-2">
-            <p-button class="mr-1" icon="pi pi-check"  [text]="true" severity="success" (click)="onSubmit()" />
-            <p-button icon="pi pi-times"  [text]="true" severity="danger" (click)="crearVisible = false" />
+        <div class="flex justify-content-end gap-2 mt-3">
+            <p-button class="mr-1" label="Continuar" icon="pi pi-check" [text]="true" severity="success" type="submit"></p-button>
+            <p-button label="Cancelar" icon="pi pi-times" [text]="true" severity="danger" (click)="editVisible = false"></p-button>
         </div>
     </form>
 </p-dialog>
 
 <!-- <============================================ EDITAR ==================================================> -->
 <p-dialog header="Editar Datos para Servicio" [modal]="true" [(visible)]="editVisible" [style]="{ width: '25rem' }">
-    <form [formGroup]="form" (ngSubmit)="onSubmit()">
+    <form [formGroup]="form" (ngSubmit)="openServiceDialog()">
+
+        <div class="flex align-items-center gap-3 mb-3">
+            <label for="usuarioId" class="font-semibold w-6rem"><strong>Recepcionista</strong></label>
+            <select id="usuarioId" class="flex-auto" formControlName="usuarioId">
+              <option *ngFor="let persona of usuarios" [value]="persona.id">{{ persona.name }} {{ persona.lastname }}</option>
+            </select>
+        </div>
+      
+        <div class="flex align-items-center gap-3 mb-3">
+            <label for="personaId" class="font-semibold w-6rem"><strong>Cliente</strong></label>
+            <select id="personaId" class="flex-auto" formControlName="personaId">
+              <option *ngFor="let persona of clientes" [value]="persona.id">{{ persona.nombre }} {{ persona.apellido }}</option>
+            </select>
+        </div>
         
         <div class="flex align-items-center gap-3 mb-3">
             <label for="modelo" class="font-semibold w-6rem"><strong>Modelo</strong></label>
@@ -190,12 +219,38 @@
 
         
         
-        <div class="flex justify-content-end gap-2">
-            <p-button class="mr-1" icon="pi pi-check"  [text]="true" severity="success" (click)="onSubmit()" />
-            <p-button icon="pi pi-times"  [text]="true" severity="danger" (click)="crearVisible = false" />
+        <div class="flex justify-content-end gap-2 mt-3">
+            <p-button class="mr-1" label="Continuar" icon="pi pi-check" [text]="true" severity="success" type="submit"></p-button>
+            <p-button label="Cancelar" icon="pi pi-times" [text]="true" severity="danger" (click)="editVisible = false"></p-button>
         </div>
     </form>
 </p-dialog>
+
+<p-dialog header="Especificar Servicios" [modal]="true" [(visible)]="serviciosVisible" [style]="{ width: '50rem' }">
+    <form [formGroup]="form" (ngSubmit)="onSubmit()">
+        <p-pickList 
+        [source]="servicios" 
+        [target]="productos.value"
+        sourceHeader="Disponibles" 
+        targetHeader="Seleccionados" 
+        dragdrop="true" 
+        sourceStyle="" 
+        targetStyle="" 
+        (onMoveToTarget)="agregarProductoDesdePickList($event)" 
+        (onMoveToSource)="eliminarProductoDesdePickList($event)">
+        <ng-template let-item pTemplate="item">
+          <div class="product-item">
+            <h5>{{ item.nombre_articulo }}</h5>
+          </div>
+        </ng-template>
+      </p-pickList>
+    </form>
+
+    <div class="flex justify-content-end gap-2">
+        <p-button class="mr-1" icon="pi pi-check"  [text]="true" severity="success" (click)="onSubmit()" />
+        <p-button icon="pi pi-times"  [text]="true" severity="danger" (click)="crearVisible = false" />
+    </div>
+  </p-dialog>
 
 <!-- <============================================ ELIMINAR ==================================================> -->
 <p-dialog header="Eliminar Datos para Servicio" [modal]="true" [(visible)]="editEliminar" [style]="{ width: '25rem' }">
@@ -209,80 +264,111 @@
 </p-dialog>
 
 <!-- <============================================ DETALLES  ==================================================> -->
-<p-dialog header="Detalles del Servicio" [modal]="true" [(visible)]="showModal" [style]="{ width: '25rem' }">
-    <div class="p-fluid">
-
-        <div class="field">
-            <label for="modelo"><strong>Modelo:</strong></label>
-            <span id="modelo"> {{ cardData?.modelo }}</span>
-        </div>
-        <br>
-
-        <div class="field">
-            <label for="patente"><strong>Patente:</strong></label>
-            <span id="patente"> {{ cardData?.patente }}</span>
-        </div>
-        <br>
-
-        <div class="field">
-            <label for="num_motor"><strong>Número de Motor:</strong></label>
-            <span id="num_motor"> {{ cardData?.num_motor }}</span>
-        </div>
-        <br>
-        <div class="field">
-            <label for="color"><strong>Color:</strong></label>
-            <span id="color"> {{ cardData?.color }}</span>
-        </div>
-        <br>
-
-        <div class="field">
-            <label for="kilometros"><strong>Kilómetros:</strong></label>
-            <span id="kilometros"> {{ cardData?.kilometros }}</span>
-        </div>
-        <br>
-        <div class="field">
-            <label for="estado_general"><strong>Estado General:</strong></label>
-            <span id="estado_general"> {{ cardData?.estado_general }}</span>
-        </div>
-        <br>
-        <div class="field">
-            <label for="observaciones"><strong>Observaciones:</strong></label>
-            <span id="observaciones"> {{ cardData?.observaciones }}</span>
-        </div>
-        <br>
-
-        <div class="field">
-            <label for="tipo_servicio"><strong>Tipo de Servicio:</strong></label>
-            <span id="tipo_servicio"> {{ cardData?.tipo_servicio }}</span>
-        </div>
-        <br>
-        <div class="field">
-            <label for="fecha_recepcion"><strong>Fecha de Recepción:</strong></label>
-            <span id="fecha_recepcion"> {{ cardData?.fecha_recepcion | date: 'dd/MM/yyyy' }}</span>
-        </div>
-        <br>
-        <div class="field">
-            <label for="fecha_est_entrega"><strong>Fecha Estimada de Entrega:</strong></label>
-            <span id="fecha_est_entrega"> {{ cardData?.fecha_est_entrega | date: 'dd/MM/yyyy' }}</span>
-        </div>
-        <br>
-        <div class="field">
-            <label for="hora_est_entrega"><strong>Hora Estimada de Entrega:</strong></label>
-            <span id="hora_est_entrega"> {{ cardData?.hora_est_entrega }}</span>
-        </div>
-        <br>
-        
-       
-        <div class="field">
-            <label for="recepcionista"><strong>Recepcionista:</strong></label>
-            <span id="recepcionista"> {{ cardData?.Recepcionista }}</span>
-        </div>
-        <br>
-    </div>
-
+<p-dialog header="Detalles del Servicio" [modal]="true" [(visible)]="showModal" [style]="{ width: '50rem' }">
     <div class="flex justify-content-end gap-2 mt-3">
         <p-button class="mr-1" label="Ver en PDF" icon="pi pi-arrow-right" [text]="true" (onClick)="redirectToPDF(cardData)"></p-button>
+    </div>
+    <br>
+    <div class="p-fluid">
+        <div class="p-grid">
+            <div class="p-col-12 p-md-6">
+                <div class="field">
+                    <label for="modelo"><strong>Modelo:</strong></label>
+                    <span id="modelo"> {{ cardData?.modelo }}</span>
+                </div>
+            </div>
+            <div class="p-col-12 p-md-6">
+                <div class="field">
+                    <label for="patente"><strong>Patente:</strong></label>
+                    <span id="patente"> {{ cardData?.patente }}</span>
+                </div>
+            </div>
+
+            <div class="p-col-12 p-md-6">
+                <div class="field">
+                    <label for="num_motor"><strong>Número de Motor:</strong></label>
+                    <span id="num_motor"> {{ cardData?.num_motor }}</span>
+                </div>
+            </div>
+            <div class="p-col-12 p-md-6">
+                <div class="field">
+                    <label for="color"><strong>Color:</strong></label>
+                    <span id="color"> {{ cardData?.color }}</span>
+                </div>
+            </div>
+
+            <div class="p-col-12 p-md-6">
+                <div class="field">
+                    <label for="kilometros"><strong>Kilómetros:</strong></label>
+                    <span id="kilometros"> {{ cardData?.kilometros }}</span>
+                </div>
+            </div>
+            <div class="p-col-12 p-md-6">
+                <div class="field">
+                    <label for="estado_general"><strong>Estado General:</strong></label>
+                    <span id="estado_general"> {{ cardData?.estado_general }}</span>
+                </div>
+            </div>
+
+            <div class="p-col-12 p-md-6">
+                <div class="field">
+                    <label for="observaciones"><strong>Observaciones:</strong></label>
+                    <span id="observaciones"> {{ cardData?.observaciones }}</span>
+                </div>
+            </div>
+            <div class="p-col-12 p-md-6">
+                <div class="field">
+                    <label for="tipo_servicio"><strong>Tipo de Servicio:</strong></label>
+                    <span id="tipo_servicio"> {{ cardData?.tipo_servicio }}</span>
+                </div>
+            </div>
+
+            <div class="p-col-12 p-md-6">
+                <div class="field">
+                    <label for="fecha_recepcion"><strong>Fecha de Recepción:</strong></label>
+                    <span id="fecha_recepcion"> {{ cardData?.fecha_recepcion | date: 'dd/MM/yyyy' }}</span>
+                </div>
+            </div>
+            <div class="p-col-12 p-md-6">
+                <div class="field">
+                    <label for="fecha_est_entrega"><strong>Fecha Estimada de Entrega:</strong></label>
+                    <span id="fecha_est_entrega"> {{ cardData?.fecha_est_entrega | date: 'dd/MM/yyyy' }}</span>
+                </div>
+            </div>
+
+            <div class="p-col-12 p-md-6">
+                <div class="field">
+                    <label for="hora_est_entrega"><strong>Hora Estimada de Entrega:</strong></label>
+                    <span id="hora_est_entrega"> {{ cardData?.hora_est_entrega }}</span>
+                </div>
+            </div>
+            <div class="p-col-12 p-md-6">
+                <div class="field">
+                    <label for="recepcionista"><strong>Recepcionista:</strong></label>
+                    <span id="recepcionista"> {{ cardData?.Recepcionista }}</span>
+                </div>
+            </div>
+        </div>
+        <br>
+        <div class="field">
+            <label for="stock"><strong>Detalles de los Servicios:</strong></label>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Nombre</th>
+                        <th>Costo</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let item of cardData?.Servicios">
+                        <td>{{ item.nombre }}</td>
+                        <td>{{ item.costo | currency }}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="flex justify-content-end gap-2 mt-3">
         <p-button label="Volver" icon="pi pi-times" [text]="true" severity="danger" (click)="crearVisible = false"></p-button>
     </div>
 </p-dialog>
-

@@ -13,13 +13,16 @@ export class DatosServicioPdfComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
-    private personasService: PersonasService
+    private personasService: PersonasService,
+    
   ) { }
 
   ngOnInit(): void {
     this.route.queryParams.subscribe(params => {
-      this.cardData = params;
-      console.log('data', this.cardData);
+      
+      
+      this.cardData = { ...params, Servicios: JSON.parse(params['Servicios']) };
+      console.log(this.cardData);
       if (this.cardData.recepcionistaId) {
         this.personasService.getById(this.cardData.recepcionistaId).subscribe((res: any) => {
           this.recepcionista = res;

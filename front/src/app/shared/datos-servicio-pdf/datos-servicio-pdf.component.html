@@ -76,32 +76,28 @@
           <tr>
             <th>CÓDIGO</th>
             <th>DESCRIPCIÓN TRABAJO REALIZADO</th>
-            <th>COSTO M.O.</th>
-            <th>CÓDIGO Y DESCRIP. REPUESTOS</th>
             <th>CANT.</th>
             <th>COSTO REP.</th>
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <td style="height: 25px;"><span id="codigo1"></span></td>
-            <td><span id="descripcionTrabajo1"></span></td>
-            <td><span id="costoMO1"></span></td>
-            <td><span id="codigoRepuestos1"></span></td>
-            <td><span id="cantidad1"></span></td>
-            <td><span id="costoRep1"></span></td>
+          <tr *ngFor="let item of cardData.Servicios" style="color: white;" >
+            <td>{{item.id}}</td>
+            <td>{{item.nombre}}</td>
+            <td>1</td>
+            <td>{{item.costo | currency}}</td>
+            
+            
           </tr>
         </tbody>
       </table>
     </div>
     <div class="bordered pr-3 mb-2">
       <div class="row">
-        <div class="col-6">Total M.O.:<span id="totalMOLabel"></span></div>
-        <div class="col-6 bordered p-1"><span id="totalMO"></span></div>
-        <div class="col-6">Total Repuestos: <span id="totalRepuestosLabel"></span></div>
-        <div class="col-6 bordered p-1"><span id="totalRepuestos"></span></div>
-        <div class="col-6">Total: <span id="totalLabel"></span></div>
-        <div class="col-6 bordered p-1"><span id="total"></span></div>
+        <div class="col-6">Total Servicios: </div>
+        <div class="col-6 bordered p-1">{{cardData.subtotal | currency}}</div>
+        <div class="col-6">Total: </div>
+        <div class="col-6 bordered p-1">{{cardData.subtotal | currency}}</div>
       </div>
     </div>
     <div class="bordered p-2">

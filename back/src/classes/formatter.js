@@ -157,6 +157,30 @@ class Formatter {
       }))
     }
 
+    Service(data) {
+      return data.map(servicio => ({
+        id: servicio.id,
+        createdAt: servicio.createdAt,
+        updatedAt: servicio.updatedAt,
+        cliente: `${servicio.Persona.nombre} ${servicio.Persona.apellido}`,
+        usuario:servicio.Usuario.user,
+        usuarioId: servicio.Usuario.id,
+        personaId: servicio.Persona.id,
+        TipoMovimiento: servicio.TipoMovimiento.descripcion,
+        tipoMovimientoId: servicio.TipoMovimiento.id,
+        subtotal: servicio.subtotal,
+        Servicios: servicio.Stocks.map(stock => ({
+          id: stock.id,
+          nombre: stock.nombre,
+          costo: stock.costo
+        })),
+        DatosServicio: servicio.DatosServicio,
+        datosServiciosId: servicio.datosServicioId,
+        Recepcionista: `${servicio.DatosServicio.Persona.nombre} ${servicio.DatosServicio.Persona.apellido}`
+
+      }))
+    }
+
     MotosVenta(data) {
       return data.map(moto => ({
         id: moto.id,

@@ -262,4 +262,7 @@ export class VentaRepuestosComponent implements OnDestroy, OnInit {
     this.editEliminar = true;
     this.id = data.id;
   }
+
+
+
 }

@@ -29,6 +29,20 @@ class StockService {
           throw err;
         }
       }
+
+      async listAllServicios() {
+        try {
+          const Stock = await models.Stock.findAll({
+            include: [{ all: true }]
+          });
+          console.log('✅ Stock were found');
+          let data = format.Stock(Stock);
+          return data.filter((item) => item.tipoArticulo === 'Servicio');
+        } catch (err) {
+          console.error('🛑 Error when fetching Stock', err);
+          throw err;
+        }
+      }
     
       async listOneStock(Stock_id) {
         try {
