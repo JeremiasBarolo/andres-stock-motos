@@ -16,13 +16,15 @@
     <form [formGroup]="form" (ngSubmit)="openServiceDialog()">
         <div class="flex align-items-center gap-3 mb-3">
             <label for="usuarioId" class="font-semibold w-6rem"><strong>Recepcionista</strong></label>
+            <br>
             <select id="usuarioId" class="flex-auto" formControlName="usuarioId">
               <option *ngFor="let persona of usuarios" [value]="persona.id">{{ persona.name }} {{ persona.lastname }}</option>
             </select>
-          </div>
+        </div>
       
-          <div class="flex align-items-center gap-3 mb-3">
+        <div class="flex align-items-center gap-3 mb-3">
             <label for="personaId" class="font-semibold w-6rem"><strong>Cliente</strong></label>
+            <br>
             <select id="personaId" class="flex-auto" formControlName="personaId">
               <option *ngFor="let persona of clientes" [value]="persona.id">{{ persona.nombre }} {{ persona.apellido }}</option>
             </select>
@@ -63,7 +65,13 @@
         <div class="flex align-items-center gap-3 mb-3">
             <label for="tipo_servicio" class="font-semibold w-6rem"><strong>Tipo de Servicio</strong></label>
             <br>
-            <input id="tipo_servicio" class="flex-auto" formControlName="tipo_servicio" />
+            <select id="tipo_servicio" class="flex-auto"  formControlName="tipo_servicio">
+                <option [id]="'Servicio Garantia'" [value]="'Servicio Garantia'">Servicio Garantia</option>
+                <option [id]="'Reparacion General'" [value]="'Reparacion General'">Reparacion General</option>
+                <option [id]="'Mantenimiento Periodico'" [value]="'Mantenimiento Periodico'">Mantenimiento Periodico</option>
+                <option [id]="'Puesta Marcha'" [value]="'Puesta Marcha'">Puesta Marcha</option>
+                <option [id]="'Otro Servicio'" [value]="'Otro Servicio'">Otro Servicio</option>
+            </select>
         </div>
 
         <div class="flex align-items-center gap-3 mb-3">
@@ -125,6 +133,7 @@
 
         <div class="flex align-items-center gap-3 mb-3">
             <label for="usuarioId" class="font-semibold w-6rem"><strong>Recepcionista</strong></label>
+            <br>
             <select id="usuarioId" class="flex-auto" formControlName="usuarioId">
               <option *ngFor="let persona of usuarios" [value]="persona.id">{{ persona.name }} {{ persona.lastname }}</option>
             </select>
@@ -132,6 +141,7 @@
       
         <div class="flex align-items-center gap-3 mb-3">
             <label for="personaId" class="font-semibold w-6rem"><strong>Cliente</strong></label>
+            <br>
             <select id="personaId" class="flex-auto" formControlName="personaId">
               <option *ngFor="let persona of clientes" [value]="persona.id">{{ persona.nombre }} {{ persona.apellido }}</option>
             </select>
@@ -170,7 +180,13 @@
         <div class="flex align-items-center gap-3 mb-3">
             <label for="tipo_servicio" class="font-semibold w-6rem"><strong>Tipo de Servicio</strong></label>
             <br>
-            <input id="tipo_servicio" class="flex-auto" formControlName="tipo_servicio" />
+            <select id="tipo_servicio" class="flex-auto"  formControlName="tipo_servicio">
+                <option [value]="'servicioGarantia'">Servicio Garantia</option>
+                <option [value]="'reparacionGeneral'">Reparacion General</option>
+                <option [value]="'mantenimientoPeriodico'">Mantenimiento Periodico</option>
+                <option [value]="'puestaMarcha'">Puesta Marcha</option>
+                <option [value]="'otroServicio'">Otro Servicio</option>
+            </select>
         </div>
 
         <div class="flex align-items-center gap-3 mb-3">
@@ -226,7 +242,7 @@
     </form>
 </p-dialog>
 
-<p-dialog header="Especificar Servicios" [modal]="true" [(visible)]="serviciosVisible" [style]="{ width: '50rem' }">
+<p-dialog header="Especificar Servicios" [modal]="true" [(visible)]="serviciosVisible" [style]="{ width: '50rem' }" (onHide)="cerrarServicios()">
     <form [formGroup]="form" (ngSubmit)="onSubmit()">
         <p-pickList 
         [source]="servicios" 
@@ -264,7 +280,7 @@
 </p-dialog>
 
 <!-- <============================================ DETALLES  ==================================================> -->
-<p-dialog header="Detalles del Servicio" [modal]="true" [(visible)]="showModal" [style]="{ width: '50rem' }">
+<p-dialog header="Detalles del Servicio" [modal]="true" [(visible)]="showModal" [style]="{ width: '50rem' }" (onHide)="cerrarEdit()">
     <div class="flex justify-content-end gap-2 mt-3">
         <p-button class="mr-1" label="Ver en PDF" icon="pi pi-arrow-right" [text]="true" (onClick)="redirectToPDF(cardData)"></p-button>
     </div>
@@ -326,13 +342,13 @@
             <div class="p-col-12 p-md-6">
                 <div class="field">
                     <label for="fecha_recepcion"><strong>Fecha de Recepción:</strong></label>
-                    <span id="fecha_recepcion"> {{ cardData?.fecha_recepcion | date: 'dd/MM/yyyy' }}</span>
+                    <span id="fecha_recepcion"> {{ cardData?.fecha_recepcion  }}</span>
                 </div>
             </div>
             <div class="p-col-12 p-md-6">
                 <div class="field">
                     <label for="fecha_est_entrega"><strong>Fecha Estimada de Entrega:</strong></label>
-                    <span id="fecha_est_entrega"> {{ cardData?.fecha_est_entrega | date: 'dd/MM/yyyy' }}</span>
+                    <span id="fecha_est_entrega"> {{ cardData?.fecha_est_entrega }}</span>
                 </div>
             </div>
 

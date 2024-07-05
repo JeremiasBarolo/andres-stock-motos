@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormArray } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Subject, takeUntil } from 'rxjs';
@@ -33,6 +33,7 @@ export class DatosServicioComponent {
   servicios: any[] = [];
   clientes: any[] = [];
   usuarios: any[] = [];
+  ServiciosStatic: any[] = [];
 
   private destroy$ = new Subject<void>();
 
@@ -48,7 +49,8 @@ export class DatosServicioComponent {
     private fb: FormBuilder,
     private router: Router,
     private aRoute: ActivatedRoute,
-    private datePipe: DatePipe
+    private datePipe: DatePipe,
+    private cd: ChangeDetectorRef
   ){
 
     this.form = this.fb.group({
@@ -78,9 +80,8 @@ export class DatosServicioComponent {
         { field: 'id', header: 'ID' },
         { field: 'modelo', header: 'Modelo' },
         { field: 'patente', header: 'Patente' },
-        { field: 'color', header: 'Color' },
-        { field: 'num_motor', header: 'Nro. Motor' },
-        { field: 'num_chasis', header: 'Nro. Chasis' },
+        { field: 'cliente', header: 'Cliente' },
+        
         { field: 'tipo_servicio', header: 'Tipo de Servicio' },
         { field: 'Recepcionista', header: 'Recepcionista' },
         { field: 'fecha_recepcion', header: 'Fecha de Recepcion' },
@@ -96,6 +97,7 @@ export class DatosServicioComponent {
           id: data.id,
           personaId: data.personaId,
           usuarioId: data.usuarioId,
+          cliente: data.cliente,
           modelo: data.DatosServicio.modelo,
           num_motor: data.DatosServicio.num_motor,
           num_chasis: data.DatosServicio.num_chasis,
@@ -127,6 +129,7 @@ export class DatosServicioComponent {
 
     this.stockService.getAllServicios().pipe(takeUntil(this.destroy$)).subscribe((data)=>{
       this.servicios = data;
+      this.ServiciosStatic = data;
     })
 
     this.usuariosService.getAll().pipe(takeUntil(this.destroy$)).subscribe(data => {
@@ -144,25 +147,14 @@ export class DatosServicioComponent {
     this.destroy$.complete();
   }
 
-  editarItem(data:any) {
-    this.editVisible = true
-    this.id = data.id
-
-    console.log('edit',data);
-
-   
-  
-    
-    // const fecha_est_entrega_parts = data.DatosServicio.fecha_est_entrega.split('/');
-    // const fecha_est_entrega_iso = `20${fecha_est_entrega_parts[2]}-${fecha_est_entrega_parts[1]}-${fecha_est_entrega_parts[0]}`;
+  editarItem(data: any) {
+    this.editVisible = true;
+    this.id = data.id;
 
     const fecha_est_entrega = new Date(data.DatosServicio.fecha_est_entrega).toISOString().split('T')[0];
-    
     const fecha_recepcion = new Date(data.DatosServicio.fecha_recepcion).toISOString().split('T')[0];
     const hora_est_entrega = data.hora_est_entrega.slice(0, 5);
-    
-    
-    
+
     this.form.patchValue({
       usuarioId: data.usuarioId,
       personaId: data.personaId,
@@ -179,7 +171,25 @@ export class DatosServicioComponent {
       hora_est_entrega: hora_est_entrega,
       fecha_est_entrega: fecha_est_entrega,
       fecha_recepcion: fecha_recepcion,
-    })
+    });
+
+    this.cd.detectChanges(); // Forzar la detección de cambios
+
+    this.stockService.getAllServicios().subscribe(servicios => {
+      this.servicios = servicios;
+
+      data.Servicios.forEach((item: any) => {
+        this.agregarProducto({
+          id: item.id,
+          nombre_articulo: item.nombre,
+          costo: item.costo
+          
+        });
+
+        this.servicios = this.servicios.filter(repuesto => repuesto.id !== item.id);
+      });
+    });
+  
     
     
     
@@ -242,7 +252,7 @@ export class DatosServicioComponent {
   }
 
   Eliminar(){
-    this.datosServicioService.delete(this.id).pipe(takeUntil(this.destroy$)).subscribe(() => {
+    this.movimientosService.delete(this.id).pipe(takeUntil(this.destroy$)).subscribe(() => {
       setTimeout(() => {
         window.location.reload();
       }, 1000)
@@ -279,7 +289,7 @@ export class DatosServicioComponent {
     const productoForm = this.fb.group({
       id: [producto.id, Validators.required],
       nombre_articulo: [producto.nombre_articulo, Validators.required],
-      costo: [producto.costo, Validators.required],
+      costo: [producto.costo || 0, Validators.required], 
     });
   
     this.productos.push(productoForm);
@@ -311,6 +321,18 @@ openServiceDialog() {
     this.crearVisible = false;
     this.serviciosVisible = true;
   
+}
+
+cerrarEdit(){
+  this.editVisible = false;
+  this.form.reset();
+}
+
+cerrarServicios(){
+  this.serviciosVisible = false;
+  this.cerrarEdit()
+  this.productos.clear()
+  this.servicios = this.ServiciosStatic
 }
 
 }

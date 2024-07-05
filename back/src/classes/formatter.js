@@ -175,7 +175,7 @@ class Formatter {
           costo: stock.costo
         })),
         DatosServicio: servicio.DatosServicio,
-        datosServiciosId: servicio.datosServicioId,
+        datosServiciosId: servicio.DatosServicio.id,
         Recepcionista: `${servicio.DatosServicio.Persona.nombre} ${servicio.DatosServicio.Persona.apellido}`
 
       }))
