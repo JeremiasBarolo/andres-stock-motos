@@ -89,9 +89,7 @@ class MovimientosService {
           {
             model: models.DatosServicio,
             include: [
-              {
-                model: models.Personas
-              }
+                { all: true },
             ]
           }
         ],

@@ -9,9 +9,6 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      tipo_servicio: {
-        type: Sequelize.STRING
-      },
       fecha_recepcion: {
         type: Sequelize.DATE
       },

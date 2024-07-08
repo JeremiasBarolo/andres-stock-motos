@@ -1,58 +1,60 @@
-import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder, Validators, FormArray } from '@angular/forms';
+import { ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
+import { FormGroup, FormBuilder, Validators, FormArray, FormControl } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
-import { Subject, takeUntil } from 'rxjs';
+import { Subject, forkJoin } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 import { DatePipe } from '@angular/common';
 import { DatosServicioService } from '../../../services/datos-servicio.service';
 import { PersonasService } from '../../../services/personas.service';
 import { StockService } from '../../../services/stock.service';
 import { UsuariosService } from '../../../services/usuarios.service';
 import { MovimientosService } from '../../../services/movimientos.service';
+import { TipoServicioService } from '../../../services/tipo-servicio.service';
+import { ChecklistService } from '../../../services/checklist.service';
+
 @Component({
   selector: 'app-datos-servicio',
   templateUrl: './datos-servicio.component.html',
-  styleUrl: './datos-servicio.component.css',
+  styleUrls: ['./datos-servicio.component.css'],
   providers: [DatePipe]
 })
-export class DatosServicioComponent {
-
-
-
-  products: any[] = [];
-  columns: any[] = [];
-  editVisible: boolean = false
-  editEliminar: boolean = false
-  crearVisible: boolean = false
-  showModal: boolean = false
-  serviciosVisible: boolean = false
+export class DatosServicioComponent implements OnInit, OnDestroy {
   form: FormGroup;
-  tipo: any;
-  cardData: any;
-  id: number = 0;
   empleados: any[] = [];
   servicios: any[] = [];
   clientes: any[] = [];
   usuarios: any[] = [];
+  tipoServicio: any[] = [];
+  checklistOptions: any[] = [];
+  columns: any[] = [];
+  products: any[] = [];
+  showModal: boolean = false;
+  cardData: any;
+  id: number = 0;
+  editVisible: boolean = false;
+  datosServicioVisible: boolean = false;
+  editEliminar: boolean = false;
+  crearVisible: boolean = false;
+  serviciosVisible: boolean = false;
   ServiciosStatic: any[] = [];
-
+  tipo:any
   private destroy$ = new Subject<void>();
+  selectedServicios: any;
 
-
-
-
-  constructor( 
+  constructor(
     private datosServicioService: DatosServicioService,
     private movimientosService: MovimientosService,
     private personasService: PersonasService,
     private usuariosService: UsuariosService,
     private stockService: StockService,
+    private tipoServicioService: TipoServicioService,
+    private checklistService: ChecklistService,
     private fb: FormBuilder,
     private router: Router,
     private aRoute: ActivatedRoute,
     private datePipe: DatePipe,
     private cd: ChangeDetectorRef
-  ){
-
+  ) {
     this.form = this.fb.group({
       modelo: ['', Validators.required],
       num_motor: ['', Validators.required],
@@ -69,59 +71,53 @@ export class DatosServicioComponent {
       num_chasis: ['', Validators.required],
       usuarioId: ['', Validators.required],
       personaId: ['', Validators.required],
-      productos: this.fb.array([]) 
+      selectedServicios: [[]],
+      checklist: this.fb.array([]),
+      productos: this.fb.array([])
     });
   }
-  
-  ngOnInit(): void {
 
+  ngOnInit(): void {
     this.movimientosService.getAllServices().pipe(takeUntil(this.destroy$)).subscribe((data: any[]) => {
       this.columns = [
         { field: 'id', header: 'ID' },
         { field: 'modelo', header: 'Modelo' },
         { field: 'patente', header: 'Patente' },
         { field: 'cliente', header: 'Cliente' },
-        
         { field: 'tipo_servicio', header: 'Tipo de Servicio' },
         { field: 'Recepcionista', header: 'Recepcionista' },
         { field: 'fecha_recepcion', header: 'Fecha de Recepcion' },
-        { field: 'fecha_est_entrega', header: 'Fecha Estimadad de Entrega' },
+        { field: 'fecha_est_entrega', header: 'Fecha Estimada de Entrega' },
         { field: 'hora_est_entrega', header: 'Hora Estimada de Entrega' }
       ];
 
-      data.map((data)=>{
-         console.log(data);
-         
-         
-        this.products.push({
-          id: data.id,
-          personaId: data.personaId,
-          usuarioId: data.usuarioId,
-          cliente: data.cliente,
-          modelo: data.DatosServicio.modelo,
-          num_motor: data.DatosServicio.num_motor,
-          num_chasis: data.DatosServicio.num_chasis,
-          patente: data.DatosServicio.patente,
-          color: data.DatosServicio.color,
-          tipo_servicio: data.DatosServicio.tipo_servicio,
-          kilometros: data.DatosServicio.kilometros,
-          estado_general: data.DatosServicio.estado_general,
-          observaciones: data.DatosServicio.observaciones,
-          Recepcionista: data.Recepcionista,
-          fecha_recepcion: this.datePipe.transform(data.DatosServicio.fecha_recepcion, 'dd/MM/yy'),
-          fecha_est_entrega: this.datePipe.transform(data.DatosServicio.fecha_est_entrega, 'dd/MM/yy'),
-          hora_est_entrega: data.DatosServicio.hora_est_entrega,
-          recepcionistaId: data.DatosServicio.recepcionistaId,
-          DatosServicio: data.DatosServicio,
-          datosServicioId: data.datosServicioId,
-          Servicios: data.Servicios,
-          subtotal: data.subtotal
-
-        })
-      })
-    })
-
-    
+      this.products = data.map((item) => ({
+        id: item.id,
+        personaId: item.personaId,
+        usuarioId: item.usuarioId,
+        cliente: item.cliente,
+        modelo: item.DatosServicio.modelo,
+        num_motor: item.DatosServicio.num_motor,
+        num_chasis: item.DatosServicio.num_chasis,
+        patente: item.DatosServicio.patente,
+        color: item.DatosServicio.color,
+        tipo_servicio: item.TipoServicio,
+        tipoServicioId: item.tipoServicioId,
+        kilometros: item.DatosServicio.kilometros,
+        estado_general: item.DatosServicio.estado_general,
+        observaciones: item.DatosServicio.observaciones,
+        Recepcionista: item.Recepcionista,
+        fecha_recepcion: this.datePipe.transform(item.DatosServicio.fecha_recepcion, 'dd/MM/yy'),
+        fecha_est_entrega: this.datePipe.transform(item.DatosServicio.fecha_est_entrega, 'dd/MM/yy'),
+        hora_est_entrega: item.DatosServicio.hora_est_entrega,
+        recepcionistaId: item.DatosServicio.recepcionistaId,
+        DatosServicio: item.DatosServicio,
+        datosServicioId: item.datosServicioId,
+        Servicios: item.Servicios,
+        subtotal: item.subtotal,
+        checklist: item.checklist
+      }));
+    });
 
     this.personasService.getAllEmpleados().pipe(takeUntil(this.destroy$)).subscribe((data)=>{
       this.empleados = data;
@@ -139,6 +135,12 @@ export class DatosServicioComponent {
     this.personasService.getAllClientes().pipe(takeUntil(this.destroy$)).subscribe((data)=>{
       this.clientes = data;
     })
+
+    this.tipoServicioService.getAll().pipe(takeUntil(this.destroy$)).subscribe((data)=>{
+      this.tipoServicio = data;
+    })
+
+    this.loadChecklistOptions();
    
   }
 
@@ -147,9 +149,26 @@ export class DatosServicioComponent {
     this.destroy$.complete();
   }
 
+  get checklist(): FormArray {
+    return this.form.get('checklist') as FormArray;
+  }
+
+  loadChecklistOptions() {
+    this.checklistService.getAll().pipe(takeUntil(this.destroy$)).subscribe((data) => {
+      this.checklistOptions = data.map((item: any) => ({
+        label: item.descripcion,
+        value: item.id
+      }));
+
+      
+    });
+  }
+
   editarItem(data: any) {
     this.editVisible = true;
     this.id = data.id;
+    console.log(data);
+    
 
     const fecha_est_entrega = new Date(data.DatosServicio.fecha_est_entrega).toISOString().split('T')[0];
     const fecha_recepcion = new Date(data.DatosServicio.fecha_recepcion).toISOString().split('T')[0];
@@ -171,115 +190,107 @@ export class DatosServicioComponent {
       hora_est_entrega: hora_est_entrega,
       fecha_est_entrega: fecha_est_entrega,
       fecha_recepcion: fecha_recepcion,
+      selectedServicios: data.checklist.map((item: any) =>( {
+            value: item.id,
+            label: item.nombre
+          }))
     });
 
-    this.cd.detectChanges(); // Forzar la detección de cambios
-
-    this.stockService.getAllServicios().subscribe(servicios => {
-      this.servicios = servicios;
-
-      data.Servicios.forEach((item: any) => {
-        this.agregarProducto({
-          id: item.id,
-          nombre_articulo: item.nombre,
-          costo: item.costo
-          
-        });
-
-        this.servicios = this.servicios.filter(repuesto => repuesto.id !== item.id);
+    this.productos.clear(); 
+    data.Servicios.forEach((item: any) => {
+      this.agregarProducto({
+        id: item.id,
+        nombre_articulo: item.nombre,
+        costo: item.costo
       });
     });
-  
+
+    this.servicios = this.ServiciosStatic.filter(servicio => !data.Servicios.some((item: any) => item.id === servicio.id));
     
     
-    
+
     
   }
 
-  eliminarItem(data:any) {
-    this.editEliminar = true
-    this.id = data.id
+  eliminarItem(data: any) {
+    this.editEliminar = true;
+    this.id = data.id;
   }
-  
-  onSubmit(){
 
-    
-    
+  onSubmit() {
+    const formData = this.form.value;
+
     this.tipo = {
-      usuarioId: this.form.value.usuarioId,
-      personaId: this.form.value.personaId,
-      modelo: this.form.value.modelo,
-      color: this.form.value.color,
-      patente: this.form.value.patente,
-      num_motor: this.form.value.num_motor,
-      num_chasis: this.form.value.num_chasis,
-      tipo_servicio: this.form.value.tipo_servicio,
-      kilometros: this.form.value.kilometros,
-      estado_general: this.form.value.estado_general,
-      observaciones: this.form.value.observaciones,
-      recepcionistaId: this.form.value.recepcionistaId,
-      hora_est_entrega: this.form.value.hora_est_entrega,
-      fecha_est_entrega: this.form.value.fecha_est_entrega,
-      fecha_recepcion: this.form.value.fecha_recepcion,
-      productos: this.form.value.productos
+      usuarioId: formData.usuarioId,
+      personaId: formData.personaId,
+      modelo: formData.modelo,
+      color: formData.color,
+      patente: formData.patente,
+      num_motor: formData.num_motor,
+      num_chasis: formData.num_chasis,
+      tipo_servicio: formData.tipo_servicio,
+      kilometros: formData.kilometros,
+      estado_general: formData.estado_general,
+      observaciones: formData.observaciones,
+      recepcionistaId: formData.recepcionistaId,
+      hora_est_entrega: formData.hora_est_entrega,
+      fecha_est_entrega: formData.fecha_est_entrega,
+      fecha_recepcion: formData.fecha_recepcion,
+      productos: formData.productos.map((producto: any) => ({
+        id: producto.id,
+        nombre_articulo: producto.nombre_articulo,
+        costo: producto.costo
+      })),
+      checklist: formData.checklist.map((item: any) => ({
+        id: item.id,
+        nombre: item.nombre
+      }))
+    
+    };
+
+    if (this.id > 0) {
+      this.tipo.checklist = formData.selectedServicios
+      // Es editar
+      this.datosServicioService.update(this.id, this.tipo).pipe(takeUntil(this.destroy$)).subscribe(() => {
+        setTimeout(() => {
+          window.location.reload();
+        }, 600);
+      }, error => {
+        console.error('Error al actualizar:', error);
+      });
+
+    } else {
+      // Es crear
+      this.datosServicioService.create(this.tipo).pipe(takeUntil(this.destroy$)).subscribe(() => {
+        setTimeout(() => {
+          window.location.reload();
+        }, 600);
+      }, error => {
+        console.error('Error al crear:', error);
+      });
     }
-
-      if(this.id > 0){
-            // Es editar
-            try {
-              this.datosServicioService.update(this.id, this.tipo).pipe(takeUntil(this.destroy$)).subscribe(() => {
-                setTimeout(() => {
-                  window.location.reload();
-                }, 600)
-              });
-
-            } catch (error) {
-              console.log(error);
-            }
-      }else{
-        // Es crear
-        try {
-          this.datosServicioService.create(this.tipo).pipe(takeUntil(this.destroy$)).subscribe(() => {
-            setTimeout(() => {
-              window.location.reload();
-            }, 600)
-          });
-          
-        } catch (error) {
-          console.log(error);
-        }
-      }
   }
 
-  Eliminar(){
+  eliminar() {
     this.movimientosService.delete(this.id).pipe(takeUntil(this.destroy$)).subscribe(() => {
       setTimeout(() => {
         window.location.reload();
-      }, 1000)
-      // this.router.navigate(['dashboard/insumos']);
+      }, 1000);
+    }, error => {
+      console.error('Error al eliminar:', error);
     });
   }
 
-  modalOpen(data:any){
-    this.showModal = true
-    this.cardData = data
-    console.log('cardata:', data);
-    
-  }
+  
 
   redirectToPDF(cardData: any) {
-    console.log(cardData);
-    
+    console.log('cardData', cardData);
     
     const serviciosSerialized = JSON.stringify(cardData.Servicios);
-    
-    
-    const queryParams = { ...cardData, Servicios: serviciosSerialized };
-
-    
-    this.router.navigate(['admin/datos-servicio-pdf'], { queryParams });
-}
-
+    const checklistSerialized = JSON.stringify(cardData.checklist);
+    const queryParams = { ...cardData, Servicios: serviciosSerialized, Checklist: checklistSerialized  };
+    this.router.navigate(['admin/service-pdf'], { queryParams });
+  }
 // <========================================================= FUNCIONAMIENTO DE PICKLIST =======================================================================>
   get productos(): FormArray {
     return this.form.get('productos') as FormArray;
@@ -295,14 +306,34 @@ export class DatosServicioComponent {
     this.productos.push(productoForm);
   }
 
+  agregarProductoChecklist(producto: any) {
+    const productoCheclistForm = this.fb.group({
+      id: [producto.value, Validators.required],
+      nombre: [producto.label, Validators.required] 
+    });
+  
+    this.checklist.push(productoCheclistForm);
+  }
+
+  eliminarProductoCheckList(index: number) {
+    this.checklist.removeAt(index);
+  }
+
   eliminarProducto(index: number) {
     this.productos.removeAt(index);
   }
 
   agregarProductoDesdePickList(event: any) {
+    console.log('evento',event);
     event.items.forEach((producto: any) => {
       this.agregarProducto(producto);
     });
+  }
+
+  agregarProductoDesdeCheckList(event: any) {
+    console.log('evento',event);
+    this.agregarProductoChecklist(event.itemValue);
+    
   }
 
   eliminarProductoDesdePickList(event: any) {
@@ -314,26 +345,62 @@ export class DatosServicioComponent {
     });
   }
 
+  eliminarProductoDesdeCheckList(event: any) {
+    event.value.forEach((producto: any) => {
+      const index = this.checklist.controls.findIndex((control: any) => control.value.id === producto.id);
+      if (index > -1) {
+        this.eliminarProducto(index);
+      }
+    });
+  }
+
 
   // <===================================== FUNCIONAMIENTO DE MODALES ========================================>
 openServiceDialog() {
-  
     this.crearVisible = false;
-    this.serviciosVisible = true;
+    this.datosServicioVisible =  true
   
+}
+
+
+
+openServicesModal(){
+  this.datosServicioVisible = false;
+    this.serviciosVisible =  true
 }
 
 cerrarEdit(){
   this.editVisible = false;
-  this.form.reset();
 }
 
 cerrarServicios(){
-  this.serviciosVisible = false;
+  this.datosServicioVisible = false;
   this.cerrarEdit()
-  this.productos.clear()
+  
   this.servicios = this.ServiciosStatic
 }
+
+marcarCheckboxes(checklistOptions: any) {
+  console.log('checklistOptions', checklistOptions);
+
+  setTimeout(() => {
+    checklistOptions.forEach((option: { id: any; }) => {
+      const checkbox = document.getElementById(`${option.id}`) as HTMLInputElement;
+      if (checkbox) {
+        checkbox.checked = true;
+      }
+    });
+  }, 0);
+}
+
+modalOpen(data: any) {
+  console.log('data', data);
+  
+  this.showModal = true;
+  this.cardData = data;
+  this.marcarCheckboxes(data.checklist);
+}
+
 
 }
 

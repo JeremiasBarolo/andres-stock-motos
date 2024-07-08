@@ -174,7 +174,15 @@ class Formatter {
           nombre: stock.nombre,
           costo: stock.costo
         })),
+
+        checklist: servicio.DatosServicio.checklists.map(stock => ({
+          id: stock.id,
+          nombre: stock.descripcion,
+        })),
+
         DatosServicio: servicio.DatosServicio,
+        TipoServicio: servicio.DatosServicio.TipoServicio.descripcion,
+        tipoServicioId: servicio.DatosServicio.TipoServicio.id,
         datosServiciosId: servicio.DatosServicio.id,
         Recepcionista: `${servicio.DatosServicio.Persona.nombre} ${servicio.DatosServicio.Persona.apellido}`
 

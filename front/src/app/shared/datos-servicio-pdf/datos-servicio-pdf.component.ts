@@ -27,8 +27,10 @@ export class DatosServicioPdfComponent implements OnInit {
     this.route.queryParams.subscribe(params => {
       
       
-      this.cardData = { ...params, Servicios: JSON.parse(params['Servicios']) };
+      this.cardData = { ...params, Servicios: JSON.parse(params['Servicios']), Checklist: JSON.parse(params['Checklist']) };
       console.log(this.cardData);
+      
+
       if (this.cardData.recepcionistaId) {
         this.personasService.getById(this.cardData.recepcionistaId).subscribe((res: any) => {
           this.recepcionista = res;
@@ -38,6 +40,10 @@ export class DatosServicioPdfComponent implements OnInit {
         console.error('No recepcionistaId found');
       }
     });
+
+    this.marcarCheckboxes(this.cardData.Checklist)
+    this.marcarTipoServicio(this.cardData.tipo_servicio)
+    
   }
 
   generatePDF(): void {
@@ -60,6 +66,27 @@ export class DatosServicioPdfComponent implements OnInit {
         title.classList.remove('pdf-title');
       });
     });
+  }
+
+  marcarCheckboxes(checklistOptions: any) {
+  
+    setTimeout(() => {
+      checklistOptions.forEach((option: { id: any; }) => {
+        const checkbox = document.getElementById(`${option.id}`) as HTMLInputElement;
+        if (checkbox) {
+          checkbox.checked = true;
+        }
+      });
+    }, 0);
+  }
+
+  marcarTipoServicio(tipoServicio: string) {
+    setTimeout(() => {
+      const checkbox = document.getElementById(tipoServicio) as HTMLInputElement;
+      if (checkbox) {
+        checkbox.checked = true;
+      }
+    }, 0);
   }
 
 }

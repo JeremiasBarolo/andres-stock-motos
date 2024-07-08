@@ -14,6 +14,8 @@ const MotosController = require('./Motos');
 const TipoMotoController = require('./TipoMoto');
 const empleadosController = require('./empleados');
 const PedidosController = require('./Pedidos');
+const checklistController = require('./checklist');
+const TipoServicioController = require('./TipoServicio');
 
 
 module.exports= {
@@ -31,5 +33,7 @@ module.exports= {
     MotosController,
     TipoMotoController,
     empleadosController,
-    PedidosController
+    PedidosController,
+    checklistController,
+    TipoServicioController
 }
