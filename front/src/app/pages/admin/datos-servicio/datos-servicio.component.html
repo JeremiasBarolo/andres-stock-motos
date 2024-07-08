@@ -1,6 +1,6 @@
 <div class="header-container">
-    <h3>Datos para Servicio</h3>
-    <p-button icon="pi pi-plus" label="Agregar Datos para Servicio" [text]="true" (click)="crearVisible = true" styleClass="ml-auto"></p-button>
+    <h3>Service</h3>
+    <p-button icon="pi pi-plus" label="Agregar Service" [text]="true" (click)="crearVisible = true" styleClass="ml-auto"></p-button>
 </div>
 
 <app-tablang
@@ -66,11 +66,7 @@
             <label for="tipo_servicio" class="font-semibold w-6rem"><strong>Tipo de Servicio</strong></label>
             <br>
             <select id="tipo_servicio" class="flex-auto"  formControlName="tipo_servicio">
-                <option [id]="'Servicio Garantia'" [value]="'Servicio Garantia'">Servicio Garantia</option>
-                <option [id]="'Reparacion General'" [value]="'Reparacion General'">Reparacion General</option>
-                <option [id]="'Mantenimiento Periodico'" [value]="'Mantenimiento Periodico'">Mantenimiento Periodico</option>
-                <option [id]="'Puesta Marcha'" [value]="'Puesta Marcha'">Puesta Marcha</option>
-                <option [id]="'Otro Servicio'" [value]="'Otro Servicio'">Otro Servicio</option>
+                <option *ngFor="let tipo of tipoServicio" [value]="tipo.id">{{ tipo.descripcion }}</option>
             </select>
         </div>
 
@@ -181,11 +177,7 @@
             <label for="tipo_servicio" class="font-semibold w-6rem"><strong>Tipo de Servicio</strong></label>
             <br>
             <select id="tipo_servicio" class="flex-auto"  formControlName="tipo_servicio">
-                <option [value]="'servicioGarantia'">Servicio Garantia</option>
-                <option [value]="'reparacionGeneral'">Reparacion General</option>
-                <option [value]="'mantenimientoPeriodico'">Mantenimiento Periodico</option>
-                <option [value]="'puestaMarcha'">Puesta Marcha</option>
-                <option [value]="'otroServicio'">Otro Servicio</option>
+                <option *ngFor="let tipo of tipoServicio" [value]="tipo.id">{{ tipo.descripcion }}</option>
             </select>
         </div>
 
@@ -242,8 +234,8 @@
     </form>
 </p-dialog>
 
-<p-dialog header="Especificar Servicios" [modal]="true" [(visible)]="serviciosVisible" [style]="{ width: '50rem' }" (onHide)="cerrarServicios()">
-    <form [formGroup]="form" (ngSubmit)="onSubmit()">
+<p-dialog header="Especificar Servicios" [modal]="true" [(visible)]="datosServicioVisible" [style]="{ width: '50rem' }" (onHide)="cerrarServicios()">
+    <form [formGroup]="form">
         <p-pickList 
         [source]="servicios" 
         [target]="productos.value"
@@ -263,10 +255,33 @@
     </form>
 
     <div class="flex justify-content-end gap-2">
-        <p-button class="mr-1" icon="pi pi-check"  [text]="true" severity="success" (click)="onSubmit()" />
+        <p-button class="mr-1" icon="pi pi-check"  [text]="true" severity="success" (click)="openServicesModal()" />
         <p-button icon="pi pi-times"  [text]="true" severity="danger" (click)="crearVisible = false" />
     </div>
   </p-dialog>
+
+
+  <p-dialog header="Especificar Servicios" [modal]="true" [(visible)]="serviciosVisible" [style]="{ width: '50rem', height: '50rem' }" (onHide)="cerrarServicios()">
+    <form [formGroup]="form" (ngSubmit)="onSubmit()">
+        <div class="flex align-items-center gap-3 mb-3">
+            <label for="servicios" class="font-semibold w-6rem"><strong>Servicios</strong></label>
+            <br>
+            <p-multiSelect 
+    [options]="checklistOptions" 
+    formControlName="selectedServicios" 
+    optionLabel="label"
+    (onChange)="agregarProductoDesdeCheckList($event)">
+  </p-multiSelect>
+        </div>
+
+        <div class="flex justify-content-end gap-2">
+            <p-button class="mr-1" icon="pi pi-check" label="Confirmar" severity="success" type="submit"></p-button>
+            <p-button icon="pi pi-times" label="Cancelar" severity="danger" (click)="serviciosVisible = false"></p-button>
+        </div>
+    </form>
+</p-dialog>
+
+
 
 <!-- <============================================ ELIMINAR ==================================================> -->
 <p-dialog header="Eliminar Datos para Servicio" [modal]="true" [(visible)]="editEliminar" [style]="{ width: '25rem' }">
@@ -274,7 +289,7 @@
     <br>
     <br>
     <div class="flex justify-content-end gap-2">
-        <p-button class="mr-1" icon="pi pi-check"  [text]="true" severity="success" (click)="Eliminar()" />
+        <p-button class="mr-1" icon="pi pi-check"  [text]="true" severity="success" (click)="eliminar()" />
         <p-button icon="pi pi-times"  [text]="true" severity="danger" (click)="editEliminar = false" />
     </div>
 </p-dialog>

@@ -34,6 +34,7 @@ class DatosServicioService {
     try {
       
       let subtotal = await this.calcularSubtotal(DataDatosServicio.productos);
+      let checklist = DataDatosServicio.checklist
 
       const newDatosServicio = await models.DatosServicio.create(DataDatosServicio);
 
@@ -50,6 +51,13 @@ class DatosServicioService {
           stockId: servicio.id,
           cantidad: 1,
           movimientosId: movimiento.id
+        })
+      }
+
+      for(const servicio of checklist){
+        await models.ServicioChecklist.create({
+          datosServicioId: newDatosServicio.id,
+          checklistId: servicio.id,
         })
       }
 

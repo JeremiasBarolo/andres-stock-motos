@@ -13,6 +13,8 @@ const DatosServicioProvider = require('./DatosServicio');
 const MotosProvider = require('./Motos');
 const TipoMotoProvider = require('./TipoMoto');
 const PedidosProvider = require('./Pedidos');
+const checklistProvider = require('./checklist');
+const TipoServicioProvider = require('./TipoServicio');
 
 
 
@@ -31,5 +33,7 @@ module.exports = {
     DatosServicioProvider,
     MotosProvider,
     TipoMotoProvider,
-    PedidosProvider
+    PedidosProvider,
+    checklistProvider,
+    TipoServicioProvider
 };

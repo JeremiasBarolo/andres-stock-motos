@@ -194,6 +194,17 @@ module.exports = {
     onDelete: 'CASCADE'
   });
 
+  await queryInterface.addColumn('DatosServicios', 'tipo_servicio', {
+    type: Sequelize.INTEGER,
+    allowNull: true,
+    references: {
+      model: 'TipoServicios',
+      key: 'id'
+    },
+    onUpdate: 'CASCADE',
+    onDelete: 'CASCADE'
+  });
+
  
 // <=============================== Fin DatosServicios ===============================>
   
@@ -224,7 +235,33 @@ module.exports = {
     });
   
    
-// <=============================== Fin Pedidos Stock ===============================>   
+// <=============================== Fin Pedidos Stock ===============================>  
+  
+// <=============================== ServicioChecklist ===============================> 
+    await queryInterface.addColumn('ServicioChecklists', 'datosServicioId', {
+      type: Sequelize.INTEGER,
+      allowNull: true,
+      references: {
+        model: 'DatosServicios',
+        key: 'id'
+      },
+      onUpdate: 'CASCADE',
+      onDelete: 'CASCADE'
+    });
+
+    await queryInterface.addColumn('ServicioChecklists', 'checklistId', {
+      type: Sequelize.INTEGER,
+      allowNull: true,
+      references: {
+        model: 'checklists',
+        key: 'id'
+      },
+      onUpdate: 'CASCADE',
+      onDelete: 'CASCADE'
+    });
+  
+   
+// <=============================== Fin Pedidos Stock ===============================>  
 
 
 
@@ -266,11 +303,17 @@ module.exports = {
 
     // <=============================== DatosServicios ===============================> 
     await queryInterface.removeColumn('DatosServicios', 'recepcionistaId');
+    await queryInterface.removeColumn('DatosServicios', 'tipo_servicio');
     // <=============================== Fin DatosServicios ===============================>
       
+    // <=============================== ServicioChecklists ===============================> 
+    await queryInterface.removeColumn('ServicioChecklists', 'checklistId');
+    await queryInterface.removeColumn('ServicioChecklists', 'datosServicioId');
+    // <=============================== Fin ServicioChecklists ===============================>
+
     // <=============================== Motos ===============================> 
     await queryInterface.removeColumn('PedidosStocks', 'pedidoId');
-      await queryInterface.removeColumn('PedidosStocks', 'stockId');
-    // <=============================== Fin Motos ===============================>
+    await queryInterface.removeColumn('PedidosStocks', 'stockId');
+  // <=============================== Fin Motos ===============================>
   }
 };

@@ -19,6 +19,8 @@ const ClientesRouter = require('./clientes');
 const MotosUsadasRouter = require('./motosUsadas');
 const MotosNuevasRouter = require('./motosNuevas');
 const PedidosRouter = require('./pedidos');
+const ChecklistRouter = require('./checklist');
+const TipoServicioRouter = require('./tipoServicio');
 
 
 module.exports = {
@@ -40,5 +42,7 @@ module.exports = {
     ClientesRouter,
     MotosUsadasRouter,
     MotosNuevasRouter,
-    PedidosRouter
+    PedidosRouter,
+    ChecklistRouter,
+    TipoServicioRouter
 };

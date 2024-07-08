@@ -14,14 +14,25 @@ module.exports = (sequelize, DataTypes) => {
         foreignKey: 'datosServiciosId'
       })
 
+      DatosServicio.belongsTo(models.TipoServicio, {
+        foreignKey: 'tipo_servicio',
+        onUpdate: 'CASCADE',
+      });
+
       DatosServicio.belongsTo(models.Personas, {
         foreignKey: 'recepcionistaId',
         onUpdate: 'CASCADE',
       });
+
+      DatosServicio.belongsToMany(models.checklist, 
+        { 
+          through: models.ServicioChecklist,
+          foreignKey: 'datosServicioId',
+        
+      });
     }
   }
   DatosServicio.init({
-    tipo_servicio: DataTypes.STRING,
     fecha_recepcion: DataTypes.DATE,
     fecha_est_entrega: DataTypes.DATE,
     hora_est_entrega: DataTypes.INTEGER,

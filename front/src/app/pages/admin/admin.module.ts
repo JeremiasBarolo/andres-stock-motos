@@ -32,6 +32,8 @@ import { DropdownModule } from 'primeng/dropdown';
 import { HistorialClientesComponent } from './historial-clientes/historial-clientes.component';
 import { PedidosStockComponent } from './pedidos-stock/pedidos-stock.component';
 
+import { MultiSelectModule } from 'primeng/multiselect';
+
 
 
 
@@ -76,6 +78,7 @@ import { PedidosStockComponent } from './pedidos-stock/pedidos-stock.component';
     PickListModule,
     DragDropModule,
     DropdownModule,
+    MultiSelectModule
   
   ]
 })
