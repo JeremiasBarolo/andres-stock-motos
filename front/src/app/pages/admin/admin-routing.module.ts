@@ -49,14 +49,14 @@ const routes: Routes = [
       { path: 'motos-nuevas', component: MotosNuevasComponent },
       { path: 'tipo-motos', component: TipoMotosComponent },
       { path: 'marcas', component: MarcaComponent },
-      { path: 'datos-servicio', component: DatosServicioComponent },
+      { path: 'service', component: DatosServicioComponent },
       { path: 'clientes', component: ClientesComponent },
       { path: 'proveedor', component: ProveedoresComponent },
       { path: 'venta-respuestos', component: VentaRepuestosComponent },
       { path: 'venta-motos', component: VentaMotosComponent },
       { path: 'historial-clientes', component: HistorialClientesComponent },
       { path: 'pedidos-stock', component: PedidosStockComponent },
-      { path: 'datos-servicio-pdf', component: DatosServicioPdfComponent },
+      { path: 'service-pdf', component: DatosServicioPdfComponent },
     ]
   },
   

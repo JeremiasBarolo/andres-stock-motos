@@ -113,7 +113,8 @@ export class DatosServicioComponent implements OnInit, OnDestroy {
         DatosServicio: item.DatosServicio,
         datosServicioId: item.datosServicioId,
         Servicios: item.Servicios,
-        subtotal: item.subtotal
+        subtotal: item.subtotal,
+        checklist: item.checklist
       }));
     });
 
@@ -268,15 +269,15 @@ export class DatosServicioComponent implements OnInit, OnDestroy {
     });
   }
 
-  modalOpen(data: any) {
-    this.showModal = true;
-    this.cardData = data;
-  }
+  
 
   redirectToPDF(cardData: any) {
+    console.log('cardData', cardData);
+    
     const serviciosSerialized = JSON.stringify(cardData.Servicios);
-    const queryParams = { ...cardData, Servicios: serviciosSerialized };
-    this.router.navigate(['admin/datos-servicio-pdf'], { queryParams });
+    const checklistSerialized = JSON.stringify(cardData.checklist);
+    const queryParams = { ...cardData, Servicios: serviciosSerialized, Checklist: checklistSerialized  };
+    this.router.navigate(['admin/service-pdf'], { queryParams });
   }
 // <========================================================= FUNCIONAMIENTO DE PICKLIST =======================================================================>
   get productos(): FormArray {
@@ -349,6 +350,8 @@ openServiceDialog() {
   
 }
 
+
+
 openServicesModal(){
   this.datosServicioVisible = false;
     this.serviciosVisible =  true
@@ -363,6 +366,27 @@ cerrarServicios(){
   this.cerrarEdit()
   
   this.servicios = this.ServiciosStatic
+}
+
+marcarCheckboxes(checklistOptions: any) {
+  console.log('checklistOptions', checklistOptions);
+
+  setTimeout(() => {
+    checklistOptions.forEach((option: { id: any; }) => {
+      const checkbox = document.getElementById(`${option.id}`) as HTMLInputElement;
+      if (checkbox) {
+        checkbox.checked = true;
+      }
+    });
+  }, 0);
+}
+
+modalOpen(data: any) {
+  console.log('data', data);
+  
+  this.showModal = true;
+  this.cardData = data;
+  this.marcarCheckboxes(data.checklist);
 }
 
 
