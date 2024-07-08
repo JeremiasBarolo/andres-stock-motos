@@ -71,6 +71,7 @@ export class DatosServicioComponent implements OnInit, OnDestroy {
       num_chasis: ['', Validators.required],
       usuarioId: ['', Validators.required],
       personaId: ['', Validators.required],
+      selectedServicios: [[]],
       checklist: this.fb.array([]),
       productos: this.fb.array([])
     });
@@ -166,6 +167,8 @@ export class DatosServicioComponent implements OnInit, OnDestroy {
   editarItem(data: any) {
     this.editVisible = true;
     this.id = data.id;
+    console.log(data);
+    
 
     const fecha_est_entrega = new Date(data.DatosServicio.fecha_est_entrega).toISOString().split('T')[0];
     const fecha_recepcion = new Date(data.DatosServicio.fecha_recepcion).toISOString().split('T')[0];
@@ -186,10 +189,14 @@ export class DatosServicioComponent implements OnInit, OnDestroy {
       recepcionistaId: data.DatosServicio.recepcionistaId,
       hora_est_entrega: hora_est_entrega,
       fecha_est_entrega: fecha_est_entrega,
-      fecha_recepcion: fecha_recepcion
+      fecha_recepcion: fecha_recepcion,
+      selectedServicios: data.checklist.map((item: any) =>( {
+            value: item.id,
+            label: item.nombre
+          }))
     });
 
-    this.productos.clear(); // Limpiar productos antes de agregar los nuevos
+    this.productos.clear(); 
     data.Servicios.forEach((item: any) => {
       this.agregarProducto({
         id: item.id,
@@ -199,6 +206,10 @@ export class DatosServicioComponent implements OnInit, OnDestroy {
     });
 
     this.servicios = this.ServiciosStatic.filter(servicio => !data.Servicios.some((item: any) => item.id === servicio.id));
+    
+    
+
+    
   }
 
   eliminarItem(data: any) {
@@ -238,6 +249,7 @@ export class DatosServicioComponent implements OnInit, OnDestroy {
     };
 
     if (this.id > 0) {
+      this.tipo.checklist = formData.selectedServicios
       // Es editar
       this.datosServicioService.update(this.id, this.tipo).pipe(takeUntil(this.destroy$)).subscribe(() => {
         setTimeout(() => {

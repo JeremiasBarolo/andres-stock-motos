@@ -78,6 +78,8 @@ class DatosServicioService {
         return null;
       }
 
+// <============================= Stock Movimientos =============================>
+  
       let oldStock = oldDatosServicio.Stocks;
       let newStock = dataUpdated.productos;
       let toAdd = [];
@@ -120,6 +122,12 @@ class DatosServicioService {
         });
       }
 
+// <============================= CheckList =============================>
+
+    this.checklistLogica(oldDatosServicio.DatosServicio.id, dataUpdated.checklist)
+
+
+
       let subtotal = await this.calcularSubtotal(dataUpdated.productos)
 
       let newVentas = await oldDatosServicio.update({...dataUpdated, subtotal: subtotal});
@@ -150,6 +158,60 @@ class DatosServicioService {
       return subtotal + (producto.costo); 
     }, 0);
   }
+
+  async checklistLogica(datosServicioId, checklistOptions) {
+    try {
+     
+      let oldStock = await models.ServicioChecklist.findAll({
+        where: { datosServicioId: datosServicioId }
+      });
+      
+      checklistOptions = checklistOptions.map(item =>({
+        id: item.value,
+        nombre: item.label,
+      }));
+     
+      let oldStockMap = new Map();
+      oldStock.forEach(item => {
+        oldStockMap.set(item.checklistId, item);
+      });
+  
+      let toAdd = [];
+      let toDelete = [];
+  
+      
+      checklistOptions.forEach(newItem => {
+        if (oldStockMap.has(newItem.id)) {
+          oldStockMap.delete(newItem.id); 
+        } else {
+          toAdd.push(newItem); 
+        }
+      });
+  
+      
+      toDelete = Array.from(oldStockMap.values());
+  
+      
+      for (let item of toDelete) {
+        await models.ServicioChecklist.destroy({
+          where: { datosServicioId: datosServicioId, checklistId: item.checklistId }
+        });
+      }
+  
+      
+      for (let item of toAdd) {
+        await models.ServicioChecklist.create({
+          checklistId: item.id,
+          datosServicioId: datosServicioId,
+        });
+      }
+  
+      console.log('Checklist actualizado correctamente.');
+    } catch (error) {
+      console.error('Error al actualizar el checklist:', error);
+    }
+  }
+
 }
 
 module.exports = DatosServicioService;
