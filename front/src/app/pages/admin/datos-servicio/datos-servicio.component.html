@@ -261,7 +261,7 @@
   </p-dialog>
 
 
-  <p-dialog header="Especificar Servicios" [modal]="true" [(visible)]="serviciosVisible" [style]="{ width: '100vw', height: '100vh' }" (onHide)="cerrarServicios()">
+  <p-dialog header="Especificar Servicios" [modal]="true" [(visible)]="serviciosVisible" [style]="{ width: '50vw', height: '50vh' }" (onHide)="cerrarServicios()">
     <form [formGroup]="form" (ngSubmit)="onSubmit()">
         <div class="flex align-items-center gap-3 mb-3">
             <label for="servicios" class="font-semibold w-6rem"><strong>Servicios</strong></label>

@@ -31,8 +31,9 @@ import { VentaMotosComponent } from './venta-motos/venta-motos.component';
 import { DropdownModule } from 'primeng/dropdown';
 import { HistorialClientesComponent } from './historial-clientes/historial-clientes.component';
 import { PedidosStockComponent } from './pedidos-stock/pedidos-stock.component';
-
+import { FormsModule } from '@angular/forms';
 import { MultiSelectModule } from 'primeng/multiselect';
+import { ListadoPreciosComponent } from './listado-precios/listado-precios.component';
 
 
 
@@ -62,6 +63,7 @@ import { MultiSelectModule } from 'primeng/multiselect';
     VentaMotosComponent,
     HistorialClientesComponent,
     PedidosStockComponent,
+    ListadoPreciosComponent,
 
    
   ],
@@ -78,7 +80,8 @@ import { MultiSelectModule } from 'primeng/multiselect';
     PickListModule,
     DragDropModule,
     DropdownModule,
-    MultiSelectModule
+    MultiSelectModule,
+    FormsModule
   
   ]
 })

@@ -51,6 +51,30 @@ class MovimientosService {
     }
   }
 
+
+  async listPrecios() {
+    try {
+      const Stock = await models.Stock.findAll({
+        include: [{ all: true }]
+      });
+
+      const Motos = await models.Motos.findAll({
+        include: [{ all: true }]
+      });
+
+      let stock = await format.ListPreciosStock(Stock);
+      let motos = await format.ListPreciosMotos(Motos);
+
+
+      let mergedArray = [...stock, ...motos];
+
+      return mergedArray
+    } catch (err) {
+      console.error('🛑 Error when fetching Ventas', err);
+      throw err;
+    }
+  }
+
   async listAllMotosMovimientos() {
     try {
       const Ventas = await models.Movimientos.findAll({

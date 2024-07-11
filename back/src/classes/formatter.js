@@ -12,6 +12,27 @@ class Formatter {
       }))
     }
 
+
+    ListPreciosMotos(data) {
+      return data.map(moto => ({
+        nombre: `${moto.Marca.descripcion} ${moto.modelo} ${moto.year}`,
+        costo: moto.precio,
+        cantidad: 1,
+        tipo_articulo: `Moto ${moto.TipoMoto.descripcion}`,
+        datos: moto,
+      }))
+    }
+
+    ListPreciosStock(data) {
+      return data.map(stock => ({
+        nombre: stock.nombre,
+        costo: stock.costo,
+        tipo_articulo: stock.Tipo_Articulo.descripcion,
+        cantidad: stock.cantidad,
+        datos: stock,
+      }))
+    }
+
     StockDePedidos(data) {
       return data.map(pedido => ({
         id: pedido.id,
@@ -241,7 +262,7 @@ class Formatter {
     }
 
 
-    Hostorial(data) {
+    Historial(data) {
      
 
       return data.map(venta => 

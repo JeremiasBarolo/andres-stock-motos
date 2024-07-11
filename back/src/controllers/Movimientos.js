@@ -22,6 +22,15 @@ const listHistorial = async (req, res) => {
   }
 };
 
+const listPrecios = async (req, res) => {
+  try {
+    const Movimientos = await MovimientosService.listPrecios();
+    res.json(Movimientos);
+  } catch (err) {
+    res.status(500).json({ action: "listAll", error: err.message });
+  }
+};
+
 const listAllServices = async (req, res) => {
   try {
     const Movimientos = await MovimientosService.listAllServices();
@@ -149,5 +158,6 @@ module.exports = {
   updateVentaMotos,
   listHistorial,
   deleteVentaRespuestos,
-  listAllServices
+  listAllServices,
+  listPrecios
 };

@@ -5,6 +5,10 @@ const listHistorial = async () => {
   return await movimientosService.listHistorial();
 };
 
+const listPrecios = async () => {
+  return await movimientosService.listPrecios();
+};
+
 const listAllMovimientos = async () => {
   return await movimientosService.listAllMovimientos();
 };
@@ -68,5 +72,6 @@ module.exports = {
   listHistorial,
   deleteVentaRespuestos,
   listAllServices,
+  listPrecios,
 
 };

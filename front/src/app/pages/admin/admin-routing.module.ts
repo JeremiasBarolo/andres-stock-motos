@@ -26,6 +26,8 @@ import { VentaMotosComponent } from './venta-motos/venta-motos.component';
 import { HistorialClientesComponent } from './historial-clientes/historial-clientes.component';
 import { PedidosStockComponent } from './pedidos-stock/pedidos-stock.component';
 import { DatosServicioPdfComponent } from '../../shared/datos-servicio-pdf/datos-servicio-pdf.component';
+import { ListadoPreciosComponent } from './listado-precios/listado-precios.component';
+
 
 
 
@@ -57,6 +59,7 @@ const routes: Routes = [
       { path: 'historial-clientes', component: HistorialClientesComponent },
       { path: 'pedidos-stock', component: PedidosStockComponent },
       { path: 'service-pdf', component: DatosServicioPdfComponent },
+      { path: 'listado-precios', component: ListadoPreciosComponent },
     ]
   },
   

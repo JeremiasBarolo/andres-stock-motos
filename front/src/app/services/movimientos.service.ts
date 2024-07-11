@@ -26,6 +26,10 @@ export class MovimientosService {
     return this.http.get<any[]>(`${this.apiUrl}/ventas`); 
   }
 
+  getListadoPrecios(): Observable<any[]> {
+    return this.http.get<any[]>(`${this.apiUrl}/listado-precios`); 
+  }
+
   getAllVentasMoto(): Observable<any[]> {
     return this.http.get<any[]>(`${this.apiUrl}/ventas/motos`); 
   }
