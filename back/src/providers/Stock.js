@@ -9,6 +9,10 @@ const listAllRepuestos = async () => {
   return await StockService.listAllRepuestos();
 };
 
+const listAllStockVentaGeneral = async () => {
+  return await StockService.listAllStockVentaGeneral();
+};
+
 const listAllServicios = async () => {
   return await StockService.listAllServicios();
 };
@@ -36,5 +40,6 @@ module.exports = {
   updateStock,
   deleteStock,
   listAllRepuestos,
-  listAllServicios
+  listAllServicios,
+  listAllStockVentaGeneral
 };

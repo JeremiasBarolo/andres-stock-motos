@@ -86,7 +86,7 @@ export class VentaRepuestosComponent implements OnDestroy, OnInit {
       this.usuarios = data;
     });
 
-    this.stockService.getAll().pipe(takeUntil(this.destroy$)).subscribe((data)=>{
+    this.stockService.getAllStockVentaGeneral().pipe(takeUntil(this.destroy$)).subscribe((data)=>{
       let dataReal = data.map((stock)=>{
         return {
           ...stock,

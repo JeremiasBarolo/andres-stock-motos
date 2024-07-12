@@ -29,7 +29,7 @@ class MovimientosService {
       console.log('✅ Ventas were found');
       let data = await format.Ventas(Ventas);
 
-      return data
+      return data.filter((item) => item.TipoMovimiento !== 'Servicio')
     } catch (err) {
       console.error('🛑 Error when fetching Ventas', err);
       throw err;
@@ -42,7 +42,7 @@ class MovimientosService {
         include: [{ all: true }]
       });
       console.log('✅ Ventas were found');
-      let data = await format.Hostorial(Ventas);
+      let data = await format.Historial(Ventas);
 
       return data
     } catch (err) {

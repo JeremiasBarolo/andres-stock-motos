@@ -23,6 +23,10 @@ export class StockService {
     return this.http.get<any[]>(`${this.apiUrl}/repuestos`); 
   }
 
+  getAllStockVentaGeneral(): Observable<any[]> {
+    return this.http.get<any[]>(`${this.apiUrl}/general`); 
+  }
+
   getAllServicios(): Observable<any[]> {
     return this.http.get<any[]>(`${this.apiUrl}/servicios`); 
   }
