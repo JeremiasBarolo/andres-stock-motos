@@ -7,14 +7,14 @@ import { TipoPersonasService } from '../../../services/tipo-personas.service';
 import { LocalidadesService } from '../../../services/localidades.service';
 import { DatePipe } from '@angular/common';
 
+
 @Component({
-  selector: 'app-proveedores',
-  templateUrl: './proveedores.component.html',
-  styleUrl: './proveedores.component.css',
+  selector: 'app-empleados',
+  templateUrl: './empleados.component.html',
+  styleUrl: './empleados.component.css',
   providers: [DatePipe]
 })
-export class ProveedoresComponent {
-
+export class EmpleadosComponent {
   products: any[] = [];
   columns: any[] = [];
   editVisible: boolean = false
@@ -60,7 +60,7 @@ export class ProveedoresComponent {
   
   ngOnInit(): void {
 
-    this.personasService.getAllProveedores().pipe(takeUntil(this.destroy$)).subscribe((data: any[]) => {
+    this.personasService.getAllEmpleados().pipe(takeUntil(this.destroy$)).subscribe((data: any[]) => {
       this.columns = [
         { field: 'id', header: 'ID' },
         { field: 'nombre', header: 'Nombre' },
@@ -156,7 +156,7 @@ export class ProveedoresComponent {
       direccion: this.form.value.direccion,
       nro_direccion: this.form.value.nro_direccion,
       localidadId: this.form.value.localidadId,
-      tipoPersonaId: 1
+      tipoPersonaId: 2
     }
 
       if(this.id > 0){
@@ -201,4 +201,3 @@ export class ProveedoresComponent {
   }
 
 }
-

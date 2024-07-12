@@ -34,6 +34,7 @@ import { PedidosStockComponent } from './pedidos-stock/pedidos-stock.component';
 import { FormsModule } from '@angular/forms';
 import { MultiSelectModule } from 'primeng/multiselect';
 import { ListadoPreciosComponent } from './listado-precios/listado-precios.component';
+import { EmpleadosComponent } from './empleados/empleados.component';
 
 
 
@@ -64,6 +65,7 @@ import { ListadoPreciosComponent } from './listado-precios/listado-precios.compo
     HistorialClientesComponent,
     PedidosStockComponent,
     ListadoPreciosComponent,
+    EmpleadosComponent,
 
    
   ],

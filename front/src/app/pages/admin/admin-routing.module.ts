@@ -27,6 +27,7 @@ import { HistorialClientesComponent } from './historial-clientes/historial-clien
 import { PedidosStockComponent } from './pedidos-stock/pedidos-stock.component';
 import { DatosServicioPdfComponent } from '../../shared/datos-servicio-pdf/datos-servicio-pdf.component';
 import { ListadoPreciosComponent } from './listado-precios/listado-precios.component';
+import { EmpleadosComponent } from './empleados/empleados.component';
 
 
 
@@ -45,6 +46,7 @@ const routes: Routes = [
       { path: 'roles', component: RolesComponent },
       { path: 'usuarios', component: UsuariosComponent },
       { path: 'personas', component: PersonasComponent },
+      { path: 'empleados', component: EmpleadosComponent },
       { path: 'stock', component: StockComponent },
       { path: 'motos', component: MotosComponent },
       { path: 'motos-usadas', component: MotosUsadasComponent },

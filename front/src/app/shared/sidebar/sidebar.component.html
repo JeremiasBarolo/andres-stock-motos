@@ -47,73 +47,20 @@
       </li>
 
 
-
       <li>
-        
-        <a href="javascript:;" class="has-arrow">
+        <a (click)="navigateTo('admin/pedidos-stock')">
           <div class="parent-icon">
             <ion-icon name="albums-outline"></ion-icon>
           </div>
-          <div class="menu-title">Pedidos</div>
+          <div class="menu-title">Pedidos de Stock</div>
         </a>
-        <ul>
-          <li><a (click)="navigateTo('admin/pedidos-stock')">
-            <ion-icon name="ellipse-outline"></ion-icon> Pedidos de stock
-          </a>
-          </li>
-
-          <li><a (click)="navigateTo('admin/motos-usadas')">
-              <ion-icon name="ellipse-outline"></ion-icon> Pedidos Motos?
-            </a>
-          </li>
-          
-          
-          
-        </ul>
       </li>
+
+     
 
 
       <li class="menu-label">Gestionar Ventas</li>
-      <li>
-        <a href="javascript:;" class="has-arrow">
-          <div class="parent-icon">
-            <ion-icon name="search-outline"></ion-icon>
-          </div>
-          <div class="menu-title">Diagnostico</div>
-        </a>
-        <ul>
-          <li> <a>
-              <ion-icon name="ellipse-outline"></ion-icon>Presupuesto
-            </a>
-          </li>
-          <li> <a >
-              <ion-icon name="ellipse-outline"></ion-icon>Orden de Reaparacion
-            </a>
-          </li>
-        
-        </ul>
-      </li>
 
-      <li>
-        <a href="javascript:;" class="has-arrow">
-          <div class="parent-icon">
-            <ion-icon name="build-outline"></ion-icon>
-            
-          </div>
-          <div class="menu-title">Services</div>
-        </a>
-        <ul>
-          <li> <a (click)="navigateTo('admin/service')" >
-              <ion-icon name="ellipse-outline"></ion-icon>Datos de Service
-            </a>
-          </li>
-          <li> <a >
-              <ion-icon name="ellipse-outline"></ion-icon>Orden de Reaparacion
-            </a>
-          </li>
-
-        </ul>
-      </li>
 
       <li>
         <a href="javascript:;" class="has-arrow">
@@ -124,7 +71,7 @@
         </a>
         <ul>
           <li> <a (click)="navigateTo('admin/venta-respuestos')">
-              <ion-icon name="ellipse-outline"></ion-icon>Repuestos
+              <ion-icon name="ellipse-outline"></ion-icon> General
             </a>
           </li>
           <li> <a (click)="navigateTo('admin/venta-motos')">
@@ -135,22 +82,42 @@
         </ul>
       </li>
 
+      <li>
+        <a (click)="navigateTo('admin/service')">
+          <div class="parent-icon">
+            <ion-icon name="build-outline"></ion-icon>
+          </div>
+          <div class="menu-title">Service</div>
+        </a>
+      </li>
+      
       
 
-      <a href="javascript:;">
-        <ion-icon name="cash-outline"></ion-icon>
-        <div class="menu-title">Listado de Precios</div>
-      </a>
+     
 
-      <a (click)="navigateTo('admin/historial-clientes')">
-        <ion-icon name="list-outline"></ion-icon>
-        <div class="menu-title">Historial de Clientes</div>
-      </a>
+      
+      <li>
+        <a (click)="navigateTo('admin/listado-precios')">
+          <div class="parent-icon">
+            <ion-icon name="cash-outline"></ion-icon>
+          </div>
+          <div class="menu-title">Listado de Precios</div>
+          
+          
+        </a>
+      </li>
+      
+      <li>
+        <a (click)="navigateTo('admin/historial-clientes')">
+          <div class="parent-icon">
+            <ion-icon name="list-outline"></ion-icon>
+          </div>
+          <div class="menu-title">Historial de Clientes</div>
+        </a>
+      </li>
+      
 
-      <a href="javascript:;">
-        <ion-icon name="bar-chart-outline"></ion-icon>
-      <div class="menu-title">Estadisticas</div>
-    </a>
+      
 
 
       <li class="menu-label">Personas y Motos</li>
@@ -162,18 +129,21 @@
           <div class="menu-title">Personas</div>
         </a>
         <ul>
-          <li> <a (click)="navigateTo('admin/tipo-personas')">
-              <ion-icon name="ellipse-outline"></ion-icon>Tipo de Personas
-            </a>
-          </li>
+          
           <li> <a (click)="navigateTo('admin/personas')">
               <ion-icon name="ellipse-outline"></ion-icon> Listado de Personas
             </a>
           </li>
+
           <li> <a (click)="navigateTo('admin/proveedor')">
               <ion-icon name="ellipse-outline"></ion-icon> Proveedores
             </a>
           </li>
+
+          <li> <a (click)="navigateTo('admin/empleados')">
+            <ion-icon name="ellipse-outline"></ion-icon> Empleados
+          </a>
+        </li>
 
           <li> <a (click)="navigateTo('admin/clientes')">
             <ion-icon name="ellipse-outline"></ion-icon> Clientes
@@ -190,22 +160,12 @@
 
       
       <li>
-        <a class="has-arrow" href="javascript:;">
+        <a (click)="navigateTo('admin/motos')">
           <div class="parent-icon">
             <ion-icon name="bicycle-outline"></ion-icon>
           </div>
           <div class="menu-title">Motos</div>
         </a>
-        <ul>
-          <li> <a (click)="navigateTo('admin/tipo-motos')">
-              <ion-icon name="ellipse-outline"></ion-icon>Tipo de Motos
-            </a>
-          </li>
-          <li> <a (click)="navigateTo('admin/motos')">
-              <ion-icon name="ellipse-outline"></ion-icon> Motos
-            </a>
-          </li>
-        </ul>
       </li>
 
       <li class="menu-label">Padrones</li>
