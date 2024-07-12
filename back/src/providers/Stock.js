@@ -5,6 +5,10 @@ const listAllStock = async () => {
   return await StockService.listAllStock();
 };
 
+const listAllInsumos = async () => {
+  return await StockService.listAllInsumos();
+};
+
 const listAllRepuestos = async () => {
   return await StockService.listAllRepuestos();
 };
@@ -41,5 +45,6 @@ module.exports = {
   deleteStock,
   listAllRepuestos,
   listAllServicios,
-  listAllStockVentaGeneral
+  listAllStockVentaGeneral,
+  listAllInsumos
 };

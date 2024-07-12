@@ -6,6 +6,10 @@
             return await StockProvider.listAllStock();
         };
 
+        const listAllInsumos = async () => {
+            return await StockProvider.listAllInsumos();
+        };
+
         const listAllRepuestos = async () => {
             return await StockProvider.listAllRepuestos();
         };
@@ -45,5 +49,6 @@
         listAllRepuestos, 
         listAllServicios,
         listAllStockVentaGeneral,
+        listAllInsumos
         };
 

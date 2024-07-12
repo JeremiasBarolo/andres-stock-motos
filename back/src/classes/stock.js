@@ -15,6 +15,20 @@ class StockService {
           throw err;
         }
       }
+      async listAllInsumos() {
+        try {
+          const Stock = await models.Stock.findAll({
+            include: [{ all: true }]
+          });
+          console.log('✅ Stock were found');
+          let data = format.Stock(Stock);
+          return data.filter((item) => item.tipoArticulo === 'Insumo');
+        } catch (err) {
+          console.error('🛑 Error when fetching Stock', err);
+          throw err;
+        }
+      }
+      
 
       async listAllRepuestos() {
         try {
@@ -37,7 +51,7 @@ class StockService {
           });
           console.log('✅ Stock were found');
           let data = format.Stock(Stock);
-          return data.filter((item) => item.tipoArticulo !== 'Servicio' && item.tipoArticulo !== 'Insumo');
+          return data.filter((item) => item.tipoArticulo !== 'Servicio');
         } catch (err) {
           console.error('🛑 Error when fetching Stock', err);
           throw err;
