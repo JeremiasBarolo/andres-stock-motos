@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { StockService } from '../../../services/stock.service';
 import { Subject, takeUntil } from 'rxjs';
 
@@ -26,16 +26,18 @@ export class AsignarInsumosComponent implements OnInit {
     private stockService: StockService,
     private datosServicioService: DatosServicioService,
     private movimientoService: MovimientosService,
+    private route: ActivatedRoute, 
   ) { }
 
   ngOnInit(): void {
-    const dataString = sessionStorage.getItem('datos');
-    if (dataString) {
-      this.cardData = JSON.parse(dataString);
-      sessionStorage.removeItem('datos'); 
-    }
-
-    this.setDatos(this.cardData)
+    this.route.paramMap.subscribe(params => {
+      const id = params.get('id') ? +params.get('id')! : null;
+      if (id !== null) {
+        this.setDatos(id);
+      } else {
+        console.error('ID no válido');
+      }
+    });
   }
 
   ngOnDestroy(): void {
@@ -44,12 +46,16 @@ export class AsignarInsumosComponent implements OnInit {
   }
 
 
-  setDatos(datos: any): void {
-    if (!datos) return;
+  setDatos(id: any): void {
 
-    console.log(datos);
+    
+    
 
-    const insumos = datos.Servicios.filter((servicio: any) => servicio.tipoArticulo !== 'Servicio');
+    this.movimientoService.getById(id).pipe(takeUntil(this.destroy$)).subscribe((datos: any) => {
+      console.log(datos);
+      
+      this.cardData = datos;
+      const insumos = datos.Servicios.filter((servicio: any) => servicio.tipoArticulo !== 'Servicio');
 
 
     this.stockService.getAllInsumos().pipe(
@@ -63,8 +69,12 @@ export class AsignarInsumosComponent implements OnInit {
         ...insumo,
         cantidad: insumo.cantidad,
         descripcion: insumo.nombre 
-      }));
+        }));
+      });
     });
+    
+
+    
 }
 
 

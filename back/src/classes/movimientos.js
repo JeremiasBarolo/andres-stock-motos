@@ -173,11 +173,33 @@ class MovimientosService {
 
   async listOneMovimientos(Ventas_id) {
     try {
-      const oneVentas = await models.Movimientos.findByPk(Ventas_id);
+      const oneVentas = await models.Movimientos.findByPk(Ventas_id,{
+        include: [{ all: true }],
+        include: [
+          { all: true },
+          {
+            model: models.DatosServicio,
+            include: [
+                { all: true },
+            ]
+          },
+          {
+            model: models.Stock,
+            include: [
+                { all: true },
+            ]
+          },
+
+            
+
+        ],
+      }
+      );
       if (!oneVentas) {
         return null;
       }
-      return oneVentas
+      let data = format.OneService(oneVentas);
+      return data
     } catch (err) {
       console.error('🛑 Error when fetching a single Usuario', err);
       throw err;

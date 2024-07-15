@@ -393,9 +393,41 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr *ngFor="let item of cardData?.Servicios">
+                    <tr *ngFor="let item of cardData?.ServiciosTable">
                         <td>{{ item.nombre }}</td>
                         <td>{{ item.costo | currency }}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <br>
+        <br>
+
+        <div class="field" *ngIf="cardData?.InsumoTable?.length > 0">
+            <label for="stock"><strong>Detalles de los Insumos:</strong></label>
+            
+            
+            
+            <table class="table">
+                <thead>
+                  <tr>
+                    <th>Nombre</th>
+                    <th>Costo</th>
+                    <th>
+                      <div class="d-flex justify-content-between align-items-center">
+                        <span>Cantidad</span>
+                        <p-button icon="pi pi-plus" [text]="true" severity="info" (click)="asignarInsumos(cardData)" pTooltip="Asignarle Insumos"></p-button>
+                      </div>
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let item of cardData?.InsumoTable">
+                        <td>{{ item.nombre }}</td>
+                        <td>{{ item.costo | currency }}</td>
+                        <td>{{ item.cantidad  }}</td>
+                        
+                        
                     </tr>
                 </tbody>
             </table>

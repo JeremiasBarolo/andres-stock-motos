@@ -63,7 +63,7 @@ const routes: Routes = [
       { path: 'pedidos-stock', component: PedidosStockComponent },
       { path: 'service-pdf', component: DatosServicioPdfComponent },
       { path: 'listado-precios', component: ListadoPreciosComponent },
-      { path: 'asignar-insumos', component: AsignarInsumosComponent },
+      { path: 'asignar-insumos/:id', component: AsignarInsumosComponent },
     ]
   },
   

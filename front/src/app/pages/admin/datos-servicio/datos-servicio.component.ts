@@ -218,10 +218,7 @@ export class DatosServicioComponent implements OnInit, OnDestroy {
     this.id = data.id;
   }
 
-  asignarInsumos(data: any) {
-    sessionStorage.setItem('datos', JSON.stringify(data)); 
-    this.router.navigate(['admin/asignar-insumos']);
-  }
+  
 
   onSubmit() {
     const formData = this.form.value;
@@ -370,6 +367,10 @@ openServiceDialog() {
   
 }
 
+asignarInsumos(data: any) {
+  this.router.navigate(['admin/asignar-insumos', data.id]);
+}
+
 
 
 openServicesModal(){
@@ -405,7 +406,10 @@ modalOpen(data: any) {
   console.log('data', data);
   
   this.showModal = true;
-  this.cardData = data;
+  this.cardData = {...data,
+    ServiciosTable: data.Servicios.filter((item: { tipoArticulo: string; }) => item.tipoArticulo === 'Servicio'),
+    InsumoTable: data.Servicios.filter((item: { tipoArticulo: string; }) => item.tipoArticulo === 'Insumo'),
+  };
   this.marcarCheckboxes(data.checklist);
 }
 

@@ -227,6 +227,40 @@ class Formatter {
       }))
     }
 
+    OneService(data) {
+      return {
+        id: data.id,
+        createdAt: data.createdAt,
+        updatedAt: data.updatedAt,
+        cliente: `${data.Persona.nombre} ${data.Persona.apellido}`,
+        usuario:data.Usuario.user,
+        usuarioId: data.Usuario.id,
+        personaId: data.Persona.id,
+        TipoMovimiento: data.TipoMovimiento.descripcion,
+        tipoMovimientoId: data.TipoMovimiento.id,
+        subtotal: data.subtotal,
+        Servicios: data.Stocks.map(stock => ({
+          id: stock.id,
+          nombre: stock.nombre,
+          costo: stock.costo,
+          cantidad: stock.StockMoviminetos.cantidad,
+          tipoArticulo: stock.Tipo_Articulo.descripcion
+        })),
+
+        checklist: data.DatosServicio.checklists.map(stock => ({
+          id: stock.id,
+          nombre: stock.descripcion,
+        })),
+
+        DatosServicio: data.DatosServicio,
+        TipoServicio: data.DatosServicio.TipoServicio.descripcion,
+        tipoServicioId: data.DatosServicio.TipoServicio.id,
+        datosServiciosId: data.DatosServicio.id,
+        Recepcionista: `${data.DatosServicio.Persona.nombre} ${data.DatosServicio.Persona.apellido}`
+
+      }
+    }
+
     MotosVenta(data) {
       return data.map(moto => ({
         id: moto.id,
