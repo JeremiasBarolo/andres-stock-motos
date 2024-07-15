@@ -10,7 +10,7 @@
             <div class="card-body">
               <ul class="list-group" *ngFor="let entity of options">
                 <li class="list-group-item d-flex justify-content-between align-items-center">
-                  {{ entity.nombre_articulo }}
+                  {{ entity.nombre }}
                   <button class="btn btn-success" (click)="selectedEntity(entity)">Agregar Insumo</button>
                 </li>
               </ul>
@@ -38,7 +38,7 @@
                         </ng-template>
                         <ng-template pTemplate="body" let-item let-i="rowIndex">
                           <tr>
-                            <td>{{ item.nombre_articulo }}</td>
+                            <td>{{ item.nombre }}</td>
                             <td>{{ item.costo | currency }}</td>
                             <td>
                               <button type="button" class="btn btn-primary" (click)="incrementQuantity(item)">+</button>

@@ -49,51 +49,32 @@ export class AsignarInsumosComponent implements OnInit {
 
     console.log(datos);
 
-   
+    const insumos = datos.Servicios.filter((servicio: any) => servicio.tipoArticulo !== 'Servicio');
+
+
     this.stockService.getAllInsumos().pipe(
       takeUntil(this.destroy$)
     ).subscribe((data: any[]) => {
       
-      this.options = data.filter(insumo => insumo.tipoArticulo !== 'Servicio');
-
-     
-      this.movimientoService.getRelaciones(datos.id).pipe(
-        takeUntil(this.destroy$)
-      ).subscribe((relaciones: any[]) => {
-        
-        const relacionesFiltradas = relaciones.filter(rel => {
-          const insumo = this.options.find(opt => opt.id === rel.stockId);
-          return insumo && insumo.tipoArticulo !== 'Servicio';
-        });
-
-        
-        this.selectedEntities = relacionesFiltradas.map(rel => {
-          const insumo = this.options.find(opt => opt.id === rel.stockId);
-          return {
-            ...insumo,
-            cantidad: rel.cantidad,
-            descripcion: insumo.descripcion,
-            total: insumo.costo * rel.cantidad
-          };
-        });
-
-        
-        this.options = this.options.filter(insumo => !this.selectedEntities.some(entity => entity.id === insumo.id));
-      });
+      this.options = data.filter(insumo => insumo.tipoArticulo !== 'Servicio' && !insumos.some((entity: { id: any; }) => entity.id === insumo.id));
+      
+    
+      this.selectedEntities = insumos.map((insumo: any) => ({
+        ...insumo,
+        cantidad: insumo.cantidad,
+        descripcion: insumo.nombre 
+      }));
     });
-  }
+}
 
 
   selectedEntity(entity: any) {
-    this.selectedEntities.push({ 
-      ...entity, 
-      cantidad: 1,
-      descripcion: entity.descripcion 
-      });
+    this.selectedEntities.push(entity);
     this.options = this.options.filter(item => item.id !== entity.id);
   }
 
   returnEntities(entity: any) {
+
     this.options.push(entity);
     this.selectedEntities = this.selectedEntities.filter(item => item.id !== entity.id);
   }

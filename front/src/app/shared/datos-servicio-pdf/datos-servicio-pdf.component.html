@@ -83,6 +83,7 @@
           <tr>
             <th>CÓDIGO</th>
             <th>DESCRIPCIÓN TRABAJO REALIZADO</th>
+            <th>TIPO ART.</th>
             <th>CANT.</th>
             <th>COSTO REP.</th>
           </tr>
@@ -91,7 +92,8 @@
           <tr *ngFor="let item of cardData.Servicios" style="color: white;" >
             <td>{{item.id}}</td>
             <td>{{item.nombre}}</td>
-            <td>1</td>
+            <td>{{item.tipoArticulo}}</td>
+            <td>{{item.cantidad}}</td>
             <td>{{item.costo | currency}}</td>
             
             
@@ -103,8 +105,10 @@
       <div class="row">
         <div class="col-6">Total Servicios: </div>
         <div class="col-6 bordered p-1">{{cardData.subtotal | currency}}</div>
+        <div class="col-6">Mano de Obra:</div>
+        <div class="col-6 bordered p-1">{{ManoDeObra(cardData.subtotal) | currency}}</div>
         <div class="col-6">Total: </div>
-        <div class="col-6 bordered p-1">{{cardData.subtotal | currency}}</div>
+        <div class="col-6 bordered p-1">{{CalcularSubtotalFinal(cardData.subtotal) | currency }}</div>
       </div>
     </div>
     <div class="bordered p-2">

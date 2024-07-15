@@ -1,6 +1,9 @@
 var models = require('../models');
 const Formatter = require('./formatter');
 const format = new Formatter();
+const UtilsService = require('./utils');
+const utilsService = new UtilsService();
+
 
 class DatosServicioService {
   async listAllDatosServicio() {
@@ -150,43 +153,35 @@ class DatosServicioService {
 
 // <============================= Stock Movimientos =============================>
   
-      let oldStock = oldDatosServicio.Stocks.filter(item => item.tipoId !== 3)
-      let newStock = dataUpdated
+      let oldStock = oldDatosServicio.Stocks.filter(item => item.tipoId !== 3);
+      let newStock = dataUpdated;
       
       let toAdd = [];
       let toDelete = [];
       let toUpdate = [];
-
       
-      if(newStock.length === 0){
+      if(newStock.length === 0) {
         for (let item of oldStock) {
-          
           let stock = await models.Stock.findByPk(item.id);
           await stock.update({
             cantidad: stock.cantidad + item.StockMoviminetos.cantidad
           });
-
+      
           await models.StockMoviminetos.destroy({
             where: { stockId: item.id, movimientosId: DatosServicio_id }
           });
-
-          
         } 
       } 
-
-
+      
       let oldStockMap = new Map();
       oldStock.forEach(item => {
-        oldStockMap.set(item.id);
+        oldStockMap.set(item.id, item.StockMoviminetos.cantidad);
       });
-
-      
-      
-
       
       newStock.forEach(newItem => {
         if (oldStockMap.has(newItem.id)) {
-          if (oldStockMap.get(newItem.id) !== newItem.cantidad) {
+          let oldCantidad = oldStockMap.get(newItem.id);
+          if (oldCantidad !== newItem.cantidad) {
             toUpdate.push(newItem);
           }
           oldStockMap.delete(newItem.id); 
@@ -194,57 +189,55 @@ class DatosServicioService {
           toAdd.push(newItem);
         }
       });
-
       
-      
-
+      toDelete = Array.from(oldStockMap.keys());
       
       for (let item of toUpdate) {
-       
-      let stock = await models.Stock.findByPk(item.id);
-
+        let stock = await models.Stock.findByPk(item.id);
       
-      let movimientoAnterior = await models.StockMoviminetos.findOne({
-        where: { stockId: item.id, movimientosId: DatosServicio_id },
-      });
-      
-      movimientoAnterior = movimientoAnterior ? parseInt(movimientoAnterior.cantidad, 10) : 0;
-      let nuevaCantidad = parseInt(item.cantidad, 10);
-
-      
-      if (nuevaCantidad > movimientoAnterior) {
-        let diferencia = nuevaCantidad - movimientoAnterior;
-        await stock.update({
-          cantidad: stock.cantidad - diferencia
+        let movimientoAnterior = await models.StockMoviminetos.findOne({
+          where: { stockId: item.id, movimientosId: parseInt(DatosServicio_id, 10)},
         });
-      }
+        
+        movimientoAnterior = movimientoAnterior ? parseInt(movimientoAnterior.cantidad, 10) : 0;
+        let nuevaCantidad = parseInt(item.cantidad, 10);
       
-      else if (nuevaCantidad < movimientoAnterior) {
-        let diferencia = movimientoAnterior - nuevaCantidad;
-        await stock.update({
-          cantidad: stock.cantidad + diferencia
-        });
+        if (nuevaCantidad > movimientoAnterior) {
+          let diferencia = nuevaCantidad - movimientoAnterior;
+          await stock.update({
+            cantidad: stock.cantidad - diferencia
+          });
+        } else if (nuevaCantidad < movimientoAnterior) {
+          let diferencia = movimientoAnterior - nuevaCantidad;
+          await stock.update({
+            cantidad: stock.cantidad + diferencia
+          });
+        }
+      
+        await models.StockMoviminetos.update(
+          { cantidad: nuevaCantidad },
+          { where: { stockId: item.id, movimientosId: DatosServicio_id } }
+        );
       }
-
-      await models.StockMoviminetos.update(
-        { cantidad: item.cantidad },
-        { where: { stockId: item.id, movimientosId: DatosServicio_id } }
-      );
-    }
-
-
-
       
       for (let id of toDelete) {
-        await models.StockMoviminetos.destroy({
+        let stockMoviminetos = await models.StockMoviminetos.findOne({
           where: { stockId: id, movimientosId: DatosServicio_id }
         });
-        let stock = await models.Stock.findByPk(id);
-        await stock.update({
-          cantidad: stock.cantidad + item.cantidad
-        });
+      
+        if (stockMoviminetos) {
+          let cantidad = stockMoviminetos.cantidad;
+      
+          await models.StockMoviminetos.destroy({
+            where: { stockId: id, movimientosId: DatosServicio_id },
+          });
+      
+          let stock = await models.Stock.findByPk(id);
+          await stock.update({
+            cantidad: stock.cantidad + cantidad
+          });
+        }
       }
-
       
       for (let item of toAdd) {
         await models.StockMoviminetos.create({
@@ -252,16 +245,25 @@ class DatosServicioService {
           movimientosId: DatosServicio_id,
           cantidad: item.cantidad
         });
-
+      
         let stock = await models.Stock.findByPk(item.id);
         await stock.update({
           cantidad: stock.cantidad - item.cantidad
         });
       }
-
       
+      const servicios = oldDatosServicio.Stocks.filter(item => item.tipoId === 3)
+      servicios.map(item => 
+        dataUpdated.push(
+          ({
+            id: item.id,
+            costo:item.costo,
+            cantidad: 1
+          }))
+        )
 
-      
+      const subtotal = await utilsService.getTotalPrice(dataUpdated)
+      await oldDatosServicio.update({subtotal: subtotal});
       return true;
 
     } catch (err) {

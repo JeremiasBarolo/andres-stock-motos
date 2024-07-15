@@ -4,6 +4,8 @@ const Formatter = require('./formatter');
 const format = new Formatter();
 const stockService = require('./stock');
 const StockService = new stockService();
+const UtilsService = require('./utils');
+const utilsService = new UtilsService();
 
 class MovimientosService {
   async listAllMovimientos() {
@@ -184,7 +186,7 @@ class MovimientosService {
 
   async createMovimientos(DataVentas) {
     try {
-      let subtotal = await this.getTotalPrice(DataVentas.productos)
+      let subtotal = await utilsService.getTotalPrice(DataVentas.productos)
       
       const movimiento = await models.Movimientos.create({
         subtotal: subtotal,
@@ -379,7 +381,7 @@ class MovimientosService {
         });
       }
 
-      let subtotal = await this.getTotalPrice(dataUpdated.productos)
+      let subtotal = await utilsService.getTotalPrice(dataUpdated.productos)
 
       let newVentas = await oneVentas.update({...dataUpdated, subtotal: subtotal});
       return newVentas;
@@ -435,7 +437,6 @@ class MovimientosService {
     }
   }
 
-
   async getTotalPrice(productos) {
     try {
       let subtotal = 0;
@@ -459,6 +460,8 @@ class MovimientosService {
       throw err;
     }
   }
+
+  
 }
 
 module.exports = MovimientosService;

@@ -89,6 +89,18 @@ export class DatosServicioPdfComponent implements OnInit {
     }, 0);
   }
 
+
+  CalcularSubtotalFinal(subtotal: any){
+    const incremento = subtotal * 0.25;
+    const subtotalFinal = parseInt(subtotal, 10) + incremento;
+    return subtotalFinal;
+  }
+
+  ManoDeObra(subtotal: number){
+    const incremento = subtotal * 0.25;
+    return incremento;
+  }
+
 }
 
 

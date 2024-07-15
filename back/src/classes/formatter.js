@@ -209,6 +209,7 @@ class Formatter {
           id: stock.id,
           nombre: stock.nombre,
           costo: stock.costo,
+          cantidad: stock.StockMoviminetos.cantidad,
           tipoArticulo: stock.Tipo_Articulo.descripcion
         })),
 
