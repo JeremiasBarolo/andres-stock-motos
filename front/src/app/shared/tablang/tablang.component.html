@@ -13,6 +13,9 @@
               
         
         <td *ngIf="acciones"> 
+          <ng-container *ngIf="insumos">
+            <p-button icon="pi pi-plus" [text]="true" severity="info" (click)="asignarInsumos(rowData)" pTooltip="Asignarle Insumos"></p-button>
+          </ng-container>
           <p-button icon="pi pi-pencil" [text]="true" (click)="editar(rowData)"></p-button>
           <p-button icon="pi pi-trash" [text]="true" severity="danger" (click)="eliminar(rowData)"></p-button>
         </td>

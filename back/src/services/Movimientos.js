@@ -30,6 +30,10 @@
             return await MovimientosProvider.listOneMovimientos(Movimientos_id);
         };
 
+        const listAllRelaciones = async (Movimientos_id) => {
+            return await MovimientosProvider.listAllRelaciones(Movimientos_id);
+        };
+
         const createMovimientos = async (MovimientosData) => {
             return await MovimientosProvider.createMovimientos(MovimientosData);
         };
@@ -72,6 +76,7 @@
         listHistorial,
         deleteVentaRespuestos,
         listAllServices,
-        listPrecios
+        listPrecios,
+        listAllRelaciones
         };
 

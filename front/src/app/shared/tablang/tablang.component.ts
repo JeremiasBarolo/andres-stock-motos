@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -8,21 +9,26 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 })
 export class TablangComponent {
   acciones: boolean = true
+  insumos: boolean = false
   @Input() data: any[] = [];
   @Input() columns: any[] = [];
   @Input() accionesVisible: boolean = true;
+  @Input() insumosVisible: boolean = true;
+  
 
   @Output() editarClick: EventEmitter<any> = new EventEmitter();
   @Output() eliminarClick: EventEmitter<any> = new EventEmitter();
+  @Output() insumoClick: EventEmitter<any> = new EventEmitter();
   @Output() modalOpenClick: EventEmitter<any> = new EventEmitter();
 
-  constructor() { }
+
+  constructor(private router: Router) { }
 
   ngOnInit(): void {
-    if (this.accionesVisible === false) {
-     this.acciones = false
-    }
-    
+    console.log(this.insumosVisible);
+
+    this.acciones = this.accionesVisible;
+    this.insumos = this.insumosVisible;
   }
 
   editar(rowData:any) {
@@ -35,5 +41,9 @@ modalOpen(rowdata:any) {
 
 eliminar(rowdata:any) {
     this.eliminarClick.emit(rowdata);
+}
+
+asignarInsumos(rowData: any) {
+  this.insumoClick.emit(rowData);
 }
 }

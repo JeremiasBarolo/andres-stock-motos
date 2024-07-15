@@ -8,6 +8,7 @@ import { TablangComponent } from './tablang/tablang.component';
 import { TableModule } from 'primeng/table';
 import { ButtonModule } from 'primeng/button';
 import { DatosServicioPdfComponent } from './datos-servicio-pdf/datos-servicio-pdf.component';
+import { TooltipModule } from 'primeng/tooltip';
 
 
 
@@ -26,7 +27,7 @@ import { DatosServicioPdfComponent } from './datos-servicio-pdf/datos-servicio-p
     IonicModule,
     TableModule,
     ButtonModule,
-    
+    TooltipModule
     
     
   ],
@@ -34,7 +35,8 @@ import { DatosServicioPdfComponent } from './datos-servicio-pdf/datos-servicio-p
     HeaderComponent,
     SidebarComponent,
     FooterComponent,
-    TablangComponent
+    TablangComponent,
+    
 
   ]
 })

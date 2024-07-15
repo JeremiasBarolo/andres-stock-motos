@@ -139,6 +139,137 @@ class DatosServicioService {
     }
   }
 
+  async updateInsumos(DatosServicio_id, dataUpdated) {
+    try {
+      const oldDatosServicio = await models.Movimientos.findByPk(DatosServicio_id,
+        { include: [{ all: true }] }
+      );
+      if (!oldDatosServicio) {
+        return null;
+      }
+
+// <============================= Stock Movimientos =============================>
+  
+      let oldStock = oldDatosServicio.Stocks.filter(item => item.tipoId !== 3)
+      let newStock = dataUpdated
+      
+      let toAdd = [];
+      let toDelete = [];
+      let toUpdate = [];
+
+      
+      if(newStock.length === 0){
+        for (let item of oldStock) {
+          
+          let stock = await models.Stock.findByPk(item.id);
+          await stock.update({
+            cantidad: stock.cantidad + item.StockMoviminetos.cantidad
+          });
+
+          await models.StockMoviminetos.destroy({
+            where: { stockId: item.id, movimientosId: DatosServicio_id }
+          });
+
+          
+        } 
+      } 
+
+
+      let oldStockMap = new Map();
+      oldStock.forEach(item => {
+        oldStockMap.set(item.id);
+      });
+
+      
+      
+
+      
+      newStock.forEach(newItem => {
+        if (oldStockMap.has(newItem.id)) {
+          if (oldStockMap.get(newItem.id) !== newItem.cantidad) {
+            toUpdate.push(newItem);
+          }
+          oldStockMap.delete(newItem.id); 
+        } else {
+          toAdd.push(newItem);
+        }
+      });
+
+      
+      
+
+      
+      for (let item of toUpdate) {
+       
+      let stock = await models.Stock.findByPk(item.id);
+
+      
+      let movimientoAnterior = await models.StockMoviminetos.findOne({
+        where: { stockId: item.id, movimientosId: DatosServicio_id },
+      });
+      
+      movimientoAnterior = movimientoAnterior ? parseInt(movimientoAnterior.cantidad, 10) : 0;
+      let nuevaCantidad = parseInt(item.cantidad, 10);
+
+      
+      if (nuevaCantidad > movimientoAnterior) {
+        let diferencia = nuevaCantidad - movimientoAnterior;
+        await stock.update({
+          cantidad: stock.cantidad - diferencia
+        });
+      }
+      
+      else if (nuevaCantidad < movimientoAnterior) {
+        let diferencia = movimientoAnterior - nuevaCantidad;
+        await stock.update({
+          cantidad: stock.cantidad + diferencia
+        });
+      }
+
+      await models.StockMoviminetos.update(
+        { cantidad: item.cantidad },
+        { where: { stockId: item.id, movimientosId: DatosServicio_id } }
+      );
+    }
+
+
+
+      
+      for (let id of toDelete) {
+        await models.StockMoviminetos.destroy({
+          where: { stockId: id, movimientosId: DatosServicio_id }
+        });
+        let stock = await models.Stock.findByPk(id);
+        await stock.update({
+          cantidad: stock.cantidad + item.cantidad
+        });
+      }
+
+      
+      for (let item of toAdd) {
+        await models.StockMoviminetos.create({
+          stockId: item.id,
+          movimientosId: DatosServicio_id,
+          cantidad: item.cantidad
+        });
+
+        let stock = await models.Stock.findByPk(item.id);
+        await stock.update({
+          cantidad: stock.cantidad - item.cantidad
+        });
+      }
+
+      
+
+      
+      return true;
+
+    } catch (err) {
+      console.error('🛑 Error when updating DatosServicio', err);
+      throw err;
+    }
+  }
+
   async deleteDatosServicio(DatosServicio_id) {
     try {
       const deletedDatosServicio = await models.DatosServicio.findByPk(DatosServicio_id);

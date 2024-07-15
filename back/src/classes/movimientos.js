@@ -36,6 +36,19 @@ class MovimientosService {
     }
   }
 
+  async listAllRelaciones(id) {
+    try {
+      const Ventas = await models.StockMoviminetos.findAll({
+        where: { movimientosId: id },
+        include: [{ all: true }]
+      });
+      return Ventas
+    } catch (err) {
+      console.error('🛑 Error when fetching Ventas', err);
+      throw err;
+    }
+  }
+
   async listHistorial() {
     try {
       const Ventas = await models.Movimientos.findAll({
@@ -115,9 +128,20 @@ class MovimientosService {
             include: [
                 { all: true },
             ]
-          }
+          },
+          {
+            model: models.Stock,
+            include: [
+                { all: true },
+            ]
+          },
+
+            
+
         ],
       });
+
+    
       console.log('✅ Ventas were found');
       let data = await format.Service(Service);
       

@@ -28,6 +28,7 @@ import { PedidosStockComponent } from './pedidos-stock/pedidos-stock.component';
 import { DatosServicioPdfComponent } from '../../shared/datos-servicio-pdf/datos-servicio-pdf.component';
 import { ListadoPreciosComponent } from './listado-precios/listado-precios.component';
 import { EmpleadosComponent } from './empleados/empleados.component';
+import { AsignarInsumosComponent } from './asignar-insumos/asignar-insumos.component';
 
 
 
@@ -62,6 +63,7 @@ const routes: Routes = [
       { path: 'pedidos-stock', component: PedidosStockComponent },
       { path: 'service-pdf', component: DatosServicioPdfComponent },
       { path: 'listado-precios', component: ListadoPreciosComponent },
+      { path: 'asignar-insumos', component: AsignarInsumosComponent },
     ]
   },
   

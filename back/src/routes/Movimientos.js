@@ -9,7 +9,9 @@
     router.get('/listado-precios', MovimientosController.listPrecios);
     router.get('/services', MovimientosController.listAllServices);
     router.get('/ventas/motos', MovimientosController.listAllMotosMovimientos);
+    router.get('/relaciones/:Movimientos_id', MovimientosController.listAllRelaciones);
     router.get('/:Movimientos_id', MovimientosController.listOneMovimientos);
+    
 
     router.post('/', MovimientosController.createMovimientos);
     router.post('/venta/motos', MovimientosController.createVentaMoto);

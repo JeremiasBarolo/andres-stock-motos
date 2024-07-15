@@ -201,7 +201,8 @@ export class DatosServicioComponent implements OnInit, OnDestroy {
       this.agregarProducto({
         id: item.id,
         nombre_articulo: item.nombre,
-        costo: item.costo
+        costo: item.costo,
+        tipoArticulo: item.tipo_articulo
       });
     });
 
@@ -215,6 +216,11 @@ export class DatosServicioComponent implements OnInit, OnDestroy {
   eliminarItem(data: any) {
     this.editEliminar = true;
     this.id = data.id;
+  }
+
+  asignarInsumos(data: any) {
+    sessionStorage.setItem('datos', JSON.stringify(data)); 
+    this.router.navigate(['admin/asignar-insumos']);
   }
 
   onSubmit() {
@@ -239,7 +245,8 @@ export class DatosServicioComponent implements OnInit, OnDestroy {
       productos: formData.productos.map((producto: any) => ({
         id: producto.id,
         nombre_articulo: producto.nombre_articulo,
-        costo: producto.costo
+        costo: producto.costo,
+        tipoArticulo: producto.tipo_articulo
       })),
       checklist: formData.checklist.map((item: any) => ({
         id: item.id,
@@ -300,7 +307,8 @@ export class DatosServicioComponent implements OnInit, OnDestroy {
     const productoForm = this.fb.group({
       id: [producto.id, Validators.required],
       nombre_articulo: [producto.nombre_articulo, Validators.required],
-      costo: [producto.costo || 0, Validators.required], 
+      costo: [producto.costo || 0, Validators.required],
+      tipoArticulo: [producto.tipoArticulo, Validators.required] 
     });
   
     this.productos.push(productoForm);

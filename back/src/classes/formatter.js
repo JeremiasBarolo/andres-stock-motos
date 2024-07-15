@@ -118,6 +118,21 @@ class Formatter {
       }))
     }
 
+    Insumos(data) {
+      return data.map(stock => ({
+        id: stock.id,
+        nombre_articulo: stock.nombre,
+        descripcion: stock.descripcion,
+        costo: stock.costo,
+        cantidad: stock.cantidad,
+        tipoArticulo: stock.Tipo_Articulo.descripcion,
+        tipoArticuloId: stock.Tipo_Articulo.id,
+        proveedor: `${stock.Persona.nombre} ${stock.Persona.apellido}`,
+        proveedorId: stock.Persona.id,
+        
+      }))
+    }
+
     Motos(data) {
       return data.map(moto => ({
         id: moto.id,
@@ -193,7 +208,8 @@ class Formatter {
         Servicios: servicio.Stocks.map(stock => ({
           id: stock.id,
           nombre: stock.nombre,
-          costo: stock.costo
+          costo: stock.costo,
+          tipoArticulo: stock.Tipo_Articulo.descripcion
         })),
 
         checklist: servicio.DatosServicio.checklists.map(stock => ({

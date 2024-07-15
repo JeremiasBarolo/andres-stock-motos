@@ -37,6 +37,12 @@ export class DatosServicioService {
 
   }
 
+  // update
+  updateInsumos(id: number, Entity: any): Observable<any> {
+    return this.http.put<any>(`${this.apiUrl}/insumos/${id}`, Entity)
+
+  }
+
   // delete
   delete(id: number): Observable<any> {
     return this.http.delete<any>(`${this.apiUrl}/${id}`)

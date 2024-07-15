@@ -6,7 +6,9 @@
 <app-tablang
     [data]="products"
     [columns]="columns"
+    [insumosVisible]="true"
     (editarClick)="editarItem($event)" 
+    (insumoClick)="asignarInsumos($event)" 
     (eliminarClick)="eliminarItem($event)"
     (modalOpenClick)="modalOpen($event)"
 ></app-tablang>

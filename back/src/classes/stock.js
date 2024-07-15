@@ -21,7 +21,7 @@ class StockService {
             include: [{ all: true }]
           });
           console.log('✅ Stock were found');
-          let data = format.Stock(Stock);
+          let data = format.Insumos(Stock);
           return data.filter((item) => item.tipoArticulo === 'Insumo');
         } catch (err) {
           console.error('🛑 Error when fetching Stock', err);

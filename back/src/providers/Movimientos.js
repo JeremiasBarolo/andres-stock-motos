@@ -30,6 +30,10 @@ const listOneMovimientos = async (Movimientos_id) => {
   return await movimientosService.listOneMovimientos(Movimientos_id);
 };
 
+const listAllRelaciones = async (Movimientos_id) => {
+  return await movimientosService.listAllRelaciones(Movimientos_id);
+};
+
 const createMovimientos = async (MovimientosData) => {
   return await movimientosService.createMovimientos(MovimientosData);
 };
@@ -73,5 +77,6 @@ module.exports = {
   deleteVentaRespuestos,
   listAllServices,
   listPrecios,
+  listAllRelaciones
 
 };
