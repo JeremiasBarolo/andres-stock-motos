@@ -403,7 +403,7 @@ marcarCheckboxes(checklistOptions: any) {
 }
 
 modalOpen(data: any) {
-  console.log('data', data);
+
   
   this.showModal = true;
   this.cardData = {...data,
@@ -411,6 +411,12 @@ modalOpen(data: any) {
     InsumoTable: data.Servicios.filter((item: { tipoArticulo: string; }) => item.tipoArticulo === 'Insumo'),
   };
   this.marcarCheckboxes(data.checklist);
+}
+
+pdfOpen(data: any) {
+
+  this.redirectToPDF(data)
+ 
 }
 
 

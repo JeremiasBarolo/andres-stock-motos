@@ -61,7 +61,7 @@ export class DatosServicioPdfComponent implements OnInit {
       pdf.addImage(contentDataURL, 'PNG', 0, 0, imgWidth, imgHeight);
       pdf.save(`servicio-${this.cardData.modelo}-${this.cardData.fecha_est_entrega}.pdf`);
   
-      // Restaurar estilos originales
+      
       titles.forEach((title: HTMLElement) => {
         title.classList.remove('pdf-title');
       });

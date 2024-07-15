@@ -7,10 +7,12 @@
     [data]="products"
     [columns]="columns"
     [insumosVisible]="true"
+    [pdfVisible]="true"
     (editarClick)="editarItem($event)" 
     (insumoClick)="asignarInsumos($event)" 
     (eliminarClick)="eliminarItem($event)"
     (modalOpenClick)="modalOpen($event)"
+    (pdfOpenClick)="pdfOpen($event)"
 ></app-tablang>
 
 <!-- <============================================ CREAR ==================================================> -->
@@ -298,10 +300,7 @@
 
 <!-- <============================================ DETALLES  ==================================================> -->
 <p-dialog header="Detalles del Servicio" [modal]="true" [(visible)]="showModal" [style]="{ width: '50rem' }" (onHide)="cerrarEdit()">
-    <div class="flex justify-content-end gap-2 mt-3">
-        <p-button class="mr-1" label="Ver en PDF" icon="pi pi-arrow-right" [text]="true" (onClick)="redirectToPDF(cardData)"></p-button>
-    </div>
-    <br>
+    
     <div class="p-fluid">
         <div class="p-grid">
             <div class="p-col-12 p-md-6">

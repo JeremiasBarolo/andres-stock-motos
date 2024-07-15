@@ -10,16 +10,19 @@ import { Router } from '@angular/router';
 export class TablangComponent {
   acciones: boolean = true
   insumos: boolean = false
+  pdf: boolean = false
   @Input() data: any[] = [];
   @Input() columns: any[] = [];
   @Input() accionesVisible: boolean = true;
   @Input() insumosVisible: boolean = true;
+  @Input() pdfVisible: boolean = true;
   
 
   @Output() editarClick: EventEmitter<any> = new EventEmitter();
   @Output() eliminarClick: EventEmitter<any> = new EventEmitter();
   @Output() insumoClick: EventEmitter<any> = new EventEmitter();
   @Output() modalOpenClick: EventEmitter<any> = new EventEmitter();
+  @Output() pdfOpenClick: EventEmitter<any> = new EventEmitter();
 
 
   constructor(private router: Router) { }
@@ -29,21 +32,27 @@ export class TablangComponent {
 
     this.acciones = this.accionesVisible;
     this.insumos = this.insumosVisible;
+    this.pdf = this.pdfVisible;
   }
 
   editar(rowData:any) {
     this.editarClick.emit(rowData);
-}
+  }
 
-modalOpen(rowdata:any) {
-  this.modalOpenClick.emit(rowdata);
-}
+  modalOpen(rowdata:any) {
+    this.modalOpenClick.emit(rowdata);
+  }
 
-eliminar(rowdata:any) {
-    this.eliminarClick.emit(rowdata);
-}
+  eliminar(rowdata:any) {
+      this.eliminarClick.emit(rowdata);
+  }
 
-asignarInsumos(rowData: any) {
-  this.insumoClick.emit(rowData);
-}
+  asignarInsumos(rowData: any) {
+    this.insumoClick.emit(rowData);
+  }
+
+  pdfClick(rowData: any) {
+    this.pdfOpenClick.emit(rowData);
+
+  }
 }
