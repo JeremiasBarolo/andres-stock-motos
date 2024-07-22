@@ -67,8 +67,6 @@ export class PersonasComponent {
         { field: 'id', header: 'ID' },
         { field: 'nombre', header: 'Nombre' },
         { field: 'apellido', header: 'Apellido' },
-        { field: 'cuit', header: 'CUIT' },
-        { field: 'dni', header: 'DNI' },
         { field: 'fecha_nacimientoFormatted', header: 'Fecha Nac.' },
         { field: 'telefono', header: 'Telefono' },
         { field: 'direccionCompleta', header: 'Direccion' },
