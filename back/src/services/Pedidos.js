@@ -6,6 +6,10 @@
             return await PedidosProvider.listAllPedidos();
         };
 
+        const listAllPedidosPendientes = async () => {
+            return await PedidosProvider.listAllPedidosPendientes();
+        };
+
         const listOnePedidos = async (Pedidos_id) => {
             return await PedidosProvider.listOnePedidos(Pedidos_id);
         };
@@ -44,6 +48,7 @@
         deletePedidos, 
         listStockOnePedidos,
         updatePedidosStock,
-        SumarCantidades
+        SumarCantidades,
+        listAllPedidosPendientes
         };
 

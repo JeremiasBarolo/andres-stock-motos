@@ -12,6 +12,15 @@ const listAllPedidos = async (req, res) => {
   }
 };
 
+const listAllPedidosPendientes = async (req, res) => {
+  try {
+    const Pedidos = await PedidosService.listAllPedidosPendientes();
+    res.json(Pedidos);
+  } catch (err) {
+    res.status(500).json({ action: "listAll", error: err.message });
+  }
+};
+
 const listOnePedidos = async (req, res) => {
   try {
     const id = req.params.Pedidos_id;
@@ -98,4 +107,5 @@ module.exports = {
   listStockOnePedidos,
   updatePedidosStock,
   SumarCantidades,
+  listAllPedidosPendientes
 };

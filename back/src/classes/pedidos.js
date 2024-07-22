@@ -34,6 +34,20 @@ class PedidosService {
     }
   }
 
+  async listAllPedidosPendientes() {
+    try {
+      const Pedidos = await models.Pedidos.findAll({
+        include: [{ all: true }],
+        where: { estado: "En Preparacion" }
+      });
+      console.log('✅ Pedidos were found');
+      return Pedidos.length
+    } catch (err) {
+      console.error('🛑 Error when fetching Pedidos', err);
+      throw err;
+    }
+  }
+
  
 
   async listOnePedidos(Pedidos_id) {

@@ -18,6 +18,10 @@ export class PedidosService {
     return this.http.get<any[]>(`${this.apiUrl}`); 
   }
 
+  getAllPendientes(): Observable<any[]> {
+    return this.http.get<any[]>(`${this.apiUrl}/pendientes`); 
+  }
+
   // get by id
   getById(id: number): Observable<any> {
     return this.http.get<any>(`${this.apiUrl}/${id}`)

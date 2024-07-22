@@ -5,6 +5,10 @@ const listAllPedidos = async () => {
   return await pedidosService.listAllPedidos();
 };
 
+const listAllPedidosPendientes = async () => {
+  return await pedidosService.listAllPedidosPendientes();
+};
+
 const listOnePedidos = async (Pedidos_id) => {
   return await pedidosService.listOnePedidos(Pedidos_id);
 };
@@ -41,5 +45,6 @@ module.exports = {
   deletePedidos,
   listStockOnePedidos,
   updatePedidosStock,
-  SumarCantidades
+  SumarCantidades,
+  listAllPedidosPendientes
 };

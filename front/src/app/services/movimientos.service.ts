@@ -18,8 +18,8 @@ export class MovimientosService {
     return this.http.get<any[]>(`${this.apiUrl}`); 
   }
 
-  getAllRecaudacion(): Observable<any[]> {
-    return this.http.get<any[]>(`${this.apiUrl}/recaudacion-total`); 
+  getAllRecaudacion(): Observable<any> {
+    return this.http.get<any>(`${this.apiUrl}/recaudacion`);
   }
   
   getAllHistorial(): Observable<any[]> {

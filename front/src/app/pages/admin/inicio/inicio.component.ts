@@ -3,6 +3,7 @@ import { AuthService } from '../../../services/auth.service';
 import { PersonasService } from '../../../services/personas.service';
 import { Subject, takeUntil } from 'rxjs';
 import { MovimientosService } from '../../../services/movimientos.service';
+import { PedidosService } from '../../../services/pedidos.service';
 
 @Component({
   selector: 'app-inicio',
@@ -22,7 +23,8 @@ export class InicioComponent implements OnInit, OnDestroy {
   constructor(
     private authService: AuthService,
     private personasService: PersonasService,
-    private movimientosService: MovimientosService
+    private movimientosService: MovimientosService,
+    private pedidosService: PedidosService
     
   ) {
     
@@ -42,7 +44,16 @@ export class InicioComponent implements OnInit, OnDestroy {
     this.movimientosService.getAllRecaudacion()
     .pipe(takeUntil(this.destroy$))
     .subscribe((data) => {
-      this.recaudacionTotal = data
+      
+      
+      this.recaudacionTotal = data.recaudacion
+      this.ventasTotal = data.cantidad
+    });
+
+    this.pedidosService.getAllPendientes()
+    .pipe(takeUntil(this.destroy$))
+    .subscribe((data) => {
+      this.pedidosPendientes = data
     });
 
   }

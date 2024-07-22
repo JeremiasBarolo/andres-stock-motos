@@ -38,7 +38,7 @@ class MovimientosService {
       return total + venta.subtotal; 
     }, 0);
 
-    return totalRecaudacion;
+    return {recaudacion: totalRecaudacion, cantidad: Ventas.length} ;
   } catch (err) {
     console.error('🛑 Error when fetching Ventas', err);
     throw err;

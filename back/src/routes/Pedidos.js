@@ -4,6 +4,7 @@
     const {PedidosController }= require('../controllers');
 
     router.get('/', PedidosController.listAllPedidos);
+    router.get('/pendientes', PedidosController.listAllPedidosPendientes);
     router.get('/:Pedidos_id', PedidosController.listOnePedidos);
     router.get('/stock/:Pedidos_id', PedidosController.listStockOnePedidos);
 
