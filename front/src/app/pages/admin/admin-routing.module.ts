@@ -58,7 +58,7 @@ const routes: Routes = [
       { path: 'service', component: DatosServicioComponent },
       { path: 'clientes', component: ClientesComponent },
       { path: 'proveedor', component: ProveedoresComponent },
-      { path: 'venta-respuestos', component: VentaRepuestosComponent },
+      { path: 'ventas', component: VentaRepuestosComponent },
       { path: 'venta-motos', component: VentaMotosComponent },
       { path: 'historial-clientes', component: HistorialClientesComponent },
       { path: 'pedidos-stock', component: PedidosStockComponent },

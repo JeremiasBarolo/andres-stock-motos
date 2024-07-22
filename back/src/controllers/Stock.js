@@ -13,6 +13,15 @@ const listAllStock = async (req, res) => {
   }
 };
 
+const listAllDisponible = async (req, res) => {
+  try {
+    const Stock = await StockService.listAllDisponible();
+    res.json(Stock);
+  } catch (err) {
+    res.status(500).json({ action: "listAll", error: err.message });
+  }
+};
+
 const listAllInsumos = async (req, res) => {
   try {
     const Stock = await StockService.listAllInsumos();
@@ -103,6 +112,7 @@ module.exports = {
   listAllRepuestos, 
   listAllServicios, 
   listAllStockVentaGeneral,
-  listAllInsumos
+  listAllInsumos,
+  listAllDisponible
 
 };

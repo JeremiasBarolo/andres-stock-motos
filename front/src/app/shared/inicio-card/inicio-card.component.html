@@ -17,7 +17,9 @@
                 <ng-template #noCurrency>{{descripcion}}</ng-template>
               </h4>
           </div>
-          <!-- <div class="ms-auto">+6.32%</div> -->
+          <div class="ms-auto hover-icon" pTooltip="{{tooltip}}" (click)="redirectTo(url)">
+            <ion-icon name="arrow-redo-outline"  ></ion-icon>
+          </div>
         </div>
       </div>
     </div>

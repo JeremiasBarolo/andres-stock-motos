@@ -4,6 +4,7 @@ import { PersonasService } from '../../../services/personas.service';
 import { Subject, takeUntil } from 'rxjs';
 import { MovimientosService } from '../../../services/movimientos.service';
 import { PedidosService } from '../../../services/pedidos.service';
+import { StockService } from '../../../services/stock.service';
 
 @Component({
   selector: 'app-inicio',
@@ -24,7 +25,8 @@ export class InicioComponent implements OnInit, OnDestroy {
     private authService: AuthService,
     private personasService: PersonasService,
     private movimientosService: MovimientosService,
-    private pedidosService: PedidosService
+    private pedidosService: PedidosService,
+    private stockService: StockService
     
   ) {
     
@@ -54,6 +56,12 @@ export class InicioComponent implements OnInit, OnDestroy {
     .pipe(takeUntil(this.destroy$))
     .subscribe((data) => {
       this.pedidosPendientes = data
+    });
+
+    this.stockService.listAllStockCount()
+    .pipe(takeUntil(this.destroy$))
+    .subscribe((data) => {
+      this.stockDisponible = data
     });
 
   }

@@ -4,7 +4,7 @@
     const {StockController }= require('../controllers');
 
     router.get('/', StockController.listAllStock);
-    
+    router.get('/disponible', StockController.listAllDisponible);
     router.get('/repuestos', StockController.listAllRepuestos);
     router.get('/general', StockController.listAllStockVentaGeneral);
     router.get('/insumos', StockController.listAllInsumos);

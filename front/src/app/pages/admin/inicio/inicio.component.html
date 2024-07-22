@@ -8,7 +8,8 @@
     [descripcion]="recaudacionTotal"
     [color]="'success'"
     [icono]="'wallet-outline'"
-    
+    [url]="'admin/historial-clientes'"
+    [tooltip]="'Redirigir a Historial de Clientes'"
     [useCurrencyPipe]="true"
     ></app-inicio-card>
     
@@ -17,6 +18,8 @@
     [descripcion]="ventasTotal"
     [icono]="'card-outline'"
     [color]="'info'"
+    [url]="'admin/ventas'"
+    [tooltip]="'Redirigir a Ventas'"
     ></app-inicio-card>
 
     <app-inicio-card
@@ -25,7 +28,8 @@
     [descripcion]="pedidosPendientes"
     [icono]="'cube-outline'"
     [color]="'danger'"
-    
+    [url]="'admin/pedidos-stock'"
+    [tooltip]="'Redirigir a Pedidos de Stock'"
     ></app-inicio-card>
 
     <app-inicio-card
@@ -34,6 +38,8 @@
     [descripcion]="stockDisponible"
     [icono]="'archive-outline'"
     [color]="'purple'"
+    [url]="'admin/stock'"
+    [tooltip]="'Redirigir a Stock'"
     ></app-inicio-card>
 
     
@@ -68,7 +74,29 @@
    
 
     <div class="col">
-     <!-- mejores clientes -->
+      <div class="card radius-10 w-100">
+        <div class="card-body">
+          <div class="d-flex align-items-center mb-3">
+            <h6 class="mb-0">Nustros Mejores Clintes</h6>
+           
+          </div>
+          <div class="countries-list" *ngFor="let empleado of empleados">
+            <div class="d-flex align-items-center gap-3 mb-3">
+              <div class="country-icon">
+                <img src="../../../../assets/images/logo-sg-motos.png" alt="/front/src/assets/images/logo-sg-motos.png" width="35">
+              </div>
+              <div class="country-name flex-grow-1">
+                <h5 class="mb-0">{{empleado.nombre}}</h5>
+                <p class="mb-0 text-secondary">{{empleado.Localidad}}</p>
+              </div>
+              <div class="">
+                <p class="mb-0 text-success d-flex gap-1 align-items-center fw-500"><i class='bx bx-up-arrow-alt'></i><span>{{empleado.ventas}}</span></p>
+              </div>
+            </div>
+           
+          </div>
+        </div>
+      </div>
     </div>
 
     <div class="col">
