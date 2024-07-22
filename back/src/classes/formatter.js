@@ -1,3 +1,6 @@
+const UtilsService = require("./utils")
+const utilsService = new UtilsService();
+
 class Formatter {
     usuarios(data) {
       return data.map(user => ({
@@ -81,6 +84,27 @@ class Formatter {
         Localidad: user.Localidade.descripcion,
         LocalidadId: user.Localidade.id
       }))
+    }
+
+    async mejoresEmpleados(data) {
+      try {
+        const empleados = await Promise.all(
+          data.map(async user => {
+            const ventas = await utilsService.getVentasByEmpleado(user.Usuarios[0].id);
+            return {
+              id: user.id,
+              nombre: `${user.nombre} ${user.apellido}`,
+              ventas: ventas,
+              Localidad: user.Localidade.descripcion
+            };
+          })
+        );
+    
+        return empleados;
+      } catch (err) {
+        console.error('🛑 Error al obtener las mejores ventas de empleados', err);
+        throw err;
+      }
     }
 
     Persona(user) {

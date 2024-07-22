@@ -4,7 +4,9 @@
     const {PersonasController }= require('../controllers');
 
     router.get('/', PersonasController.listAllPersonas);
+    router.get('/mejores-empleados', PersonasController.mejoresEmpleados);
     router.get('/:Personas_id', PersonasController.listOnePersonas);
+    
     router.post('/', PersonasController.createPersonas);
     router.put('/:Personas_id', PersonasController.updatePersonas);
     router.delete('/:Personas_id', PersonasController.deletePersonas);

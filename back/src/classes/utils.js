@@ -3,6 +3,23 @@ var models = require('../models');
 
 
 class UtilsService {
+
+    async getVentasByEmpleado(id) {
+      try {
+      const Movimientos = await models.Movimientos.findAll({
+        where: {usuarioId: id}
+      });
+      const Cantidad = Movimientos.length
+
+      
+      return Cantidad
+      
+      } catch (err) {
+        console.error('🛑 Error al calcular el subtotal de la lista de productos', err);
+        throw err;
+      }
+    }
+
     async getTotalPrice(productos) {
         try {
           let subtotal = 0;
@@ -42,6 +59,9 @@ class UtilsService {
           throw err;
         }
       }
+
+
+     
 
 
 }

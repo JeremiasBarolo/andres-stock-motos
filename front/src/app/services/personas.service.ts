@@ -21,6 +21,10 @@ export class PersonasService {
   getAllEmpleados(): Observable<any[]> {
     return this.http.get<any[]>(`http://localhost:8081/empleados`); 
   }
+
+  getMejoresEmpleados(): Observable<any[]> {
+    return this.http.get<any[]>(`${this.apiUrl}/mejores-empleados`); 
+  }
   getAllProveedores(): Observable<any[]> {
     return this.http.get<any[]>(`http://localhost:8081/proveedores`); 
   }

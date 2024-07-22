@@ -1,3 +1,77 @@
 <div class="header-container">
     <h3>Bienvenido {{titulo}}!</h3>
 </div>
+
+<div  *ngIf="isAdmin" class="row row-cols-1 row-cols-lg-2 row-cols-xxl-4">
+    <app-inicio-card
+    [titulo]="'Total Recaudado'"
+    [descripcion]="91000"
+    [color]="'success'"
+    [icono]="'wallet-outline'"
+    
+    [useCurrencyPipe]="true"
+    ></app-inicio-card>
+    
+    <app-inicio-card
+    [titulo]="'Ventas Totales'"
+    [descripcion]="ventasTotal"
+    [icono]="'card-outline'"
+    [color]="'info'"
+    ></app-inicio-card>
+
+    <app-inicio-card
+    
+    [titulo]="'Pedidos Pendientes'"
+    [descripcion]="pedidosPendientes"
+    [icono]="'cube-outline'"
+    [color]="'danger'"
+    
+    ></app-inicio-card>
+
+    <app-inicio-card
+    
+    [titulo]="'Stock Disponible'"
+    [descripcion]="stockDisponible"
+    [icono]="'archive-outline'"
+    [color]="'purple'"
+    ></app-inicio-card>
+
+    
+</div>
+
+<div class="row row-cols-1 row-cols-lg-3">
+    <div class="col">
+      <div class="card radius-10 w-100">
+        <div class="card-body">
+          <div class="d-flex align-items-center mb-3">
+            <h6 class="mb-0">Mejores Empleados</h6>
+           
+          </div>
+          <div class="countries-list" *ngFor="let empleado of empleados">
+            <div class="d-flex align-items-center gap-3 mb-3">
+              <div class="country-icon">
+                <img src="../../../../assets/images/logo-sg-motos.png" alt="/front/src/assets/images/logo-sg-motos.png" width="35">
+              </div>
+              <div class="country-name flex-grow-1">
+                <h5 class="mb-0">{{empleado.nombre}}</h5>
+                <p class="mb-0 text-secondary">{{empleado.Localidad}}</p>
+              </div>
+              <div class="">
+                <p class="mb-0 text-success d-flex gap-1 align-items-center fw-500"><i class='bx bx-up-arrow-alt'></i><span>{{empleado.ventas}}</span></p>
+              </div>
+            </div>
+           
+          </div>
+        </div>
+      </div>
+    </div>
+   
+
+    <div class="col">
+     <!-- mejores clientes -->
+    </div>
+
+    <div class="col">
+        <!-- ventas por tipo -->
+       </div>
+  </div>

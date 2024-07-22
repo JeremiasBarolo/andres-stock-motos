@@ -39,7 +39,7 @@ import { AsignarInsumosComponent } from './asignar-insumos/asignar-insumos.compo
 import { TableModule } from 'primeng/table';
 import { ToastModule } from 'primeng/toast';
 import { InicioComponent } from './inicio/inicio.component';
-
+import { IonicModule } from '@ionic/angular';
 
 
 
@@ -90,7 +90,9 @@ import { InicioComponent } from './inicio/inicio.component';
     MultiSelectModule,
     FormsModule,
     TableModule,
-    ToastModule
+    ToastModule,
+    IonicModule
+    
   
   ]
 })

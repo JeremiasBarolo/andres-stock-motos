@@ -9,6 +9,7 @@ import { TableModule } from 'primeng/table';
 import { ButtonModule } from 'primeng/button';
 import { DatosServicioPdfComponent } from './datos-servicio-pdf/datos-servicio-pdf.component';
 import { TooltipModule } from 'primeng/tooltip';
+import { InicioCardComponent } from './inicio-card/inicio-card.component';
 
 
 
@@ -20,6 +21,7 @@ import { TooltipModule } from 'primeng/tooltip';
     FooterComponent,
     TablangComponent,
     DatosServicioPdfComponent,
+    InicioCardComponent,
 
   ],
   imports: [
@@ -36,6 +38,7 @@ import { TooltipModule } from 'primeng/tooltip';
     SidebarComponent,
     FooterComponent,
     TablangComponent,
+    InicioCardComponent,
     
 
   ]

@@ -17,6 +17,21 @@ class PersonasService {
     }
   }
 
+  async mejoresEmpleados() {
+    try {
+      const Personas = await models.Personas.findAll({
+        include: [{ all: true }],
+        where: { tipoPersonaId: 2 }
+      });
+      console.log('✅ Personas were found');
+      return format.mejoresEmpleados(Personas);
+
+    } catch (err) {
+      console.error('🛑 Error when fetching Personas', err);
+      throw err;
+    }
+  }
+
   async listAllEmpleados() {
     try {
       const Personas = await models.Personas.findAll({
