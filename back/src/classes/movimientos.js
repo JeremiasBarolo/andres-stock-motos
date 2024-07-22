@@ -6,6 +6,7 @@ const stockService = require('./stock');
 const StockService = new stockService();
 const UtilsService = require('./utils');
 const utilsService = new UtilsService();
+const { Op } = require('sequelize');
 
 class MovimientosService {
   async listAllMovimientos() {
@@ -20,6 +21,29 @@ class MovimientosService {
       throw err;
     }
   }
+
+  async listAllRecaudacion() {
+    try {
+      const Ventas = await models.Movimientos.findAll({
+        include: [{ all: true }],
+        where: {
+          tipoMovimientoId: {
+            [Op.or]: [2, 3]
+          }
+        }
+      });
+      
+     
+    const totalRecaudacion = Ventas.reduce((total, venta) => {
+      return total + venta.subtotal; 
+    }, 0);
+
+    return totalRecaudacion;
+  } catch (err) {
+    console.error('🛑 Error when fetching Ventas', err);
+    throw err;
+  }
+}
 
   
 

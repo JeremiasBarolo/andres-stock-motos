@@ -9,6 +9,10 @@ const listPrecios = async () => {
   return await movimientosService.listPrecios();
 };
 
+const listAllRecaudacion = async () => {
+  return await movimientosService.listAllRecaudacion();
+};
+
 const listAllMovimientos = async () => {
   return await movimientosService.listAllMovimientos();
 };
@@ -77,6 +81,7 @@ module.exports = {
   deleteVentaRespuestos,
   listAllServices,
   listPrecios,
-  listAllRelaciones
-
+  listAllRelaciones,
+  listAllRecaudacion,
+  
 };

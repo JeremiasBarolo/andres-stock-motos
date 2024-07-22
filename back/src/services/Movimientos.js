@@ -6,6 +6,10 @@
             return await MovimientosProvider.listHistorial();
         };
 
+        const listAllRecaudacion = async () => {
+            return await MovimientosProvider.listAllRecaudacion();
+        };
+
         const listPrecios = async () => {
             return await MovimientosProvider.listPrecios();
         };
@@ -77,6 +81,7 @@
         deleteVentaRespuestos,
         listAllServices,
         listPrecios,
-        listAllRelaciones
+        listAllRelaciones,
+        listAllRecaudacion
         };
 

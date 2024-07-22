@@ -6,6 +6,7 @@
     router.get('/', MovimientosController.listAllMovimientos);
     router.get('/ventas', MovimientosController.listAllVentas);
     router.get('/historiales', MovimientosController.listHistorial);
+    router.get('/recaudacion-total', MovimientosController.listAllRecaudacion);
     router.get('/listado-precios', MovimientosController.listPrecios);
     router.get('/services', MovimientosController.listAllServices);
     router.get('/ventas/motos', MovimientosController.listAllMotosMovimientos);

@@ -121,7 +121,8 @@ export class VentaRepuestosComponent implements OnDestroy, OnInit {
     const productoForm = this.fb.group({
       id: [producto.id, Validators.required],
       nombre_articulo: [producto.nombre_articulo, Validators.required],
-      cantidad: [producto.cantidad, [Validators.required, Validators.min(1)]]
+      cantidad: [producto.cantidad, [Validators.required, Validators.min(1)]],
+      costo: [producto.costo, Validators.required]
     });
   
     this.productos.push(productoForm);

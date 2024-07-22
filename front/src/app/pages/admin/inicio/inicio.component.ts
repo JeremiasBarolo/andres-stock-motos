@@ -2,6 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { AuthService } from '../../../services/auth.service';
 import { PersonasService } from '../../../services/personas.service';
 import { Subject, takeUntil } from 'rxjs';
+import { MovimientosService } from '../../../services/movimientos.service';
 
 @Component({
   selector: 'app-inicio',
@@ -11,6 +12,7 @@ import { Subject, takeUntil } from 'rxjs';
 export class InicioComponent implements OnInit, OnDestroy {
   titulo :any
   isAdmin: any;
+  recaudacionTotal:any
   ventasTotal:any
   pedidosPendientes:any
   stockDisponible:any
@@ -19,7 +21,8 @@ export class InicioComponent implements OnInit, OnDestroy {
 
   constructor(
     private authService: AuthService,
-    private personasService: PersonasService
+    private personasService: PersonasService,
+    private movimientosService: MovimientosService
     
   ) {
     
@@ -34,6 +37,12 @@ export class InicioComponent implements OnInit, OnDestroy {
     .pipe(takeUntil(this.destroy$))
     .subscribe((data) => {
       this.empleados = data.sort((a, b) => b.ventas - a.ventas);
+    });
+
+    this.movimientosService.getAllRecaudacion()
+    .pipe(takeUntil(this.destroy$))
+    .subscribe((data) => {
+      this.recaudacionTotal = data
     });
 
   }

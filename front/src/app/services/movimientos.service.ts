@@ -17,6 +17,10 @@ export class MovimientosService {
   getAll(): Observable<any[]> {
     return this.http.get<any[]>(`${this.apiUrl}`); 
   }
+
+  getAllRecaudacion(): Observable<any[]> {
+    return this.http.get<any[]>(`${this.apiUrl}/recaudacion-total`); 
+  }
   
   getAllHistorial(): Observable<any[]> {
     return this.http.get<any[]>(`${this.apiUrl}/historiales`); 
