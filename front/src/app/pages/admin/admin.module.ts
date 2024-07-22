@@ -37,7 +37,8 @@ import { ListadoPreciosComponent } from './listado-precios/listado-precios.compo
 import { EmpleadosComponent } from './empleados/empleados.component';
 import { AsignarInsumosComponent } from './asignar-insumos/asignar-insumos.component';
 import { TableModule } from 'primeng/table';
-
+import { ToastModule } from 'primeng/toast';
+import { InicioComponent } from './inicio/inicio.component';
 
 
 
@@ -69,6 +70,7 @@ import { TableModule } from 'primeng/table';
     ListadoPreciosComponent,
     EmpleadosComponent,
     AsignarInsumosComponent,
+    InicioComponent,
 
    
   ],
@@ -87,7 +89,8 @@ import { TableModule } from 'primeng/table';
     DropdownModule,
     MultiSelectModule,
     FormsModule,
-    TableModule
+    TableModule,
+    ToastModule
   
   ]
 })

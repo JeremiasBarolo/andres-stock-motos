@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-root',
@@ -6,5 +7,15 @@ import { Component } from '@angular/core';
   styleUrl: './app.component.css'
 })
 export class AppComponent {
-  title = 'andres-stock-motos';
+  showSidebar: boolean = true;
+
+  constructor(private router: Router) {
+    this.router.events.subscribe(event => {
+      if (this.router.url.includes('/login')) {
+        this.showSidebar = false;
+      } else {
+        this.showSidebar = true;
+      }
+    });
+  }
 }

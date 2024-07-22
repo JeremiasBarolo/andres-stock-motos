@@ -45,6 +45,16 @@ const updateUsuarios = async (req, res) => {
   }
 };
 
+const updatePassword = async (req, res) => {
+
+  try {
+    const updatedPassword = await UsuariosService.updatePassword(req.params.Usuarios_id, req.body);
+    res.json(updatedPassword);
+  } catch (err) {
+    res.status(500).json({ action: 'updateUsuarios', error: err.message });
+  }
+};
+
 const deleteUsuarios = async (req, res) => {
   const id = req.params.Usuarios_id;
   try {
@@ -58,5 +68,10 @@ const deleteUsuarios = async (req, res) => {
 
 
 module.exports = {
-  listAllUsuarios, listOneUsuarios, createUsuarios, updateUsuarios, deleteUsuarios, 
+  listAllUsuarios, 
+  listOneUsuarios, 
+  createUsuarios, 
+  updateUsuarios, 
+  deleteUsuarios, 
+  updatePassword
 };

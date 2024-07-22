@@ -1,4 +1,5 @@
 var models = require('../models');
+const bcrypt = require('bcrypt');
 const Formatter = require('./formatter');
 const format = new Formatter();
 
@@ -31,8 +32,18 @@ class UsuariosService {
 
   async createUsuarios(DataUsuarios) {
     try {
-      const newUsuarios = await models.Usuarios.create(DataUsuarios);
-      return newUsuarios;
+      const hashedPassword = await bcrypt.hash(DataUsuarios.password, 10); 
+    
+      let user = {
+          user: DataUsuarios.user,
+          password: hashedPassword, 
+          rolId: DataUsuarios.rolId,
+          personaId: DataUsuarios.personaId
+      };
+      
+      const newusuarios = await models.Usuarios.create(user);
+      
+      return newusuarios;
     } catch (err) {
       console.error('🛑 Error when creating Usuarios', err);
       throw err;
@@ -46,6 +57,22 @@ class UsuariosService {
         return null;
       }
       let newUsuarios = await oldUsuarios.update(dataUpdated);
+      return newUsuarios;
+    } catch (err) {
+      console.error('🛑 Error when updating Usuarios', err);
+      throw err;
+    }
+  }
+
+  async updatePassword(Usuarios_id, dataUpdated) {
+    try {
+      const oldUsuarios = await models.Usuarios.findByPk(Usuarios_id);
+      if (!oldUsuarios) {
+        return null;
+      }
+
+      const hashedPassword = await bcrypt.hash(dataUpdated.newPassword, 10);
+      let newUsuarios = await oldUsuarios.update({...oldUsuarios, password:hashedPassword });
       return newUsuarios;
     } catch (err) {
       console.error('🛑 Error when updating Usuarios', err);

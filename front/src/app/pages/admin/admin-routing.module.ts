@@ -29,6 +29,7 @@ import { DatosServicioPdfComponent } from '../../shared/datos-servicio-pdf/datos
 import { ListadoPreciosComponent } from './listado-precios/listado-precios.component';
 import { EmpleadosComponent } from './empleados/empleados.component';
 import { AsignarInsumosComponent } from './asignar-insumos/asignar-insumos.component';
+import { InicioComponent } from './inicio/inicio.component';
 
 
 
@@ -64,6 +65,8 @@ const routes: Routes = [
       { path: 'service-pdf', component: DatosServicioPdfComponent },
       { path: 'listado-precios', component: ListadoPreciosComponent },
       { path: 'asignar-insumos/:id', component: AsignarInsumosComponent },
+      { path: 'inicio', component: InicioComponent },
+      { path: '**', redirectTo: 'inicio' }, 
     ]
   },
   

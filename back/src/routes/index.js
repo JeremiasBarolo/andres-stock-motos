@@ -21,6 +21,7 @@ const MotosNuevasRouter = require('./motosNuevas');
 const PedidosRouter = require('./pedidos');
 const ChecklistRouter = require('./checklist');
 const TipoServicioRouter = require('./tipoServicio');
+const loginRouter = require('./login');
 
 
 module.exports = {
@@ -44,5 +45,6 @@ module.exports = {
     MotosNuevasRouter,
     PedidosRouter,
     ChecklistRouter,
-    TipoServicioRouter
+    TipoServicioRouter,
+    loginRouter
 };

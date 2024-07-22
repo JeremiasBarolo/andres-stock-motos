@@ -11,7 +11,7 @@ import { TipoArticuloService } from '../../../services/tipo-articulo.service';
   templateUrl: './stock.component.html',
   styleUrl: './stock.component.css'
 })
-export class StockComponent {
+export class StockComponent implements OnInit {
   products: any[] = [];
   columns: any[] = [];
   editVisible: boolean = false
@@ -168,6 +168,10 @@ export class StockComponent {
       // this.router.navigate(['dashboard/insumos']);
     });
   }
+
+  asignarInsumos(data:any){}
+modalOpen(data:any){}
+pdfOpen(data:any){}
 
 
 }

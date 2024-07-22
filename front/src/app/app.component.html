@@ -1,7 +1,7 @@
 
 
-<app-sidebar></app-sidebar>
-<app-header></app-header>
+<app-sidebar *ngIf="showSidebar"></app-sidebar>
+<app-header *ngIf="showSidebar"></app-header>
 <p-toast></p-toast>
     <div class="page-content-wrapper">
       <router-outlet></router-outlet>

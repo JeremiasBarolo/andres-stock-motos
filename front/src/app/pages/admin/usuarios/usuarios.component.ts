@@ -19,6 +19,7 @@ export class UsuariosComponent {
   editVisible: boolean = false
   editEliminar: boolean = false
   crearVisible: boolean = false
+  cambioPassword: boolean = false
   form: FormGroup;
   tipo: any;
   cardData: any;
@@ -47,6 +48,9 @@ export class UsuariosComponent {
       lastname: ['', Validators.required],
       personaId: ['', Validators.required],
       rolId: ['', Validators.required],
+      newPassword: ['', Validators.required],
+      rnewPassword: ['', Validators.required],
+    
     });
   }
   
@@ -69,7 +73,6 @@ export class UsuariosComponent {
           id: data.id,
           user: data.user,
           name: data.name,
-          password: data.password,
           lastname: data.lastname,
           rol: data.rol,
           rolId: data.rolId,
@@ -95,6 +98,7 @@ export class UsuariosComponent {
   editarItem(data:any) {
     this.editVisible = true
     this.id = data.id
+    this.cardData = data
     this.form.patchValue({
       user: data.user,
       password: data.password,
@@ -113,6 +117,30 @@ export class UsuariosComponent {
     this.editEliminar = true
     this.id = data.id
   }
+
+  CambiarPassword(cardData:any){
+      this.tipo = {
+        newPassword: this.form.value.newPassword,
+        user: cardData.user,
+        password: cardData.password,
+        personaId: cardData.personaId,
+        rolId: cardData.rolId,
+
+      }
+       
+        try {
+          this.usuariosService.updatePassword(this.id, this.tipo).pipe(takeUntil(this.destroy$)).subscribe(() => {
+            setTimeout(() => {
+              window.location.reload();
+            }, 600)
+          });
+
+        } catch (error) {
+          console.log(error);
+        }
+
+    
+  }
   
   onSubmit(){
 
@@ -124,6 +152,9 @@ export class UsuariosComponent {
       personaId: this.form.value.personaId,
       rolId: this.form.value.rolId,
     }
+
+
+   
 
       if(this.id > 0){
             // Es editar
@@ -164,6 +195,11 @@ export class UsuariosComponent {
   ngOnDestroy(): void {
     this.destroy$.next();
     this.destroy$.complete();
+  }
+
+  abrirCambioPassword(){
+    this.editVisible = false
+    this.cambioPassword = true
   }
 
 }

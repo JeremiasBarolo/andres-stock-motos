@@ -29,7 +29,8 @@ const {
     MotosUsadasRouter,
     PedidosRouter,
     ChecklistRouter,
-    TipoServicioRouter
+    TipoServicioRouter,
+    loginRouter
     
  } = require('./routes')
 
@@ -65,6 +66,7 @@ app.use("/tipo_moto", TipoMotoRouter)
 app.use("/pedidos", PedidosRouter)
 app.use("/checklist", ChecklistRouter)
 app.use("/tipo-servicio", TipoServicioRouter)
+app.use("/login", loginRouter)
 
 
 

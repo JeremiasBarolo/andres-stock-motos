@@ -19,12 +19,21 @@
             return await UsuariosProvider.updateUsuarios(Usuarios_id, updateUsuarios);
         };
 
+        const updatePassword = async (Usuarios_id, updateUsuarios) => {
+            return await UsuariosProvider.updatePassword(Usuarios_id, updateUsuarios);
+        };
+
         const deleteUsuarios = async (Usuarios_id) => {
             return await UsuariosProvider.deleteUsuarios(Usuarios_id);
         };
 
 
         module.exports = {
-        listAllUsuarios, listOneUsuarios, createUsuarios, updateUsuarios, deleteUsuarios, 
+        listAllUsuarios, 
+        listOneUsuarios, 
+        createUsuarios, 
+        updateUsuarios, 
+        deleteUsuarios, 
+        updatePassword
         };
 

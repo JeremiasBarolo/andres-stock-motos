@@ -44,8 +44,8 @@
                   <div class="d-flex flex-row align-items-center gap-2">
                     <img src="/assets/images/avatars/06.png" alt="" class="rounded-circle" width="54" height="54">
                     <div class="">
-                      <h6 class="mb-0 dropdown-user-name">Andres</h6>
-                      <small class="mb-0 dropdown-user-designation text-secondary">Analistista en Sistemas</small>
+                      <h6 class="mb-0 dropdown-user-name">{{nombre}}</h6>
+                      <small class="mb-0 dropdown-user-designation text-secondary">{{rol}}</small>
                     </div>
                   </div>
                 </a>
@@ -60,7 +60,7 @@
                     <div class="">
                       <ion-icon name="log-out-outline"></ion-icon>
                     </div>
-                    <div class="ms-3"><span>Logout</span></div>
+                    <div class="ms-3" (click)="logout()"><span>Logout</span></div>
                   </div>
                 </a>
               </li>

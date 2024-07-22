@@ -2,6 +2,8 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AuthRoutingModule } from './auth/auth-routing.module';
 import { CommonModule } from '@angular/common';
+import { LoginComponent } from './auth/login/login.component';
+import { AdminGuard } from './auth/admin-guard/admin-guard.component';
 
 
 
@@ -16,7 +18,7 @@ const routes: Routes = [
   {
     path: 'admin',
     loadChildren: () => import('./pages/admin/admin.module').then(m => m.AdminModule),
-    // canActivate: [AdminGuard] 
+    canActivate: [AdminGuard] 
   },
   {
     path: 'auth',
@@ -27,7 +29,7 @@ const routes: Routes = [
     path: 'shared',
     loadChildren: () => import('./shared/shared.module').then(m => m.SharedModule)
   },
-  // { path: 'login', component: LoginComponent },
+  { path: 'login', component: LoginComponent },
 
   // { path: '**', redirectTo: 'login' }, 
 ];

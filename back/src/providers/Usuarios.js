@@ -17,6 +17,10 @@ const updateUsuarios = async (Usuarios_id, dataUpdated) => {
   return await usuariosService.updateUsuarios(Usuarios_id, dataUpdated);
 };
 
+const updatePassword = async (Usuarios_id, dataUpdated) => {
+  return await usuariosService.updatePassword(Usuarios_id, dataUpdated);
+};
+
 const deleteUsuarios = async (Usuarios_id) => {
   return await usuariosService.deleteUsuarios(Usuarios_id);
 };
@@ -27,4 +31,5 @@ module.exports = {
   createUsuarios,
   updateUsuarios,
   deleteUsuarios,
+  updatePassword
 };

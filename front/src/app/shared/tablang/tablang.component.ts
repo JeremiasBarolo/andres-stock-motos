@@ -1,22 +1,17 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import { Router } from '@angular/router';
-
 
 @Component({
   selector: 'app-tablang',
   templateUrl: './tablang.component.html',
-  styleUrl: './tablang.component.css'
+  styleUrls: ['./tablang.component.css']
 })
-export class TablangComponent {
-  acciones: boolean = true
-  insumos: boolean = false
-  pdf: boolean = false
+export class TablangComponent implements OnInit, OnDestroy {
   @Input() data: any[] = [];
   @Input() columns: any[] = [];
   @Input() accionesVisible: boolean = true;
-  @Input() insumosVisible: boolean = true;
-  @Input() pdfVisible: boolean = true;
-  
+  @Input() insumosVisible: boolean = false;
+  @Input() pdfVisible: boolean = false;
 
   @Output() editarClick: EventEmitter<any> = new EventEmitter();
   @Output() eliminarClick: EventEmitter<any> = new EventEmitter();
@@ -24,27 +19,40 @@ export class TablangComponent {
   @Output() modalOpenClick: EventEmitter<any> = new EventEmitter();
   @Output() pdfOpenClick: EventEmitter<any> = new EventEmitter();
 
+  acciones: boolean = true;
+  insumos: boolean = false;
+  pdf: boolean = false;
 
   constructor(private router: Router) { }
 
-  ngOnInit(): void {
-    console.log(this.insumosVisible);
+  ngOnDestroy(): void {
+    this.insumos = false;
+    this.pdf = false;
+  }
 
+  ngOnInit(): void {
     this.acciones = this.accionesVisible;
     this.insumos = this.insumosVisible;
     this.pdf = this.pdfVisible;
   }
 
-  editar(rowData:any) {
+  ngOnChanges(): void {
+    // Ensure properties are updated when inputs change
+    this.acciones = this.accionesVisible;
+    this.insumos = this.insumosVisible;
+    this.pdf = this.pdfVisible;
+  }
+
+  editar(rowData: any) {
     this.editarClick.emit(rowData);
   }
 
-  modalOpen(rowdata:any) {
-    this.modalOpenClick.emit(rowdata);
+  modalOpen(rowData: any) {
+    this.modalOpenClick.emit(rowData);
   }
 
-  eliminar(rowdata:any) {
-      this.eliminarClick.emit(rowdata);
+  eliminar(rowData: any) {
+    this.eliminarClick.emit(rowData);
   }
 
   asignarInsumos(rowData: any) {
@@ -53,6 +61,5 @@ export class TablangComponent {
 
   pdfClick(rowData: any) {
     this.pdfOpenClick.emit(rowData);
-
   }
 }

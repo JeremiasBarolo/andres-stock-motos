@@ -3,7 +3,6 @@ class Formatter {
       return data.map(user => ({
         id: user.id,
         user: user.user,
-        password: user.password,
         name: user.Persona.nombre,
         lastname: user.Persona.apellido,
         rol: user.Rol.descripcion,
