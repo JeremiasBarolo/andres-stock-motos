@@ -2,13 +2,13 @@
   <ng-template pTemplate="header" class="p-overlaypanel-header p-component-header">
     <tr>
       <th *ngFor="let col of columns">{{ col.header }}</th>
-      <th *ngIf="acciones">Acciones</th>
+      <th *ngIf="acciones && isAdmin">Acciones</th>
     </tr>
   </ng-template>
   <ng-template pTemplate="body" let-rowData>
     <tr>
       <td (click)="modalOpen(rowData)" *ngFor="let col of columns">{{ rowData[col.field] }}</td>
-      <td *ngIf="acciones">
+      <td *ngIf="acciones && isAdmin">
         <ng-container *ngIf="insumos">
           <p-button icon="pi pi-plus" [text]="true" severity="info" (click)="asignarInsumos(rowData)" pTooltip="Asignar Insumos"></p-button>
         </ng-container>

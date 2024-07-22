@@ -1,6 +1,6 @@
 <div class="header-container">
     <h3>Listado de Motos</h3>
-    <p-button icon="pi pi-plus" label="Agregar Moto" [text]="true" (click)="crearVisible = true" styleClass="ml-auto"></p-button>
+    <p-button  *ngIf="isAdmin" icon="pi pi-plus" label="Agregar Moto" [text]="true" (click)="crearVisible = true" styleClass="ml-auto"></p-button>
 </div>
 
 <app-tablang

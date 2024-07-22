@@ -120,13 +120,13 @@
       
 
 
-      <li class="menu-label">Personas y Motos</li>
-      <li>
+      <li class="menu-label">{{ isAdmin ? 'Personas y Motos' : 'Motos' }}</li>
+      <li *ngIf="isAdmin">
         <a class="has-arrow" href="javascript:;">
           <div class="parent-icon">
             <ion-icon name="accessibility-outline"></ion-icon>
           </div>
-          <div class="menu-title">Personas</div>
+          <div class="menu-title" >Personas</div>
         </a>
         <ul>
           
@@ -150,7 +150,7 @@
           </a>
           </li>
 
-          <li> <a (click)="navigateTo('admin/usuarios')">
+          <li *ngIf="isAdmin"> <a (click)="navigateTo('admin/usuarios')">
             <ion-icon name="ellipse-outline"></ion-icon> Usuarios
           </a>
           </li>
@@ -168,8 +168,8 @@
         </a>
       </li>
 
-      <li class="menu-label">Padrones</li>
-      <li>
+      <li class="menu-label" *ngIf="isAdmin" >Padrones</li>
+      <li *ngIf="isAdmin">
         <a class="has-arrow" href="javascript:;">
           <div class="parent-icon">
             <ion-icon name="happy-outline"></ion-icon>
@@ -189,17 +189,14 @@
               <ion-icon name="ellipse-outline"></ion-icon> Usuarios
             </a>
           </li>
-
           <li> <a (click)="navigateTo('admin/localidades')">
             <ion-icon name="ellipse-outline"></ion-icon> Localidades
           </a>
           </li>
-          
         </ul>
       </li>
 
-      
-      <li>
+      <li *ngIf="isAdmin">
         <a class="has-arrow" href="javascript:;">
           <div class="parent-icon">
             <ion-icon name="hammer-outline"></ion-icon>
@@ -222,8 +219,7 @@
         </ul>
       </li>
 
-
-      <li>
+      <li *ngIf="isAdmin">
         <a class="has-arrow" href="javascript:;">
           <div class="parent-icon">
             <ion-icon name="albums-outline"></ion-icon>
@@ -235,15 +231,12 @@
               <ion-icon name="ellipse-outline"></ion-icon>Tipo de Articulos
             </a>
           </li>
-
           <li> <a (click)="navigateTo('admin/tipo-movimientos')">
             <ion-icon name="ellipse-outline"></ion-icon>Tipo de Movimientos
           </a>
-        </li>
-          
+          </li>
         </ul>
       </li>
-      
     </ul>
     <!--end navigation-->
   </aside>

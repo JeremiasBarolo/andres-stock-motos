@@ -9,6 +9,7 @@ import { DatePipe } from '@angular/common';
 import { MotosService } from '../../../services/motos.service';
 import { TipoMotosService } from '../../../services/tipo-motos.service';
 import { MarcaService } from '../../../services/marca.service';
+import { AuthService } from '../../../services/auth.service';
 
 
 @Component({
@@ -19,6 +20,7 @@ import { MarcaService } from '../../../services/marca.service';
 })
 export class MotosComponent {
 
+  isAdmin: any;
   products: any[] = [];
   columns: any[] = [];
   editVisible: boolean = false
@@ -43,6 +45,7 @@ export class MotosComponent {
     private fb: FormBuilder,
     private router: Router,
     private aRoute: ActivatedRoute,
+    private authService: AuthService
   ){
 
     this.form = this.fb.group({
@@ -61,6 +64,7 @@ export class MotosComponent {
   
   ngOnInit(): void {
 
+    this.isAdmin = this.authService.isAllowed();
     this.motosService.getAll().pipe(takeUntil(this.destroy$)).subscribe((data: any[]) => {
       this.columns = [
         { field: 'id', header: 'ID' },

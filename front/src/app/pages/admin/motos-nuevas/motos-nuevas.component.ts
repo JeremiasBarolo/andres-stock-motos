@@ -5,6 +5,7 @@ import { Subject, takeUntil } from 'rxjs';
 import { MotosService } from '../../../services/motos.service';
 import { TipoMotosService } from '../../../services/tipo-motos.service';
 import { MarcaService } from '../../../services/marca.service';
+import { AuthService } from '../../../services/auth.service';
 
 @Component({
   selector: 'app-motos-nuevas',
@@ -24,6 +25,7 @@ export class MotosNuevasComponent {
   id: number = 0;
   tipoMotos: any[] = [];
   marcas: any[] = [];
+  isAdmin: any;
 
   private destroy$ = new Subject<void>();
 
@@ -37,6 +39,7 @@ export class MotosNuevasComponent {
     private fb: FormBuilder,
     private router: Router,
     private aRoute: ActivatedRoute,
+    private authService: AuthService
   ){
 
     this.form = this.fb.group({
@@ -54,7 +57,7 @@ export class MotosNuevasComponent {
   }
   
   ngOnInit(): void {
-
+    this.isAdmin = this.authService.isAllowed();
     this.motosService.getAllNuevas().pipe(takeUntil(this.destroy$)).subscribe((data: any[]) => {
       this.columns = [
         { field: 'id', header: 'ID' },

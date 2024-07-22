@@ -33,11 +33,24 @@ export class AuthService {
     const token = this.getToken();
     if (token) {
       const decodedToken = this.decodeToken(token);
-      console.log(decodedToken);
-      
-      return decodedToken && decodedToken.rol === 'ADMIN';
+      return decodedToken && decodedToken.rol;
     }
     return false;
+  }
+
+
+  isAllowed(): any {
+    const token = this.getToken();
+    if (token) {
+      const decodedToken = this.decodeToken(token);
+      if(decodedToken.rol == 'ADMIN'){
+        return true;
+      }else{
+        return false;
+      }
+      
+    }
+    
   }
 
   logout(): void {

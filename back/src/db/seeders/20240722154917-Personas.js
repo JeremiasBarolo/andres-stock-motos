@@ -29,7 +29,7 @@ module.exports = {
         mail: faker.internet.email(),
         dni: faker.datatype.number({ min: 10000000, max: 99999999 }).toString(),
         tipoPersonaId: 1,
-        localidadId: faker.datatype.number({ min: 1, max: 10 }),
+        localidadId: 1,
         createdAt: new Date(),
         updatedAt: new Date()
       },
@@ -44,7 +44,7 @@ module.exports = {
         mail: faker.internet.email(),
         dni: faker.datatype.number({ min: 10000000, max: 99999999 }).toString(),
         tipoPersonaId: 2,
-        localidadId: faker.datatype.number({ min: 1, max: 10 }),
+        localidadId: 1,
         createdAt: new Date(),
         updatedAt: new Date()
       },
@@ -59,7 +59,7 @@ module.exports = {
         mail: faker.internet.email(),
         dni: faker.datatype.number({ min: 10000000, max: 99999999 }).toString(),
         tipoPersonaId: 3,
-        localidadId: faker.datatype.number({ min: 1, max: 10 }),
+        localidadId: 1,
         createdAt: new Date(),
         updatedAt: new Date()
       }

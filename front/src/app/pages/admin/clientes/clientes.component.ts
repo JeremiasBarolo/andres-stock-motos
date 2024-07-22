@@ -6,6 +6,7 @@ import { PersonasService } from '../../../services/personas.service';
 import { TipoPersonasService } from '../../../services/tipo-personas.service';
 import { LocalidadesService } from '../../../services/localidades.service';
 import { DatePipe } from '@angular/common';
+import { AuthService } from '../../../services/auth.service';
 
 @Component({
   selector: 'app-clientes',
@@ -27,6 +28,7 @@ export class ClientesComponent {
   id: number = 0;
   tipoPersonas: any[] = [];
   roles: any[] = [];
+  isAdmin: any;
 
   private destroy$ = new Subject<void>();
 
@@ -40,7 +42,8 @@ export class ClientesComponent {
     private fb: FormBuilder,
     private router: Router,
     private aRoute: ActivatedRoute,
-    private datePipe: DatePipe
+    private datePipe: DatePipe,
+    private authService: AuthService
   ){
 
     this.form = this.fb.group({
@@ -61,6 +64,8 @@ export class ClientesComponent {
   
   ngOnInit(): void {
 
+    this.isAdmin = this.authService.isAllowed();
+
     this.personasService.getAllClientes().pipe(takeUntil(this.destroy$)).subscribe((data: any[]) => {
       this.columns = [
         { field: 'id', header: 'ID' },
@@ -72,7 +77,6 @@ export class ClientesComponent {
         { field: 'telefono', header: 'Telefono' },
         { field: 'direccionCompleta', header: 'Direccion' },
         { field: 'mail', header: 'Correo Elec.' },
-        { field: 'tipoPersona', header: 'TipoPersona' }
       ];
 
       data.map((data)=>{

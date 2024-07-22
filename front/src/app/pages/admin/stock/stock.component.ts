@@ -5,6 +5,7 @@ import { Subject, takeUntil } from 'rxjs';
 import { PersonasService } from '../../../services/personas.service';
 import { StockService } from '../../../services/stock.service';
 import { TipoArticuloService } from '../../../services/tipo-articulo.service';
+import { AuthService } from '../../../services/auth.service';
 
 @Component({
   selector: 'app-stock',
@@ -23,6 +24,7 @@ export class StockComponent implements OnInit {
   id: number = 0;
   proveedores: any[] = [];
   tipoArticulos: any[] = [];
+  isAdmin: any;
 
   private destroy$ = new Subject<void>();
 
@@ -36,6 +38,7 @@ export class StockComponent implements OnInit {
     private fb: FormBuilder,
     private router: Router,
     private aRoute: ActivatedRoute,
+    private authService: AuthService
   ){
 
     this.form = this.fb.group({
@@ -49,6 +52,7 @@ export class StockComponent implements OnInit {
   }
   
   ngOnInit(): void {
+    this.isAdmin = this.authService.isAllowed();
 
     this.stockService.getAll().pipe(takeUntil(this.destroy$)).subscribe((data: any[]) => {
       this.columns = [
