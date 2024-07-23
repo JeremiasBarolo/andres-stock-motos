@@ -14,15 +14,7 @@
 
 <!-- <================================ CREATE =======================================> -->
 <p-dialog header="Crear Venta" [modal]="true" [(visible)]="crearVisible" [style]="{ width: '50rem' }">
-    <form [formGroup]="form" (ngSubmit)="onSubmit()">
-        <div class="flex align-items-center gap-3 mb-3">
-            <label for="usuarioId" class="font-semibold w-6rem"><strong>Recepcionista</strong></label>
-            <br>
-            <select id="usuarioId" class="flex-auto" formControlName="usuarioId">
-                <option *ngFor="let persona of usuarios" [value]="persona.id">{{ persona.user }} </option>
-            </select>
-        </div>
-        
+    <form [formGroup]="form" (ngSubmit)="onSubmit()"> 
         <div class="flex align-items-center gap-3 mb-3">
             <label for="personaId" class="font-semibold w-6rem"><strong>Cliente</strong></label>
             <br>
@@ -57,14 +49,6 @@
 <!-- <================================ UPDATE =======================================> -->
 <p-dialog header="Editar Venta" [modal]="true" [(visible)]="editVisible" [style]="{ width: '50rem' }">
     <form [formGroup]="form" (ngSubmit)="onSubmit()">
-        <div class="flex align-items-center gap-3 mb-3">
-            <label for="usuarioId" class="font-semibold w-6rem"><strong>Recepcionista</strong></label>
-            <br>
-            <select id="usuarioId" class="flex-auto" formControlName="usuarioId">
-                <option *ngFor="let persona of usuarios" [value]="persona.id">{{ persona.user }} </option>
-            </select>
-        </div>
-        
         <div class="flex align-items-center gap-3 mb-3">
             <label for="personaId" class="font-semibold w-6rem"><strong>Cliente</strong></label>
             <br>

@@ -8,6 +8,7 @@ import { UsuariosService } from '../../../services/usuarios.service';
 import { MovimientosService } from '../../../services/movimientos.service';
 import { DatePipe } from '@angular/common';
 import { MotosService } from '../../../services/motos.service';
+import { AuthService } from '../../../services/auth.service';
 
 @Component({
   selector: 'app-venta-motos',
@@ -31,12 +32,16 @@ export class VentaMotosComponent implements OnDestroy, OnInit {
   motos: any[] = [];
   motosDisponibles: any[] = [];
   private destroy$ = new Subject<void>();
+  usuarioId:any
+  usuarioIdEdit:any
+
 
   constructor(
     private usuariosService: UsuariosService,
     private personasService: PersonasService,
     private motoService: MotosService,
     private movimientosService: MovimientosService,
+    private authService: AuthService,
     private fb: FormBuilder,
     private datePipe: DatePipe
   ) {
@@ -58,6 +63,10 @@ export class VentaMotosComponent implements OnDestroy, OnInit {
   }
 
   loadData(): void {
+    this.authService.getUserData().subscribe((data: any) => {
+      this.usuarioId = data.userId
+    })
+
     this.movimientosService.getAllVentasMoto().pipe(takeUntil(this.destroy$)).subscribe((data: any[]) => {
       this.columns = [
         { field: 'id', header: 'ID' },
@@ -111,7 +120,6 @@ export class VentaMotosComponent implements OnDestroy, OnInit {
     this.editVisible = true;
     this.id = data.id;
     this.form.patchValue({
-      usuarioId: data.usuarioId,
       personaId: data.personaId,
       motoId: data.motoId
     });
@@ -125,7 +133,7 @@ export class VentaMotosComponent implements OnDestroy, OnInit {
   onSubmit() {
     const formValue = this.form.value;
     this.tipo = {
-      usuarioId: formValue.usuarioId,
+      usuarioId: this.id > 0 ? this.usuarioIdEdit : this.usuarioId,
       personaId: formValue.personaId,
       motoId: formValue.motoId, 
       tipoMovimientoId: 2

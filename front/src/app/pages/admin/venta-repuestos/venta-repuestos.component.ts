@@ -34,8 +34,6 @@ export class VentaRepuestosComponent implements OnDestroy, OnInit {
   tipoArticulos: any[] = [];
   usuarios: any[] = [];
   clientes: any[] = [];
-  seleccionados: any[] = [];
-  repuestos: any[] = [];
   usuarioId: any
   usuarioIdEdit: any
   options: any[] = [];

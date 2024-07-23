@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, OnDestroy, OnInit, Output } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
 
@@ -7,7 +7,7 @@ import { AuthService } from '../../services/auth.service';
   templateUrl: './tablang.component.html',
   styleUrls: ['./tablang.component.css']
 })
-export class TablangComponent implements OnInit, OnDestroy {
+export class TablangComponent implements OnInit, OnDestroy, OnChanges {
   @Input() data: any[] = [];
   @Input() columns: any[] = [];
   @Input() accionesVisible: boolean = true;

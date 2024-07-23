@@ -40,6 +40,8 @@ import { TableModule } from 'primeng/table';
 import { ToastModule } from 'primeng/toast';
 import { InicioComponent } from './inicio/inicio.component';
 import { IonicModule } from '@ionic/angular';
+import { ServiciosComponent } from './servicios/servicios.component';
+import { InsumosComponent } from './insumos/insumos.component';
 
 
 
@@ -70,6 +72,8 @@ import { IonicModule } from '@ionic/angular';
     EmpleadosComponent,
     AsignarInsumosComponent,
     InicioComponent,
+    ServiciosComponent,
+    InsumosComponent,
 
    
   ],

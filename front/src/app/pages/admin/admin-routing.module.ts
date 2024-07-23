@@ -30,6 +30,8 @@ import { ListadoPreciosComponent } from './listado-precios/listado-precios.compo
 import { EmpleadosComponent } from './empleados/empleados.component';
 import { AsignarInsumosComponent } from './asignar-insumos/asignar-insumos.component';
 import { InicioComponent } from './inicio/inicio.component';
+import { ServiciosComponent } from './servicios/servicios.component';
+import { InsumosComponent } from './insumos/insumos.component';
 
 
 
@@ -57,6 +59,8 @@ const routes: Routes = [
       { path: 'marcas', component: MarcaComponent },
       { path: 'service', component: DatosServicioComponent },
       { path: 'clientes', component: ClientesComponent },
+      { path: 'servicios', component: ServiciosComponent },
+      { path: 'insumos', component: InsumosComponent },
       { path: 'proveedor', component: ProveedoresComponent },
       { path: 'ventas', component: VentaRepuestosComponent },
       { path: 'venta-motos', component: VentaMotosComponent },
