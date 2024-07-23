@@ -35,7 +35,7 @@ const login = async (req, res) => {
     const isAdmin = usuario.Rol.isAdmin;
     isAdmin === 0 ? rol = 'EMPLEADO' : rol = 'ADMIN';
 
-    const token = jwt.sign({ username: username, userId: usuario.id, rol: rol, nombre: `${usuario.Persona.nombre} ${usuario.Persona.apellido}` }, process.env.SECRET, { expiresIn: '24h' });
+    const token = jwt.sign({ username: username, userId: usuario.id, rol: rol, nombre: `${usuario.Persona.nombre} ${usuario.Persona.apellido}`, personaId:usuario.Persona.id }, process.env.SECRET, { expiresIn: '24h' });
     res.status(200).json({ token:token});
   } catch (error) {
     console.error(error);

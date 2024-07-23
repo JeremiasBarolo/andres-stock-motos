@@ -11,6 +11,7 @@ import { UsuariosService } from '../../../services/usuarios.service';
 import { MovimientosService } from '../../../services/movimientos.service';
 import { TipoServicioService } from '../../../services/tipo-servicio.service';
 import { ChecklistService } from '../../../services/checklist.service';
+import { AuthService } from '../../../services/auth.service';
 
 @Component({
   selector: 'app-datos-servicio',
@@ -40,6 +41,10 @@ export class DatosServicioComponent implements OnInit, OnDestroy {
   tipo:any
   private destroy$ = new Subject<void>();
   selectedServicios: any;
+  usuarioId:any
+  usuarioIdEdit:any
+  recepcionistaId:any
+  recepcionistaIdEdit:any
 
   constructor(
     private datosServicioService: DatosServicioService,
@@ -49,6 +54,7 @@ export class DatosServicioComponent implements OnInit, OnDestroy {
     private stockService: StockService,
     private tipoServicioService: TipoServicioService,
     private checklistService: ChecklistService,
+    private authService: AuthService,
     private fb: FormBuilder,
     private router: Router,
     private aRoute: ActivatedRoute,
@@ -69,7 +75,6 @@ export class DatosServicioComponent implements OnInit, OnDestroy {
       fecha_est_entrega: ['', Validators.required],
       fecha_recepcion: ['', Validators.required],
       num_chasis: ['', Validators.required],
-      usuarioId: ['', Validators.required],
       personaId: ['', Validators.required],
       selectedServicios: [[]],
       checklist: this.fb.array([]),
@@ -78,6 +83,13 @@ export class DatosServicioComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
+
+    this.authService.getUserData().subscribe((data: any) => {
+      this.usuarioId = data.userId
+      this.recepcionistaId = data.personaId
+    })
+
+
     this.movimientosService.getAllServices().pipe(takeUntil(this.destroy$)).subscribe((data: any[]) => {
       this.columns = [
         { field: 'id', header: 'ID' },
@@ -168,6 +180,8 @@ export class DatosServicioComponent implements OnInit, OnDestroy {
     this.editVisible = true;
     this.id = data.id;
     console.log(data);
+    this.usuarioIdEdit = data.usuarioId
+    this.recepcionistaIdEdit = data.recepcionistaId
     
 
     const fecha_est_entrega = new Date(data.DatosServicio.fecha_est_entrega).toISOString().split('T')[0];
@@ -175,7 +189,6 @@ export class DatosServicioComponent implements OnInit, OnDestroy {
     const hora_est_entrega = data.hora_est_entrega.slice(0, 5);
 
     this.form.patchValue({
-      usuarioId: data.usuarioId,
       personaId: data.personaId,
       modelo: data.DatosServicio.modelo,
       patente: data.DatosServicio.patente,
@@ -186,7 +199,6 @@ export class DatosServicioComponent implements OnInit, OnDestroy {
       kilometros: data.DatosServicio.kilometros,
       estado_general: data.DatosServicio.estado_general,
       observaciones: data.DatosServicio.observaciones,
-      recepcionistaId: data.DatosServicio.recepcionistaId,
       hora_est_entrega: hora_est_entrega,
       fecha_est_entrega: fecha_est_entrega,
       fecha_recepcion: fecha_recepcion,
@@ -224,7 +236,6 @@ export class DatosServicioComponent implements OnInit, OnDestroy {
     const formData = this.form.value;
 
     this.tipo = {
-      usuarioId: formData.usuarioId,
       personaId: formData.personaId,
       modelo: formData.modelo,
       color: formData.color,
@@ -255,7 +266,7 @@ export class DatosServicioComponent implements OnInit, OnDestroy {
     if (this.id > 0) {
       this.tipo.checklist = formData.selectedServicios
       // Es editar
-      this.datosServicioService.update(this.id, this.tipo).pipe(takeUntil(this.destroy$)).subscribe(() => {
+      this.datosServicioService.update(this.id, {...this.tipo, usuarioId: this.usuarioIdEdit , recepcionistaId: this.recepcionistaIdEdit}).pipe(takeUntil(this.destroy$)).subscribe(() => {
         setTimeout(() => {
           window.location.reload();
         }, 600);
@@ -265,7 +276,7 @@ export class DatosServicioComponent implements OnInit, OnDestroy {
 
     } else {
       // Es crear
-      this.datosServicioService.create(this.tipo).pipe(takeUntil(this.destroy$)).subscribe(() => {
+      this.datosServicioService.create({...this.tipo, usuarioId: this.usuarioId, recepcionistaId:this.recepcionistaId}).pipe(takeUntil(this.destroy$)).subscribe(() => {
         setTimeout(() => {
           window.location.reload();
         }, 600);

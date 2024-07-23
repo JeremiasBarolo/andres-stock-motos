@@ -1,20 +1,23 @@
 import { Component } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, NavigationEnd } from '@angular/router';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrl: './app.component.css'
+  styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  showSidebar: boolean = true;
+  showSidebar = true;
+  showHeader = true;
 
   constructor(private router: Router) {
+    // Listen for route changes
     this.router.events.subscribe(event => {
-      if (this.router.url.includes('/login')) {
-        this.showSidebar = false;
-      } else {
-        this.showSidebar = true;
+      if (event instanceof NavigationEnd) {
+        
+        const isLoginPage = event.url.includes('login');
+        this.showSidebar = !isLoginPage;
+        this.showHeader = !isLoginPage;
       }
     });
   }

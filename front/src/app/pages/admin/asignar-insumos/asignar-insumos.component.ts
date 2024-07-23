@@ -56,21 +56,22 @@ export class AsignarInsumosComponent implements OnInit {
       
       this.cardData = datos;
       const insumos = datos.Servicios.filter((servicio: any) => servicio.tipoArticulo !== 'Servicio');
+      
 
 
-    this.stockService.getAllInsumos().pipe(
-      takeUntil(this.destroy$)
-    ).subscribe((data: any[]) => {
+      this.stockService.getAllInsumos().pipe(
+        takeUntil(this.destroy$)
+      ).subscribe((data: any[]) => {
+        
+        this.options = data.filter(insumo => insumo.tipoArticulo !== 'Servicio' && !insumos.some((entity: { id: any; }) => entity.id === insumo.id));
+        this.options = this.options.map((insumo: any) => ({ ...insumo, nombre: insumo.nombre_articulo }));
       
-      this.options = data.filter(insumo => insumo.tipoArticulo !== 'Servicio' && !insumos.some((entity: { id: any; }) => entity.id === insumo.id));
-      
-    
-      this.selectedEntities = insumos.map((insumo: any) => ({
-        ...insumo,
-        cantidad: insumo.cantidad,
-        descripcion: insumo.nombre 
-        }));
-      });
+        this.selectedEntities = insumos.map((insumo: any) => ({
+          ...insumo,
+          cantidad: insumo.cantidad,
+          descripcion: insumo.nombre 
+          }));
+        });
     });
     
 

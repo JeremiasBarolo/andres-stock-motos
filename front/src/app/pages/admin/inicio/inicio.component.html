@@ -2,7 +2,8 @@
     <h3>Bienvenido {{titulo}}!</h3>
 </div>
 
-<div  *ngIf="isAdmin" class="row row-cols-1 row-cols-lg-2 row-cols-xxl-4">
+<div *ngIf="isAdmin">
+  <div   class="row row-cols-1 row-cols-lg-2 row-cols-xxl-4">
     <app-inicio-card
     [titulo]="'Total Recaudado'"
     [descripcion]="recaudacionTotal"
@@ -111,3 +112,4 @@
       </div>
     </div>
   </div>
+</div>
