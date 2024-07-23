@@ -8,6 +8,7 @@ import { StockService } from '../../../services/stock.service';
 import { UsuariosService } from '../../../services/usuarios.service';
 import { MovimientosService } from '../../../services/movimientos.service';
 import { DatePipe } from '@angular/common';
+import { AuthService } from '../../../services/auth.service';
 
 @Component({
   selector: 'app-venta-repuestos',
@@ -34,6 +35,8 @@ export class VentaRepuestosComponent implements OnDestroy, OnInit {
   clientes: any[] = [];
   seleccionados: any[] = [];
   repuestos: any[] = [];
+  usuarioId: any
+  usuarioIdEdit: any
 
 
   private destroy$ = new Subject<void>();
@@ -43,19 +46,23 @@ export class VentaRepuestosComponent implements OnDestroy, OnInit {
     private personasService: PersonasService,
     private stockService: StockService,
     private movimientosService: MovimientosService,
+    private authService: AuthService,
     private fb: FormBuilder,
     private router: Router,
     private aRoute: ActivatedRoute,
     private datePipe: DatePipe
   ) {
     this.form = this.fb.group({
-      usuarioId: ['', Validators.required],
       personaId: ['', Validators.required],
       productos: this.fb.array([]) 
     });
   }
 
   ngOnInit(): void {
+    this.authService.getUserData().subscribe((data: any) => {
+      this.usuarioId = data.userId
+    })
+
     this.movimientosService.getAllVentas().pipe(takeUntil(this.destroy$)).subscribe((data: any[]) => {
       this.columns = [
         { field: 'id', header: 'ID' },
@@ -153,10 +160,10 @@ export class VentaRepuestosComponent implements OnDestroy, OnInit {
   editarItem(data: any) {
     this.editVisible = true;
     this.id = data.id;
+    this.usuarioIdEdit = data.usuarioId 
     
     
     this.form.patchValue({
-      usuarioId: data.usuarioId,
       personaId: data.personaId
     });
   
@@ -187,16 +194,17 @@ export class VentaRepuestosComponent implements OnDestroy, OnInit {
   onSubmit() {
     const formValue = this.form.value;
     
-    this.tipo = {
-      usuarioId: formValue.usuarioId,
-      personaId: formValue.personaId,
-      productos: formValue.productos,
-      tipoMovimientoId: 3
-    };
+    
    
   
     if (this.id > 0) {
       // Es editar
+      this.tipo = {
+        usuarioId: this.usuarioIdEdit,
+        personaId: formValue.personaId,
+        productos: formValue.productos,
+        tipoMovimientoId: 3
+      };
       this.movimientosService.updateVentaRepuestos(this.id, this.tipo).pipe(takeUntil(this.destroy$)).subscribe(() => {
         setTimeout(() => {
           window.location.reload();
@@ -204,6 +212,12 @@ export class VentaRepuestosComponent implements OnDestroy, OnInit {
       });
     } else {
       // Es crear
+      this.tipo = {
+        usuarioId: this.usuarioId,
+        personaId: formValue.personaId,
+        productos: formValue.productos,
+        tipoMovimientoId: 3
+      };
       this.movimientosService.create(this.tipo).pipe(takeUntil(this.destroy$)).subscribe(() => {
         setTimeout(() => {
           window.location.reload();

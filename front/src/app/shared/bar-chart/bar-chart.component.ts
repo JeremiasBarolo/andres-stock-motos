@@ -1,28 +1,42 @@
-import { Component, ElementRef, ViewChild, AfterViewInit } from '@angular/core';
+import { Component, ElementRef, ViewChild, AfterViewInit, OnDestroy } from '@angular/core';
 import { Chart, LinearScale, BarElement, BarController, CategoryScale, Title, Tooltip, Legend } from 'chart.js';
+import { MovimientosService } from '../../services/movimientos.service';
+import { Subject, takeUntil } from 'rxjs';
 
 @Component({
   selector: 'app-bar-chart',
   templateUrl: './bar-chart.component.html',
   styleUrls: ['./bar-chart.component.css']
 })
-export class BarChartComponent implements AfterViewInit {
+export class BarChartComponent implements AfterViewInit, OnDestroy {
+  
   @ViewChild('barCanvas') private barCanvas!: ElementRef;
-
   barChart: any;
-
-  constructor() {
-    // Register components
+  ventasData: any[] = [];
+  private destroy$ = new Subject<void>();
+  
+  constructor(
+    private movimientosService: MovimientosService,
+  ) {
     Chart.register(CategoryScale, LinearScale, BarElement, BarController, Title, Tooltip, Legend);
   }
 
   ngAfterViewInit(): void {
-    this.loadSalesData();
+    this.movimientosService.listAllVentasPorCategoria()
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((data) => {  
+        this.ventasData = data;
+        this.loadSalesData();
+      });
   }
 
   loadSalesData() {
-    const salesData = [10, 20, 30, 40, 20]; 
-    const labels = ['Insumos', 'Accesorios', 'Repuestos', 'Motos Nuevas', 'Motos Usadas'];
+    if (this.barChart) {
+      this.barChart.destroy();  
+    }
+
+    const labels = this.ventasData.map((item: { TipoMovimiento: any; }) => item.TipoMovimiento);
+    const salesData = this.ventasData.map((item: { cantidad: any; }) => item.cantidad);
 
     this.barChart = new Chart(this.barCanvas.nativeElement, {
       type: 'bar',
@@ -60,5 +74,10 @@ export class BarChartComponent implements AfterViewInit {
         }
       }
     });
+  }
+
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 }

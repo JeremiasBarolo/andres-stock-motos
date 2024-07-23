@@ -22,6 +22,9 @@ export class InicioComponent implements OnInit, OnDestroy {
   stockDisponible:any
   empleados:any[] = []
   clientes:any[] = []
+  ventasData:any[] = []
+
+
   private destroy$ = new Subject<void>();
 
   constructor(
@@ -37,7 +40,12 @@ export class InicioComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.isAdmin = this.authService.isAllowed();
     this.authService.getUserData().subscribe((data: any) => {
-      this.titulo = data.nombre;
+      if(data.nombre === 'Admin Admin'){
+        this.titulo = 'Admin';
+      }else{
+        this.titulo = data.nombre;
+      }
+      
     })
 
     this.personasService.getMejoresEmpleados()
@@ -60,6 +68,8 @@ export class InicioComponent implements OnInit, OnDestroy {
       this.recaudacionTotal = data.recaudacion
       this.ventasTotal = data.cantidad
     });
+
+    
 
     this.pedidosService.getAllPendientes()
     .pipe(takeUntil(this.destroy$))

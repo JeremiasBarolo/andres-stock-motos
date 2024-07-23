@@ -22,6 +22,15 @@ const listAllRecaudacion = async (req, res) => {
   }
 };
 
+const listAllVentasPorCategoria = async (req, res) => {
+  try {
+    const Movimientos = await MovimientosService.listAllVentasPorCategoria();
+    res.json(Movimientos);
+  } catch (err) {
+    res.status(500).json({ action: "listAll", error: err.message });
+  }
+};
+
 const listAllRelaciones = async (req, res) => {
   try {
     const id = req.params.Movimientos_id;
@@ -181,5 +190,6 @@ module.exports = {
   listAllServices,
   listPrecios,
   listAllRelaciones,
-  listAllRecaudacion
+  listAllRecaudacion,
+  listAllVentasPorCategoria
 };

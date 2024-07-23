@@ -20,12 +20,13 @@ class MotosService {
   async listAllMotosUsadas() {
     try {
       const Motos = await models.Motos.findAll({
-        include: [{ all: true }]
+        include: [{ all: true }],
+        where: { tipoMotoId: 1 }
       });
       console.log('✅ Motos were found');
       let data = await format.Motos(Motos);
       
-      return data.filter((item) => item.tipoMotoId === 1);
+      return data
     } catch (err) {
       console.error('🛑 Error when fetching Motos', err);
       throw err;

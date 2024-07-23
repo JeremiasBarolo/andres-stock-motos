@@ -76,6 +76,24 @@ class UtilsService {
         }
       }
 
+      async cantidadesAcumuladasStock(movimientos) {
+        let acumulado = await movimientos.reduce((acc, item) => {
+          if (!acc[item.TipoMovimiento]) {
+            acc[item.TipoMovimiento] = 0;
+          }
+          acc[item.TipoMovimiento] += item.cantidad;
+          return acc;
+        }, {});
+      
+        let result = Object.entries(acumulado).map(([tipoMovimiento, cantidad]) => ({
+          TipoMovimiento: tipoMovimiento,
+          cantidad: cantidad
+        }));
+      
+        return result;
+      }
+     
+
 
      
 

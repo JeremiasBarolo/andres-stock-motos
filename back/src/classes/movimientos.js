@@ -66,6 +66,40 @@ class MovimientosService {
     }
   }
 
+  async listAllVentasPorCategoria() {
+    try {
+      const VentasMotos = await models.Movimientos.findAll({
+        include: [{ all: true }],
+        where:{
+          tipoMovimientoId: 2
+        }
+        
+      });
+
+      const VentasGenerales = await models.Stock.findAll({
+        include: [{ all: true }],
+        where: {
+          tipoId: {
+            [Op.or]: [1,2,4]
+          }
+        }
+      });
+
+
+      console.log('✅ Ventas were found');
+      let dataMotos = await format.VentasMotoPorCategoria(VentasMotos);
+      let dataGenerales = await format.VentasGeneralPorCategoria(VentasGenerales);
+
+      let motos = await utilsService.cantidadesAcumuladasStock(dataMotos)
+      let general = await utilsService.cantidadesAcumuladasStock(dataGenerales)
+
+      return [...motos , ...general]
+    } catch (err) {
+      console.error('🛑 Error when fetching Ventas', err);
+      throw err;
+    }
+  }
+
   async listAllRelaciones(id) {
     try {
       const Ventas = await models.StockMoviminetos.findAll({

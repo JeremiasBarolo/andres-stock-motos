@@ -231,6 +231,23 @@ class Formatter {
         }))
       }))
     }
+    VentasMotoPorCategoria(data) {
+      return data.map(venta => ({
+        id: venta.id,
+        TipoMovimiento: `${venta.TipoMovimiento.descripcion} ${venta.TipoMovimiento.descripcion== 'Venta Moto' && venta.Moto.tipoMotoId == 1 ? 'Usada' : 'Nueva'}`,
+        cantidad: venta.TipoMovimiento.descripcion === 'Venta Moto'? 1 : 0
+      }))
+    }
+
+    VentasGeneralPorCategoria(data) {
+      return data.map(venta => ({
+        id: venta.id,
+        TipoMovimiento: `${venta.Tipo_Articulo.descripcion}`,
+        cantidad: venta.Movimientos.reduce((acc, item) => {
+          return acc + item.StockMoviminetos.cantidad;
+        }, 0)
+      }))
+    }
 
     Service(data) {
       return data.map(servicio => ({

@@ -10,6 +10,10 @@
             return await MovimientosProvider.listAllRecaudacion();
         };
 
+        const listAllVentasPorCategoria = async () => {
+            return await MovimientosProvider.listAllVentasPorCategoria();
+        };
+
         const listPrecios = async () => {
             return await MovimientosProvider.listPrecios();
         };
@@ -82,6 +86,7 @@
         listAllServices,
         listPrecios,
         listAllRelaciones,
-        listAllRecaudacion
+        listAllRecaudacion,
+        listAllVentasPorCategoria
         };
 

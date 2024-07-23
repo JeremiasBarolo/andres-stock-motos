@@ -13,6 +13,10 @@ const listAllRecaudacion = async () => {
   return await movimientosService.listAllRecaudacion();
 };
 
+const listAllVentasPorCategoria = async () => {
+  return await movimientosService.listAllVentasPorCategoria();
+};
+
 const listAllMovimientos = async () => {
   return await movimientosService.listAllMovimientos();
 };
@@ -83,5 +87,6 @@ module.exports = {
   listPrecios,
   listAllRelaciones,
   listAllRecaudacion,
+  listAllVentasPorCategoria
   
 };
