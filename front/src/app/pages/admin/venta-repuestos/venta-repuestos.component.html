@@ -12,8 +12,8 @@
   ></app-tablang>
   
   <!-- <============================================ CREAR ==================================================> -->
-  <p-dialog header="Crear Venta" [modal]="true" [(visible)]="crearVisible" [style]="{ width: '50rem' }">
-    <form [formGroup]="form" (ngSubmit)="openCantidadDialog()">
+  <p-dialog header="Crear Venta" [modal]="true" [(visible)]="crearVisible" [style]="{ width: '100vw' }">
+    <form [formGroup]="form" (ngSubmit)="onSubmit()">
       <div class="flex align-items-center gap-3 mb-3">
         <label for="personaId" class="font-semibold w-6rem"><strong>Cliente</strong></label>
         <br>
@@ -21,23 +21,64 @@
           <option *ngFor="let persona of clientes" [value]="persona.id">{{ persona.nombre }} {{ persona.apellido }}</option>
         </select>
       </div>
-  
-      <p-pickList 
-        [source]="repuestos" 
-        [target]="productos.value" 
-        sourceHeader="Disponibles" 
-        targetHeader="Seleccionados" 
-        dragdrop="true" 
-        sourceStyle="" 
-        targetStyle="" 
-        (onMoveToTarget)="agregarProductoDesdePickList($event)" 
-        (onMoveToSource)="eliminarProductoDesdePickList($event)">
-        <ng-template let-item pTemplate="item">
-          <div class="product-item">
-            <h5>{{ item.nombre_articulo }}</h5>
+      <div class="card mb-3 border border-0 mx-auto">
+        <div class="row mt-4 ml-3">
+          <div class="col-md-6 text-center">
+            <h6>Articulos Disponibles</h6>
+            <div class="card" style="height: 550px; overflow-y: auto; margin-left: 6vw;">
+              <div class="card-body">
+                <ul class="list-group" *ngFor="let entity of options">
+                  <li class="list-group-item d-flex justify-content-between align-items-center">
+                    {{ entity.nombre }}
+                    <button class="btn btn-success" (click)="selectedEntity(entity)">Agregar Insumo</button>
+                  </li>
+                </ul>
+              </div>
+            </div>
           </div>
-        </ng-template>
-      </p-pickList>
+    
+          <!-- Lista de Insumos Seleccionados -->
+          <div class="col-md-5 text-center">
+              <h6>Artículos Seleccionados</h6>
+              <div class="spacer">
+                <div class="container">
+                  <div class="row mt-5">
+                    <div class="col-lg-12">
+                      <div class="row shop-listing">
+                        <p-table [value]="selectedEntities" [paginator]="true" [rows]="10" [responsive]="true"
+                          [styleClass]="'table shop-table'">
+                          <ng-template pTemplate="header">
+                            <tr>
+                              <th>Nombre</th>
+                              
+                              <th>Cantidad</th>
+                              <th></th> 
+                            </tr>
+                          </ng-template>
+                          <ng-template pTemplate="body" let-item let-i="rowIndex">
+                            <tr>
+                              <td>{{ item.nombre }}</td>
+                              
+                              <td>
+                                <button type="button" class="btn btn-primary" (click)="incrementQuantity(item)">+</button>
+                                {{ item.cantidad || 0 }}
+                                <button type="button" class="btn btn-primary" (click)="decrementQuantity(item)">-</button>
+                              </td>
+    
+                              <td>
+                                <button type="button" pButton icon="pi pi-trash" class="btn btn-danger btn-sm" (click)="returnEntities(item)"></button>
+                              </td>
+                            </tr>
+                          </ng-template>
+                        </p-table>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+      </div>
+      </div>
   
       <div class="flex justify-content-end gap-2 mt-3">
         <p-button class="mr-1" label="Siguiente" icon="pi pi-arrow-right" [text]="true" severity="success" type="submit"></p-button>
@@ -45,32 +86,11 @@
       </div>
     </form>
   </p-dialog>
-   <!-- <============================================ ESPECIFICAR CANTIDAD ==================================================> -->
-  <p-dialog header="Especificar Cantidad" [modal]="true" [(visible)]="cantidadVisible" [style]="{ width: '50rem' }">
-    <form [formGroup]="form" (ngSubmit)="onSubmit()">
-      <div formArrayName="productos">
-        <div *ngFor="let producto of productos.controls; let i = index" [formGroupName]="i" class="flex align-items-center gap-3 mb-3">
-          <label>{{ producto.get('nombre_articulo')?.value }}</label>
-          <br>
-          <input type="number" formControlName="cantidad" min="1" class="flex-auto" />
-          <button type="button" class="p-button p-component p-button-danger" (click)="eliminarProducto(i)" style="margin-left: 1em;">
-            <span class="p-button-icon pi pi-times"></span>
-          </button>
-        </div>
-      </div>
-      <div class="flex justify-content-end gap-2 mt-3">
-        <p-button class="mr-1" label="Guardar" icon="pi pi-check" [text]="true" severity="success" type="submit"></p-button>
-        <p-button label="Cancelar" icon="pi pi-times" [text]="true" severity="danger" (click)="cantidadVisible = false"></p-button>
-      </div>
-    </form>
-  </p-dialog>
   
   
   <!-- <============================================ EDITAR ==================================================> -->
-  <p-dialog header="Editar Venta" [modal]="true" [(visible)]="editVisible" [style]="{ width: '50rem' }">
-    <form [formGroup]="form" (ngSubmit)="openCantidadDialog()">
-      
-  
+  <p-dialog header="Editar Venta" [modal]="true" [(visible)]="editVisible" [style]="{ width: '100vw' }">
+    <form [formGroup]="form" (ngSubmit)="onSubmit()">
       <div class="flex align-items-center gap-3 mb-3">
         <label for="personaId" class="font-semibold w-6rem"><strong>Cliente</strong></label>
         <br>
@@ -78,27 +98,68 @@
           <option *ngFor="let persona of clientes" [value]="persona.id">{{ persona.nombre }} {{ persona.apellido }}</option>
         </select>
       </div>
-  
-      <p-pickList 
-        [source]="repuestos" 
-        [target]="productos.value" 
-        sourceHeader="Disponibles" 
-        targetHeader="Seleccionados" 
-        dragdrop="true" 
-        sourceStyle="" 
-        targetStyle="" 
-        (onMoveToTarget)="agregarProductoDesdePickList($event)" 
-        (onMoveToSource)="eliminarProductoDesdePickList($event)">
-        <ng-template let-item pTemplate="item">
-          <div class="product-item">
-            <h5>{{ item.nombre_articulo }}</h5>
+      <div class="card mb-3 border border-0 mx-auto">
+        <div class="row mt-4 ml-3">
+          <div class="col-md-6 text-center">
+            <h6>Articulos Disponibles</h6>
+            <div class="card" style="height: 550px; overflow-y: auto; margin-left: 6vw;">
+              <div class="card-body">
+                <ul class="list-group" *ngFor="let entity of options">
+                  <li class="list-group-item d-flex justify-content-between align-items-center">
+                    {{ entity.nombre }}
+                    <button class="btn btn-success" (click)="selectedEntity(entity)">Agregar Insumo</button>
+                  </li>
+                </ul>
+              </div>
+            </div>
           </div>
-        </ng-template>
-      </p-pickList>
+    
+          <!-- Lista de Insumos Seleccionados -->
+          <div class="col-md-5 text-center">
+              <h6>Artículos Seleccionados</h6>
+              <div class="spacer">
+                <div class="container">
+                  <div class="row mt-5">
+                    <div class="col-lg-12">
+                      <div class="row shop-listing">
+                        <p-table [value]="selectedEntities" [paginator]="true" [rows]="10" [responsive]="true"
+                          [styleClass]="'table shop-table'">
+                          <ng-template pTemplate="header">
+                            <tr>
+                              <th>Nombre</th>
+                              
+                              <th>Cantidad</th>
+                              <th></th> 
+                            </tr>
+                          </ng-template>
+                          <ng-template pTemplate="body" let-item let-i="rowIndex">
+                            <tr>
+                              <td>{{ item.nombre }}</td>
+                              
+                              <td>
+                                <button type="button" class="btn btn-primary" (click)="incrementQuantity(item)">+</button>
+                                {{ item.cantidad || 0 }}
+                                <button type="button" class="btn btn-primary" (click)="decrementQuantity(item)">-</button>
+                              </td>
+    
+                              <td>
+                                <button type="button" pButton icon="pi pi-trash" class="btn btn-danger btn-sm" (click)="returnEntities(item)"></button>
+                              </td>
+                            </tr>
+                          </ng-template>
+                        </p-table>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+      </div>
+      </div>
   
       <div class="flex justify-content-end gap-2 mt-3">
-        <p-button class="mr-1" label="Continuar" icon="pi pi-check" [text]="true" severity="success" type="submit"></p-button>
-        <p-button label="Cancelar" icon="pi pi-times" [text]="true" severity="danger" (click)="editVisible = false"></p-button>
+        <p-button class="mr-1" label="Siguiente" icon="pi pi-arrow-right" [text]="true" severity="success" type="submit"></p-button>
+        <p-button label="Cancelar" icon="pi pi-times" [text]="true" severity="danger" (click)="crearVisible = false"></p-button>
       </div>
     </form>
   </p-dialog>

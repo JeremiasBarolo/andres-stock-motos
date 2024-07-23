@@ -451,9 +451,17 @@ class MovimientosService {
 
       
       for (let id of toDelete) {
-        await models.StockMoviminetos.destroy({
-          where: { stockId: id, movimientosId: Ventas_id }
+        let Movimiento = await models.StockMoviminetos.findOne({
+          where: { stockId: id, movimientosId: Ventas_id },
         });
+
+        let stock = await models.Stock.findByPk(id);
+
+        await stock.update({
+          cantidad: stock.cantidad + Movimiento.cantidad
+        });
+
+        await Movimiento.destroy();
       }
 
       

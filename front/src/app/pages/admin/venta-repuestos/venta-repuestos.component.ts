@@ -9,6 +9,7 @@ import { UsuariosService } from '../../../services/usuarios.service';
 import { MovimientosService } from '../../../services/movimientos.service';
 import { DatePipe } from '@angular/common';
 import { AuthService } from '../../../services/auth.service';
+import { MessageService } from 'primeng/api';
 
 @Component({
   selector: 'app-venta-repuestos',
@@ -37,6 +38,8 @@ export class VentaRepuestosComponent implements OnDestroy, OnInit {
   repuestos: any[] = [];
   usuarioId: any
   usuarioIdEdit: any
+  options: any[] = [];
+  selectedEntities: any[] = [];
 
 
   private destroy$ = new Subject<void>();
@@ -47,6 +50,7 @@ export class VentaRepuestosComponent implements OnDestroy, OnInit {
     private stockService: StockService,
     private movimientosService: MovimientosService,
     private authService: AuthService,
+    private messageService: MessageService,
     private fb: FormBuilder,
     private router: Router,
     private aRoute: ActivatedRoute,
@@ -89,20 +93,17 @@ export class VentaRepuestosComponent implements OnDestroy, OnInit {
       });
     });
 
-    this.usuariosService.getAll().pipe(takeUntil(this.destroy$)).subscribe(data => {
-      this.usuarios = data;
-    });
-
     this.stockService.getAllStockVentaGeneral().pipe(takeUntil(this.destroy$)).subscribe((data)=>{
       let dataReal = data.map((stock)=>{
         return {
           ...stock,
+          nombre: stock.nombre_articulo,
           cantidad: 0,
           cantidadActual: stock.cantidad
         }
       })
 
-      this.repuestos = dataReal;
+      this.options = dataReal.filter(item => item.cantidadActual > 0 && item.tipoArticulo !== 'Insumo')
     })
 
     this.personasService.getAllClientes().pipe(takeUntil(this.destroy$)).subscribe(data => {
@@ -120,39 +121,32 @@ export class VentaRepuestosComponent implements OnDestroy, OnInit {
 
 // <================================ FUNCIONAMIENTO DE PICKLIST =======================================>
 
-  get productos(): FormArray {
-    return this.form.get('productos') as FormArray;
-  }
+selectedEntity(entity: any) {
+  this.selectedEntities.push({...entity, cantidad: 1});
+  this.options = this.options.filter(item => item.id !== entity.id);
+}
 
-  agregarProducto(producto: any) {
-    const productoForm = this.fb.group({
-      id: [producto.id, Validators.required],
-      nombre_articulo: [producto.nombre_articulo, Validators.required],
-      cantidad: [producto.cantidad, [Validators.required, Validators.min(1)]],
-      costo: [producto.costo, Validators.required]
-    });
-  
-    this.productos.push(productoForm);
-  }
+returnEntities(entity: any) {
 
-  eliminarProducto(index: number) {
-    this.productos.removeAt(index);
-  }
+  this.options.push(entity);
+  this.selectedEntities = this.selectedEntities.filter(item => item.id !== entity.id);
+}
 
-  agregarProductoDesdePickList(event: any) {
-    event.items.forEach((producto: any) => {
-      this.agregarProducto(producto);
-    });
+incrementQuantity(item: any): void {
+  if (item.cantidad) {
+    item.cantidad++;
+  } else {
+    item.cantidad = 1;
   }
+ 
+}
 
-  eliminarProductoDesdePickList(event: any) {
-    event.items.forEach((producto: any) => {
-      const index = this.productos.controls.findIndex((control: any) => control.value.id === producto.id);
-      if (index > -1) {
-        this.eliminarProducto(index);
-      }
-    });
+decrementQuantity(item: any): void {
+  if (item.cantidad && item.cantidad > 0) {
+    item.cantidad--;
+    
   }
+}
 
 
 
@@ -161,6 +155,8 @@ export class VentaRepuestosComponent implements OnDestroy, OnInit {
     this.editVisible = true;
     this.id = data.id;
     this.usuarioIdEdit = data.usuarioId 
+   
+    
     
     
     this.form.patchValue({
@@ -168,22 +164,24 @@ export class VentaRepuestosComponent implements OnDestroy, OnInit {
     });
   
     
-    this.productos.clear();
   
-    this.stockService.getAllRepuestos().subscribe(repuestos => {
+    this.stockService.getAllStockVentaGeneral().subscribe(opciones => {
+      console.log(opciones);
       
-      this.repuestos = repuestos;
-
+      this.options = opciones.filter(item => item.tipoArticulo !== 'Insumo')
       
       data.stock.forEach((item: any) => {
-        this.agregarProducto({
-          id: item.id,
-          nombre_articulo: item.nombre,
-          cantidad: item.cantidad
-        });
-
-        
-        this.repuestos = this.repuestos.filter(repuesto => repuesto.id !== item.id);
+       
+        this.selectedEntities.push(item)
+        this.options = this.options.filter(option => option.id !== item.id);
+        this.options = this.options.map((stock)=>{
+          return {
+            ...stock,
+            nombre: stock.nombre_articulo,
+            cantidad: 1,
+            cantidadActual: stock.cantidad
+          }
+        })
       });
     });
     
@@ -194,40 +192,56 @@ export class VentaRepuestosComponent implements OnDestroy, OnInit {
   onSubmit() {
     const formValue = this.form.value;
     
+    if (!formValue.personaId) {
+      this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Debe seleccionar al menos un cliente' });
+    } else if (this.selectedEntities.length === 0) {
+      this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Debe seleccionar al menos un elemento' });
+    } else {
+
+      this.tipo= {
+        usuarioId: this.id > 0 ? this.usuarioIdEdit : this.usuarioId,
+        personaId: formValue.personaId,
+        productos: this.selectedEntities,
+        tipoMovimientoId: 3
+      };
+    
+      if (this.id > 0) {
+        // Es editar
+        this.movimientosService.updateVentaRepuestos(this.id, this.tipo)
+          .pipe(takeUntil(this.destroy$))
+          .subscribe(() => {
+            this.messageService.add({ severity: 'success', summary: 'Exito', detail: 'Venta actualizada correctamente' });
+            setTimeout(() => {
+              window.location.reload();
+            }, 600);
+          }, (error) => {
+            this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Error al actualizar la venta' });
+          });
+      } else {
+        // Es crear
+        this.movimientosService.create(this.tipo)
+          .pipe(takeUntil(this.destroy$))
+          .subscribe(() => {
+            this.messageService.add({ severity: 'success', summary: 'Exito', detail: 'Venta creada correctamente' });
+            setTimeout(() => {
+              window.location.reload();
+            }, 600);
+          }, (error) => {
+            this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Error al crear la venta' });
+          });
+      }
+    }
+    
+
     
    
   
-    if (this.id > 0) {
-      // Es editar
-      this.tipo = {
-        usuarioId: this.usuarioIdEdit,
-        personaId: formValue.personaId,
-        productos: formValue.productos,
-        tipoMovimientoId: 3
-      };
-      this.movimientosService.updateVentaRepuestos(this.id, this.tipo).pipe(takeUntil(this.destroy$)).subscribe(() => {
-        setTimeout(() => {
-          window.location.reload();
-        }, 600);
-      });
-    } else {
-      // Es crear
-      this.tipo = {
-        usuarioId: this.usuarioId,
-        personaId: formValue.personaId,
-        productos: formValue.productos,
-        tipoMovimientoId: 3
-      };
-      this.movimientosService.create(this.tipo).pipe(takeUntil(this.destroy$)).subscribe(() => {
-        setTimeout(() => {
-          window.location.reload();
-        }, 600);
-      });
-    }
+    
   }
 
   Eliminar() {
     this.movimientosService.deleteVentaRepuesto(this.id).pipe(takeUntil(this.destroy$)).subscribe(() => {
+      this.messageService.add({ severity: 'success', summary: 'Exito', detail: 'Venta eliminada correctamente' });
       setTimeout(() => {
         window.location.reload();
       }, 1000);
@@ -238,20 +252,7 @@ export class VentaRepuestosComponent implements OnDestroy, OnInit {
 
 // <================================ FUNCIONAMIENTO DE MODALES =======================================>
 
-  openCantidadDialog() {
-    if (this.productos.length > 0) {
-      this.productos.controls.forEach((control) => {
-        if (!control.get('cantidad')?.value) {
-          control.get('cantidad')?.setValue(1);
-        }
-      });
   
-      this.crearVisible = false;
-      this.cantidadVisible = true;
-    } else {
-      alert('Debe seleccionar al menos un producto.');
-    }
-  }
 
   modalOpen(data:any){
     this.detailModal = true
