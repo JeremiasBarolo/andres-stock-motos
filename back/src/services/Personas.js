@@ -10,6 +10,10 @@
             return await PersonasProvider.mejoresEmpleados();
         };
 
+        const mejoresClientes = async () => {
+            return await PersonasProvider.mejoresClientes();
+        };
+
         const listAllEmpleados = async () => {
             return await PersonasProvider.listAllEmpleados();
         };
@@ -49,6 +53,7 @@
         listAllEmpleados, 
         listAllProveedores,
         listAllClientes,
-        mejoresEmpleados
+        mejoresEmpleados,
+        mejoresClientes
         };
 

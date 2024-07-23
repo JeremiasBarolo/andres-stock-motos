@@ -6,10 +6,12 @@ import { MovimientosService } from '../../../services/movimientos.service';
 import { PedidosService } from '../../../services/pedidos.service';
 import { StockService } from '../../../services/stock.service';
 
+
 @Component({
   selector: 'app-inicio',
   templateUrl: './inicio.component.html',
-  styleUrl: './inicio.component.css'
+  styleUrl: './inicio.component.css',
+  
 })
 export class InicioComponent implements OnInit, OnDestroy {
   titulo :any
@@ -19,6 +21,7 @@ export class InicioComponent implements OnInit, OnDestroy {
   pedidosPendientes:any
   stockDisponible:any
   empleados:any[] = []
+  clientes:any[] = []
   private destroy$ = new Subject<void>();
 
   constructor(
@@ -40,7 +43,13 @@ export class InicioComponent implements OnInit, OnDestroy {
     this.personasService.getMejoresEmpleados()
     .pipe(takeUntil(this.destroy$))
     .subscribe((data) => {
-      this.empleados = data.sort((a, b) => b.ventas - a.ventas);
+      this.empleados = data.sort((a, b) => b.ventas - a.ventas).slice(0, 10);
+    });
+
+  this.personasService.getMejoresClientes()
+    .pipe(takeUntil(this.destroy$))
+    .subscribe((data) => {
+      this.clientes = data.sort((a, b) => b.ventas - a.ventas).slice(0, 10);
     });
 
     this.movimientosService.getAllRecaudacion()
@@ -63,6 +72,8 @@ export class InicioComponent implements OnInit, OnDestroy {
     .subscribe((data) => {
       this.stockDisponible = data
     });
+
+ 
 
   }
 

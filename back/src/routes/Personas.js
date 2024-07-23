@@ -5,6 +5,7 @@
 
     router.get('/', PersonasController.listAllPersonas);
     router.get('/mejores-empleados', PersonasController.mejoresEmpleados);
+    router.get('/mejores-clientes', PersonasController.mejoresClientes);
     router.get('/:Personas_id', PersonasController.listOnePersonas);
     
     router.post('/', PersonasController.createPersonas);

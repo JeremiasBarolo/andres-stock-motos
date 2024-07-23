@@ -50,12 +50,16 @@ class MovimientosService {
   async listAllVentas() {
     try {
       const Ventas = await models.Movimientos.findAll({
-        include: [{ all: true }]
+        include: [{ all: true }],
+        where:{
+          tipoMovimientoId: 3
+        }
+        
       });
       console.log('✅ Ventas were found');
       let data = await format.Ventas(Ventas);
 
-      return data.filter((item) => item.TipoMovimiento !== 'Servicio')
+      return data
     } catch (err) {
       console.error('🛑 Error when fetching Ventas', err);
       throw err;

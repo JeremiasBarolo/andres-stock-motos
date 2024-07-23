@@ -65,12 +65,29 @@ class PersonasService {
   async listAllClientes() {
     try {
       const Personas = await models.Personas.findAll({
-        include: [{ all: true }]
+        include: [{ all: true }],
+        where: { tipoPersonaId: 3 }
       });
       console.log('✅ Personas were found');
       let data = await format.Personas(Personas);
       
-      return data.filter((item) => item.tipoPersona === 'Cliente');
+      return data
+    } catch (err) {
+      console.error('🛑 Error when fetching Personas', err);
+      throw err;
+    }
+  }
+
+  async mejoresClientes() {
+    try {
+      const mejoresClientes = await models.Personas.findAll({
+        include: [{ all: true }],
+        where: { tipoPersonaId: 3 }
+      });
+      console.log('✅ Personas were found');
+      let data = await format.mejoresClientes(mejoresClientes);
+      
+      return data
     } catch (err) {
       console.error('🛑 Error when fetching Personas', err);
       throw err;

@@ -10,6 +10,7 @@ import { ButtonModule } from 'primeng/button';
 import { DatosServicioPdfComponent } from './datos-servicio-pdf/datos-servicio-pdf.component';
 import { TooltipModule } from 'primeng/tooltip';
 import { InicioCardComponent } from './inicio-card/inicio-card.component';
+import { BarChartComponent } from './bar-chart/bar-chart.component';
 
 
 
@@ -22,6 +23,7 @@ import { InicioCardComponent } from './inicio-card/inicio-card.component';
     TablangComponent,
     DatosServicioPdfComponent,
     InicioCardComponent,
+    BarChartComponent,
 
   ],
   imports: [
@@ -39,6 +41,7 @@ import { InicioCardComponent } from './inicio-card/inicio-card.component';
     FooterComponent,
     TablangComponent,
     InicioCardComponent,
+    BarChartComponent,
     
 
   ]

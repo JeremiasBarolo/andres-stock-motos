@@ -23,6 +23,17 @@ const mejoresEmpleados = async (req, res) => {
   }
 };
 
+
+const mejoresClientes = async (req, res) => {
+  try {
+    
+    const Personas = await PersonasService.mejoresClientes();
+    res.json(Personas);
+  } catch (err) {
+    res.status(500).json({ action: "listAll", error: err.message });
+  }
+};
+
 const listAllEmpleados = async (req, res) => {
   try {
 
@@ -109,5 +120,6 @@ module.exports = {
   listAllEmpleados,
   listAllProveedores,
   listAllClientes,
-  mejoresEmpleados
+  mejoresEmpleados,
+  mejoresClientes
 };

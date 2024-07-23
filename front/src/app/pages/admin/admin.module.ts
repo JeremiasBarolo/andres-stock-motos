@@ -43,7 +43,6 @@ import { IonicModule } from '@ionic/angular';
 
 
 
-
 @NgModule({
   declarations: [
     AdminComponent,
@@ -91,7 +90,8 @@ import { IonicModule } from '@ionic/angular';
     FormsModule,
     TableModule,
     ToastModule,
-    IonicModule
+    IonicModule,
+
     
   
   ]

@@ -9,6 +9,10 @@ const mejoresEmpleados = async () => {
   return await personasService.mejoresEmpleados();
 };
 
+const mejoresClientes = async () => {
+  return await personasService.mejoresClientes();
+};
+
 const listAllEmpleados= async () => {
   return await personasService.listAllEmpleados();
 };
@@ -46,5 +50,6 @@ module.exports = {
   listAllEmpleados,
   listAllProveedores,
   listAllClientes,
-  mejoresEmpleados
+  mejoresEmpleados,
+  mejoresClientes
 };

@@ -86,6 +86,22 @@ class Formatter {
       }))
     }
 
+    async mejoresClientes(data) {
+      const clientes = await Promise.all(
+        data.map(async user => {
+          const ventas = await utilsService.getVentasByCliente(user.id);
+          return {
+            id: user.id,
+            nombre: `${user.nombre} ${user.apellido}`,
+            ventas: ventas,
+            Localidad: user.Localidade.descripcion
+          };
+        })
+      );
+  
+      return clientes;
+    }
+
     async mejoresEmpleados(data) {
       try {
         const empleados = await Promise.all(
