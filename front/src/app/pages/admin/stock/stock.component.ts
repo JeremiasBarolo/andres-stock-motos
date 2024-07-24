@@ -54,7 +54,7 @@ export class StockComponent implements OnInit {
   ngOnInit(): void {
     this.isAdmin = this.authService.isAllowed();
 
-    this.stockService.getAll().pipe(takeUntil(this.destroy$)).subscribe((data: any[]) => {
+    this.stockService.getAllStockGeneral().pipe(takeUntil(this.destroy$)).subscribe((data: any[]) => {
       this.columns = [
         { field: 'id', header: 'ID' },
         { field: 'nombre_articulo', header: 'Nombre Articulo' },
@@ -63,7 +63,6 @@ export class StockComponent implements OnInit {
         { field: 'proveedor', header: 'Proveedor' },
         { field: 'costo', header: 'Costo' },
         { field: 'cantidad', header: 'Cantidad' },
-        // { field: 'id_codigo_barra', header: 'Codigo Barra' },
         
 
       ];

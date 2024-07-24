@@ -58,7 +58,6 @@ export class ServiciosComponent {
         { field: 'id', header: 'ID' },
         { field: 'nombre_articulo', header: 'Nombre Articulo' },
         { field: 'descripcion', header: 'Descripcion' },
-        { field: 'tipoArticulo', header: 'Tipo Articulo' },
         { field: 'proveedor', header: 'Proveedor' },
         { field: 'costo', header: 'Costo' },
         

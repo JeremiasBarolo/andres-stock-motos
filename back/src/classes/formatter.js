@@ -55,7 +55,7 @@ class Formatter {
         descripcion: pedido.descripcion,
         estado: pedido.estado,
         Pedido: pedido.PedidosStocks.map(stock => ({
-          id: stock.id,
+          id: stock.stockId,
           nombre: stock.Stock.nombre,
           cantidad: stock.cantidad,
           costo: stock.Stock.costo,
@@ -300,6 +300,7 @@ class Formatter {
           nombre: stock.nombre,
           costo: stock.costo,
           cantidad: stock.StockMoviminetos.cantidad,
+          cantidadActual: stock.cantidad,
           tipoArticulo: stock.Tipo_Articulo.descripcion
         })),
 
@@ -345,7 +346,7 @@ class Formatter {
 
         }
       }))
-    }
+    } 
 
     OneVentas(data) {
       return {
@@ -362,6 +363,7 @@ class Formatter {
         stock: data.Stocks.map(stock => ({
           id: stock.id,
           nombre: stock.nombre,
+          cantidadActual: stock.cantidad,
           cantidad: stock.StockMoviminetos.cantidad,
           costo: stock.costo
         }))

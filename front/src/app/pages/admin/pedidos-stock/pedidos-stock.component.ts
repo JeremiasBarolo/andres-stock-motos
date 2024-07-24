@@ -7,6 +7,7 @@ import { StockService } from '../../../services/stock.service';
 import { TipoArticuloService } from '../../../services/tipo-articulo.service';
 import { PedidosService } from '../../../services/pedidos.service';
 import { DatePipe } from '@angular/common';
+import { MessageService } from 'primeng/api';
 
 @Component({
   selector: 'app-pedidos-stock',
@@ -28,9 +29,9 @@ export class PedidosStockComponent {
   id: number = 0;
   proveedores: any[] = [];
   tipoArticulos: any[] = [];
-  seleccionados: any[] = [];
-  Articulos: any[] = [];
-  repuestos: any[] = [];
+  options: any[] = [];
+  Articulos:any[] = []
+  selectedEntities: any[] = [];
   
 
   private destroy$ = new Subject<void>();
@@ -44,6 +45,7 @@ export class PedidosStockComponent {
     private fb: FormBuilder,
     private router: Router,
     private aRoute: ActivatedRoute,
+    private messageService: MessageService,
     private datePipe: DatePipe
   ){
 
@@ -68,7 +70,8 @@ export class PedidosStockComponent {
 
       ];
 
-      data.map((data)=>{
+      let dataSorted = data.sort((a, b) => b.id - a.id)
+      dataSorted.map((data)=>{
 
         this.products.push({
           id: data.id,
@@ -84,17 +87,23 @@ export class PedidosStockComponent {
 
     
 
-    this.stockService.getAll().pipe(takeUntil(this.destroy$)).subscribe((data)=>{
+    this.stockService.getAllStockVentaGeneral().pipe(takeUntil(this.destroy$)).subscribe((data)=>{
       let dataReal = data.map((stock)=>{
-        return {
-          ...stock,
-          cantidad: 0,
-          cantidadActual: stock.cantidad
-        }
+        
+          return {
+            ...stock,
+            nombre: stock.nombre_articulo,
+            cantidad: 0,
+            cantidadActual: stock.cantidad
+          }
+        
+        
       })
 
+      dataReal = dataReal.filter(stock => stock.cantidadActual > 0);
+
       this.Articulos = dataReal;
-      this.repuestos = dataReal;
+      this.options = dataReal;
     })
 
    
@@ -115,23 +124,41 @@ export class PedidosStockComponent {
     });
   
     
-    this.productos.clear();
   
     
-    this.pedidosService.getStockPedido(this.id).subscribe(repuestos => {
+    this.form.patchValue({
+      personaId: data.personaId
+    });
+
+
+    console.log(data);
+    
+  
+    
+  
+    this.stockService.getAllStockVentaGeneral().subscribe(opciones => {
       
-      console.log('respuests',repuestos);
-
-      repuestos.forEach((item: any) => {
-        this.agregarProducto({
-          id: item.stockId,
-          nombre_articulo: item.nombre,
-          cantidad: item.cantidad
-        });
-
-        this.Articulos = this.Articulos.filter(repuesto => repuesto.id !== item.stockId);
+      this.options = opciones
+      
+      data.Pedido.forEach((item: any) => {
+       
+        this.selectedEntities.push(item)
+        this.options = this.options.filter(option => option.id !== item.id);
+        this.options = this.options.map((stock)=>{
+          return {
+            ...stock,
+            nombre: stock.nombre_articulo,
+            cantidad: 1,
+            cantidadActual: stock.cantidad
+          }
+        })
       });
     });
+
+    console.log(this.options);
+    console.log(this.selectedEntities);
+    
+    
     
   }
 
@@ -144,7 +171,7 @@ export class PedidosStockComponent {
 
     this.tipo = {
       descripcion: this.form.value.descripcion,
-      productos: this.form.value.productos,
+      productos: this.selectedEntities,
     }
 
       if(this.id > 0){
@@ -186,64 +213,42 @@ export class PedidosStockComponent {
       setTimeout(() => {
         window.location.reload();
       }, 1000)
-      // this.router.navigate(['dashboard/insumos']);
     });
   }
 
   // <================================ FUNCIONAMIENTO DE PICKLIST =======================================>
-  get productos(): FormArray {
-    return this.form.get('productos') as FormArray;
+  selectedEntity(entity: any) {
+    this.selectedEntities.push({...entity, cantidad: 1});
+    this.options = this.options.filter(item => item.id !== entity.id);
   }
-
-  agregarProducto(producto: any) {
-    
-    
-    const productoForm = this.fb.group({
-      id: [producto.id, Validators.required],
-      nombre_articulo: [producto.nombre_articulo, Validators.required],
-      cantidad: [producto.cantidad, [Validators.required, Validators.min(1)]]
-    });
   
-    this.productos.push(productoForm);
+  returnEntities(entity: any) {
+  
+    this.options.push(entity);
+    this.selectedEntities = this.selectedEntities.filter(item => item.id !== entity.id);
   }
-
-  eliminarProducto(index: number) {
-    this.productos.removeAt(index);
-  }
-
-  agregarProductoDesdePickList(event: any) {
-    event.items.forEach((producto: any) => {
-      this.agregarProducto(producto);
-    });
-  }
-
-  eliminarProductoDesdePickList(event: any) {
-    event.items.forEach((producto: any) => {
-      const index = this.productos.controls.findIndex((control: any) => control.value.id === producto.id);
-      if (index > -1) {
-        this.eliminarProducto(index);
+  
+  incrementQuantity(item: any): void {
+    if (item.cantidad) {
+      if (item.cantidad < item.cantidadActual) {
+        item.cantidad++;
+      } else {
+        this.messageService.add({ severity: 'error', summary: 'Error', detail: 'No hay suficiente stock disponible' });
       }
-    });
+    } else {
+      item.cantidad = 1;
+    }
+  }
+  
+  decrementQuantity(item: any): void {
+    if (item.cantidad && item.cantidad > 0) {
+      item.cantidad--;
+    }
   }
 
 
 
     // <================================ FUNCIONAMIENTO DE MODALES =======================================>
-
-    openCantidadDialog() {
-      if (this.productos.length > 0) {
-        this.productos.controls.forEach((control) => {
-          if (!control.get('cantidad')?.value) {
-            control.get('cantidad')?.setValue(1);
-          }
-        });
-    
-        this.crearVisible = false;
-        this.cantidadVisible = true;
-      } else {
-        alert('Debe seleccionar al menos un producto.');
-      }
-    }
 
     modalOpen(data:any){
       this.detailModal = true
@@ -261,11 +266,12 @@ export class PedidosStockComponent {
       this.editVisible = false;
       this.crearVisible = false;
       if(total){
-        this.productos.clear();
-        this.Articulos = [...this.repuestos]; 
+        this.Articulos = [...this.options]; 
         this.form.reset({
           descripcion: '',
         });
+
+        this.selectedEntities = []
       }
       
     }

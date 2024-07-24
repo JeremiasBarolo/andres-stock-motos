@@ -75,7 +75,8 @@ export class VentaRepuestosComponent implements OnDestroy, OnInit {
         { field: 'cantArt', header: 'Articulos Vendidos' },
       ];
 
-      data.forEach((data) => {
+      let dataReal = data.sort((a, b) => b.id - a.id)
+      dataReal.forEach((data) => {
         this.products.push({
           id: data.id,
           createdAt: this.datePipe.transform(data.createdAt, 'dd/MM/yy'),
@@ -132,17 +133,19 @@ returnEntities(entity: any) {
 
 incrementQuantity(item: any): void {
   if (item.cantidad) {
-    item.cantidad++;
+    if (item.cantidad < item.cantidadActual) {
+      item.cantidad++;
+    } else {
+      this.messageService.add({ severity: 'error', summary: 'Error', detail: 'No hay suficiente stock disponible' });
+    }
   } else {
     item.cantidad = 1;
   }
- 
 }
 
 decrementQuantity(item: any): void {
   if (item.cantidad && item.cantidad > 0) {
     item.cantidad--;
-    
   }
 }
 

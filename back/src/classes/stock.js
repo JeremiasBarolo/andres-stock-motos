@@ -1,3 +1,4 @@
+const { where } = require('sequelize');
 var models = require('../models');
 const Formatter = require('./formatter');
 const format = new Formatter();
@@ -47,11 +48,12 @@ class StockService {
       async listAllRepuestos() {
         try {
           const Stock = await models.Stock.findAll({
-            include: [{ all: true }]
+            include: [{ all: true }],
+            where: { tipoId: 1}
           });
           console.log('✅ Stock were found');
           let data = format.Stock(Stock);
-          return data.filter((item) => item.tipoArticulo === 'Repuesto');
+          return data
         } catch (err) {
           console.error('🛑 Error when fetching Stock', err);
           throw err;
@@ -66,6 +68,21 @@ class StockService {
           console.log('✅ Stock were found');
           let data = format.Stock(Stock);
           return data.filter((item) => item.tipoArticulo !== 'Servicio');
+        } catch (err) {
+          console.error('🛑 Error when fetching Stock', err);
+          throw err;
+        }
+      }
+
+      async listAllStockGeneral() {
+        try {
+          const Stock = await models.Stock.findAll({
+            include: [{ all: true }],
+            where: { tipoId: [1,2]}
+          });
+          console.log('✅ Stock were found');
+          let data = format.Stock(Stock);
+          return data
         } catch (err) {
           console.error('🛑 Error when fetching Stock', err);
           throw err;
