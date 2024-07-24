@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, catchError, of, tap } from 'rxjs';
 import { MessageService } from 'primeng/api';
+import { AuthService } from './auth.service';
 
 @Injectable({
   providedIn: 'root'
@@ -9,33 +10,45 @@ import { MessageService } from 'primeng/api';
 export class TipoMovimientosService {
 
    
-  constructor(private http: HttpClient, private messageService: MessageService ) { }
+  constructor(private http: HttpClient, private authService: AuthService,private messageService: MessageService ) { }
   // appSettings: any = AppSettings.readAppSettings().ValeCaffarato;
   // private apiUrl = `${this.appSettings.url_api}/bancos`;
 
   private apiUrl = 'http://localhost:8081/tipo_movimientos';
+
+  // Método para obtener encabezado con token
+  private getHeaders(): HttpHeaders {
+    const token = this.authService.getToken();
+    let headers = new HttpHeaders();
+
+    if (token) {
+      headers = headers.set('Authorization', `Bearer ${token}`);
+    }
+
+    return headers;
+  }
   
  
   //get all
   getAll(): Observable<any[]> {
-    return this.http.get<any[]>(`${this.apiUrl}`); 
+    return this.http.get<any[]>(`${this.apiUrl}`, { headers: this.getHeaders() }); 
   }
 
   // get by id
   getById(id: number): Observable<any> {
-    return this.http.get<any>(`${this.apiUrl}/${id}`)
+    return this.http.get<any>(`${this.apiUrl}/${id}`, { headers: this.getHeaders() })
     
   }
 
   // create
   create(Entity: any): Observable<any> {
-    return this.http.post<any>(`${this.apiUrl}`, Entity)
+    return this.http.post<any>(`${this.apiUrl}`, Entity, { headers: this.getHeaders() })
       
   }
 
   // update
   update(id: number, Entity: FormData): Observable<any> {
-    return this.http.put<any>(`${this.apiUrl}/${id}`, Entity)
+    return this.http.put<any>(`${this.apiUrl}/${id}`, Entity, { headers: this.getHeaders() })
 
   }
 
@@ -52,7 +65,7 @@ export class TipoMovimientosService {
       });
       return of(null);  
     } else {
-      return this.http.delete<any>(`${this.apiUrl}/${id}`);
+      return this.http.delete<any>(`${this.apiUrl}/${id}`, { headers: this.getHeaders() });
     }
   }
 

@@ -1,5 +1,5 @@
+const authMiddleware = require('./authToken');
+
 module.exports = {
-    budgetMdw: require('./budget'),
-    contactMdw: require('./contact'),
-    loginMdw: require('./login'),
-}
+  authMiddleware,
+};

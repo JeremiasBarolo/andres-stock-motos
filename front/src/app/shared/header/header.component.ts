@@ -22,7 +22,11 @@ export class HeaderComponent implements OnInit {
 
   ngOnInit(): void {
     this.authService.getUserData().pipe(takeUntil(this.destroy$)).subscribe((data)=>{
-      this.nombre = data.nombre;
+      if(data.nombre === 'Admin Admin'){
+        this.nombre = 'Admin';
+      }else{
+        this.nombre = data.nombre;
+      }
       this.rol = data.rol;
     })
   }
