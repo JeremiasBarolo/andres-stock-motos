@@ -4,6 +4,9 @@
     const {PersonasController }= require('../controllers');
 
     router.get('/', PersonasController.listAllPersonas);
+    router.get('/proveedores', PersonasController.listAllProveedores);
+    router.get('/clientes', PersonasController.listAllClientes);
+    router.get('/empleados', PersonasController.listAllEmpleados);
     router.get('/mejores-empleados', PersonasController.mejoresEmpleados);
     router.get('/mejores-clientes', PersonasController.mejoresClientes);
     router.get('/:Personas_id', PersonasController.listOnePersonas);

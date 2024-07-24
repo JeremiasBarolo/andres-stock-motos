@@ -19,7 +19,7 @@ export class PersonasService {
   }
 
   getAllEmpleados(): Observable<any[]> {
-    return this.http.get<any[]>(`http://localhost:8081/empleados`); 
+    return this.http.get<any[]>(`${this.apiUrl}/empleados`); 
   }
 
   getMejoresEmpleados(): Observable<any[]> {
@@ -30,10 +30,10 @@ export class PersonasService {
     return this.http.get<any[]>(`${this.apiUrl}/mejores-clientes`); 
   }
   getAllProveedores(): Observable<any[]> {
-    return this.http.get<any[]>(`http://localhost:8081/proveedores`); 
+    return this.http.get<any[]>(`${this.apiUrl}/proveedores`); 
   }
   getAllClientes(): Observable<any[]> {
-    return this.http.get<any[]>(`http://localhost:8081/clientes`); 
+    return this.http.get<any[]>(`${this.apiUrl}/clientes`); 
   }
 
   // get by id

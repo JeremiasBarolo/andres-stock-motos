@@ -4,6 +4,8 @@
     const {MotosController }= require('../controllers');
 
     router.get('/', MotosController.listAllMotos);
+    router.get('/usadas', MotosController.listAllMotosUsadas);
+    router.get('/nuevas', MotosController.listAllMotosNuevas);
     router.get('/:Motos_id', MotosController.listOneMotos);
     router.post('/', MotosController.createMotos);
     router.put('/:Motos_id', MotosController.updateMotos);

@@ -12,6 +12,8 @@ const listAllMotos = async (req, res) => {
   }
 };
 
+
+
 const listAllMotosUsadas = async (req, res) => {
   try {
     const Motos = await MotosService.listAllMotosUsadas();

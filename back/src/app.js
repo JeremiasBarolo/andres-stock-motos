@@ -22,11 +22,6 @@ const {
     DatosServicioRouter,
     MarcaRouter,
     TipoMotoRouter,
-    EmpleadosRouter,
-    ProveedoresRouter,
-    ClientesRouter,
-    MotosNuevasRouter,
-    MotosUsadasRouter,
     PedidosRouter,
     ChecklistRouter,
     TipoServicioRouter,
@@ -48,9 +43,6 @@ app.use(cors());
 app.use("/tipo_articulo", TipoArticuloRouter)
 app.use("/stock", StockRouter)
 app.use("/personas", PersonasRouter)
-app.use("/empleados", EmpleadosRouter)
-app.use("/proveedores", ProveedoresRouter)
-app.use("/clientes", ClientesRouter)
 app.use("/usuarios", UsuariosRouter)
 app.use("/rol", RolRouter)
 app.use("/localidades", LocalidadesRouter)
@@ -58,8 +50,6 @@ app.use("/tipo_personas", TipoPersonaRouter)
 app.use("/movimientos", MovimientosRouter)
 app.use("/tipo_movimientos", TipoMovimientosRouter)
 app.use("/motos", MotosRouter)
-app.use("/motos_usadas", MotosUsadasRouter)
-app.use("/motos_nuevas", MotosNuevasRouter)
 app.use("/datos_servicio", DatosServicioRouter)
 app.use("/marca", MarcaRouter)
 app.use("/tipo_moto", TipoMotoRouter)

@@ -31,8 +31,8 @@ export class DatosServicioPdfComponent implements OnInit {
       console.log(this.cardData);
       
 
-      if (this.cardData.recepcionistaId) {
-        this.personasService.getById(this.cardData.recepcionistaId).subscribe((res: any) => {
+      if (this.cardData.personaId) {
+        this.personasService.getById(this.cardData.personaId).subscribe((res: any) => {
           this.recepcionista = res;
           console.log(this.recepcionista);
         });

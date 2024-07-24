@@ -21,12 +21,12 @@ export class MotosService {
   }
 
   getAllUsadas(): Observable<any[]> {
-    return this.http.get<any[]>(`http://localhost:8081/motos_usadas`); 
+    return this.http.get<any[]>(`${this.apiUrl}/usadas`); 
   }
 
 
   getAllNuevas(): Observable<any[]> {
-    return this.http.get<any[]>(`http://localhost:8081/motos_nuevas`); 
+    return this.http.get<any[]>(`${this.apiUrl}/nuevas`); 
   }
 
 
