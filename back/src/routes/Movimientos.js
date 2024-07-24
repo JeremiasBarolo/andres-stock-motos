@@ -2,6 +2,9 @@
     const express = require('express');
     const router = express.Router();
     const {MovimientosController }= require('../controllers');
+    const { authMiddleware } = require('../middleware');
+
+    router.use(authMiddleware)
 
     router.get('/', MovimientosController.listAllMovimientos);
     router.get('/ventas', MovimientosController.listAllVentas);

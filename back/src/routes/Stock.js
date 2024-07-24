@@ -2,6 +2,9 @@
     const express = require('express');
     const router = express.Router();
     const {StockController }= require('../controllers');
+    const { authMiddleware } = require('../middleware');
+
+    router.use(authMiddleware)
 
     router.get('/', StockController.listAllStock);
     router.get('/disponible', StockController.listAllDisponible);

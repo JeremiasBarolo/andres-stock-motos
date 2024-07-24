@@ -7,7 +7,7 @@ const {
 const { initializeDB } = require('./db/initializeDB');
 require('dotenv').config();
 const cors = require("cors");
-const {authMiddleware} = require('./middleware');
+
 const { 
     TipoArticuloRouter,
     StockRouter,
@@ -38,7 +38,7 @@ const PORT = process.env.PORT || 3001;
 // Aplication Middlewares
 app.use(express.json()) 
 app.use(cors());
-app.use(authMiddleware);
+
 
 // Routes
 app.use("/tipo_articulo", TipoArticuloRouter)
