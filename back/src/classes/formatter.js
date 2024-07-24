@@ -164,6 +164,7 @@ class Formatter {
         descripcion: stock.descripcion,
         costo: stock.costo,
         cantidad: stock.cantidad,
+        cantidadActual: stock.cantidad,
         tipoArticulo: stock.Tipo_Articulo.descripcion,
         tipoArticuloId: stock.Tipo_Articulo.id,
         proveedor: `${stock.Persona.nombre} ${stock.Persona.apellido}`,

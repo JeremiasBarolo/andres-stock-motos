@@ -36,7 +36,7 @@ class DatosServicioService {
   async createDatosServicio(DataDatosServicio) {
     try {
       
-      let subtotal = await this.calcularSubtotal(DataDatosServicio.productos);
+      let subtotal = await utilsService.calcularSubtotalDatosServicios(DataDatosServicio.productos);
       let checklist = DataDatosServicio.checklist
 
       const newDatosServicio = await models.DatosServicio.create(DataDatosServicio);
@@ -81,57 +81,21 @@ class DatosServicioService {
         return null;
       }
 
-// <============================= Stock Movimientos =============================>
+
   
-      let oldStock = oldDatosServicio.Stocks;
-      let newStock = dataUpdated.productos;
-      let toAdd = [];
-      let toDelete = [];
+    let oldStock = oldDatosServicio.Stocks;
+    let newStock = dataUpdated.productos;
+    
+    // logica de cantidades
+    await utilsService.updateDatosServicioLogica(oldStock, newStock, DatosServicio_id, dataUpdated)  
 
-      
-      let oldStockMap = new Map();
-      oldStock.forEach(item => {
-        oldStockMap.set(item.id);
-      });
 
-      
-      
-
-      
-      newStock.forEach(newItem => {
-        if (oldStockMap.has(newItem.id)) {
-          oldStockMap.delete(newItem.id); 
-        } else {
-          toAdd.push(newItem);
-        }
-      });
-
-      
-      toDelete = Array.from(oldStockMap.keys());
-
-      
-      for (let id of toDelete) {
-        await models.StockMoviminetos.destroy({
-          where: { stockId: id, movimientosId: DatosServicio_id }
-        });
-      }
-
-      
-      for (let item of toAdd) {
-        await models.StockMoviminetos.create({
-          stockId: item.id,
-          movimientosId: DatosServicio_id,
-          cantidad: 1
-        });
-      }
-
-// <============================= CheckList =============================>
-
-    this.checklistLogica(oldDatosServicio.DatosServicio.id, dataUpdated.checklist)
+    // creacion de checklist
+    await utilsService.checklistLogica(oldDatosServicio.DatosServicio.id, dataUpdated.checklist)
 
 
 
-      let subtotal = await this.calcularSubtotal(dataUpdated.productos)
+      let subtotal = await utilsService.calcularSubtotalDatosServicios(dataUpdated.productos)
 
       let newVentas = await oldDatosServicio.update({...dataUpdated, subtotal: subtotal});
       return newVentas;
@@ -151,116 +115,10 @@ class DatosServicioService {
         return null;
       }
 
-// <============================= Stock Movimientos =============================>
-  
       let oldStock = oldDatosServicio.Stocks.filter(item => item.tipoId !== 3);
       let newStock = dataUpdated;
       
-      let toAdd = [];
-      let toDelete = [];
-      let toUpdate = [];
-      
-      if(newStock.length === 0) {
-        for (let item of oldStock) {
-          let stock = await models.Stock.findByPk(item.id);
-          await stock.update({
-            cantidad: stock.cantidad + item.StockMoviminetos.cantidad
-          });
-      
-          await models.StockMoviminetos.destroy({
-            where: { stockId: item.id, movimientosId: DatosServicio_id }
-          });
-        } 
-      } 
-      
-      let oldStockMap = new Map();
-      oldStock.forEach(item => {
-        oldStockMap.set(item.id, item.StockMoviminetos.cantidad);
-      });
-      
-      newStock.forEach(newItem => {
-        if (oldStockMap.has(newItem.id)) {
-          let oldCantidad = oldStockMap.get(newItem.id);
-          if (oldCantidad !== newItem.cantidad) {
-            toUpdate.push(newItem);
-          }
-          oldStockMap.delete(newItem.id); 
-        } else {
-          toAdd.push(newItem);
-        }
-      });
-      
-      toDelete = Array.from(oldStockMap.keys());
-      
-      for (let item of toUpdate) {
-        let stock = await models.Stock.findByPk(item.id);
-      
-        let movimientoAnterior = await models.StockMoviminetos.findOne({
-          where: { stockId: item.id, movimientosId: parseInt(DatosServicio_id, 10)},
-        });
-        
-        movimientoAnterior = movimientoAnterior ? parseInt(movimientoAnterior.cantidad, 10) : 0;
-        let nuevaCantidad = parseInt(item.cantidad, 10);
-      
-        if (nuevaCantidad > movimientoAnterior) {
-          let diferencia = nuevaCantidad - movimientoAnterior;
-          await stock.update({
-            cantidad: stock.cantidad - diferencia
-          });
-        } else if (nuevaCantidad < movimientoAnterior) {
-          let diferencia = movimientoAnterior - nuevaCantidad;
-          await stock.update({
-            cantidad: stock.cantidad + diferencia
-          });
-        }
-      
-        await models.StockMoviminetos.update(
-          { cantidad: nuevaCantidad },
-          { where: { stockId: item.id, movimientosId: DatosServicio_id } }
-        );
-      }
-      
-      for (let id of toDelete) {
-        let stockMoviminetos = await models.StockMoviminetos.findOne({
-          where: { stockId: id, movimientosId: DatosServicio_id }
-        });
-      
-        if (stockMoviminetos) {
-          let cantidad = stockMoviminetos.cantidad;
-      
-          await models.StockMoviminetos.destroy({
-            where: { stockId: id, movimientosId: DatosServicio_id },
-          });
-      
-          let stock = await models.Stock.findByPk(id);
-          await stock.update({
-            cantidad: stock.cantidad + cantidad
-          });
-        }
-      }
-      
-      for (let item of toAdd) {
-        await models.StockMoviminetos.create({
-          stockId: item.id,
-          movimientosId: DatosServicio_id,
-          cantidad: item.cantidad
-        });
-      
-        let stock = await models.Stock.findByPk(item.id);
-        await stock.update({
-          cantidad: stock.cantidad - item.cantidad
-        });
-      }
-      
-      const servicios = oldDatosServicio.Stocks.filter(item => item.tipoId === 3)
-      servicios.map(item => 
-        dataUpdated.push(
-          ({
-            id: item.id,
-            costo:item.costo,
-            cantidad: 1
-          }))
-        )
+      await utilsService.stockLogica(oldStock, newStock, DatosServicio_id, oldDatosServicio, dataUpdated)
 
       const subtotal = await utilsService.getTotalPrice(dataUpdated)
       await oldDatosServicio.update({subtotal: subtotal});
@@ -286,65 +144,9 @@ class DatosServicioService {
     }
   }
 
-  async calcularSubtotal(DataDatosServicio) {
-    return DataDatosServicio.reduce((subtotal, producto) => {
-      return subtotal + (producto.costo); 
-    }, 0);
-  }
+  
 
-  async checklistLogica(datosServicioId, checklistOptions) {
-    try {
-     
-      let oldStock = await models.ServicioChecklist.findAll({
-        where: { datosServicioId: datosServicioId }
-      });
-      
-      checklistOptions = checklistOptions.map(item =>({
-        id: item.value,
-        nombre: item.label,
-      }));
-     
-      let oldStockMap = new Map();
-      oldStock.forEach(item => {
-        oldStockMap.set(item.checklistId, item);
-      });
-  
-      let toAdd = [];
-      let toDelete = [];
-  
-      
-      checklistOptions.forEach(newItem => {
-        if (oldStockMap.has(newItem.id)) {
-          oldStockMap.delete(newItem.id); 
-        } else {
-          toAdd.push(newItem); 
-        }
-      });
-  
-      
-      toDelete = Array.from(oldStockMap.values());
-  
-      
-      for (let item of toDelete) {
-        await models.ServicioChecklist.destroy({
-          where: { datosServicioId: datosServicioId, checklistId: item.checklistId }
-        });
-      }
-  
-      
-      for (let item of toAdd) {
-        await models.ServicioChecklist.create({
-          checklistId: item.id,
-          datosServicioId: datosServicioId,
-        });
-      }
-  
-      console.log('Checklist actualizado correctamente.');
-    } catch (error) {
-      console.error('Error al actualizar el checklist:', error);
-    }
-  }
-
+ 
 }
 
 module.exports = DatosServicioService;

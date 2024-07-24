@@ -49,7 +49,8 @@ export class HistorialClientesComponent implements OnInit, OnDestroy {
         { field: 'usuario', header: 'Recepcionista' },
       ];
 
-      data.map((data)=>{
+      let dataSorted = data.sort((a, b) => b.id - a.id)
+      dataSorted.map((data)=>{
         this.products.push({
           id: data.id,
           cliente: data.cliente,

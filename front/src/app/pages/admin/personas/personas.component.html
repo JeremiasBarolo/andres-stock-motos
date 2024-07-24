@@ -6,6 +6,7 @@
 <app-tablang
     [data]="products"
     [columns]="columns"
+    (modalOpenClick)="modalOpen($event)"
     (editarClick)="editarItem($event)" 
     (eliminarClick)="eliminarItem($event)"
 ></app-tablang>
@@ -184,5 +185,58 @@
     <div class="flex justify-content-end gap-2">
         <p-button class="mr-1" icon="pi pi-check"  [text]="true" severity="success" (click)="Eliminar()" />
         <p-button icon="pi pi-times"  [text]="true" severity="danger" (click)="editEliminar = false" />
+    </div>
+</p-dialog>
+
+<p-dialog header="Datos de Persona" [modal]="true" [(visible)]="modalData" [style]="{ width: '40vw' }">
+    <div class="p-fluid">
+        <div class="p-grid">
+            <div class="p-col-12 p-md-6">
+                <div class="field">
+                    <label for="modelo"><strong>Nombre:</strong></label>
+                    <span id="modelo"> {{ cardData?.nombre }} {{ cardData?.apellido }}</span>
+                </div>
+            </div>
+            <div class="p-col-12 p-md-6">
+                <div class="field">
+                    <label for="patente"><strong>CUIT:</strong></label>
+                    <span id="patente"> {{ cardData?.cuit }}</span>
+                </div>
+            </div>
+
+            <div class="p-col-12 p-md-6">
+                <div class="field">
+                    <label for="num_motor"><strong>DNI:</strong></label>
+                    <span id="num_motor"> {{ cardData?.dni }}</span>
+                </div>
+            </div>
+            <div class="p-col-12 p-md-6">
+                <div class="field">
+                    <label for="color"><strong>Fecha de Nacimiento:</strong></label>
+                    <span id="color"> {{ cardData?.fecha_nacimientoFormatted }}</span>
+                </div>
+            </div>
+
+            <div class="p-col-12 p-md-6">
+                <div class="field">
+                    <label for="kilometros"><strong>Telefono:</strong></label>
+                    <span id="kilometros"> {{ cardData?.telefono }}</span>
+                </div>
+            </div>
+            <div class="p-col-12 p-md-6">
+                <div class="field">
+                    <label for="estado_general"><strong>Direccion:</strong></label>
+                    <span id="estado_general"> {{ cardData?.direccionCompleta }}</span>
+                </div>
+            </div>
+
+            <div class="p-col-12 p-md-6">
+                <div class="field">
+                    <label for="observaciones"><strong>Correo Electronico:</strong></label>
+                    <span id="observaciones"> {{ cardData?.mail }}</span>
+                </div>
+            </div>
+        
+        </div>
     </div>
 </p-dialog>

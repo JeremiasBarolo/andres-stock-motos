@@ -46,14 +46,18 @@ export class AsignarInsumosComponent implements OnInit, OnDestroy {
   setDatos(id: any): void {
     this.movimientoService.getById(id).pipe(takeUntil(this.destroy$)).subscribe((datos: any) => {
       this.cardData = datos;
-      console.log(datos);
+      
       
       
       const insumos = datos.Servicios.filter((servicio: any) => servicio.tipoArticulo !== 'Servicio');
 
       this.stockService.getAllInsumos().pipe(takeUntil(this.destroy$)).subscribe((data: any[]) => {
-        this.options = data.filter(insumo => insumo.tipoArticulo !== 'Servicio' && !insumos.some((entity: { id: any; }) => entity.id === insumo.id));
-        this.options = this.options.map((insumo: any) => ({ ...insumo, nombre: insumo.nombre_articulo }));
+        this.options = data.filter(insumo => 
+          insumo.tipoArticulo !== 'Servicio' && 
+          !insumos.some((entity: { id: any; }) => entity.id === insumo.id) &&
+          insumo.cantidadActual > 0
+        );
+        this.options = this.options.map((insumo: any) => ({ ...insumo, nombre: insumo.nombre_articulo, cantidad: 1, cantidadActual: insumo.cantidad }));
 
         this.selectedEntities = insumos.map((insumo: any) => ({
           ...insumo,

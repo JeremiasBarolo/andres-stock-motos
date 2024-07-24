@@ -20,6 +20,7 @@ export class ProveedoresComponent {
   editVisible: boolean = false
   editEliminar: boolean = false
   crearVisible: boolean = false
+  modalData: boolean = false
   form: FormGroup;
   tipo: any;
   cardData: any;
@@ -63,15 +64,11 @@ export class ProveedoresComponent {
     this.personasService.getAllProveedores().pipe(takeUntil(this.destroy$)).subscribe((data: any[]) => {
       this.columns = [
         { field: 'id', header: 'ID' },
-        { field: 'nombre', header: 'Nombre' },
-        { field: 'apellido', header: 'Apellido' },
-        { field: 'cuit', header: 'CUIT' },
-        { field: 'dni', header: 'DNI' },
-        { field: 'fecha_nacimientoFormatted', header: 'Fecha Nac.' },
+        { field: 'nombreCompleto', header: 'Nombre' },
         { field: 'telefono', header: 'Telefono' },
         { field: 'direccionCompleta', header: 'Direccion' },
         { field: 'mail', header: 'Correo Elec.' },
-        { field: 'tipoPersona', header: 'TipoPersona' }
+        
       ];
 
       data.map((data)=>{
@@ -81,6 +78,7 @@ export class ProveedoresComponent {
           id: data.id,
           nombre: data.nombre,
           apellido: data.apellido,
+          nombreCompleto: `${data.nombre} ${data.apellido}`,
           cuit: data.cuit,
           dni: data.dni,
           fecha_nacimientoFormatted: this.datePipe.transform(data.fecha_nacimiento, 'dd/MM/yy'),
@@ -91,7 +89,6 @@ export class ProveedoresComponent {
           mail: data.mail,
           tipoPersona: data.tipoPersona,
           nro_direccion: data.nro_direccion,
-          password: data.password,
           localidad: data.Localidad,
           tipoPersonaId: data.tipoPersonaId,
           localidadId: data.LocalidadId
@@ -198,6 +195,12 @@ export class ProveedoresComponent {
       }, 1000)
       // this.router.navigate(['dashboard/insumos']);
     });
+  }
+
+  modalOpen(data:any){
+    this.cardData = data;
+    this.modalData = true;
+
   }
 
 }

@@ -33,11 +33,12 @@ class StockService {
       async listAllInsumos() {
         try {
           const Stock = await models.Stock.findAll({
-            include: [{ all: true }]
+            include: [{ all: true }],
+            where: { tipoId: 4}
           });
           console.log('✅ Stock were found');
           let data = format.Insumos(Stock);
-          return data.filter((item) => item.tipoArticulo === 'Insumo');
+          return data
         } catch (err) {
           console.error('🛑 Error when fetching Stock', err);
           throw err;
