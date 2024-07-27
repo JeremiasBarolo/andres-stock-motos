@@ -8,7 +8,7 @@ body, html {
 }
 
 .bg-image {
-  background-image: url('../../../assets/images/authentication/au-sign-in-basic.png');
+  background-image: url('../../../assets/images/authentication/au-reset-password-cover.png');
   background-size: cover; /* Ajusta la imagen para que cubra todo el contenedor */
   background-repeat: no-repeat; /* Evita que la imagen se repita */
   background-position: center; /* Centra la imagen */

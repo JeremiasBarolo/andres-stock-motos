@@ -14,6 +14,26 @@ class Formatter {
       }))
     }
 
+    async Tareas(data)  {
+      const tareas = await Promise.all(
+        data.map(async tarea => {
+          const fecha_asignacion = await utilsService.formatFecha(tarea.createdAt);
+          return {
+            id: tarea.id,
+            titulo: tarea.titulo,
+            descripcion: tarea.descripcion,
+            usuario: `${tarea.Usuario.Persona.nombre} ${tarea.Usuario.Persona.apellido} ` ,
+            usuarioId: tarea.usuarioId,
+            color: tarea.color,
+            estado: tarea.estado,
+            fecha_asignacion: fecha_asignacion
+          };
+        })
+      );
+  
+      return tareas;
+    }
+
 
     ListPreciosMotos(data) {
       return data.map(moto => ({

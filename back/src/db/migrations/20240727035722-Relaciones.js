@@ -264,6 +264,19 @@ module.exports = {
 // <=============================== Fin Pedidos Stock ===============================>  
 
 
+// <=============================== Tareas ===============================>  
+  await queryInterface.addColumn('Tareas', 'usuarioId', {
+    type: Sequelize.INTEGER,
+    allowNull: true,
+    references: {
+      model: 'Usuarios',
+      key: 'id'
+    },
+    onUpdate: 'CASCADE',
+    onDelete: 'CASCADE'
+  });
+
+  // <=============================== Fin Tareas ===============================>  
 
   },
 
@@ -315,5 +328,10 @@ module.exports = {
     await queryInterface.removeColumn('PedidosStocks', 'pedidoId');
     await queryInterface.removeColumn('PedidosStocks', 'stockId');
   // <=============================== Fin Motos ===============================>
+
+    // <=============================== Tareas ===============================> 
+      
+    await queryInterface.removeColumn('Tareas', 'usuarioId');
+  // <=============================== Fin Tareas ===============================>
   }
 };

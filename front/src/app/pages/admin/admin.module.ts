@@ -42,6 +42,7 @@ import { InicioComponent } from './inicio/inicio.component';
 import { IonicModule } from '@ionic/angular';
 import { ServiciosComponent } from './servicios/servicios.component';
 import { InsumosComponent } from './insumos/insumos.component';
+import { TareasComponent } from './tareas/tareas.component';
 
 
 
@@ -74,6 +75,7 @@ import { InsumosComponent } from './insumos/insumos.component';
     InicioComponent,
     ServiciosComponent,
     InsumosComponent,
+    TareasComponent,
 
    
   ],

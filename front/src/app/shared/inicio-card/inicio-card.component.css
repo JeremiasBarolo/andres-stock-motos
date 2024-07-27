@@ -8,3 +8,7 @@
     transform: scale(1.2); /* Escala el icono un 20% más grande */
     color: #007bff; /* Cambia el color del icono al pasar el cursor */
   }
+
+/* .card-body{
+  background-color: rgb(202, 202, 196);
+} */

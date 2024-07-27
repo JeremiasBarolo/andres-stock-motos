@@ -38,7 +38,7 @@ export class TablangComponent implements OnInit, OnDestroy, OnChanges {
 
   ngOnInit(): void {
     this.isAdmin = this.authService.isAllowed();
-    console.log('admin tabla:', this.isAdmin);
+    
     
     this.acciones = this.accionesVisible;
     this.insumos = this.insumosVisible;

@@ -5,6 +5,7 @@ import { Subject, takeUntil } from 'rxjs';
 import { MovimientosService } from '../../../services/movimientos.service';
 import { PedidosService } from '../../../services/pedidos.service';
 import { StockService } from '../../../services/stock.service';
+import { TareasService } from '../../../services/tareas.service';
 
 
 @Component({
@@ -15,14 +16,18 @@ import { StockService } from '../../../services/stock.service';
 })
 export class InicioComponent implements OnInit, OnDestroy {
   titulo :any
+  id: any
   isAdmin: any;
   recaudacionTotal:any
   ventasTotal:any
   pedidosPendientes:any
   stockDisponible:any
+  modalData:boolean = false
   empleados:any[] = []
   clientes:any[] = []
   ventasData:any[] = []
+  cardData:any
+  tareas:any[] = []
 
 
   private destroy$ = new Subject<void>();
@@ -32,7 +37,8 @@ export class InicioComponent implements OnInit, OnDestroy {
     private personasService: PersonasService,
     private movimientosService: MovimientosService,
     private pedidosService: PedidosService,
-    private stockService: StockService
+    private stockService: StockService,
+    private tareasService: TareasService,
     
   ) {
     
@@ -42,19 +48,27 @@ export class InicioComponent implements OnInit, OnDestroy {
     this.authService.getUserData().subscribe((data: any) => {
       if(data.nombre === 'Admin Admin'){
         this.titulo = 'Admin';
+        
       }else{
         this.titulo = data.nombre;
       }
+      console.log('1');
+      
+      this.id = data.userId
       
     })
+    
+    
 
-    this.personasService.getMejoresEmpleados()
+    if(this.isAdmin){
+
+      this.personasService.getMejoresEmpleados()
     .pipe(takeUntil(this.destroy$))
     .subscribe((data) => {
       this.empleados = data.sort((a, b) => b.ventas - a.ventas).slice(0, 10);
     });
 
-  this.personasService.getMejoresClientes()
+    this.personasService.getMejoresClientes()
     .pipe(takeUntil(this.destroy$))
     .subscribe((data) => {
       this.clientes = data.sort((a, b) => b.ventas - a.ventas).slice(0, 10);
@@ -83,6 +97,22 @@ export class InicioComponent implements OnInit, OnDestroy {
       this.stockDisponible = data
     });
 
+
+
+    }else{
+      console.log('2', this.id);
+      
+      
+
+      this.tareasService.getTareasEmpleado(this.id).pipe(takeUntil(this.destroy$)).subscribe((data) => {
+        this.tareas = this.ordenarTareasPorColor(data);
+        
+      });
+    }
+    
+
+    
+
  
 
   }
@@ -90,5 +120,18 @@ export class InicioComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     this.destroy$.next();
     this.destroy$.complete();
+  }
+
+  modalOpen(data:any){
+    this.cardData = data;
+    this.modalData = true
+
+  }
+
+  ordenarTareasPorColor(tareas:any) {
+    return tareas.sort((a: { color: string; }, b: { color: string; }) => {
+      const coloresOrden = ['rojo', 'amarillo', 'verde']; 
+      return coloresOrden.indexOf(a.color) - coloresOrden.indexOf(b.color);
+    });
   }
 }

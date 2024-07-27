@@ -35,7 +35,7 @@
 
     <app-inicio-card
     
-    [titulo]="'Stock Disponible'"
+    [titulo]="'Tareas Disponible'"
     [descripcion]="stockDisponible"
     [icono]="'archive-outline'"
     [color]="'purple'"
@@ -44,9 +44,14 @@
     ></app-inicio-card>
 
     
+
+    
+
+    
 </div>
 
 <div class="row row-cols-1 row-cols-lg-3">
+  
     <div class="col">
       <div class="card radius-10 w-100">
         <div class="card-body">
@@ -112,4 +117,26 @@
       </div>
     </div>
   </div>
+
+  
 </div>
+<div class="row row-cols-1 row-cols-lg-12">
+  <app-tareas-admin  
+  *ngIf="isAdmin == false"
+  [tareas] = "tareas"
+  (modalOpenClick)="modalOpen($event)"
+  ></app-tareas-admin>
+</div>
+
+<p-dialog header="{{cardData?.titulo}}" [modal]="true" [(visible)]="modalData" [style]="{ width: '40vw' }" *ngIf="isAdmin == false" >
+  <div class="p-fluid" >
+      <div class="p-grid">
+          <div class="p-col-12 p-md-6">
+              <div class="field">
+                  
+                  <span id="modelo"> {{ cardData?.descripcion }} </span>
+              </div>
+          </div>
+      </div>
+  </div>
+</p-dialog>

@@ -28,7 +28,7 @@ class MovimientosService {
         include: [{ all: true }],
         where: {
           tipoMovimientoId: {
-            [Op.or]: [2, 3]
+            [Op.or]: [2, 3, 4]
           }
         }
       });

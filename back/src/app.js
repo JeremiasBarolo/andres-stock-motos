@@ -25,7 +25,8 @@ const {
     PedidosRouter,
     ChecklistRouter,
     TipoServicioRouter,
-    loginRouter
+    loginRouter,
+    tareasRouter
     
  } = require('./routes')
 
@@ -58,6 +59,7 @@ app.use("/pedidos", PedidosRouter)
 app.use("/checklist", ChecklistRouter)
 app.use("/tipo-servicio", TipoServicioRouter)
 app.use("/login", loginRouter)
+app.use("/tareas", tareasRouter)
 
 
 
@@ -69,7 +71,6 @@ app.use("/login", loginRouter)
 app.listen(PORT, 
     async () => {
         await initializeDB();
-        // await checkAdmin();
         console.log(` >>>>> 🚀 Server started at http://localhost:${PORT}`);
 })
 

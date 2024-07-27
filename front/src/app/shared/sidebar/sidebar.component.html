@@ -66,6 +66,15 @@
         </a>
       </li>
 
+      <li *ngIf="isAdmin">
+        <a (click)="navigateTo('admin/tareas')">
+          <div class="parent-icon">
+            <ion-icon name="receipt-outline"></ion-icon>
+          </div>
+          <div class="menu-title">Tareas Pendientes</div>
+        </a>
+      </li>
+
      
 
 
@@ -195,10 +204,6 @@
               <ion-icon name="ellipse-outline"></ion-icon> Roles
             </a>
           </li>
-          <li> <a (click)="navigateTo('admin/usuarios')">
-              <ion-icon name="ellipse-outline"></ion-icon> Usuarios
-            </a>
-          </li>
           <li> <a (click)="navigateTo('admin/localidades')">
             <ion-icon name="ellipse-outline"></ion-icon> Localidades
           </a>
@@ -222,10 +227,7 @@
               <ion-icon name="ellipse-outline"></ion-icon> Tipo de Motos
             </a>
           </li>
-          <li> <a (click)="navigateTo('admin/datos-servicio')">
-              <ion-icon name="ellipse-outline"></ion-icon> Datos de Servicio
-            </a>
-          </li>
+          
         </ul>
       </li>
 

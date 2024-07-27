@@ -11,6 +11,8 @@ import { DatosServicioPdfComponent } from './datos-servicio-pdf/datos-servicio-p
 import { TooltipModule } from 'primeng/tooltip';
 import { InicioCardComponent } from './inicio-card/inicio-card.component';
 import { BarChartComponent } from './bar-chart/bar-chart.component';
+import { TareasAdminComponent } from './tareas-admin/tareas-admin.component';
+import { PaginatorModule } from 'primeng/paginator';
 
 
 
@@ -24,14 +26,17 @@ import { BarChartComponent } from './bar-chart/bar-chart.component';
     DatosServicioPdfComponent,
     InicioCardComponent,
     BarChartComponent,
-
+    TareasAdminComponent,
+    
   ],
   imports: [
     CommonModule,
     IonicModule,
     TableModule,
     ButtonModule,
-    TooltipModule
+    TooltipModule,
+    PaginatorModule,
+    
     
     
   ],
@@ -42,6 +47,9 @@ import { BarChartComponent } from './bar-chart/bar-chart.component';
     TablangComponent,
     InicioCardComponent,
     BarChartComponent,
+    TareasAdminComponent,
+
+    
     
 
   ]

@@ -7,7 +7,20 @@
   </ng-template>
   <ng-template pTemplate="body" let-rowData>
     <tr>
-      <td (click)="modalOpen(rowData)" *ngFor="let col of columns">{{ rowData[col.field] }}</td>
+      <td *ngFor="let col of columns" (click)="modalOpen(col)" >
+        <ng-container *ngIf="col.field === 'estado'; else defaultContent">
+          <span class="estado" [ngClass]="{
+            'badge-pendiente': rowData.estado === 'Pendiente',
+            'badge-proceso': rowData.estado === 'En Proceso',
+            'badge-completada': rowData.estado === 'Completada',
+            'badge-Finalizado': rowData.estado === 'Finalizado',
+            'badge-Preparacion': rowData.estado === 'En Preparacion'
+          }">{{ rowData.estado }}</span>
+        </ng-container>
+        <ng-template #defaultContent>
+          {{ rowData[col.field] }}
+        </ng-template>
+      </td>
       <td *ngIf="acciones && isAdmin">
         <ng-container *ngIf="insumos">
           <p-button icon="pi pi-plus" [text]="true" severity="info" (click)="asignarInsumos(rowData)" pTooltip="Asignar Insumos"></p-button>
