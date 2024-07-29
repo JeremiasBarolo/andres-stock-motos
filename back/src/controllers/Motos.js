@@ -23,6 +23,15 @@ const listAllMotosUsadas = async (req, res) => {
   }
 };
 
+const listAllMotosConsignacion = async (req, res) => {
+  try {
+    const Motos = await MotosService.listAllMotosConsignacion();
+    res.json(Motos);
+  } catch (err) {
+    res.status(500).json({ action: "listAll", error: err.message });
+  }
+};
+
 const listAllMotosNuevas = async (req, res) => {
   try {
     const Motos = await MotosService.listAllMotosNuevas();
@@ -84,5 +93,6 @@ module.exports = {
   updateMotos, 
   deleteMotos,
   listAllMotosUsadas,
-  listAllMotosNuevas 
+  listAllMotosNuevas,
+  listAllMotosConsignacion
 };

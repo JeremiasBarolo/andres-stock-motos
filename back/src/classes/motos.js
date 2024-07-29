@@ -33,6 +33,22 @@ class MotosService {
     }
   }
 
+  async listAllMotosConsignacion() {
+    try {
+      const Motos = await models.Motos.findAll({
+        include: [{ all: true }],
+        where: { tipoMotoId: 3 }
+      });
+      console.log('✅ Motos were found');
+      let data = await format.Motos(Motos);
+      
+      return data
+    } catch (err) {
+      console.error('🛑 Error when fetching Motos', err);
+      throw err;
+    }
+  }
+
   async listAllMotosNuevas() {
     try {
       const Motos = await models.Motos.findAll({

@@ -44,6 +44,7 @@ import { ServiciosComponent } from './servicios/servicios.component';
 import { InsumosComponent } from './insumos/insumos.component';
 import { TareasComponent } from './tareas/tareas.component';
 import { CalendarModule } from 'primeng/calendar';
+import { MotosConsignacionComponent } from './motos-consignacion/motos-consignacion.component';
 
 
 
@@ -77,6 +78,7 @@ import { CalendarModule } from 'primeng/calendar';
     ServiciosComponent,
     InsumosComponent,
     TareasComponent,
+    MotosConsignacionComponent,
 
    
   ],

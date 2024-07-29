@@ -177,15 +177,40 @@
         </ul>
       </li>
 
-      
       <li>
-        <a (click)="navigateTo('admin/motos')">
+        <a class="has-arrow" href="javascript:;">
           <div class="parent-icon">
             <ion-icon name="bicycle-outline"></ion-icon>
           </div>
-          <div class="menu-title">Motos</div>
+          <div class="menu-title" >Motos</div>
         </a>
+        <ul>
+          
+          <li> <a (click)="navigateTo('admin/motos')">
+              <ion-icon name="ellipse-outline"></ion-icon> Listado de Motos
+            </a>
+          </li>
+
+          <li> <a (click)="navigateTo('admin/motos-nuevas')">
+              <ion-icon name="ellipse-outline"></ion-icon> Motos Nuevas
+            </a>
+          </li>
+
+          <li> <a (click)="navigateTo('admin/motos-usadas')">
+            <ion-icon name="ellipse-outline"></ion-icon> Motos Usadas
+          </a>
+        </li>
+
+          <li> <a (click)="navigateTo('admin/motos-consignacion')">
+            <ion-icon name="ellipse-outline"></ion-icon> Motos En Consignacion
+          </a>
+          </li>
+
+        </ul>
       </li>
+
+      
+     
 
       <li class="menu-label" *ngIf="isAdmin" >Padrones</li>
       <li *ngIf="isAdmin">

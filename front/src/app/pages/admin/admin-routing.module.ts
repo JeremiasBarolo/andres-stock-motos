@@ -34,6 +34,7 @@ import { ServiciosComponent } from './servicios/servicios.component';
 import { InsumosComponent } from './insumos/insumos.component';
 import { AdminGuard } from '../../auth/admin-guard/admin-guard.component';
 import { TareasComponent } from './tareas/tareas.component';
+import { MotosConsignacionComponent } from './motos-consignacion/motos-consignacion.component';
 
 
 
@@ -60,6 +61,7 @@ const routes: Routes = [
       { path: 'motos', component: MotosComponent },
       { path: 'motos-usadas', component: MotosUsadasComponent },
       { path: 'motos-nuevas', component: MotosNuevasComponent },
+      { path: 'motos-consignacion', component: MotosConsignacionComponent },
       { path: 'tipo-motos', component: TipoMotosComponent },
       { path: 'marcas', component: MarcaComponent },
       { path: 'service', component: DatosServicioComponent },

@@ -19,6 +19,7 @@ export class HistorialClientesComponent implements OnInit, OnDestroy {
   movements: any[] = [];
   clientes: any[] = [];
   selectedClient: any;
+  clienteChoice:any[] = []
 
   private destroy$ = new Subject<void>();
 
@@ -38,6 +39,8 @@ export class HistorialClientesComponent implements OnInit, OnDestroy {
   
   ngOnInit(): void {
 
+    const uniqueEmpledos = new Set();
+
     this.movimientosService.getAllHistorial().pipe(takeUntil(this.destroy$)).subscribe((data: any[]) => {
       this.columns = [
         { field: 'id', header: 'ID' },
@@ -50,26 +53,26 @@ export class HistorialClientesComponent implements OnInit, OnDestroy {
       ];
 
       let dataSorted = data.sort((a, b) => b.id - a.id)
-      dataSorted.map((data)=>{
+      dataSorted.map((item)=>{
         this.products.push({
-          id: data.id,
-          cliente: data.cliente,
-          TipoMovimiento: data.TipoMovimiento,
-          subtotal: data.subtotal,
-          FechaRealizacion: data.FechaRealizacion,
-          hora: data.hora,
-          usuario: data.usuario,
-          tipoMovimientoId: data.tipoMovimientoId,
-          usuarioId: data.usuarioId,
-          personaId: data.personaId,
-          createdAt: data.createdAt,
-          updatedAt: data.updatedAt
+          id: item.id,
+          cliente: item.cliente,
+          TipoMovimiento: item.TipoMovimiento,
+          subtotal: item.subtotal,
+          FechaRealizacion: item.FechaRealizacion,
+          hora: item.hora,
+          usuario: item.usuario,
+          tipoMovimientoId: item.tipoMovimientoId,
+          usuarioId: item.usuarioId,
+          personaId: item.personaId,
+          createdAt: item.createdAt,
+          updatedAt: item.updatedAt
         })
 
-        this.clientes.push({
-          id: data.personaId,
-          nombre: data.cliente
-        })
+         if (!uniqueEmpledos.has(item.personaId)) {
+          uniqueEmpledos.add(item.personaId);
+          this.clienteChoice.push({ id: item.personaId, cliente: item.cliente });
+        }
       })
     })
 

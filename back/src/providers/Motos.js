@@ -9,6 +9,10 @@ const listAllMotosUsadas = async () => {
   return await motosService.listAllMotosUsadas();
 };
 
+const listAllMotosConsignacion = async () => {
+  return await motosService.listAllMotosConsignacion();
+};
+
 const listAllMotosNuevas = async () => {
   return await motosService.listAllMotosNuevas();
 };
@@ -36,5 +40,6 @@ module.exports = {
   updateMotos,
   deleteMotos,
   listAllMotosUsadas,
-  listAllMotosNuevas
+  listAllMotosNuevas,
+  listAllMotosConsignacion
 };

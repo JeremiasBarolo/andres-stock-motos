@@ -52,9 +52,7 @@ export class InicioComponent implements OnInit, OnDestroy {
       }else{
         this.titulo = data.nombre;
       }
-      console.log('1');
-      
-      this.id = data.userId
+     this.id = data.userId
       
     })
     
@@ -100,7 +98,7 @@ export class InicioComponent implements OnInit, OnDestroy {
 
 
     }else{
-      console.log('2', this.id);
+  
       
       
 

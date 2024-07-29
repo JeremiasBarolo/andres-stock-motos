@@ -2,9 +2,9 @@
     <h3>Historial de Clientes</h3>
     
     <p-dropdown 
-      [options]="clientes" 
+      [options]="clienteChoice" 
       formControlName="selectedClient" 
-      optionLabel="nombre" 
+      optionLabel="cliente" 
       placeholder="Seleccionar Cliente"
       (onChange)="onClientChange($event)">
     </p-dropdown>

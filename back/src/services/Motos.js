@@ -8,6 +8,10 @@
         const listAllMotosUsadas = async () => {
             return await MotosProvider.listAllMotosUsadas();
         };
+
+        const listAllMotosConsignacion = async () => {
+            return await MotosProvider.listAllMotosConsignacion();
+        };
         const listAllMotosNuevas = async () => {
             return await MotosProvider.listAllMotosNuevas();
         };
@@ -37,7 +41,8 @@
         updateMotos, 
         deleteMotos,
         listAllMotosNuevas,
-        listAllMotosUsadas
+        listAllMotosUsadas,
+        listAllMotosConsignacion
 
         };
 

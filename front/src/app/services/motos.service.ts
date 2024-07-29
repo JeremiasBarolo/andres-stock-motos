@@ -34,6 +34,10 @@ export class MotosService {
     return this.http.get<any[]>(`${this.apiUrl}/usadas`, { headers: this.getHeaders() }); 
   }
 
+  getAllConsignacion(): Observable<any[]> {
+    return this.http.get<any[]>(`${this.apiUrl}/consignacion`, { headers: this.getHeaders() }); 
+  }
+
 
   getAllNuevas(): Observable<any[]> {
     return this.http.get<any[]>(`${this.apiUrl}/nuevas`, { headers: this.getHeaders() }); 
