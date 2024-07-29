@@ -21,11 +21,16 @@ import { MessageService } from 'primeng/api';
 export class VentaRepuestosComponent implements OnDestroy, OnInit {
   products: any[] = [];
   columns: any[] = [];
+  selectedDate!: Date;
+  filteredProducts: any[] = []
+  empleadoChoice: any[] = []
+  selectedClient: any
   editVisible: boolean = false;
   editEliminar: boolean = false;
   crearVisible: boolean = false;
   cantidadVisible: boolean = false;
   detailModal: boolean = false
+  fechasModal: boolean = false
   form: FormGroup;
   tipo: any;
   cardData: any;
@@ -65,6 +70,7 @@ export class VentaRepuestosComponent implements OnDestroy, OnInit {
       this.usuarioId = data.userId
     })
 
+    const uniqueEmpledos = new Set();
     this.movimientosService.getAllVentas().pipe(takeUntil(this.destroy$)).subscribe((data: any[]) => {
       this.columns = [
         { field: 'id', header: 'ID' },
@@ -76,20 +82,28 @@ export class VentaRepuestosComponent implements OnDestroy, OnInit {
       ];
 
       let dataReal = data.sort((a, b) => b.id - a.id)
-      dataReal.forEach((data) => {
+      dataReal.forEach((item) => {
         this.products.push({
-          id: data.id,
-          createdAt: this.datePipe.transform(data.createdAt, 'dd/MM/yy'),
-          cliente: data.cliente,
-          usuario: data.usuario,
-          subtotal: data.subtotal,
-          usuarioId: data.usuarioId,
-          personaId: data.personaId,
-          stock: data.stock,
-          cantArt: data.stock.length,
-          tipoMovimientoId: data.tipoMovimientoId
+          id: item.id,
+          createdAt: this.datePipe.transform(item.createdAt, 'dd/MM/yy'),
+          fecha_realizacion:new Date(item.createdAt),
+          cliente: item.cliente,
+          usuario: item.usuario,
+          subtotal: item.subtotal,
+          usuarioId: item.usuarioId,
+          personaId: item.personaId,
+          stock: item.stock,
+          cantArt: item.stock.length,
+          tipoMovimientoId: item.tipoMovimientoId
         });
+
+        if (!uniqueEmpledos.has(item.personaId)) {
+          uniqueEmpledos.add(item.personaId);
+          this.empleadoChoice.push({ id: item.personaId, cliente: item.cliente });
+        }
       });
+
+      
     });
 
     this.stockService.getAllStockVentaGeneral().pipe(takeUntil(this.destroy$)).subscribe((data)=>{
@@ -123,6 +137,18 @@ export class VentaRepuestosComponent implements OnDestroy, OnInit {
 selectedEntity(entity: any) {
   this.selectedEntities.push({...entity, cantidad: 1});
   this.options = this.options.filter(item => item.id !== entity.id);
+}
+
+filterByDate() {
+  if (this.selectedDate) {
+    const formattedSelectedDate = this.datePipe.transform(this.selectedDate, 'dd/MM/yy');
+    this.filteredProducts = this.products.filter(product => {
+      const formattedProductDate = product.createdAt
+      return formattedProductDate === formattedSelectedDate;
+    });
+
+    this.fechasModal = true
+  }
 }
 
 returnEntities(entity: any) {
@@ -256,6 +282,8 @@ decrementQuantity(item: any): void {
   
 
   modalOpen(data:any){
+    console.log(data);
+    
     this.detailModal = true
     this.cardData = data
   }
@@ -278,6 +306,25 @@ decrementQuantity(item: any): void {
   eliminarItem(data: any) {
     this.editEliminar = true;
     this.id = data.id;
+  }
+
+  cerrarFecha(){
+    this.fechasModal = false
+    this.filteredProducts = []
+  }
+
+  searchClientMovements() {
+    
+    this.filteredProducts = this.products.filter(movement => movement.personaId === this.selectedClient.id);
+    this.fechasModal = true;
+  
+  }
+
+
+
+  onClientChange(event: any) {
+    this.selectedClient = event.value;
+    this.searchClientMovements();
   }
 
 

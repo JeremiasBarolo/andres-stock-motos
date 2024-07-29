@@ -23,6 +23,10 @@ module.exports = {
         descripcion: 'Servicio',
         createdAt: new Date(),
         updatedAt: new Date()
+      },{
+        descripcion: 'Venta Accesorio',
+        createdAt: new Date(),
+        updatedAt: new Date()
       }
     ], {});
   },

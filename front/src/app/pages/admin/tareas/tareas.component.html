@@ -4,7 +4,7 @@
 </div>
 <p-dropdown 
       [options]="empleadoChoice" 
-      optionLabel="empleado" 
+      optionLabel="cliente" 
       placeholder="Seleccionar Empleado"
       (onChange)="onClientChange($event)">
 </p-dropdown>
@@ -115,7 +115,7 @@
 </p-dialog>
 
 
-<p-dialog header="Historial del Cliente" [(visible)]="showTable" [modal]="true" [style]="{width: '75vw'}">
+<p-dialog header="Tareas" [(visible)]="showTable" [modal]="true" [style]="{width: '75vw'}">
     <app-tablang
       [data]="empleadoTareas"
       [columns]="columns"

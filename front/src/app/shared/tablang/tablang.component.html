@@ -7,7 +7,7 @@
   </ng-template>
   <ng-template pTemplate="body" let-rowData>
     <tr>
-      <td *ngFor="let col of columns" (click)="modalOpen(col)" >
+      <td *ngFor="let col of columns" (click)="modalOpen(rowData)" >
         <ng-container *ngIf="col.field === 'estado'; else defaultContent">
           <span class="estado" [ngClass]="{
             'badge-pendiente': rowData.estado === 'Pendiente',

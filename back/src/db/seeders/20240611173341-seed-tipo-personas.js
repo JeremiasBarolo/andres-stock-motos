@@ -17,6 +17,11 @@ module.exports = {
         descripcion: 'Cliente',
         createdAt: new Date(),
         updatedAt: new Date()
+      },
+      {
+        descripcion: 'Propietario',
+        createdAt: new Date(),
+        updatedAt: new Date()
       }
     ], {});
   },

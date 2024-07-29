@@ -43,6 +43,7 @@ import { IonicModule } from '@ionic/angular';
 import { ServiciosComponent } from './servicios/servicios.component';
 import { InsumosComponent } from './insumos/insumos.component';
 import { TareasComponent } from './tareas/tareas.component';
+import { CalendarModule } from 'primeng/calendar';
 
 
 
@@ -97,7 +98,7 @@ import { TareasComponent } from './tareas/tareas.component';
     TableModule,
     ToastModule,
     IonicModule,
-
+    CalendarModule
     
   
   ]

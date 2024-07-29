@@ -16,6 +16,12 @@ module.exports = {
         createdAt: new Date(),
         updatedAt: new Date()
       },
+      {
+        descripcion: 'Propietario',
+        isAdmin: 1,
+        createdAt: new Date(),
+        updatedAt: new Date()
+      },
 
     ], {});
   },

@@ -13,6 +13,11 @@ module.exports = {
         descripcion: 'Nueva',
         createdAt: new Date(),
         updatedAt: new Date()
+      },
+      {
+        descripcion: 'En Consignacion',
+        createdAt: new Date(),
+        updatedAt: new Date()
       }
     ], {});
   },
