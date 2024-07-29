@@ -26,8 +26,12 @@
             return await MovimientosProvider.listAllMovimientos();
         };
 
-        const listAllVentas = async () => {
-            return await MovimientosProvider.listAllVentas();
+        const listAllVentasRepuestos = async () => {
+            return await MovimientosProvider.listAllVentasRepuestos();
+        };
+
+        const listAllVentasAccesesorios = async () => {
+            return await MovimientosProvider.listAllVentasAccesesorios();
         };
 
         const listAllMotosMovimientos = async () => {
@@ -76,7 +80,6 @@
         createMovimientos, 
         updateMovimientos, 
         deleteMovimientos, 
-        listAllVentas,
         updateVentaRepuestos,
         listAllMotosMovimientos,
         createVentaMoto,
@@ -87,6 +90,8 @@
         listPrecios,
         listAllRelaciones,
         listAllRecaudacion,
-        listAllVentasPorCategoria
+        listAllVentasPorCategoria,
+        listAllVentasRepuestos,
+        listAllVentasAccesesorios
         };
 

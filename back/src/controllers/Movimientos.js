@@ -69,9 +69,18 @@ const listAllServices = async (req, res) => {
   }
 };
 
-const listAllVentas = async (req, res) => {
+const listAllVentasRepuestos = async (req, res) => {
   try {
-    const Movimientos = await MovimientosService.listAllVentas();
+    const Movimientos = await MovimientosService.listAllVentasRepuestos();
+    res.json(Movimientos);
+  } catch (err) {
+    res.status(500).json({ action: "listAll", error: err.message });
+  }
+};
+
+const listAllVentasAccesesorios = async (req, res) => {
+  try {
+    const Movimientos = await MovimientosService.listAllVentasAccesesorios();
     res.json(Movimientos);
   } catch (err) {
     res.status(500).json({ action: "listAll", error: err.message });
@@ -180,7 +189,8 @@ module.exports = {
   createMovimientos, 
   updateMovimientos, 
   deleteMovimientos, 
-  listAllVentas,
+  listAllVentasRepuestos,
+  listAllVentasAccesesorios,
   updateVentaRepuestos,
   listAllMotosMovimientos,
   createVentaMoto,

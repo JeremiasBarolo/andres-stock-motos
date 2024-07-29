@@ -47,13 +47,33 @@ class MovimientosService {
 
   
 
-  async listAllVentas() {
+  async listAllVentasRepuestos() {
     try {
       const Ventas = await models.Movimientos.findAll({
         include: [{ all: true }],
         where:{
           tipoMovimientoId: 3
         }
+        
+      });
+      console.log('✅ Ventas were found');
+      let data = await format.Ventas(Ventas);
+
+      return data
+    } catch (err) {
+      console.error('🛑 Error when fetching Ventas', err);
+      throw err;
+    }
+  }
+
+  async listAllVentasAccesesorios() {
+    try {
+      const Ventas = await models.Movimientos.findAll({
+        where:{
+          tipoMovimientoId: 5
+        },
+        include: [{ all: true }],
+        
         
       });
       console.log('✅ Ventas were found');

@@ -7,7 +7,8 @@
     router.use(authMiddleware)
 
     router.get('/', MovimientosController.listAllMovimientos);
-    router.get('/ventas', MovimientosController.listAllVentas);
+    router.get('/ventas-repuestos', MovimientosController.listAllVentasRepuestos);
+    router.get('/ventas-accesorios', MovimientosController.listAllVentasAccesesorios);
     router.get('/historiales', MovimientosController.listHistorial);
     router.get('/recaudacion', MovimientosController.listAllRecaudacion);
     router.get('/venta-categoria', MovimientosController.listAllVentasPorCategoria);

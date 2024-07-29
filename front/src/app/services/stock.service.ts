@@ -36,6 +36,10 @@ export class StockService {
     return this.http.get<any[]>(`${this.apiUrl}/disponible`, { headers: this.getHeaders() }); 
   }
 
+  getAllStockVentaGeneral(): Observable<any[]> {
+    return this.http.get<any[]>(`${this.apiUrl}/venta-general`, { headers: this.getHeaders() }); 
+  }
+
   getAllRepuestos(): Observable<any[]> {
     return this.http.get<any[]>(`${this.apiUrl}/repuestos`, { headers: this.getHeaders() }); 
   }
@@ -44,8 +48,12 @@ export class StockService {
     return this.http.get<any[]>(`${this.apiUrl}/insumos`, { headers: this.getHeaders() }); 
   }
 
-  getAllStockVentaGeneral(): Observable<any[]> {
-    return this.http.get<any[]>(`${this.apiUrl}/venta-general`, { headers: this.getHeaders() }); 
+  getAllStockVentaAccesorios(): Observable<any[]> {
+    return this.http.get<any[]>(`${this.apiUrl}/venta-accesorios`, { headers: this.getHeaders() }); 
+  }
+
+  getAllStockVentaRespuestos(): Observable<any[]> {
+    return this.http.get<any[]>(`${this.apiUrl}/venta-respuestos`, { headers: this.getHeaders() }); 
   }
 
   getAllStockGeneral(): Observable<any[]> {

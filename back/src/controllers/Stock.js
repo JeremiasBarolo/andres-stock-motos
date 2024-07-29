@@ -13,9 +13,18 @@ const listAllStock = async (req, res) => {
   }
 };
 
-const listAllStockGeneral = async (req, res) => {
+const listAllVentasAccesesorios = async (req, res) => {
   try {
-    const Stock = await StockService.listAllStockGeneral();
+    const Stock = await StockService.listAllVentasAccesesorios();
+    res.json(Stock);
+  } catch (err) {
+    res.status(500).json({ action: "listAll", error: err.message });
+  }
+};
+
+const listAllVentasRepuestos = async (req, res) => {
+  try {
+    const Stock = await StockService.listAllVentasRepuestos();
     res.json(Stock);
   } catch (err) {
     res.status(500).json({ action: "listAll", error: err.message });
@@ -49,9 +58,9 @@ const listAllRepuestos = async (req, res) => {
   }
 };
 
-const listAllStockVentaGeneral = async (req, res) => {
+const listAllStockGeneral = async (req, res) => {
   try {
-    const Stock = await StockService.listAllStockVentaGeneral();
+    const Stock = await StockService.listAllStockGeneral();
     res.json(Stock);
   } catch (err) {
     res.status(500).json({ action: "listAll", error: err.message });
@@ -120,9 +129,11 @@ module.exports = {
   deleteStock, 
   listAllRepuestos, 
   listAllServicios, 
-  listAllStockVentaGeneral,
   listAllInsumos,
   listAllDisponible,
+  listAllVentasRepuestos,
+  listAllVentasAccesesorios,
   listAllStockGeneral
+
 
 };

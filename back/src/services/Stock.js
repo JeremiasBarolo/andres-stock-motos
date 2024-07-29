@@ -10,6 +10,13 @@
             return await StockProvider.listAllStockGeneral();
         };
 
+        const listAllVentasAccesesorios = async () => {
+            return await StockProvider.listAllVentasAccesesorios();
+        };
+        const listAllVentasRepuestos = async () => {
+            return await StockProvider.listAllVentasRepuestos();
+        };
+
         const listAllDisponible = async () => {
             return await StockProvider.listAllDisponible();
         };
@@ -59,6 +66,9 @@
         listAllStockVentaGeneral,
         listAllInsumos,
         listAllDisponible,
+        listAllVentasAccesesorios,
+        listAllVentasRepuestos,
         listAllStockGeneral
+        
         };
 

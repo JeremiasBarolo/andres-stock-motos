@@ -42,8 +42,12 @@ export class MovimientosService {
     return this.http.get<any[]>(`${this.apiUrl}/historiales`, { headers: this.getHeaders() }); 
   }
 
-  getAllVentas(): Observable<any[]> {
-    return this.http.get<any[]>(`${this.apiUrl}/ventas`, { headers: this.getHeaders() }); 
+  getAllVentasRespuestos(): Observable<any[]> {
+    return this.http.get<any[]>(`${this.apiUrl}/ventas-repuestos`, { headers: this.getHeaders() }); 
+  }
+
+  getAllVentasAccesorios(): Observable<any[]> {
+    return this.http.get<any[]>(`${this.apiUrl}/ventas-accesorios`, { headers: this.getHeaders() }); 
   }
 
   getListadoPrecios(): Observable<any[]> {

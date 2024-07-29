@@ -25,8 +25,12 @@ const listAllServices = async () => {
   return await movimientosService.listAllServices();
 };
 
-const listAllVentas = async () => {
-  return await movimientosService.listAllVentas();
+const listAllVentasRepuestos = async () => {
+  return await movimientosService.listAllVentasRepuestos();
+};
+
+const listAllVentasAccesesorios = async () => {
+  return await movimientosService.listAllVentasAccesesorios();
 };
 
 const listAllMotosMovimientos = async () => {
@@ -76,7 +80,6 @@ module.exports = {
   createMovimientos,
   updateMovimientos,
   deleteMovimientos,
-  listAllVentas,
   updateVentaRepuestos,
   listAllMotosMovimientos,
   createVentaMoto,
@@ -87,6 +90,8 @@ module.exports = {
   listPrecios,
   listAllRelaciones,
   listAllRecaudacion,
-  listAllVentasPorCategoria
+  listAllVentasPorCategoria,
+  listAllVentasRepuestos,
+  listAllVentasAccesesorios
   
 };

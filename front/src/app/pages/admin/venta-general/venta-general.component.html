@@ -1,5 +1,6 @@
 <div class="header-container">
-    <h3>Ventas</h3>
+    <h3 *ngIf="tipoMovimientoId == 3">Ventas de Repuestos</h3>
+    <h3 *ngIf="tipoMovimientoId == 5">Ventas de Accesorios</h3>
     <p-button icon="pi pi-plus" label="Agregar Venta" [text]="true" (click)="openCrearVentaDialog()" styleClass="ml-auto"></p-button>
 </div>
 

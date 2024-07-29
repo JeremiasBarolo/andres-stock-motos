@@ -61,14 +61,30 @@ class StockService {
         }
       }
 
-      async listAllStockVentaGeneral() {
+      async listAllVentasRepuestos() {
         try {
           const Stock = await models.Stock.findAll({
-            include: [{ all: true }]
+            include: [{ all: true }],
+            where: { tipoId: 1}
           });
           console.log('✅ Stock were found');
           let data = format.Stock(Stock);
-          return data.filter((item) => item.tipoArticulo !== 'Servicio');
+          return data.filter((item) => item.cantidad > 0);
+        } catch (err) {
+          console.error('🛑 Error when fetching Stock', err);
+          throw err;
+        }
+      }
+
+      async listAllVentasAccesesorios() {
+        try {
+          const Stock = await models.Stock.findAll({
+            include: [{ all: true }],
+            where: { tipoId: 2}
+          });
+          console.log('✅ Stock were found');
+          let data = format.Stock(Stock);
+          return data.filter((item) => item.cantidad > 0);
         } catch (err) {
           console.error('🛑 Error when fetching Stock', err);
           throw err;

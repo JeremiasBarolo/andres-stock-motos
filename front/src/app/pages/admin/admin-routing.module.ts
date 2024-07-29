@@ -20,8 +20,6 @@ import { ClientesComponent } from './clientes/clientes.component';
 import { ProveedoresComponent } from './proveedores/proveedores.component';
 import { MotosNuevasComponent } from './motos-nuevas/motos-nuevas.component';
 import { MotosUsadasComponent } from './motos-usadas/motos-usadas.component';
-
-import { VentaRepuestosComponent } from './venta-repuestos/venta-repuestos.component';
 import { VentaMotosComponent } from './venta-motos/venta-motos.component';
 import { HistorialClientesComponent } from './historial-clientes/historial-clientes.component';
 import { PedidosStockComponent } from './pedidos-stock/pedidos-stock.component';
@@ -35,6 +33,7 @@ import { InsumosComponent } from './insumos/insumos.component';
 import { AdminGuard } from '../../auth/admin-guard/admin-guard.component';
 import { TareasComponent } from './tareas/tareas.component';
 import { MotosConsignacionComponent } from './motos-consignacion/motos-consignacion.component';
+import { VentaGeneralComponent } from './venta-general/venta-general.component';
 
 
 
@@ -69,7 +68,7 @@ const routes: Routes = [
       { path: 'servicios', component: ServiciosComponent },
       { path: 'insumos', component: InsumosComponent },
       { path: 'proveedor', component: ProveedoresComponent },
-      { path: 'ventas', component: VentaRepuestosComponent },
+      { path: 'ventas/:tipo', component: VentaGeneralComponent },
       { path: 'venta-motos', component: VentaMotosComponent },
       { path: 'historial-clientes', component: HistorialClientesComponent },
       { path: 'pedidos-stock', component: PedidosStockComponent },

@@ -26,7 +26,7 @@ import { MotosNuevasComponent } from './motos-nuevas/motos-nuevas.component';
 import { MotosUsadasComponent } from './motos-usadas/motos-usadas.component';
 import { PickListModule } from 'primeng/picklist';
 import { DragDropModule } from '@angular/cdk/drag-drop';
-import { VentaRepuestosComponent } from './venta-repuestos/venta-repuestos.component';
+
 import { VentaMotosComponent } from './venta-motos/venta-motos.component';
 import { DropdownModule } from 'primeng/dropdown';
 import { HistorialClientesComponent } from './historial-clientes/historial-clientes.component';
@@ -45,6 +45,8 @@ import { InsumosComponent } from './insumos/insumos.component';
 import { TareasComponent } from './tareas/tareas.component';
 import { CalendarModule } from 'primeng/calendar';
 import { MotosConsignacionComponent } from './motos-consignacion/motos-consignacion.component';
+import { VentaGeneralComponent } from './venta-general/venta-general.component';
+
 
 
 
@@ -67,7 +69,6 @@ import { MotosConsignacionComponent } from './motos-consignacion/motos-consignac
     ProveedoresComponent,
     MotosNuevasComponent,
     MotosUsadasComponent,
-    VentaRepuestosComponent,
     VentaMotosComponent,
     HistorialClientesComponent,
     PedidosStockComponent,
@@ -79,6 +80,8 @@ import { MotosConsignacionComponent } from './motos-consignacion/motos-consignac
     InsumosComponent,
     TareasComponent,
     MotosConsignacionComponent,
+    VentaGeneralComponent
+
 
    
   ],
