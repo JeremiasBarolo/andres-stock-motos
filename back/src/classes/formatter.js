@@ -126,13 +126,23 @@ class Formatter {
       try {
         const empleados = await Promise.all(
           data.map(async user => {
-            const ventas = await utilsService.getVentasByEmpleado(user.Usuarios[0].id);
+            if(user.Usuarios.length > 0){
+              const ventas = await utilsService.getVentasByEmpleado(user.Usuarios[0].id);
             return {
               id: user.id,
               nombre: `${user.nombre} ${user.apellido}`,
               ventas: ventas,
               Localidad: user.Localidade.descripcion
             };
+            }else{
+              return {
+                id: user.id,
+                nombre: `${user.nombre} ${user.apellido}`,
+                ventas: 0,
+                Localidad: user.Localidade.descripcion
+              };
+            }
+            
           })
         );
     

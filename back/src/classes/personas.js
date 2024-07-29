@@ -24,7 +24,8 @@ class PersonasService {
         where: { tipoPersonaId: 2 }
       });
       console.log('✅ Personas were found');
-      return format.mejoresEmpleados(Personas);
+      let data = await format.mejoresEmpleados(Personas);
+      return data
 
     } catch (err) {
       console.error('🛑 Error when fetching Personas', err);

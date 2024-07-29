@@ -9,6 +9,6 @@
     color: #007bff; /* Cambia el color del icono al pasar el cursor */
   }
 
-/* .card-body{
-  background-color: rgb(202, 202, 196);
-} */
+.card-body{
+  background-color: #323232;
+}
