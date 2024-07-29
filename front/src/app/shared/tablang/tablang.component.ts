@@ -12,16 +12,19 @@ export class TablangComponent implements OnInit, OnDestroy, OnChanges {
   @Input() columns: any[] = [];
   @Input() accionesVisible: boolean = true;
   @Input() insumosVisible: boolean = false;
+  @Input() adicionalesVisible: boolean = false;
   @Input() pdfVisible: boolean = false;
 
   @Output() editarClick: EventEmitter<any> = new EventEmitter();
   @Output() eliminarClick: EventEmitter<any> = new EventEmitter();
   @Output() insumoClick: EventEmitter<any> = new EventEmitter();
+  @Output() adicionalesClick: EventEmitter<any> = new EventEmitter();
   @Output() modalOpenClick: EventEmitter<any> = new EventEmitter();
   @Output() pdfOpenClick: EventEmitter<any> = new EventEmitter();
 
   acciones: boolean = true;
   insumos: boolean = false;
+  adicionales: boolean = false;
   pdf: boolean = false;
 
   isAdmin:any
@@ -42,13 +45,14 @@ export class TablangComponent implements OnInit, OnDestroy, OnChanges {
     
     this.acciones = this.accionesVisible;
     this.insumos = this.insumosVisible;
+    this.adicionales = this.adicionalesVisible;
     this.pdf = this.pdfVisible;
   }
 
   ngOnChanges(): void {
-    // Ensure properties are updated when inputs change
     this.acciones = this.accionesVisible;
     this.insumos = this.insumosVisible;
+    this.adicionales = this.adicionalesVisible;
     this.pdf = this.pdfVisible;
   }
 
@@ -66,6 +70,10 @@ export class TablangComponent implements OnInit, OnDestroy, OnChanges {
 
   asignarInsumos(rowData: any) {
     this.insumoClick.emit(rowData);
+  }
+
+  asignarAdicionales(rowData: any) {
+    this.adicionalesClick.emit(rowData);
   }
 
   pdfClick(rowData: any) {

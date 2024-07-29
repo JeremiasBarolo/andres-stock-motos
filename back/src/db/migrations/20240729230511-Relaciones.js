@@ -50,6 +50,8 @@ module.exports = {
     onUpdate: 'CASCADE',
     onDelete: 'CASCADE'
   });
+
+  
 // <=============================== Fin Personas ===============================> 
 
 
@@ -276,7 +278,21 @@ module.exports = {
     onDelete: 'CASCADE'
   });
 
-  // <=============================== Fin Tareas ===============================>  
+  // <=============================== Fin Tareas ===============================> 
+    
+    // <=============================== Datos Adicionales ===============================>  
+  await queryInterface.addColumn('DatosAdicionalesClientes', 'clienteId', {
+    type: Sequelize.INTEGER,
+    allowNull: true,
+    references: {
+      model: 'Personas',
+      key: 'id'
+    },
+    onUpdate: 'CASCADE',
+    onDelete: 'CASCADE'
+  });
+
+  // <=============================== Fin Datos Adicionales ===============================>  
 
   },
 
@@ -333,5 +349,10 @@ module.exports = {
       
     await queryInterface.removeColumn('Tareas', 'usuarioId');
   // <=============================== Fin Tareas ===============================>
+
+     // <=============================== datosAdicionalesCliente ===============================> 
+      
+      await queryInterface.removeColumn('DatosAdicionalesClientes', 'clienteId');
+      // <=============================== Fin datosAdicionalesCliente ===============================>
   }
 };

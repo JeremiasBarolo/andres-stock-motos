@@ -25,6 +25,9 @@
         <ng-container *ngIf="insumos">
           <p-button icon="pi pi-plus" [text]="true" severity="info" (click)="asignarInsumos(rowData)" pTooltip="Asignar Insumos"></p-button>
         </ng-container>
+        <ng-container *ngIf="adicionales">
+          <p-button icon="pi pi-plus" [text]="true" severity="info" (click)="asignarAdicionales(rowData)" pTooltip="Asignar Datos Adicionales"></p-button>
+        </ng-container>
         <ng-container *ngIf="pdf">
           <p-button icon="pi pi-file-pdf" [text]="true" severity="warning" (click)="pdfClick(rowData)" pTooltip="Ver PDF"></p-button>
         </ng-container>

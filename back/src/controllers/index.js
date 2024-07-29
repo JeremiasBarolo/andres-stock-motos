@@ -18,6 +18,7 @@ const checklistController = require('./checklist');
 const TipoServicioController = require('./TipoServicio');
 const loginController = require('./login'); 
 const TareasController = require('./Tareas');
+const DatosAdicionalesClienteController = require('./DatosAdicionalesCliente');
 
 
 
@@ -40,5 +41,6 @@ module.exports= {
     checklistController,
     TipoServicioController,
     loginController,
-    TareasController
+    TareasController,
+    DatosAdicionalesClienteController
 }

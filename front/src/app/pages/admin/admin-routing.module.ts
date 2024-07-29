@@ -34,6 +34,7 @@ import { AdminGuard } from '../../auth/admin-guard/admin-guard.component';
 import { TareasComponent } from './tareas/tareas.component';
 import { MotosConsignacionComponent } from './motos-consignacion/motos-consignacion.component';
 import { VentaGeneralComponent } from './venta-general/venta-general.component';
+import { AsignarAdicionalesComponent } from './asignar-adicionales/asignar-adicionales.component';
 
 
 
@@ -69,6 +70,7 @@ const routes: Routes = [
       { path: 'insumos', component: InsumosComponent },
       { path: 'proveedor', component: ProveedoresComponent },
       { path: 'ventas/:tipo', component: VentaGeneralComponent },
+      { path: 'adicionales/:tipo', component: AsignarAdicionalesComponent },
       { path: 'venta-motos', component: VentaMotosComponent },
       { path: 'historial-clientes', component: HistorialClientesComponent },
       { path: 'pedidos-stock', component: PedidosStockComponent },

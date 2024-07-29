@@ -46,6 +46,7 @@ import { TareasComponent } from './tareas/tareas.component';
 import { CalendarModule } from 'primeng/calendar';
 import { MotosConsignacionComponent } from './motos-consignacion/motos-consignacion.component';
 import { VentaGeneralComponent } from './venta-general/venta-general.component';
+import { AsignarAdicionalesComponent } from './asignar-adicionales/asignar-adicionales.component';
 
 
 
@@ -80,7 +81,8 @@ import { VentaGeneralComponent } from './venta-general/venta-general.component';
     InsumosComponent,
     TareasComponent,
     MotosConsignacionComponent,
-    VentaGeneralComponent
+    VentaGeneralComponent,
+    AsignarAdicionalesComponent
 
 
    

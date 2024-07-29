@@ -37,6 +37,12 @@ module.exports = (sequelize, DataTypes) => {
         foreignKey: 'recepcionistaId',
         onUpdate: 'CASCADE',
       });
+
+      Personas.hasOne(models.DatosAdicionalesCliente, {
+        foreignKey: 'clienteId',
+        onUpdate: 'CASCADE',
+        onDelete: 'CASCADE',
+      });
     }
   }
   Personas.init({

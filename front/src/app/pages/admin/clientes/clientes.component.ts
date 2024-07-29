@@ -208,4 +208,8 @@ export class ClientesComponent {
     this.modalData = true;
   }
 
+  redirectAdicionales(data:any){
+    this.router.navigate(['admin/adicionales', data.id]);
+  }
+
 }

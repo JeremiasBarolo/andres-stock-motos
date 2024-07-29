@@ -26,7 +26,8 @@ const {
     ChecklistRouter,
     TipoServicioRouter,
     loginRouter,
-    tareasRouter
+    tareasRouter,
+    datosAdicionalesClienteRouter
     
  } = require('./routes')
 
@@ -60,6 +61,7 @@ app.use("/checklist", ChecklistRouter)
 app.use("/tipo-servicio", TipoServicioRouter)
 app.use("/login", loginRouter)
 app.use("/tareas", tareasRouter)
+app.use("/datosAdicionales", datosAdicionalesClienteRouter)
 
 
 

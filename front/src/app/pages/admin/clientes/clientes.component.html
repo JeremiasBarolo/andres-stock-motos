@@ -6,6 +6,8 @@
 <app-tablang
     [data]="products"
     [columns]="columns"
+    [adicionalesVisible]="true"
+    (adicionalesClick)="redirectAdicionales($event)"
     (modalOpenClick)="modalOpen($event)"
     (editarClick)="editarItem($event)" 
     (eliminarClick)="eliminarItem($event)"
