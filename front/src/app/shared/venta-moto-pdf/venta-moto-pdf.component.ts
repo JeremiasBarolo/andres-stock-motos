@@ -12,6 +12,8 @@ export class VentaMotoPdfComponent implements OnInit {
   cardData: any;
   datosAdicionales: any;
   Persona: any;
+  debeChecked: boolean | undefined;
+  pagoChecked: boolean | undefined;
 
 constructor(
   private route: ActivatedRoute,
@@ -32,7 +34,7 @@ constructor(
       if (this.cardData.personaId) {
         this.datosAdicionalesService.getDatosAdicionales(this.cardData.personaId).subscribe((res: any) => {
           this.datosAdicionales = res;
-          console.log(this.datosAdicionales);
+          this.setCheckboxes(res.pago)
         });
 
         this.personasService.getById(this.cardData.personaId).subscribe((res: any) => {
@@ -43,6 +45,19 @@ constructor(
         console.error('No recepcionistaId found');
       }
     });
+
+    
+  }
+
+  setCheckboxes(pago:any): void {
+    
+    if(pago === 'SI'){
+      this.pagoChecked = true;
+    }else{
+      this.debeChecked = true;
+    }
+    
+    
   }
 
 }

@@ -38,9 +38,14 @@ class DatosAdicionalesClienteService {
 
   async createDatosAdicionalesCliente(DataDatosAdicionalesCliente) {
     try {
-
-      const newDatosAdicionalesCliente = await models.DatosAdicionalesCliente.create(DataDatosAdicionalesCliente);
-      return newDatosAdicionalesCliente;
+      if(DataDatosAdicionalesCliente.pago){
+       await  DataDatosAdicionalesCliente.pago == 'SI'? DataDatosAdicionalesCliente.pagoTrue == true : DataDatosAdicionalesCliente.debeTrue == true;
+      }
+      if(DataDatosAdicionalesCliente.clienteId){
+        const newDatosAdicionalesCliente = await models.DatosAdicionalesCliente.create(DataDatosAdicionalesCliente);
+        return newDatosAdicionalesCliente;
+      }
+      
     } catch (err) {
       console.error('🛑 Error when creating DatosAdicionalesCliente', err);
       throw err;

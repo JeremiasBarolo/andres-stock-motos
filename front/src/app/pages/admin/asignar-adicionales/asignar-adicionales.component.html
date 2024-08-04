@@ -4,7 +4,7 @@
     
     <h5 class="section-title">PERSONA FÍSICA</h5>
 
-    <div class="row">
+    <div class="row col-md-12">
       <div class="col-md-6 mb-3">
         <label for="telComercial">Teléfono Comercial</label>
         <input id="telComercial" type="text" class="form-control" formControlName="telComercial">
@@ -13,57 +13,60 @@
         <label for="estadoCivil">Estado Civil</label>
         <input id="estadoCivil" type="text" class="form-control" formControlName="estadoCivil">
       </div>
-    
+  
       <div class="col-md-6 mb-3">
         <label for="empActual">Empleo Actual</label>
         <input id="empActual" type="text" class="form-control" formControlName="empActual">
       </div>
-
+  
       <div class="col-md-6 mb-3">
         <label for="domicilioEmp">Domicilio de Empleo</label>
         <input id="domicilioEmp" type="text" class="form-control" formControlName="domicilioEmp">
       </div>
-    
+    </div>
+  
+    <div class="row">
       <div class="col-md-6 mb-3">
         <label for="telEmp">Teléfono de Empleo</label>
         <input id="telEmp" type="number" class="form-control" formControlName="telEmp">
       </div>
-
+  
       <div class="col-md-6 mb-3">
         <label for="profesion">Profesión</label>
         <input id="profesion" type="text" class="form-control" formControlName="profesion">
       </div>
-    </div>
-
-    <div class="row">
+  
       <div class="col-md-6 mb-3">
         <label for="fechaIngreso">Fecha de Ingreso</label>
         <input id="fechaIngreso" type="date" class="form-control" formControlName="fechaIngreso">
       </div>
+  
       <div class="col-md-6 mb-3">
         <label for="ingresosMensuales">Ingresos Mensuales</label>
         <input id="ingresosMensuales" type="text" class="form-control" formControlName="ingresosMensuales">
       </div>
-    
+    </div>
+  
+    <div class="row">
       <div class="col-md-6 mb-3">
         <label for="nombreConyugue">Nombre del Cónyuge</label>
         <input id="nombreConyugue" type="text" class="form-control" formControlName="nombreConyugue">
       </div>
+  
       <div class="col-md-6 mb-3">
         <label for="trabaja">¿Trabaja?</label>
         <input id="trabaja" type="text" class="form-control" formControlName="trabaja">
       </div>
-    
+  
       <div class="col-md-6 mb-3">
         <label for="dondeTrabaja">¿Dónde Trabaja?</label>
         <input id="dondeTrabaja" type="text" class="form-control" formControlName="dondeTrabaja">
       </div>
-
+  
       <div class="col-md-6 mb-3">
         <label for="dniConyugue">DNI del Cónyuge</label>
         <input id="dniConyugue" type="number" class="form-control" formControlName="dniConyugue">
       </div>
-    
     </div>
 
     
@@ -240,7 +243,7 @@
     
       <div class="col-md-6 mb-3">
         <label for="pagoTrue">Pago?</label>
-        <select id="pagoTrue" type="select" class="form-control" formControlName="pagoTrue">
+        <select id="pagoTrue" type="select" class="form-control" formControlName="pago">
         <option value="SI">Si</option>
         <option value="NO">No</option>
         </select>
@@ -261,8 +264,10 @@
     <div class="row mb-3">
       <div class="col-md-12">
         <button type="submit" class="btn btn-primary" >Guardar</button>
-        <button  class="btn btn-primary" (click)="fillFormWithRandomData()" >rellenar</button>
+        
       </div>
+
+      <button  class="btn btn-primary" (click)="fillFormWithRandomData()" >rellenar</button>
     </div>
   </div>
 </form>

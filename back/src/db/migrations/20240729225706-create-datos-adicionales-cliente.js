@@ -66,6 +66,9 @@ module.exports = {
       telefonoJuridico: {
         type: Sequelize.BIGINT(100)
       },
+      telGarante: {
+        type: Sequelize.STRING(100)
+      },
       telefax: {
         type: Sequelize.STRING(500)
       },
@@ -142,9 +145,6 @@ module.exports = {
         type: Sequelize.BIGINT(100)
       },
       inscripcion: {
-        type: Sequelize.BIGINT(100)
-      },
-      debe: {
         type: Sequelize.BIGINT(100)
       },
       pago: {

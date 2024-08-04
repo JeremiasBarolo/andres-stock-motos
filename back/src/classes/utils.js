@@ -261,10 +261,23 @@ class UtilsService {
         )
   }
 
-  async ClienteHasInfo(id){
-    const Cliente = await models.Personas.findByPk(id);
-    let hasIt =  Cliente.ClienteHasInfo ? hasIt == false : true;
-    return hasIt
+  async ClienteHasInfo(id) {
+    try {
+      const Cliente = await models.Personas.findByPk(id, {
+        include: { all: true }
+      });
+  
+      if (!Cliente) {
+        throw new Error('Cliente no encontrado');
+      }
+  
+      
+      const hasIt = !!Cliente.DatosAdicionalesCliente;
+      return hasIt;
+    } catch (error) {
+      console.error('Error al verificar datos adicionales del cliente:', error);
+      throw error;
+    }
   }
     
 

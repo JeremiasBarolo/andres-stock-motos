@@ -58,6 +58,7 @@ export class MotosComponent {
       precio: ['', Validators.required],
       marcaId: ['', Validators.required],
       tipoMotoId: ['', Validators.required],
+      color: ['', Validators.required],
       
     });
   }
@@ -74,6 +75,7 @@ export class MotosComponent {
         { field: 'num_motor', header: 'Numero de Motor' },
         { field: 'num_cuadro', header: 'Numero de Cuadro' },
         { field: 'cilindrada', header: 'Cilindrada' },
+        { field: 'color', header: 'Color' },
         { field: 'cert_num_fabrica', header: 'Cert. Num. Fabrica' },
         { field: 'precio', header: 'Precio' },
         { field: 'TipoMoto', header: 'Estado' },
@@ -91,6 +93,7 @@ export class MotosComponent {
           num_motor: data.num_motor,
           num_cuadro: data.num_cuadro,
           cilindrada: data.cilindrada,
+          color: data.color,
           cert_num_fabrica: data.cert_num_fabrica,
           precio: data.precio,
           TipoMoto: data.TipoMoto,
@@ -132,7 +135,8 @@ export class MotosComponent {
       cert_num_fabrica: data.cert_num_fabrica,
       precio: data.precio,
       marcaId: data.marcaId,
-      tipoMotoId: data.tipoMotoId
+      tipoMotoId: data.tipoMotoId,
+      color: data.color
     })
     
     
@@ -156,7 +160,8 @@ export class MotosComponent {
       cert_num_fabrica: this.form.value.cert_num_fabrica,
       precio: this.form.value.precio,
       marcaId: this.form.value.marcaId,
-      tipoMotoId: this.form.value.tipoMotoId
+      tipoMotoId: this.form.value.tipoMotoId,
+      color: this.form.value.color
       
     }
 

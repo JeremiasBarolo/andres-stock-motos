@@ -15,7 +15,7 @@
    
     <h5 class="section-title">PERSONA FÍSICA</h5>
     <div class="row">
-        <div class="row">
+        <div class="col-md-6">
             <div class="form-group">
                 <label for="apellidoNombre">Apellido y Nombre:</label>
                 <span id="apellidoNombre"> {{Persona?.apellido}}, {{Persona?.nombre}}</span>
@@ -154,7 +154,7 @@
             </div>
             <div class="form-group">
                 <label>Tel.:</label>
-                <p class="form-control-static"> </p>
+                <p class="form-control-static">{{datosAdicionales?.telGarante}} </p>
             </div>
         </div>
         <div class="col">
@@ -262,7 +262,7 @@
     </div>
 
     <h5 class="section-title">GESTORÍA</h5>
-    <div class="form-row">
+    <div class="row">
         <div class="form-group col-md-4">
             <label>Gastos Pap.</label>
             <p class="form-control-static"> {{datosAdicionales?.gastosPap | currency}} </p>
@@ -277,16 +277,26 @@
         </div>
     </div>
 
-    <div class="form-row">
+    <div class="row">
         <div class="form-group checkbox-group">
-            <input type="checkbox" id="debe" class="mr-2" disabled>
-            <label for="debe">Debe</label>
+          <input 
+            type="checkbox" 
+            id="debe" 
+            class="mr-2" 
+            [disabled]="true"
+            [(ngModel)]="debeChecked">
+          <label for="debe">Debe</label>
         </div>
         <div class="form-group checkbox-group">
-            <input type="checkbox" id="pago" class="mr-2" checked disabled>
-            <label for="pago">Pagó</label>
+          <input 
+            type="checkbox" 
+            id="pago" 
+            class="mr-2" 
+            [disabled]="true"
+            [(ngModel)]="pagoChecked">
+          <label for="pago">Pagó</label>
         </div>
-    </div>
+      </div>
 
     <p>Con fecha {{datosAdicionales?.fechaRealizacion | date}} firme SG MOTOS la documentación correspondiente al bien antes mencionado, de conformidad.</p>
 

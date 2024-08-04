@@ -72,7 +72,7 @@ const routes: Routes = [
       { path: 'proveedor', component: ProveedoresComponent },
       { path: 'ventas/:tipo', component: VentaGeneralComponent },
       { path: 'pdfVenta', component: VentaMotoPdfComponent },
-      { path: 'adicionales/:tipo', component: AsignarAdicionalesComponent },
+      { path: 'adicionales/:id', component: AsignarAdicionalesComponent },
       { path: 'venta-motos', component: VentaMotosComponent },
       { path: 'historial-clientes', component: HistorialClientesComponent },
       { path: 'pedidos-stock', component: PedidosStockComponent },

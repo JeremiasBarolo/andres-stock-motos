@@ -72,13 +72,10 @@ export class AsignarAdicionalesComponent {
   }
 
   ngOnInit() {
-    const id = this.route.snapshot.paramMap.get('id');
-    if (id !== null) {
-      this.id = id;
-    } else {
-      console.error('ID es null');
-      return;
-    }
+    this.route.params.subscribe(params => {
+      this.id = params['id']; 
+      console.log(this.id); 
+    });
   
     if (this.route.snapshot.routeConfig !== null && this.route.snapshot.routeConfig.path !== undefined) {
       this.isEditMode = this.route.snapshot.routeConfig.path.includes('editar');
@@ -92,7 +89,7 @@ export class AsignarAdicionalesComponent {
   }
 
   onSubmit() {
-    this.tipo = {...this.insumoForm.value, clienteId: this.id}
+    this.tipo = this.insumoForm.value
     
 
       if(this.isEditMode){
@@ -110,7 +107,7 @@ export class AsignarAdicionalesComponent {
       }else{
         // Es crear
         try {
-          this.adicionalesClientesService.create(this.tipo).pipe(takeUntil(this.destroy$)).subscribe(() => {
+          this.adicionalesClientesService.create({...this.tipo, clienteId: this.id}).pipe(takeUntil(this.destroy$)).subscribe(() => {
             setTimeout(() => {
               window.location.reload();
             }, 600)
@@ -129,11 +126,12 @@ export class AsignarAdicionalesComponent {
 
   fillFormWithRandomData() {
     this.insumoForm.patchValue({
-      telComercial: faker.phone.number(),
+      
+      telComercial: 44876711,
       estadoCivil: faker.name.jobType(),
       empActual: 'AGD',
       domicilioEmp: faker.address.streetAddress(),
-      telEmp: faker.phone.number(),
+      telEmp: 44876711,
       profesion: faker.name.jobTitle(),
       fechaIngreso: faker.date.past().toISOString().split('T')[0],
       ingresosMensuales: faker.finance.amount(),
@@ -147,8 +145,9 @@ export class AsignarAdicionalesComponent {
       ivaJuridico: faker.datatype.boolean() ? 'Responsable Inscripto' : 'Monotributista',
       ventasMensuales: faker.finance.amount(),
       domicilioJuridico: faker.address.streetAddress(),
-      telefonoJuridico: faker.phone.number(),
-      telefax: faker.phone.number(),
+      telefonoJuridico: 44986621,
+      telefax: 44986621,
+      telGarante: 44986621,
       nombreGarante: faker.name.fullName(),
       domicilioGarante: faker.address.streetAddress(),
       cuitGarante: faker.datatype.number({ min: 20000000000, max: 30999999999 }),
@@ -174,10 +173,7 @@ export class AsignarAdicionalesComponent {
       gastosPap: faker.finance.amount(),
       prenda: faker.finance.amount(),
       inscripcion: faker.finance.amount(),
-      debe: faker.finance.amount(),
-      pago: faker.finance.amount(),
-      debeTrue: faker.datatype.boolean(),
-      pagoTrue: faker.datatype.boolean(),
+      pago: 'SI',
       fechaRealizacion: faker.date.past().toISOString().split('T')[0],
       conceptoFinal: faker.lorem.paragraph()
     });

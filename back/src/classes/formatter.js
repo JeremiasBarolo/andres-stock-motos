@@ -277,6 +277,7 @@ class Formatter {
         modelo: moto.modelo,
         year: moto.year,
         num_motor: moto.num_motor,
+        color: moto.color,
         num_cuadro: moto.num_cuadro,
         cilindrada: moto.cilindrada,
         cert_num_fabrica: moto.cert_num_fabrica,
