@@ -48,6 +48,7 @@ import { MotosConsignacionComponent } from './motos-consignacion/motos-consignac
 import { VentaGeneralComponent } from './venta-general/venta-general.component';
 import { AsignarAdicionalesComponent } from './asignar-adicionales/asignar-adicionales.component';
 import { StepperModule } from 'primeng/stepper';
+import { MessageService } from 'primeng/api';
 
 
 
@@ -110,6 +111,7 @@ import { StepperModule } from 'primeng/stepper';
     
     
   
-  ]
+  ],
+  providers: [MessageService]
 })
 export class AdminModule { }

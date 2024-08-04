@@ -429,6 +429,7 @@ class Formatter {
             createdAt: venta.createdAt,
             updatedAt: venta.updatedAt,
             cliente: `${venta.Persona.nombre} ${venta.Persona.apellido}`,
+            clienteId: venta.Persona.id,
             usuario:venta.Usuario.user,
             usuarioId: venta.Usuario.id,
             personaId: venta.Persona.id,

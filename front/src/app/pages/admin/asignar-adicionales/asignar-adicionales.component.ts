@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { DatosAdicionalesService } from '../../../services/datos-adicionales.service';
 import { Subject, takeUntil } from 'rxjs';
 import { faker } from '@faker-js/faker';
 import { DatePipe } from '@angular/common';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-asignar-adicionales',
@@ -24,7 +25,10 @@ export class AsignarAdicionalesComponent {
     private fb: FormBuilder, 
     private route: ActivatedRoute, 
     private adicionalesClientesService: DatosAdicionalesService,
-    private datePipe: DatePipe,) {
+    private datePipe: DatePipe,
+    private location: Location
+  
+  ) {
     this.insumoForm = this.fb.group({
       telComercial: [''],
       estadoCivil: [''],
@@ -101,8 +105,8 @@ export class AsignarAdicionalesComponent {
             try {
               this.adicionalesClientesService.update(this.editId, {...this.tipo, clienteId: this.id}).pipe(takeUntil(this.destroy$)).subscribe(() => {
                 setTimeout(() => {
-                  window.location.reload();
-                }, 600)
+                  this.location.back();  // Vuelve a la pantalla anterior sin recargar la página
+                }, 600);
               });
 
             } catch (error) {
@@ -113,8 +117,8 @@ export class AsignarAdicionalesComponent {
         try {
           this.adicionalesClientesService.create({...this.tipo, clienteId: this.id}).pipe(takeUntil(this.destroy$)).subscribe(() => {
             setTimeout(() => {
-              window.location.reload();
-            }, 600)
+              this.location.back();  // Vuelve a la pantalla anterior sin recargar la página
+            }, 600);
           });
           
         } catch (error) {

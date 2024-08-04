@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, Renderer2 } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
@@ -34,9 +34,10 @@ export class VentaMotosComponent implements OnDestroy, OnInit {
   motos: any[] = [];
   motosDisponibles: any[] = [];
   private destroy$ = new Subject<void>();
-  usuarioId:any
-  usuarioIdEdit:any
-
+  usuarioId: any;
+  usuarioIdEdit: any;
+  errorModalVisible: boolean = false;
+  errorMessage: any;
 
   constructor(
     private usuariosService: UsuariosService,
@@ -47,7 +48,8 @@ export class VentaMotosComponent implements OnDestroy, OnInit {
     private fb: FormBuilder,
     private datePipe: DatePipe,
     private router: Router,
-    private messageService: MessageService
+    private messageService: MessageService,
+    private renderer: Renderer2
   ) {
     this.form = this.fb.group({
       usuarioId: ['', Validators.required],
@@ -55,6 +57,7 @@ export class VentaMotosComponent implements OnDestroy, OnInit {
       motoId: ['', Validators.required],
       productos: this.fb.array([])
     });
+
   }
 
   ngOnInit(): void {
@@ -68,8 +71,8 @@ export class VentaMotosComponent implements OnDestroy, OnInit {
 
   loadData(): void {
     this.authService.getUserData().subscribe((data: any) => {
-      this.usuarioId = data.userId
-    })
+      this.usuarioId = data.userId;
+    });
 
     this.movimientosService.getAllVentasMoto().pipe(takeUntil(this.destroy$)).subscribe((data: any[]) => {
       this.columns = [
@@ -78,7 +81,7 @@ export class VentaMotosComponent implements OnDestroy, OnInit {
         { field: 'createdAt', header: 'Fecha de Realizacion' },
         { field: 'cliente', header: 'Cliente' },
         { field: 'usuario', header: 'Recepcionista' },
-        { field: 'subtotal', header: 'Subtotal' },
+        { field: 'subtotal', header: 'Subtotal' }
       ];
       this.products = data.map(item => ({
         id: item.id,
@@ -87,6 +90,7 @@ export class VentaMotosComponent implements OnDestroy, OnInit {
         usuario: item.usuario,
         subtotal: item.subtotal,
         usuarioId: item.usuarioId,
+        clienteId: item.clienteId,
         personaId: item.personaId,
         Moto: item.Moto,
         motoId: item.Moto.id,
@@ -97,8 +101,6 @@ export class VentaMotosComponent implements OnDestroy, OnInit {
     });
 
     this.usuariosService.getAll().pipe(takeUntil(this.destroy$)).subscribe(data => {
-      
-      
       this.usuarios = data;
     });
 
@@ -120,8 +122,6 @@ export class VentaMotosComponent implements OnDestroy, OnInit {
   }
 
   editarItem(data: any) {
-    console.log(data);
-    
     this.editVisible = true;
     this.id = data.id;
     this.form.patchValue({
@@ -140,7 +140,7 @@ export class VentaMotosComponent implements OnDestroy, OnInit {
     this.tipo = {
       usuarioId: this.id > 0 ? this.usuarioIdEdit : this.usuarioId,
       personaId: formValue.personaId,
-      motoId: formValue.motoId, 
+      motoId: formValue.motoId,
       tipoMovimientoId: 2
     };
 
@@ -171,11 +171,10 @@ export class VentaMotosComponent implements OnDestroy, OnInit {
     this.detailModal = true;
     this.cardData = data;
   }
+
   redirectToPDF(cardData: any) {
-    console.log('cardData', cardData);
-    
     const MotoData = JSON.stringify(cardData.Moto);
-    const queryParams = { ...cardData, Moto: MotoData  };
+    const queryParams = { ...cardData, Moto: MotoData };
     this.router.navigate(['admin/pdfVenta'], { queryParams });
   }
 
@@ -185,9 +184,14 @@ export class VentaMotosComponent implements OnDestroy, OnInit {
     if(data.ClienteHasInfo){
       this.redirectToPDF(data)
     }else{
-      this.messageService.add({ severity: 'error', summary: 'Error', detail: 'El cliente no tiene informacion registrada' });
+      this.errorMessage = 'El cliente no tiene información registrada. Debera direccionarse a la pantalla de empleados y crearlo desde ahi.';
+      this.id = data.clienteId;  
+      this.errorModalVisible = true;
     }
-    
-   
+  }
+
+  redirectToCreate(id: any) {
+    this.router.navigate(['admin/adicionales', 'crear', id]);
   }
 }
+

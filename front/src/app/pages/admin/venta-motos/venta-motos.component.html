@@ -92,3 +92,8 @@
         <p-button icon="pi pi-times"  [text]="true" severity="danger" (click)="editEliminar = false" />
     </div>
 </p-dialog>
+
+<p-dialog header="Error" [(visible)]="errorModalVisible" [modal]="true">
+    <p>{{ errorMessage }}</p>
+    <button pButton [text]="true" label="Asignar Informacion" type="button" (click)="redirectToCreate(id)" icon="pi pi-send"></button>
+</p-dialog>
