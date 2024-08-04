@@ -30,6 +30,7 @@ module.exports = (sequelize, DataTypes) => {
   }
   Motos.init({
     modelo: DataTypes.INTEGER,
+    color: DataTypes.STRING,
     year: DataTypes.INTEGER,
     num_motor: DataTypes.INTEGER,
     num_cuadro: DataTypes.INTEGER,

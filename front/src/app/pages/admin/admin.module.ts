@@ -47,7 +47,7 @@ import { CalendarModule } from 'primeng/calendar';
 import { MotosConsignacionComponent } from './motos-consignacion/motos-consignacion.component';
 import { VentaGeneralComponent } from './venta-general/venta-general.component';
 import { AsignarAdicionalesComponent } from './asignar-adicionales/asignar-adicionales.component';
-
+import { StepperModule } from 'primeng/stepper';
 
 
 
@@ -105,7 +105,9 @@ import { AsignarAdicionalesComponent } from './asignar-adicionales/asignar-adici
     TableModule,
     ToastModule,
     IonicModule,
-    CalendarModule
+    CalendarModule,
+    StepperModule
+    
     
   
   ]

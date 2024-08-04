@@ -143,8 +143,8 @@
       
 
 
-      <li class="menu-label">{{ isAdmin ? 'Personas y Motos' : 'Motos' }}</li>
-      <li *ngIf="isAdmin">
+      <li class="menu-label">Personas y Motos</li>
+      <li>
         <a class="has-arrow" href="javascript:;">
           <div class="parent-icon">
             <ion-icon name="accessibility-outline"></ion-icon>
@@ -153,17 +153,17 @@
         </a>
         <ul>
           
-          <li> <a (click)="navigateTo('admin/personas')">
+          <li *ngIf="isAdmin"> <a (click)="navigateTo('admin/personas')">
               <ion-icon name="ellipse-outline"></ion-icon> Listado de Personas
             </a>
           </li>
 
-          <li> <a (click)="navigateTo('admin/proveedor')">
+          <li *ngIf="isAdmin"> <a (click)="navigateTo('admin/proveedor')">
               <ion-icon name="ellipse-outline"></ion-icon> Proveedores
             </a>
           </li>
 
-          <li> <a (click)="navigateTo('admin/empleados')">
+          <li *ngIf="isAdmin"> <a (click)="navigateTo('admin/empleados')">
             <ion-icon name="ellipse-outline"></ion-icon> Empleados
           </a>
         </li>

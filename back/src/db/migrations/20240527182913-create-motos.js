@@ -21,6 +21,9 @@ module.exports = {
       num_cuadro: {
         type: Sequelize.BIGINT(100)
       },
+      color: {
+        type: Sequelize.STRING(100)
+      },
       cilindrada: {
         type: Sequelize.BIGINT(100)
       },

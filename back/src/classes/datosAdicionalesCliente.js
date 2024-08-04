@@ -1,3 +1,4 @@
+const { where } = require('sequelize');
 var models = require('../models');
 const Formatter = require('./formatter');
 const format = new Formatter();
@@ -22,11 +23,13 @@ class DatosAdicionalesClienteService {
   
   async listOneDatosAdicionalesCliente(DatosAdicionalesCliente_id) {
     try {
-      const oneDatosAdicionalesCliente = await models.DatosAdicionalesCliente.findByPk(DatosAdicionalesCliente_id);
+      const oneDatosAdicionalesCliente = await models.DatosAdicionalesCliente.findOne({
+        where: {clienteId:DatosAdicionalesCliente_id}}
+      );
       if (!oneDatosAdicionalesCliente) {
         return null;
       }
-      return format.DatosAdicionalesCliente(oneDatosAdicionalesCliente);
+      return oneDatosAdicionalesCliente
     } catch (err) {
       console.error('🛑 Error when fetching a single Usuario', err);
       throw err;

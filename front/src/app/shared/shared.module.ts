@@ -14,6 +14,8 @@ import { BarChartComponent } from './bar-chart/bar-chart.component';
 import { TareasAdminComponent } from './tareas-admin/tareas-admin.component';
 import { PaginatorModule } from 'primeng/paginator';
 
+import { VentaMotoPdfComponent } from './venta-moto-pdf/venta-moto-pdf.component';
+
 
 
 
@@ -27,6 +29,7 @@ import { PaginatorModule } from 'primeng/paginator';
     InicioCardComponent,
     BarChartComponent,
     TareasAdminComponent,
+    VentaMotoPdfComponent,
     
   ],
   imports: [
@@ -48,6 +51,7 @@ import { PaginatorModule } from 'primeng/paginator';
     InicioCardComponent,
     BarChartComponent,
     TareasAdminComponent,
+    VentaMotoPdfComponent,
 
     
     

@@ -2,7 +2,7 @@
   <ng-template pTemplate="header" class="p-overlaypanel-header p-component-header">
     <tr>
       <th *ngFor="let col of columns">{{ col.header }}</th>
-      <th *ngIf="acciones && isAdmin">Acciones</th>
+      <th *ngIf="acciones ">Acciones</th>
     </tr>
   </ng-template>
   <ng-template pTemplate="body" let-rowData>
@@ -21,8 +21,8 @@
           {{ rowData[col.field] }}
         </ng-template>
       </td>
-      <td *ngIf="acciones && isAdmin">
-        <ng-container *ngIf="insumos">
+      <td *ngIf="acciones">
+        <ng-container *ngIf="insumos" >
           <p-button icon="pi pi-plus" [text]="true" severity="info" (click)="asignarInsumos(rowData)" pTooltip="Asignar Insumos"></p-button>
         </ng-container>
         <ng-container *ngIf="adicionales">
@@ -31,8 +31,8 @@
         <ng-container *ngIf="pdf">
           <p-button icon="pi pi-file-pdf" [text]="true" severity="warning" (click)="pdfClick(rowData)" pTooltip="Ver PDF"></p-button>
         </ng-container>
-        <p-button icon="pi pi-pencil" [text]="true" (click)="editar(rowData)"></p-button>
-        <p-button icon="pi pi-trash" [text]="true" severity="danger" (click)="eliminar(rowData)"></p-button>
+        <p-button *ngIf="isAdmin" icon="pi pi-pencil" [text]="true" (click)="editar(rowData)"></p-button>
+        <p-button *ngIf="isAdmin" icon="pi pi-trash" [text]="true" severity="danger" (click)="eliminar(rowData)"></p-button>
       </td>
     </tr>
   </ng-template>

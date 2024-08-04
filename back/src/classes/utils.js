@@ -261,7 +261,12 @@ class UtilsService {
         )
   }
 
-
+  async ClienteHasInfo(id){
+    const Cliente = await models.Personas.findByPk(id);
+    let hasIt =  Cliente.ClienteHasInfo ? hasIt == false : true;
+    return hasIt
+  }
+    
 
   async updateDatosServicioLogica(oldStock, newStock, DatosServicio_id){
     let toAdd = [];

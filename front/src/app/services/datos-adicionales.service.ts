@@ -31,8 +31,7 @@ export class DatosAdicionalesService {
     return this.http.get<any[]>(`${this.apiUrl}`, { headers: this.getHeaders() }); 
   }
 
-  // get by id
-  getById(id: number): Observable<any> {
+  getDatosAdicionales(id: number): Observable<any> {
     return this.http.get<any>(`${this.apiUrl}/${id}`, { headers: this.getHeaders() })
     
   }
@@ -44,7 +43,7 @@ export class DatosAdicionalesService {
   }
 
   // update
-  update(id: number, Entity: FormData): Observable<any> {
+  update(id: any, Entity: FormData): Observable<any> {
     return this.http.put<any>(`${this.apiUrl}/${id}`, Entity, { headers: this.getHeaders() })
 
   }

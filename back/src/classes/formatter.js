@@ -88,23 +88,90 @@ class Formatter {
     }
 
     Personas(data) {
-      return data.map(user => ({
-        id: user.id,
-        nombre: user.nombre,
-        apellido: user.apellido,
-        cuit: user.cuit,
-        fecha_nacimiento: user.fecha_nacimiento,
-        telefono: user.telefono,
-        direccion: user.direccion,
-        nro_direccion: user.nro_direccion,
-        mail: user.mail,
-        dni: user.dni,
-        tipoPersona: user.TipoPersona?.descripcion,
-        tipoPersonaId: user.TipoPersona.id,
-        Localidad: user.Localidade.descripcion,
-        LocalidadId: user.Localidade.id
-      }))
+      return data.map(user => {
+        
+        const person = {
+          id: user.id,
+          nombre: user.nombre,
+          apellido: user.apellido,
+          cuit: user.cuit,
+          fecha_nacimiento: user.fecha_nacimiento,
+          telefono: user.telefono,
+          direccion: user.direccion,
+          nro_direccion: user.nro_direccion,
+          mail: user.mail,
+          dni: user.dni,
+          tipoPersona: user.TipoPersona?.descripcion,
+          tipoPersonaId: user.TipoPersona?.id,
+          Localidad: user.Localidade?.descripcion,
+          LocalidadId: user.Localidade?.id,
+          ClienteHasInfo: false
+        };
+    
+        
+        if (user.DatosAdicionalesCliente) {
+          person.ClienteHasInfo = true
+          person.DatosAdicionales = {
+            telComercial: user.DatosAdicionalesCliente.telComercial || '',
+            estadoCivil: user.DatosAdicionalesCliente.estadoCivil || '',
+            empActual: user.DatosAdicionalesCliente.empActual || '',
+            domicilioEmp: user.DatosAdicionalesCliente.domicilioEmp || '',
+            telEmp: user.DatosAdicionalesCliente.telEmp || '',
+            profesion: user.DatosAdicionalesCliente.profesion || '',
+            fechaIngreso: user.DatosAdicionalesCliente.fechaIngreso || '',
+            ingresosMensuales: user.DatosAdicionalesCliente.ingresosMensuales || '',
+            nombreConyugue: user.DatosAdicionalesCliente.nombreConyugue || '',
+            trabaja: user.DatosAdicionalesCliente.trabaja || '',
+            dondeTrabaja: user.DatosAdicionalesCliente.dondeTrabaja || '',
+            dniConyugue: user.DatosAdicionalesCliente.dniConyugue || '',
+            razonSocial: user.DatosAdicionalesCliente.razonSocial || '',
+            ramoDeActividad: user.DatosAdicionalesCliente.ramoDeActividad || '',
+            cuitJuridico: user.DatosAdicionalesCliente.cuitJuridico || '',
+            ivaJuridico: user.DatosAdicionalesCliente.ivaJuridico || '',
+            ventasMensuales: user.DatosAdicionalesCliente.ventasMensuales || '',
+            domicilioJuridico: user.DatosAdicionalesCliente.domicilioJuridico || '',
+            telefonoJuridico: user.DatosAdicionalesCliente.telefonoJuridico || '',
+            telefax: user.DatosAdicionalesCliente.telefax || '',
+            nombreGarante: user.DatosAdicionalesCliente.nombreGarante || '',
+            domicilioGarante: user.DatosAdicionalesCliente.domicilioGarante || '',
+            cuitGarante: user.DatosAdicionalesCliente.cuitGarante || '',
+            direccionEmpGarante: user.DatosAdicionalesCliente.direccionEmpGarante || '',
+            casaPropiaAlquilada: user.DatosAdicionalesCliente.casaPropiaAlquilada || '',
+            edadGarante: user.DatosAdicionalesCliente.edadGarante || '',
+            estadoCivilGarante: user.DatosAdicionalesCliente.estadoCivilGarante || '',
+            precioOperacion: user.DatosAdicionalesCliente.precioOperacion || '',
+            señaOperacion: user.DatosAdicionalesCliente.señaOperacion || '',
+            entregaOperacion: user.DatosAdicionalesCliente.entregaOperacion || '',
+            otrasEntOperacion: user.DatosAdicionalesCliente.otrasEntOperacion || '',
+            observacionOperacion: user.DatosAdicionalesCliente.observacionOperacion || '',
+            cuotas: user.DatosAdicionalesCliente.cuotas || '',
+            valorCuota: user.DatosAdicionalesCliente.valorCuota || '',
+            diaVencimientoCuota: user.DatosAdicionalesCliente.diaVencimientoCuota || '',
+            diaInicioCuota: user.DatosAdicionalesCliente.diaInicioCuota || '',
+            mesInicioCuota: user.DatosAdicionalesCliente.mesInicioCuota || '',
+            anioInicioCuota: user.DatosAdicionalesCliente.anioInicioCuota || '',
+            diaFinalCuota: user.DatosAdicionalesCliente.diaFinalCuota || '',
+            mesFinalCuota: user.DatosAdicionalesCliente.mesFinalCuota || '',
+            anioFinalCuota: user.DatosAdicionalesCliente.anioFinalCuota || '',
+            lugarPago: user.DatosAdicionalesCliente.lugarPago || '',
+            gastosPap: user.DatosAdicionalesCliente.gastosPap || '',
+            prenda: user.DatosAdicionalesCliente.prenda || '',
+            inscripcion: user.DatosAdicionalesCliente.inscripcion || '',
+            debe: user.DatosAdicionalesCliente.debe || '',
+            pago: user.DatosAdicionalesCliente.pago || '',
+            debeTrue: user.DatosAdicionalesCliente.debeTrue || false,
+            pagoTrue: user.DatosAdicionalesCliente.pagoTrue || false,
+            fechaRealizacion: user.DatosAdicionalesCliente.fechaRealizacion || '',
+            conceptoFinal: user.DatosAdicionalesCliente.conceptoFinal || ''
+          };
+        }
+    
+        return person;
+      });
     }
+    
+
+    
 
     async mejoresClientes(data) {
       const clientes = await Promise.all(
@@ -351,34 +418,43 @@ class Formatter {
       }
     }
 
-    MotosVenta(data) {
-      return data.map(moto => ({
-        id: moto.id,
-        createdAt: moto.createdAt,
-        updatedAt: moto.updatedAt,
-        cliente: `${moto.Persona.nombre} ${moto.Persona.apellido}`,
-        usuario:moto.Usuario.user,
-        usuarioId: moto.Usuario.id,
-        personaId: moto.Persona.id,
-        TipoMovimiento: moto.TipoMovimiento.descripcion,
-        tipoMovimientoId: moto.TipoMovimiento.id,
-        subtotal: moto.subtotal,
-        Moto: {
-          id: moto.Moto.id,
-          marcaId: moto.Moto.marcaId,
-          marca: moto.Moto.Marca.descripcion,
-          modelo: moto.Moto.modelo,
-          year: moto.Moto.year,
-          num_motor: moto.Moto.num_motor,
-          num_cuadro: moto.Moto.num_cuadro,
-          cilindrada: moto.Moto.cilindrada,
-          cert_num_fabrica: moto.Moto.cert_num_fabrica,
-          precio: moto.Moto.precio,
-          tipoMotoId: moto.Moto.tipoMotoId,
-          kilometros: moto.Moto.kilometros
+    async MotosVenta(data) {
 
-        }
-      }))
+      const ventas = await Promise.all(
+        data.map(async venta => {
+          const ClienteHasInfo = await utilsService.ClienteHasInfo(venta.Persona.id)
+          return {
+            id: venta.id,
+            createdAt: venta.createdAt,
+            updatedAt: venta.updatedAt,
+            cliente: `${venta.Persona.nombre} ${venta.Persona.apellido}`,
+            usuario:venta.Usuario.user,
+            usuarioId: venta.Usuario.id,
+            personaId: venta.Persona.id,
+            TipoMovimiento: venta.TipoMovimiento.descripcion,
+            tipoMovimientoId: venta.TipoMovimiento.id,
+            subtotal: venta.subtotal,
+            ClienteHasInfo: ClienteHasInfo,
+            Moto: {
+              id: venta.Moto.id,
+              marcaId: venta.Moto.marcaId,
+              marca: venta.Moto.Marca.descripcion,
+              modelo: venta.Moto.modelo,
+              year: venta.Moto.year,
+              color: venta.Moto.color,
+              num_motor: venta.Moto.num_motor,
+              num_cuadro: venta.Moto.num_cuadro,
+              cilindrada: venta.Moto.cilindrada,
+              cert_num_fabrica: venta.Moto.cert_num_fabrica,
+              precio: venta.Moto.precio,
+              tipoMotoId: venta.Moto.tipoMotoId,
+              kilometros: venta.Moto.kilometros
+            }
+          };
+        })
+      );
+  
+      return ventas;
     } 
 
     OneVentas(data) {

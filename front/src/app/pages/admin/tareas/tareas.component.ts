@@ -63,7 +63,7 @@ export class TareasComponent {
   ngOnInit(): void {
     this.isAdmin = this.authService.isAllowed();
   
-    // Inicializamos el set de empleados únicos
+    
     const uniqueEmpledos = new Set();
   
     this.tareasService.getAll().pipe(takeUntil(this.destroy$)).subscribe((data: any[]) => {

@@ -57,9 +57,8 @@ export class DatosServicioComponent implements OnInit, OnDestroy {
     private authService: AuthService,
     private fb: FormBuilder,
     private router: Router,
-    private aRoute: ActivatedRoute,
     private datePipe: DatePipe,
-    private cd: ChangeDetectorRef
+    
   ) {
     this.form = this.fb.group({
       modelo: ['', Validators.required],

@@ -9,6 +9,8 @@ import { MovimientosService } from '../../../services/movimientos.service';
 import { DatePipe } from '@angular/common';
 import { MotosService } from '../../../services/motos.service';
 import { AuthService } from '../../../services/auth.service';
+import { Router } from '@angular/router';
+import { MessageService } from 'primeng/api';
 
 @Component({
   selector: 'app-venta-motos',
@@ -43,7 +45,9 @@ export class VentaMotosComponent implements OnDestroy, OnInit {
     private movimientosService: MovimientosService,
     private authService: AuthService,
     private fb: FormBuilder,
-    private datePipe: DatePipe
+    private datePipe: DatePipe,
+    private router: Router,
+    private messageService: MessageService
   ) {
     this.form = this.fb.group({
       usuarioId: ['', Validators.required],
@@ -87,6 +91,7 @@ export class VentaMotosComponent implements OnDestroy, OnInit {
         Moto: item.Moto,
         motoId: item.Moto.id,
         tipoMovimientoId: item.tipoMovimientoId,
+        ClienteHasInfo: item.ClienteHasInfo,
         nombreMoto: `${item.Moto.marca} ${item.Moto.modelo}`
       }));
     });
@@ -165,5 +170,24 @@ export class VentaMotosComponent implements OnDestroy, OnInit {
   modalOpen(data: any) {
     this.detailModal = true;
     this.cardData = data;
+  }
+  redirectToPDF(cardData: any) {
+    console.log('cardData', cardData);
+    
+    const MotoData = JSON.stringify(cardData.Moto);
+    const queryParams = { ...cardData, Moto: MotoData  };
+    this.router.navigate(['admin/pdfVenta'], { queryParams });
+  }
+
+  pdfOpen(data: any) {
+    console.log('redirect' ,data);
+    
+    if(data.ClienteHasInfo){
+      this.redirectToPDF(data)
+    }else{
+      this.messageService.add({ severity: 'error', summary: 'Error', detail: 'El cliente no tiene informacion registrada' });
+    }
+    
+   
   }
 }

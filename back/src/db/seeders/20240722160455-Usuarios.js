@@ -6,7 +6,7 @@ module.exports = {
       {
         user: 'Admin',
         password: await bcrypt.hash(process.env.ADMIN_PASSWORD , 10),
-        rolId: 1,
+        rolId: 3,
         personaId: 1,
         createdAt: new Date(),
         updatedAt: new Date()

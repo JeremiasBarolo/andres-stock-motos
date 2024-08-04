@@ -35,6 +35,7 @@ import { TareasComponent } from './tareas/tareas.component';
 import { MotosConsignacionComponent } from './motos-consignacion/motos-consignacion.component';
 import { VentaGeneralComponent } from './venta-general/venta-general.component';
 import { AsignarAdicionalesComponent } from './asignar-adicionales/asignar-adicionales.component';
+import { VentaMotoPdfComponent } from '../../shared/venta-moto-pdf/venta-moto-pdf.component';
 
 
 
@@ -70,6 +71,7 @@ const routes: Routes = [
       { path: 'insumos', component: InsumosComponent },
       { path: 'proveedor', component: ProveedoresComponent },
       { path: 'ventas/:tipo', component: VentaGeneralComponent },
+      { path: 'pdfVenta', component: VentaMotoPdfComponent },
       { path: 'adicionales/:tipo', component: AsignarAdicionalesComponent },
       { path: 'venta-motos', component: VentaMotosComponent },
       { path: 'historial-clientes', component: HistorialClientesComponent },
@@ -77,6 +79,7 @@ const routes: Routes = [
       { path: 'service-pdf', component: DatosServicioPdfComponent },
       { path: 'listado-precios', component: ListadoPreciosComponent },
       { path: 'asignar-insumos/:id', component: AsignarInsumosComponent },
+      { path: 'asignar-insumos/editar/:id', component: AsignarInsumosComponent },
       { path: 'tareas', component: TareasComponent },
       { path: 'inicio', component: InicioComponent, canActivate: [AdminGuard],  },
       { path: '**', redirectTo: 'inicio' }, 

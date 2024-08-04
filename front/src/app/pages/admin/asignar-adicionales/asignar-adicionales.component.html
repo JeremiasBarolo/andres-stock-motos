@@ -1,1 +1,294 @@
-<p>asignar-adicionales works!</p>
+<form [formGroup]="insumoForm" (ngSubmit)="onSubmit()">
+  <div class="container">
+    <h2>Asignar Adicionales</h2>
+    
+    <div class="row mb-3">
+      <div class="col-md-6">
+        <label for="telComercial">Teléfono Comercial</label>
+        <input id="telComercial" type="text" class="form-control" formControlName="telComercial">
+      </div>
+      <div class="col-md-6">
+        <label for="estadoCivil">Estado Civil</label>
+        <input id="estadoCivil" type="text" class="form-control" formControlName="estadoCivil">
+      </div>
+    </div>
+
+    <div class="row mb-3">
+      <div class="col-md-6">
+        <label for="empActual">Empleo Actual</label>
+        <input id="empActual" type="text" class="form-control" formControlName="empActual">
+      </div>
+      <div class="col-md-6">
+        <label for="domicilioEmp">Domicilio de Empleo</label>
+        <input id="domicilioEmp" type="text" class="form-control" formControlName="domicilioEmp">
+      </div>
+    </div>
+
+    <div class="row mb-3">
+      <div class="col-md-6">
+        <label for="telEmp">Teléfono de Empleo</label>
+        <input id="telEmp" type="number" class="form-control" formControlName="telEmp">
+      </div>
+      <div class="col-md-6">
+        <label for="profesion">Profesión</label>
+        <input id="profesion" type="text" class="form-control" formControlName="profesion">
+      </div>
+    </div>
+
+    <div class="row mb-3">
+      <div class="col-md-6">
+        <label for="fechaIngreso">Fecha de Ingreso</label>
+        <input id="fechaIngreso" type="date" class="form-control" formControlName="fechaIngreso">
+      </div>
+      <div class="col-md-6">
+        <label for="ingresosMensuales">Ingresos Mensuales</label>
+        <input id="ingresosMensuales" type="text" class="form-control" formControlName="ingresosMensuales">
+      </div>
+    </div>
+
+    <div class="row mb-3">
+      <div class="col-md-6">
+        <label for="nombreConyugue">Nombre del Cónyuge</label>
+        <input id="nombreConyugue" type="text" class="form-control" formControlName="nombreConyugue">
+      </div>
+      <div class="col-md-6">
+        <label for="trabaja">¿Trabaja?</label>
+        <input id="trabaja" type="text" class="form-control" formControlName="trabaja">
+      </div>
+    </div>
+
+    <div class="row mb-3">
+      <div class="col-md-6">
+        <label for="dondeTrabaja">¿Dónde Trabaja?</label>
+        <input id="dondeTrabaja" type="text" class="form-control" formControlName="dondeTrabaja">
+      </div>
+      <div class="col-md-6">
+        <label for="dniConyugue">DNI del Cónyuge</label>
+        <input id="dniConyugue" type="number" class="form-control" formControlName="dniConyugue">
+      </div>
+    </div>
+
+    <div class="row mb-3">
+      <div class="col-md-6">
+        <label for="razonSocial">Razón Social</label>
+        <input id="razonSocial" type="text" class="form-control" formControlName="razonSocial">
+      </div>
+      <div class="col-md-6">
+        <label for="ramoDeActividad">Ramo de Actividad</label>
+        <input id="ramoDeActividad" type="text" class="form-control" formControlName="ramoDeActividad">
+      </div>
+    </div>
+
+    <div class="row mb-3">
+      <div class="col-md-6">
+        <label for="cuitJuridico">CUIT Jurídico</label>
+        <input id="cuitJuridico" type="number" class="form-control" formControlName="cuitJuridico">
+      </div>
+      <div class="col-md-6">
+        <label for="ivaJuridico">IVA Jurídico</label>
+        <input id="ivaJuridico" type="text" class="form-control" formControlName="ivaJuridico">
+      </div>
+    </div>
+
+    <div class="row mb-3">
+      <div class="col-md-6">
+        <label for="ventasMensuales">Ventas Mensuales</label>
+        <input id="ventasMensuales" type="text" class="form-control" formControlName="ventasMensuales">
+      </div>
+      <div class="col-md-6">
+        <label for="domicilioJuridico">Domicilio Jurídico</label>
+        <input id="domicilioJuridico" type="text" class="form-control" formControlName="domicilioJuridico">
+      </div>
+    </div>
+
+    <div class="row mb-3">
+      <div class="col-md-6">
+        <label for="telefonoJuridico">Teléfono Jurídico</label>
+        <input id="telefonoJuridico" type="number" class="form-control" formControlName="telefonoJuridico">
+      </div>
+      <div class="col-md-6">
+        <label for="telefax">Telefax</label>
+        <input id="telefax" type="text" class="form-control" formControlName="telefax">
+      </div>
+    </div>
+
+    <div class="row mb-3">
+      <div class="col-md-6">
+        <label for="nombreGarante">Nombre del Garante</label>
+        <input id="nombreGarante" type="text" class="form-control" formControlName="nombreGarante">
+      </div>
+      <div class="col-md-6">
+        <label for="domicilioGarante">Domicilio del Garante</label>
+        <input id="domicilioGarante" type="text" class="form-control" formControlName="domicilioGarante">
+      </div>
+    </div>
+
+    <div class="row mb-3">
+      <div class="col-md-6">
+        <label for="cuitGarante">CUIT del Garante</label>
+        <input id="cuitGarante" type="number" class="form-control" formControlName="cuitGarante">
+      </div>
+      <div class="col-md-6">
+        <label for="direccionEmpGarante">Dirección del Empleo del Garante</label>
+        <input id="direccionEmpGarante" type="text" class="form-control" formControlName="direccionEmpGarante">
+      </div>
+    </div>
+
+    <div class="row mb-3">
+      <div class="col-md-6">
+        <label for="casaPropiaAlquilada">Casa Propia/Alquilada</label>
+        <input id="casaPropiaAlquilada" type="text" class="form-control" formControlName="casaPropiaAlquilada">
+      </div>
+      <div class="col-md-6">
+        <label for="edadGarante">Edad del Garante</label>
+        <input id="edadGarante" type="number" class="form-control" formControlName="edadGarante">
+      </div>
+    </div>
+
+    <div class="row mb-3">
+      <div class="col-md-6">
+        <label for="estadoCivilGarante">Estado Civil del Garante</label>
+        <input id="estadoCivilGarante" type="text" class="form-control" formControlName="estadoCivilGarante">
+      </div>
+      <div class="col-md-6">
+        <label for="precioOperacion">Precio de Operación</label>
+        <input id="precioOperacion" type="number" class="form-control" formControlName="precioOperacion">
+      </div>
+    </div>
+
+    <div class="row mb-3">
+      <div class="col-md-6">
+        <label for="señaOperacion">Seña de Operación</label>
+        <input id="señaOperacion" type="number" class="form-control" formControlName="señaOperacion">
+      </div>
+      <div class="col-md-6">
+        <label for="entregaOperacion">Entrega de Operación</label>
+        <input id="entregaOperacion" type="number" class="form-control" formControlName="entregaOperacion">
+      </div>
+    </div>
+
+    <div class="row mb-3">
+      <div class="col-md-6">
+        <label for="otrasEntOperacion">Otras Entregas de Operación</label>
+        <input id="otrasEntOperacion" type="number" class="form-control" formControlName="otrasEntOperacion">
+      </div>
+      <div class="col-md-6">
+        <label for="observacionOperacion">Observación de Operación</label>
+        <input id="observacionOperacion" type="text" class="form-control" formControlName="observacionOperacion">
+      </div>
+    </div>
+
+    <div class="row mb-3">
+      <div class="col-md-6">
+        <label for="cuotas">Cuotas</label>
+        <input id="cuotas" type="number" class="form-control" formControlName="cuotas">
+      </div>
+      <div class="col-md-6">
+        <label for="valorCuota">Valor de Cuota</label>
+        <input id="valorCuota" type="number" class="form-control" formControlName="valorCuota">
+      </div>
+    </div>
+
+    <div class="row mb-3">
+      <div class="col-md-6">
+        <label for="diaVencimientoCuota">Día de Vencimiento de Cuota</label>
+        <input id="diaVencimientoCuota" type="number" class="form-control" formControlName="diaVencimientoCuota">
+      </div>
+      <div class="col-md-6">
+        <label for="diaInicioCuota">Día Inicio de Cuota</label>
+        <input id="diaInicioCuota" type="number" class="form-control" formControlName="diaInicioCuota">
+      </div>
+    </div>
+
+    <div class="row mb-3">
+      <div class="col-md-6">
+        <label for="mesInicioCuota">Mes Inicio de Cuota</label>
+        <input id="mesInicioCuota" type="text" class="form-control" formControlName="mesInicioCuota">
+      </div>
+      <div class="col-md-6">
+        <label for="anioInicioCuota">Año Inicio de Cuota</label>
+        <input id="anioInicioCuota" type="number" class="form-control" formControlName="anioInicioCuota">
+      </div>
+    </div>
+
+    <div class="row mb-3">
+      <div class="col-md-6">
+        <label for="diaFinalCuota">Día Final de Cuota</label>
+        <input id="diaFinalCuota" type="number" class="form-control" formControlName="diaFinalCuota">
+      </div>
+      <div class="col-md-6">
+        <label for="mesFinalCuota">Mes Final de Cuota</label>
+        <input id="mesFinalCuota" type="text" class="form-control" formControlName="mesFinalCuota">
+      </div>
+    </div>
+
+    <div class="row mb-3">
+      <div class="col-md-6">
+        <label for="anioFinalCuota">Año Final de Cuota</label>
+        <input id="anioFinalCuota" type="number" class="form-control" formControlName="anioFinalCuota">
+      </div>
+      <div class="col-md-6">
+        <label for="lugarPago">Lugar de Pago</label>
+        <input id="lugarPago" type="text" class="form-control" formControlName="lugarPago">
+      </div>
+    </div>
+
+    <div class="row mb-3">
+      <div class="col-md-6">
+        <label for="gastosPap">Gastos Papelería</label>
+        <input id="gastosPap" type="number" class="form-control" formControlName="gastosPap">
+      </div>
+      <div class="col-md-6">
+        <label for="prenda">Prenda</label>
+        <input id="prenda" type="number" class="form-control" formControlName="prenda">
+      </div>
+    </div>
+
+    <div class="row mb-3">
+      <div class="col-md-6">
+        <label for="inscripcion">Inscripción</label>
+        <input id="inscripcion" type="number" class="form-control" formControlName="inscripcion">
+      </div>
+      <div class="col-md-6">
+        <label for="debe">Debe</label>
+        <input id="debe" type="number" class="form-control" formControlName="debe">
+      </div>
+    </div>
+
+    <div class="row mb-3">
+      <div class="col-md-6">
+        <label for="pago">Pago</label>
+        <input id="pago" type="text" class="form-control" formControlName="pago">
+      </div>
+      <div class="col-md-6">
+        <label for="debeTrue">Debe (Booleano)</label>
+        <p-checkbox id="debeTrue" formControlName="debeTrue"></p-checkbox>
+      </div>
+    </div>
+
+    <div class="row mb-3">
+      <div class="col-md-6">
+        <label for="pagoTrue">Pago (Booleano)</label>
+        <p-checkbox id="pagoTrue" formControlName="pagoTrue"></p-checkbox>
+      </div>
+      <div class="col-md-6">
+        <label for="fechaRealizacion">Fecha de Realización</label>
+        <input id="fechaRealizacion" type="date" class="form-control" formControlName="fechaRealizacion">
+      </div>
+    </div>
+
+    <div class="row mb-3">
+      <div class="col-md-12">
+        <label for="conceptoFinal">Concepto Final</label>
+        <textarea id="conceptoFinal" class="form-control" formControlName="conceptoFinal"></textarea>
+      </div>
+    </div>
+
+    <div class="row mb-3">
+      <div class="col-md-12">
+        <button type="submit" class="btn btn-primary" >Guardar</button>
+        <button  class="btn btn-primary" (click)="fillFormWithRandomData()" >rellenar</button>
+      </div>
+    </div>
+  </div>
+</form>

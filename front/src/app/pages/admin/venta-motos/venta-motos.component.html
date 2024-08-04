@@ -6,9 +6,11 @@
 <app-tablang
     [data]="products"
     [columns]="columns"
+    [pdfVisible]="true"
     (editarClick)="editarItem($event)" 
     (eliminarClick)="eliminarItem($event)"
     (modalOpenClick)="modalOpen($event)"
+    (pdfOpenClick)="pdfOpen($event)"
 ></app-tablang>
 
 
