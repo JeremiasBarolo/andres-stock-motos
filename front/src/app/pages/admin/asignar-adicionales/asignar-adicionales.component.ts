@@ -39,6 +39,7 @@ export class AsignarAdicionalesComponent {
       domicilioJuridico: [''],
       telefonoJuridico: [''],
       telefax: [''],
+      telGarante: [''],
       nombreGarante: [''],
       domicilioGarante: [''],
       cuitGarante: [''],
@@ -64,10 +65,7 @@ export class AsignarAdicionalesComponent {
       gastosPap: [''],
       prenda: [''],
       inscripcion: [''],
-      debe: [''],
       pago: [''],
-      debeTrue: [''],
-      pagoTrue: [''],
       fechaRealizacion: [''],
       conceptoFinal: ['']
     });
