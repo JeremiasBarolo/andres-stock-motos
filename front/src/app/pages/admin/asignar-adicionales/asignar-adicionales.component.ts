@@ -4,20 +4,27 @@ import { ActivatedRoute } from '@angular/router';
 import { DatosAdicionalesService } from '../../../services/datos-adicionales.service';
 import { Subject, takeUntil } from 'rxjs';
 import { faker } from '@faker-js/faker';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-asignar-adicionales',
   templateUrl: './asignar-adicionales.component.html',
-  styleUrl: './asignar-adicionales.component.css'
+  styleUrl: './asignar-adicionales.component.css',
+  providers: [DatePipe]
 })
 export class AsignarAdicionalesComponent {
   insumoForm: FormGroup;
   isEditMode: any
-  id: string | undefined 
+  id: string | undefined
   form: any;
   tipo: any;
   private destroy$ = new Subject<void>();
-  constructor(private fb: FormBuilder, private route: ActivatedRoute, private adicionalesClientesService: DatosAdicionalesService) {
+  editId: any;
+  constructor(
+    private fb: FormBuilder, 
+    private route: ActivatedRoute, 
+    private adicionalesClientesService: DatosAdicionalesService,
+    private datePipe: DatePipe,) {
     this.insumoForm = this.fb.group({
       telComercial: [''],
       estadoCivil: [''],
@@ -73,18 +80,15 @@ export class AsignarAdicionalesComponent {
 
   ngOnInit() {
     this.route.params.subscribe(params => {
-      this.id = params['id']; 
+      this.id = params['id'];
+      this.tipo = params['tipo']; 
       console.log(this.id); 
     });
   
-    if (this.route.snapshot.routeConfig !== null && this.route.snapshot.routeConfig.path !== undefined) {
-      this.isEditMode = this.route.snapshot.routeConfig.path.includes('editar');
-    } else {
-      this.isEditMode = false;
-    }
   
-    if (this.isEditMode) {
+    if (this.tipo == 'editar') {
       this.cargarDatos();
+      
     }
   }
 
@@ -95,7 +99,7 @@ export class AsignarAdicionalesComponent {
       if(this.isEditMode){
             // Es editar
             try {
-              this.adicionalesClientesService.update(this.id, this.tipo).pipe(takeUntil(this.destroy$)).subscribe(() => {
+              this.adicionalesClientesService.update(this.editId, {...this.tipo, clienteId: this.id}).pipe(takeUntil(this.destroy$)).subscribe(() => {
                 setTimeout(() => {
                   window.location.reload();
                 }, 600)
@@ -179,5 +183,16 @@ export class AsignarAdicionalesComponent {
     });
   }
 
-  cargarDatos(){}
+  cargarDatos(){
+    this.adicionalesClientesService.getDatosAdicionales(this.id).pipe(takeUntil(this.destroy$)).subscribe((data: any) => {
+      this.editId = data.id
+      this.insumoForm.patchValue({...data,
+        fechaIngreso: this.datePipe.transform(data.fechaIngreso, 'yyyy-MM-dd'),
+        fechaRealizacion: this.datePipe.transform(data.fechaRealizacion, 'yyyy-MM-dd'),
+        
+
+      });
+      this.isEditMode = true
+    });
+  }
 }

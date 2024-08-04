@@ -31,7 +31,7 @@ export class DatosAdicionalesService {
     return this.http.get<any[]>(`${this.apiUrl}`, { headers: this.getHeaders() }); 
   }
 
-  getDatosAdicionales(id: number): Observable<any> {
+  getDatosAdicionales(id: any): Observable<any> {
     return this.http.get<any>(`${this.apiUrl}/${id}`, { headers: this.getHeaders() })
     
   }

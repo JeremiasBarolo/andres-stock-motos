@@ -1,9 +1,13 @@
-<div class="container">
+
+<div class="header-container">
+    <p-button icon="pi pi-file-pdf" label="Generar PDF" [text]="true" (click)="generatePDF()" styleClass="ml-auto"></p-button>
+  </div>
+<div class="container" #pdfContent>
     <div class="header">
         <div>
             <img src="../../../assets/images/logo-sg-motos.png">
         </div>
-        <div class="text-center"><h1>SG-MOTOS</h1></div>
+        <div class="title text-center"><h3>SG-MOTOS</h3></div>
         <div>
             <img src="../../../assets/images/logo-sg-motos.png">
         </div>
@@ -309,19 +313,7 @@
             <br>
             <br>
         </div>
-        <div class="col">
-            <label>ACLARACION:</label>
-            <p class="form-control-static"></p>
-            <br>
-            <br>
-        </div>
-        <div class="col">
-            <label>DNI:</label>
-            <p class="form-control-static"></p>
-            <br>
-            <br>
-        </div>
-
+       
         
 
     </div>

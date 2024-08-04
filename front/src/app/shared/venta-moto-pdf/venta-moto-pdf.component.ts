@@ -1,7 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { DatosAdicionalesService } from '../../services/datos-adicionales.service';
 import { PersonasService } from '../../services/personas.service';
+import html2canvas from 'html2canvas';
+import jsPDF from 'jspdf';
 
 @Component({
   selector: 'app-venta-moto-pdf',
@@ -14,7 +16,9 @@ export class VentaMotoPdfComponent implements OnInit {
   Persona: any;
   debeChecked: boolean | undefined;
   pagoChecked: boolean | undefined;
-
+  
+  @ViewChild('pdfContent', { static: false })
+  pdfContent!: ElementRef;
 constructor(
   private route: ActivatedRoute,
   private datosAdicionalesService: DatosAdicionalesService,
@@ -47,6 +51,28 @@ constructor(
     });
 
     
+  }
+
+  generatePDF(): void {
+    const data = this.pdfContent.nativeElement;
+    const titles = data.querySelectorAll('h3, h5, h6'); 
+    titles.forEach((title: HTMLElement) => {
+      title.classList.add('pdf-title');
+    });
+  
+    html2canvas(data).then(canvas => {
+      const imgWidth = 208;
+      const imgHeight = canvas.height * imgWidth / canvas.width;
+      const contentDataURL = canvas.toDataURL('image/png');
+      let pdf = new jsPDF('p', 'mm', 'a4'); // Tamaño A4
+      pdf.addImage(contentDataURL, 'PNG', 0, 0, imgWidth, imgHeight);
+      pdf.save(`venta-${this.cardData.Moto.modelo}-${this.Persona.nombre}${this.Persona.apellido}.pdf`);
+  
+      
+      titles.forEach((title: HTMLElement) => {
+        title.classList.remove('pdf-title');
+      });
+    });
   }
 
   setCheckboxes(pago:any): void {

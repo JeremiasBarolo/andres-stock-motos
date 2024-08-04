@@ -33,3 +33,20 @@ body {
 label{
    font-weight: 900; 
 }
+
+.pdf-title {
+    color: black !important;
+}
+  .bordered {
+    border: 1px solid black;
+  }
+  .no-border {
+    border: none;
+  }
+  .table td, .table th {
+    border: 1px solid black;
+  }
+
+  .title{
+    color: black !important;
+  }

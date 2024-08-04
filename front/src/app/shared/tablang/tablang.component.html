@@ -2,13 +2,13 @@
   <ng-template pTemplate="header" class="p-overlaypanel-header p-component-header">
     <tr>
       <th *ngFor="let col of columns">{{ col.header }}</th>
-      <th *ngIf="acciones ">Acciones</th>
+      <th *ngIf="acciones">Acciones</th>
     </tr>
   </ng-template>
   <ng-template pTemplate="body" let-rowData>
     <tr>
-      <td *ngFor="let col of columns" (click)="modalOpen(rowData)" >
-        <ng-container *ngIf="col.field === 'estado'; else defaultContent">
+      <td *ngFor="let col of columns" (click)="modalOpen(rowData)">
+        <ng-container *ngIf="col.field === 'estado'; else otherContent">
           <span class="estado" [ngClass]="{
             'badge-pendiente': rowData.estado === 'Pendiente',
             'badge-proceso': rowData.estado === 'En Proceso',
@@ -17,12 +17,18 @@
             'badge-Preparacion': rowData.estado === 'En Preparacion'
           }">{{ rowData.estado }}</span>
         </ng-container>
-        <ng-template #defaultContent>
-          {{ rowData[col.field] }}
+        
+        <ng-template #otherContent>
+          <ng-container *ngIf="col.field === 'subtotal' || col.field === 'precio' || col.field === 'costo' ; else defaultContent">
+            {{ rowData[col.field] | currency }}
+          </ng-container>
+          <ng-template #defaultContent>
+            {{ rowData[col.field] }}
+          </ng-template>
         </ng-template>
       </td>
       <td *ngIf="acciones">
-        <ng-container *ngIf="insumos" >
+        <ng-container *ngIf="insumos">
           <p-button icon="pi pi-plus" [text]="true" severity="info" (click)="asignarInsumos(rowData)" pTooltip="Asignar Insumos"></p-button>
         </ng-container>
         <ng-container *ngIf="adicionales">

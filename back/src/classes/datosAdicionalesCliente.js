@@ -38,19 +38,69 @@ class DatosAdicionalesClienteService {
 
   async createDatosAdicionalesCliente(DataDatosAdicionalesCliente) {
     try {
-      if(DataDatosAdicionalesCliente.pago){
-       await  DataDatosAdicionalesCliente.pago == 'SI'? DataDatosAdicionalesCliente.pagoTrue == true : DataDatosAdicionalesCliente.debeTrue == true;
-      }
-      if(DataDatosAdicionalesCliente.clienteId){
-        const newDatosAdicionalesCliente = await models.DatosAdicionalesCliente.create(DataDatosAdicionalesCliente);
+      
+      const cleanedData = {
+        telComercial: DataDatosAdicionalesCliente.telComercial || null,
+        estadoCivil: DataDatosAdicionalesCliente.estadoCivil || null,
+        empActual: DataDatosAdicionalesCliente.empActual || null,
+        domicilioEmp: DataDatosAdicionalesCliente.domicilioEmp || null,
+        telEmp: DataDatosAdicionalesCliente.telEmp || null,
+        profesion: DataDatosAdicionalesCliente.profesion || null,
+        fechaIngreso: DataDatosAdicionalesCliente.fechaIngreso || null,
+        ingresosMensuales: DataDatosAdicionalesCliente.ingresosMensuales || null,
+        nombreConyugue: DataDatosAdicionalesCliente.nombreConyugue || null,
+        trabaja: DataDatosAdicionalesCliente.trabaja || null,
+        dondeTrabaja: DataDatosAdicionalesCliente.dondeTrabaja || null,
+        dniConyugue: DataDatosAdicionalesCliente.dniConyugue || null,
+        razonSocial: DataDatosAdicionalesCliente.razonSocial || null,
+        ramoDeActividad: DataDatosAdicionalesCliente.ramoDeActividad || null,
+        cuitJuridico: DataDatosAdicionalesCliente.cuitJuridico || null,
+        ivaJuridico: DataDatosAdicionalesCliente.ivaJuridico || null,
+        ventasMensuales: DataDatosAdicionalesCliente.ventasMensuales || null,
+        domicilioJuridico: DataDatosAdicionalesCliente.domicilioJuridico || null,
+        telefonoJuridico: DataDatosAdicionalesCliente.telefonoJuridico || null,
+        telefax: DataDatosAdicionalesCliente.telefax || null,
+        telGarante: DataDatosAdicionalesCliente.telGarante || null,
+        nombreGarante: DataDatosAdicionalesCliente.nombreGarante || null,
+        domicilioGarante: DataDatosAdicionalesCliente.domicilioGarante || null,
+        cuitGarante: DataDatosAdicionalesCliente.cuitGarante || null,
+        direccionEmpGarante: DataDatosAdicionalesCliente.direccionEmpGarante || null,
+        casaPropiaAlquilada: DataDatosAdicionalesCliente.casaPropiaAlquilada || null,
+        edadGarante: DataDatosAdicionalesCliente.edadGarante || null,
+        estadoCivilGarante: DataDatosAdicionalesCliente.estadoCivilGarante || null,
+        precioOperacion: DataDatosAdicionalesCliente.precioOperacion || null,
+        señaOperacion: DataDatosAdicionalesCliente.señaOperacion || null,
+        entregaOperacion: DataDatosAdicionalesCliente.entregaOperacion || null,
+        otrasEntOperacion: DataDatosAdicionalesCliente.otrasEntOperacion || null,
+        observacionOperacion: DataDatosAdicionalesCliente.observacionOperacion || null,
+        cuotas: DataDatosAdicionalesCliente.cuotas || null,
+        valorCuota: DataDatosAdicionalesCliente.valorCuota || null,
+        diaVencimientoCuota: DataDatosAdicionalesCliente.diaVencimientoCuota || null,
+        diaInicioCuota: DataDatosAdicionalesCliente.diaInicioCuota || null,
+        mesInicioCuota: DataDatosAdicionalesCliente.mesInicioCuota || null,
+        anioInicioCuota: DataDatosAdicionalesCliente.anioInicioCuota || null,
+        diaFinalCuota: DataDatosAdicionalesCliente.diaFinalCuota || null,
+        mesFinalCuota: DataDatosAdicionalesCliente.mesFinalCuota || null,
+        anioFinalCuota: DataDatosAdicionalesCliente.anioFinalCuota || null,
+        lugarPago: DataDatosAdicionalesCliente.lugarPago || null,
+        gastosPap: DataDatosAdicionalesCliente.gastosPap || null,
+        prenda: DataDatosAdicionalesCliente.prenda || null,
+        inscripcion: DataDatosAdicionalesCliente.inscripcion || null,
+        pago: DataDatosAdicionalesCliente.pago || null,
+        fechaRealizacion: DataDatosAdicionalesCliente.fechaRealizacion || null,
+        conceptoFinal: DataDatosAdicionalesCliente.conceptoFinal || null
+      };
+  
+      if (DataDatosAdicionalesCliente.clienteId) {
+        const newDatosAdicionalesCliente = await models.DatosAdicionalesCliente.create({...cleanedData, clienteId:DataDatosAdicionalesCliente.clienteId });
         return newDatosAdicionalesCliente;
       }
-      
     } catch (err) {
       console.error('🛑 Error when creating DatosAdicionalesCliente', err);
       throw err;
     }
   }
+  
 
 
   async updateDatosAdicionalesCliente(DatosAdicionalesCliente_id, dataUpdated) {

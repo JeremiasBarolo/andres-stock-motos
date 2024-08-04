@@ -97,7 +97,8 @@ export class ClientesComponent {
           password: data.password,
           localidad: data.Localidad,
           tipoPersonaId: data.tipoPersonaId,
-          localidadId: data.LocalidadId
+          localidadId: data.LocalidadId,
+          ClienteHasInfo: data.ClienteHasInfo,
         
           
           
@@ -209,7 +210,13 @@ export class ClientesComponent {
   }
 
   redirectAdicionales(data:any){
-    this.router.navigate(['admin/adicionales', data.id]);
+    console.log(data);
+    if(data.ClienteHasInfo){
+      this.router.navigate(['admin/adicionales','editar', data.id]);
+    }else{
+      this.router.navigate(['admin/adicionales','crear', data.id]);
+    }
+    
   }
 
 }
