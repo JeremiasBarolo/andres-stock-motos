@@ -19,6 +19,7 @@ const TipoServicioController = require('./TipoServicio');
 const loginController = require('./login'); 
 const TareasController = require('./Tareas');
 const DatosAdicionalesClienteController = require('./DatosAdicionalesCliente');
+const OperacionVentaMotosController = require('./OperacionVentaMotos');
 
 
 
@@ -42,5 +43,6 @@ module.exports= {
     TipoServicioController,
     loginController,
     TareasController,
-    DatosAdicionalesClienteController
+    DatosAdicionalesClienteController,
+    OperacionVentaMotosController
 }

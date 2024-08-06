@@ -13,7 +13,7 @@ module.exports = {
         nro_direccion: '999',
         mail: 'admin@admin.com',
         dni: '99999999',
-        tipoPersonaId: 2,
+        tipoPersonaId: 4,
         localidadId: 1,
         createdAt: new Date(),
         updatedAt: new Date()

@@ -280,7 +280,7 @@ module.exports = {
 
   // <=============================== Fin Tareas ===============================> 
     
-    // <=============================== Datos Adicionales ===============================>  
+    // <=============================== Datos Adicionales Clientes ===============================>  
   await queryInterface.addColumn('DatosAdicionalesClientes', 'clienteId', {
     type: Sequelize.INTEGER,
     allowNull: true,
@@ -292,7 +292,21 @@ module.exports = {
     onDelete: 'CASCADE'
   });
 
-  // <=============================== Fin Datos Adicionales ===============================>  
+  // <=============================== Fin Datos Adicionales Clientes ===============================>
+    
+    // <=============================== Datos Operacion Venta Moto ===============================>  
+  await queryInterface.addColumn('OperacionVentaMotos', 'movimientoId', {
+    type: Sequelize.INTEGER,
+    allowNull: true,
+    references: {
+      model: 'Movimientos',
+      key: 'id'
+    },
+    onUpdate: 'CASCADE',
+    onDelete: 'CASCADE'
+  });
+
+  // <=============================== Fin Datos Operacion Venta Moto===============================> 
 
   },
 
@@ -350,9 +364,13 @@ module.exports = {
     await queryInterface.removeColumn('Tareas', 'usuarioId');
   // <=============================== Fin Tareas ===============================>
 
-     // <=============================== datosAdicionalesCliente ===============================> 
-      
-      await queryInterface.removeColumn('DatosAdicionalesClientes', 'clienteId');
-      // <=============================== Fin datosAdicionalesCliente ===============================>
+   // <=============================== datosAdicionalesCliente ===============================> 
+    await queryInterface.removeColumn('DatosAdicionalesClientes', 'clienteId');
+    // <=============================== Fin datosAdicionalesCliente ===============================>
+
+
+  // <=============================== datosAdicionalesCliente ===============================> 
+    await queryInterface.removeColumn('OperacionVentaMotos', 'movimientoId');
+    // <=============================== Fin datosAdicionalesCliente ===============================>
   }
 };

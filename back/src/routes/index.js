@@ -18,7 +18,8 @@ const ChecklistRouter = require('./checklist');
 const TipoServicioRouter = require('./tipoServicio');
 const loginRouter = require('./login');
 const tareasRouter = require('./tareas');
-const datosAdicionalesClienteRouter = require('./datosAdicionalesCliente');   
+const datosAdicionalesClienteRouter = require('./datosAdicionalesCliente');
+const operacionVentaMotosRouter = require('./operacionVentaMotos');   
 
 
 
@@ -43,5 +44,6 @@ module.exports = {
     TipoServicioRouter,
     loginRouter,
     tareasRouter,
-    datosAdicionalesClienteRouter
+    datosAdicionalesClienteRouter,
+    operacionVentaMotosRouter
 };

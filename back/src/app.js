@@ -27,7 +27,8 @@ const {
     TipoServicioRouter,
     loginRouter,
     tareasRouter,
-    datosAdicionalesClienteRouter
+    datosAdicionalesClienteRouter,
+    operacionVentaMotosRouter
     
  } = require('./routes')
 
@@ -62,6 +63,7 @@ app.use("/tipo-servicio", TipoServicioRouter)
 app.use("/login", loginRouter)
 app.use("/tareas", tareasRouter)
 app.use("/datosAdicionales", datosAdicionalesClienteRouter)
+app.use("/operacion", operacionVentaMotosRouter)
 
 
 
