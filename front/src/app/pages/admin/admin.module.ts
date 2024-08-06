@@ -49,6 +49,7 @@ import { VentaGeneralComponent } from './venta-general/venta-general.component';
 import { AsignarAdicionalesComponent } from './asignar-adicionales/asignar-adicionales.component';
 import { StepperModule } from 'primeng/stepper';
 import { MessageService } from 'primeng/api';
+import { OperacionesDetailsComponent } from './operaciones-details/operaciones-details.component';
 
 
 
@@ -83,7 +84,8 @@ import { MessageService } from 'primeng/api';
     TareasComponent,
     MotosConsignacionComponent,
     VentaGeneralComponent,
-    AsignarAdicionalesComponent
+    AsignarAdicionalesComponent,
+    OperacionesDetailsComponent
 
 
    

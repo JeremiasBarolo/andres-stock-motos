@@ -9,6 +9,9 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
+      precioOperacion: {
+        type: Sequelize.BIGINT(100)
+      },
       seniaOperacion: {
         type: Sequelize.BIGINT(100)
       },

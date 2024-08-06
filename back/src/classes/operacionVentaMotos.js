@@ -24,7 +24,7 @@ class OperacionVentaMotosService {
   async listOneOperacionVentaMotos(OperacionVentaMotos_id) {
     try {
       const oneOperacionVentaMotos = await models.OperacionVentaMotos.findOne({
-        where: {clienteId:OperacionVentaMotos_id}}
+        where: {movimientoId:OperacionVentaMotos_id}}
       );
       if (!oneOperacionVentaMotos) {
         return null;
@@ -41,7 +41,7 @@ class OperacionVentaMotosService {
       
       const cleanedData = {
         precioOperacion: DataOperacionVentaMotos.precioOperacion || null,
-        seniaOperacion: DataOperacionVentaMotos.señaOperacion || null,
+        seniaOperacion: DataOperacionVentaMotos.seniaOperacion || null,
         entregaOperacion: DataOperacionVentaMotos.entregaOperacion || null,
         otrasEntOperacion: DataOperacionVentaMotos.otrasEntOperacion || null,
         observacionOperacion: DataOperacionVentaMotos.observacionOperacion || null,
@@ -77,14 +77,38 @@ class OperacionVentaMotosService {
 
   async updateOperacionVentaMotos(OperacionVentaMotos_id, dataUpdated) {
     try {
-      const oldOperacionVentaMotos = await models.Movimientos.findByPk(OperacionVentaMotos_id,
+      const oldOperacionVentaMotos = await models.OperacionVentaMotos.findByPk(OperacionVentaMotos_id,
         { include: [{ all: true }] }
       );
       if (!oldOperacionVentaMotos) {
         return null;
       }
 
-      await oldOperacionVentaMotos.update(dataUpdated);
+      const cleanedData = {
+        precioOperacion: dataUpdated.precioOperacion || null,
+        seniaOperacion: dataUpdated.seniaOperacion || null,
+        entregaOperacion: dataUpdated.entregaOperacion || null,
+        otrasEntOperacion: dataUpdated.otrasEntOperacion || null,
+        observacionOperacion: dataUpdated.observacionOperacion || null,
+        cuotas: dataUpdated.cuotas || null,
+        valorCuota: dataUpdated.valorCuota || null,
+        diaVencimientoCuota: dataUpdated.diaVencimientoCuota || null,
+        diaInicioCuota: dataUpdated.diaInicioCuota || null,
+        mesInicioCuota: dataUpdated.mesInicioCuota || null,
+        anioInicioCuota: dataUpdated.anioInicioCuota || null,
+        diaFinalCuota: dataUpdated.diaFinalCuota || null,
+        mesFinalCuota: dataUpdated.mesFinalCuota || null,
+        anioFinalCuota: dataUpdated.anioFinalCuota || null,
+        lugarPago: dataUpdated.lugarPago || null,
+        gastosPap: dataUpdated.gastosPap || null,
+        prenda: dataUpdated.prenda || null,
+        inscripcion: dataUpdated.inscripcion || null,
+        pago: dataUpdated.pago || null,
+        fechaRealizacion: dataUpdated.fechaRealizacion || null,
+        conceptoFinal: dataUpdated.conceptoFinal || null
+      };
+
+      await oldOperacionVentaMotos.update(cleanedData);
       return true;
 
     } catch (err) {

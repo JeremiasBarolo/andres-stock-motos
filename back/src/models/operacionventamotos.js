@@ -20,7 +20,7 @@ module.exports = (sequelize, DataTypes) => {
   }
   OperacionVentaMotos.init({
     precioOperacion: DataTypes.INTEGER,
-    señaOperacion: DataTypes.INTEGER,
+    seniaOperacion: DataTypes.INTEGER,
     entregaOperacion: DataTypes.INTEGER,
     otrasEntOperacion: DataTypes.INTEGER,
     observacionOperacion: DataTypes.STRING,
@@ -38,8 +38,6 @@ module.exports = (sequelize, DataTypes) => {
     prenda: DataTypes.INTEGER,
     inscripcion: DataTypes.INTEGER,
     pago: DataTypes.STRING,
-    debeTrue: DataTypes.BOOLEAN,
-    pagoTrue: DataTypes.BOOLEAN,
     fechaRealizacion: DataTypes.DATE,
     conceptoFinal: DataTypes.STRING
   }, {

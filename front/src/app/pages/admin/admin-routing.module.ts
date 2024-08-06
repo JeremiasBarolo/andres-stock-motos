@@ -36,6 +36,7 @@ import { MotosConsignacionComponent } from './motos-consignacion/motos-consignac
 import { VentaGeneralComponent } from './venta-general/venta-general.component';
 import { AsignarAdicionalesComponent } from './asignar-adicionales/asignar-adicionales.component';
 import { VentaMotoPdfComponent } from '../../shared/venta-moto-pdf/venta-moto-pdf.component';
+import { OperacionesDetailsComponent } from './operaciones-details/operaciones-details.component';
 
 
 
@@ -73,6 +74,7 @@ const routes: Routes = [
       { path: 'ventas/:tipo', component: VentaGeneralComponent },
       { path: 'pdfVenta', component: VentaMotoPdfComponent },
       { path: 'adicionales/:tipo/:id', component: AsignarAdicionalesComponent },
+      { path: 'operacion/:tipo/:id', component: OperacionesDetailsComponent },
       { path: 'venta-motos', component: VentaMotosComponent },
       { path: 'historial-clientes', component: HistorialClientesComponent },
       { path: 'pedidos-stock', component: PedidosStockComponent },
