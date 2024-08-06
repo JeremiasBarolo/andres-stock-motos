@@ -74,7 +74,7 @@ const routes: Routes = [
       { path: 'ventas/:tipo', component: VentaGeneralComponent },
       { path: 'pdfVenta', component: VentaMotoPdfComponent },
       { path: 'adicionales/:tipo/:id', component: AsignarAdicionalesComponent },
-      { path: 'operacion/:tipo/:id', component: OperacionesDetailsComponent },
+      { path: 'operacion/:tipo/:subtotal/:id', component: OperacionesDetailsComponent },
       { path: 'venta-motos', component: VentaMotosComponent },
       { path: 'historial-clientes', component: HistorialClientesComponent },
       { path: 'pedidos-stock', component: PedidosStockComponent },

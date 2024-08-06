@@ -18,8 +18,14 @@ export class OperacionesDetailsComponent {
   id: string | undefined
   form: any;
   tipo: any;
+  subtotal:number = 0
   private destroy$ = new Subject<void>();
   editId: any;
+  valorCuotas: any;
+  dias: number[] = [];
+  meses: string[] = [];
+  years: number[] = [];
+  cantidadCuota: any;
   constructor(
     private fb: FormBuilder, 
     private route: ActivatedRoute, 
@@ -28,13 +34,11 @@ export class OperacionesDetailsComponent {
   
   ) {
     this.insumoForm = this.fb.group({
-      precioOperacion: [''],
       seniaOperacion: [''],
       entregaOperacion: [''],
       otrasEntOperacion: [''],
       observacionOperacion: [''],
-      cuotas: [''],
-      valorCuota: [''],
+      cuotas: [1, Validators.required],
       diaVencimientoCuota: [''],
       diaInicioCuota: [''],
       mesInicioCuota: [''],
@@ -47,7 +51,7 @@ export class OperacionesDetailsComponent {
       prenda: [''],
       inscripcion: [''],
       pago: [''],
-      fechaRealizacion: [''],
+
       conceptoFinal: ['']
     });
   }
@@ -56,6 +60,7 @@ export class OperacionesDetailsComponent {
     this.route.params.subscribe(params => {
       this.id = params['id'];
       this.tipo = params['tipo']; 
+      this.subtotal = params['subtotal']; 
       console.log(this.id); 
     });
   
@@ -64,6 +69,20 @@ export class OperacionesDetailsComponent {
       this.cargarDatos();
       
     }
+
+    this.insumoForm.get('diaVencimientoCuota')?.valueChanges.subscribe(value => {
+      if (value) {
+        this.cantidadCuota = value
+        this.insumoForm.patchValue({
+          diaInicioCuota: value,
+          diaFinalCuota: value
+        });
+      }
+    });
+
+    this.generateDias()
+    this.generateMeses();
+    this.generateYears();
   }
 
   onSubmit() {
@@ -73,7 +92,7 @@ export class OperacionesDetailsComponent {
       if(this.isEditMode){
             // Es editar
             try {
-              this.operacionVentaMotoService.update(this.editId, {...this.tipo, movimientoId: this.id}).pipe(takeUntil(this.destroy$)).subscribe(() => {
+              this.operacionVentaMotoService.update(this.editId, {...this.tipo, movimientoId: this.id, valorCuota: this.valorCuotas  }).pipe(takeUntil(this.destroy$)).subscribe(() => {
                 setTimeout(() => {
                   this.location.back();  
                 }, 600);
@@ -85,7 +104,7 @@ export class OperacionesDetailsComponent {
       }else{
         // Es crear
         try {
-          this.operacionVentaMotoService.create({...this.tipo, movimientoId: this.id}).pipe(takeUntil(this.destroy$)).subscribe(() => {
+          this.operacionVentaMotoService.create({...this.tipo, movimientoId: this.id, valorCuota: this.valorCuotas }).pipe(takeUntil(this.destroy$)).subscribe(() => {
             setTimeout(() => {
               this.location.back();  
             }, 600);
@@ -134,5 +153,30 @@ export class OperacionesDetailsComponent {
       this.insumoForm.patchValue(data);
       this.isEditMode = true
     });
+  }
+
+  valorCuota(): string {
+    const cuotas = this.insumoForm.get('cuotas')?.value;
+    
+    let subtotal = cuotas ? (this.subtotal / cuotas).toFixed(2) : '0.00';
+    this.valorCuotas = subtotal
+    return subtotal;
+    
+  }
+ 
+  generateDias() {
+    for (let i = 1; i <= 31; i++) {
+      this.dias.push(i);
+    }
+  }
+  generateMeses() {
+    const nombresMeses = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
+    this.meses = nombresMeses;
+  }
+
+  generateYears() {
+    for (let i = 2020; i <= 2030; i++) {
+      this.years.push(i);
+    }
   }
 }

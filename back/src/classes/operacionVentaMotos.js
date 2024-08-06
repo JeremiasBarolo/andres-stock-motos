@@ -38,34 +38,41 @@ class OperacionVentaMotosService {
 
   async createOperacionVentaMotos(DataOperacionVentaMotos) {
     try {
-      
-      const cleanedData = {
-        precioOperacion: DataOperacionVentaMotos.precioOperacion || null,
-        seniaOperacion: DataOperacionVentaMotos.seniaOperacion || null,
-        entregaOperacion: DataOperacionVentaMotos.entregaOperacion || null,
-        otrasEntOperacion: DataOperacionVentaMotos.otrasEntOperacion || null,
-        observacionOperacion: DataOperacionVentaMotos.observacionOperacion || null,
-        cuotas: DataOperacionVentaMotos.cuotas || null,
-        valorCuota: DataOperacionVentaMotos.valorCuota || null,
-        diaVencimientoCuota: DataOperacionVentaMotos.diaVencimientoCuota || null,
-        diaInicioCuota: DataOperacionVentaMotos.diaInicioCuota || null,
-        mesInicioCuota: DataOperacionVentaMotos.mesInicioCuota || null,
-        anioInicioCuota: DataOperacionVentaMotos.anioInicioCuota || null,
-        diaFinalCuota: DataOperacionVentaMotos.diaFinalCuota || null,
-        mesFinalCuota: DataOperacionVentaMotos.mesFinalCuota || null,
-        anioFinalCuota: DataOperacionVentaMotos.anioFinalCuota || null,
-        lugarPago: DataOperacionVentaMotos.lugarPago || null,
-        gastosPap: DataOperacionVentaMotos.gastosPap || null,
-        prenda: DataOperacionVentaMotos.prenda || null,
-        inscripcion: DataOperacionVentaMotos.inscripcion || null,
-        pago: DataOperacionVentaMotos.pago || null,
-        fechaRealizacion: DataOperacionVentaMotos.fechaRealizacion || null,
-        conceptoFinal: DataOperacionVentaMotos.conceptoFinal || null
-      };
-  
       if (DataOperacionVentaMotos.movimientoId) {
-        const newOperacionVentaMotos = await models.OperacionVentaMotos.create({...cleanedData, movimientoId:DataOperacionVentaMotos.movimientoId });
-        return newOperacionVentaMotos;
+
+          let subtotal = await models.Movimientos.findByPk(DataOperacionVentaMotos.movimientoId,{
+            attributes: ['subtotal']
+          })
+          
+          const cleanedData = {
+            precioOperacion: subtotal.subtotal || null,
+            seniaOperacion: DataOperacionVentaMotos.seniaOperacion || null,
+            entregaOperacion: DataOperacionVentaMotos.entregaOperacion || null,
+            otrasEntOperacion: DataOperacionVentaMotos.otrasEntOperacion || null,
+            observacionOperacion: DataOperacionVentaMotos.observacionOperacion || null,
+            cuotas: DataOperacionVentaMotos.cuotas || null,
+            valorCuota: DataOperacionVentaMotos.valorCuota || null,
+            diaVencimientoCuota: DataOperacionVentaMotos.diaVencimientoCuota || null,
+            diaInicioCuota: DataOperacionVentaMotos.diaInicioCuota || null,
+            mesInicioCuota: DataOperacionVentaMotos.mesInicioCuota || null,
+            anioInicioCuota: DataOperacionVentaMotos.anioInicioCuota || null,
+            diaFinalCuota: DataOperacionVentaMotos.diaFinalCuota || null,
+            mesFinalCuota: DataOperacionVentaMotos.mesFinalCuota || null,
+            anioFinalCuota: DataOperacionVentaMotos.anioFinalCuota || null,
+            lugarPago: DataOperacionVentaMotos.lugarPago || null,
+            gastosPap: DataOperacionVentaMotos.gastosPap || null,
+            prenda: DataOperacionVentaMotos.prenda || null,
+            inscripcion: DataOperacionVentaMotos.inscripcion || null,
+            pago: DataOperacionVentaMotos.pago || null,
+            fechaRealizacion: Date.now() || null,
+            conceptoFinal: DataOperacionVentaMotos.conceptoFinal || null
+          };
+
+          
+      
+          
+            const newOperacionVentaMotos = await models.OperacionVentaMotos.create({...cleanedData, movimientoId:DataOperacionVentaMotos.movimientoId });
+            return newOperacionVentaMotos;
       }
     } catch (err) {
       console.error('🛑 Error when creating OperacionVentaMotos', err);
@@ -83,9 +90,12 @@ class OperacionVentaMotosService {
       if (!oldOperacionVentaMotos) {
         return null;
       }
+      let subtotal = await models.Movimientos.findByPk(dataUpdated.movimientoId,{
+        attributes: ['subtotal']
+      })
 
       const cleanedData = {
-        precioOperacion: dataUpdated.precioOperacion || null,
+        precioOperacion: subtotal.subtotal || null,
         seniaOperacion: dataUpdated.seniaOperacion || null,
         entregaOperacion: dataUpdated.entregaOperacion || null,
         otrasEntOperacion: dataUpdated.otrasEntOperacion || null,

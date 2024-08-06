@@ -213,13 +213,14 @@ export class VentaMotosComponent implements OnDestroy, OnInit {
   }
 
   redirectOperaciones(data:any, accion?:any){
-
+    console.log(data);
+    
     this.comprobarDatosAdicionales = false
-    if(accion == 'OPERACION' && data.OperacionesHasInfo){
-      this.router.navigate(['admin/operacion','editar', data.id]);
+    if(accion == 'OPERACION' && data.OperacionHasInfo){
+      this.router.navigate(['admin/operacion','editar', data.subtotal, data.id]);
 
-    }else if(accion == 'OPERACION' && !data.OperacionesHasInfo){
-      this.router.navigate(['admin/operacion','crear', data.id]);
+    }else if(accion == 'OPERACION' && !data.OperacionHasInfo){
+      this.router.navigate(['admin/operacion','crear', data.subtotal, data.id]);
 
     }else if(accion == 'ADICIONALES' && data.OperacionesHasInfo){
       this.router.navigate(['admin/adicionales','editar', data.clienteId]);

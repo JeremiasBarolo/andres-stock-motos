@@ -1,13 +1,14 @@
 <form [formGroup]="insumoForm" (ngSubmit)="onSubmit()">
     <div class="container">
       <h2 class="text-center">Asignar Datos de Operacion</h2>
+ 
   
       <h5 class="section-title">OPERACION</h5>
       <div class="row">
-        <div class="col-md-6 mb-3">
+        <!-- <div class="col-md-6 mb-3" >
           <label for="precioOperacion">Precio de Operación</label>
           <input id="precioOperacion" type="number" class="form-control" formControlName="precioOperacion">
-        </div>
+        </div> -->
         <div class="col-md-6 mb-3">
           <label for="seniaOperacion">Seña de Operación</label>
           <input id="seniaOperacion" type="number" class="form-control" formControlName="seniaOperacion">
@@ -26,53 +27,93 @@
           <input id="observacionOperacion" type="text" class="form-control" formControlName="observacionOperacion">
         </div>
      
-        <div class="col-md-6 mb-3">
-          <label for="cuotas">Cuotas</label>
-          <input id="cuotas" type="number" class="form-control" formControlName="cuotas">
-        </div>
-        <div class="col-md-6 mb-3">
-          <label for="valorCuota">Valor de Cuota</label>
-          <input id="valorCuota" type="number" class="form-control" formControlName="valorCuota">
-        </div>
-        <div class="col-md-6 mb-3">
-          <label for="diaVencimientoCuota">Día de Vencimiento de Cuota</label>
-          <input id="diaVencimientoCuota" type="number" class="form-control" formControlName="diaVencimientoCuota">
-        </div>
+        
       </div>
   
       <div class="row">
-       
-        <div class="col-md-6 mb-3">
-          <label for="diaInicioCuota">Día Inicio de Cuota</label>
-          <input id="diaInicioCuota" type="number" class="form-control" formControlName="diaInicioCuota">
-        </div>
-     
-        <div class="col-md-6 mb-3">
-          <label for="mesInicioCuota">Mes Inicio de Cuota</label>
-          <input id="mesInicioCuota" type="text" class="form-control" formControlName="mesInicioCuota">
+        <h5 class="section-title">FORMA DE PAGO</h5>
+        <div class="col-md-6 mb-3 mt-3">
+          <h6>Subtotal: {{subtotal | currency}}</h6>
         </div>
         <div class="col-md-6 mb-3">
-          <label for="anioInicioCuota">Año Inicio de Cuota</label>
-          <input id="anioInicioCuota" type="number" class="form-control" formControlName="anioInicioCuota">
+          <label for="cuotas">Cantidad de Cuotas</label>
+          <div class="col-md-3">
+            <select class="form-control" formControlName="cuotas" id="cuotas">
+              <option value="1">1</option>
+              <option value="3">3</option>
+              <option value="6">6</option>
+              <option value="12">12</option>
+              <option value="18">18</option>
+              <option value="24">24</option>
+            </select>
+          </div>
+          
+          <div class="col-md-6 mb-3 mt-3">
+
+            <h6 for="valorCuota">Valor de Cuota: {{ valorCuota() | currency }} </h6>
+          </div>
+          <div class="col-md-6 mb-3">
+            <label for="diaVencimientoCuota">Día de Vencimiento de cada cuota:</label>
+            <select id="diaVencimientoCuota" class="form-control" formControlName="diaVencimientoCuota">
+              <option value="" disabled selected>Seleccione un día</option>
+              <option *ngFor="let dia of dias" [value]="dia">{{dia}}</option>
+            </select>
+          </div>
         </div>
       
-        <div class="col-md-6 mb-3">
-          <label for="diaFinalCuota">Día Final de Cuota</label>
-          <input id="diaFinalCuota" type="number" class="form-control" formControlName="diaFinalCuota">
+        <div  class="row" >
+        
+          <div class="col-md-4 mb-3">
+            <label for="diaInicioCuota">Día Inicio:</label>
+            
+            <input id="diaInicioCuota" type="number" class="form-control" formControlName="diaInicioCuota" readonly >
+          </div>
+        
+          <div class="col-md-4 mb-3">
+            <label for="mesInicioCuota">Mes Inicio de Cuota</label>
+            <select id="mesInicioCuota" class="form-control" formControlName="mesInicioCuota">
+              <option value="" disabled selected>Seleccione un mes</option>
+              <option *ngFor="let mes of meses" [value]="mes">{{mes}}</option>
+            </select>
+          </div>
+        
+          <div class="col-md-4 mb-3">
+            <label for="anioInicioCuota">Año Inicio de Cuota</label>
+            <select id="anioInicioCuota" class="form-control" formControlName="anioInicioCuota">
+              <option value="" disabled selected>Seleccione un año</option>
+              <option *ngFor="let anio of years" [value]="anio">{{anio}}</option>
+            </select>
+          </div>
+        
+          <div class="col-md-4 mb-3">
+            <label for="diaFinalCuota">Día Final de Cuota</label>
+            <input id="diaFinalCuota" type="number" class="form-control" formControlName="diaFinalCuota" readonly>
+          </div>
+        
+          <div class="col-md-4 mb-3">
+            <label for="mesFinalCuota">Mes Final de Cuota</label>
+            <select id="mesFinalCuota" class="form-control" formControlName="mesFinalCuota">
+              <option value="" disabled selected>Seleccione un mes</option>
+              <option *ngFor="let mes of meses" [value]="mes">{{mes}}</option>
+            </select>
+          </div>
+        
+          <div class="col-md-4 mb-3">
+            <label for="anioFinalCuota">Año Final de Cuota</label>
+            <select id="anioFinalCuota" class="form-control" formControlName="anioFinalCuota">
+              <option value="" disabled selected>Seleccione un año</option>
+              <option *ngFor="let anio of years" [value]="anio">{{anio}}</option>
+            </select>
+          </div>
+        
+        
+         
         </div>
-        <div class="col-md-6 mb-3">
-          <label for="mesFinalCuota">Mes Final de Cuota</label>
-          <input id="mesFinalCuota" type="text" class="form-control" formControlName="mesFinalCuota">
-        </div>
-      
-        <div class="col-md-6 mb-3">
-          <label for="anioFinalCuota">Año Final de Cuota</label>
-          <input id="anioFinalCuota" type="number" class="form-control" formControlName="anioFinalCuota">
-        </div>
-        <div class="col-md-6 mb-3">
+        <div class="col-md-4 mb-3">
           <label for="lugarPago">Lugar de Pago</label>
           <input id="lugarPago" type="text" class="form-control" formControlName="lugarPago">
         </div>
+       
       </div>
   
       <h5 class="section-title">GESTORIA</h5>
@@ -97,10 +138,6 @@
           <option value="SI">Si</option>
           <option value="NO">No</option>
           </select>
-        </div>
-        <div class="col-md-6 mb-3">
-          <label for="fechaRealizacion">Fecha de Realización</label>
-          <input id="fechaRealizacion" type="date" class="form-control" formControlName="fechaRealizacion">
         </div>
       </div>
   
