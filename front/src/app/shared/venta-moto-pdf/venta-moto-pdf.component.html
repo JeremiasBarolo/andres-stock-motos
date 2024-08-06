@@ -230,25 +230,25 @@
     <div class="row">
         <div class="form-group col-md-3">
             <label>Precio:</label>
-            <p class="form-control-static"> {{datosAdicionales?.precioOperacion}}</p>
+            <p class="form-control-static"> {{datosAdicionales?.precioOperacion | currency}}</p>
         </div>
         <div class="form-group col-md-3">
             <label>Seña:</label>
-            <p class="form-control-static"> {{datosAdicionales?.seniaOperacion || 'No especificado'}}</p>
+            <p class="form-control-static"> {{datosAdicionales?.seniaOperacion  | currency}}</p>
         </div>
         <div class="form-group col-md-3">
             <label>Entrega inicial:</label>
-            <p class="form-control-static"> {{datosAdicionales?.entregaOperacion}}</p>
+            <p class="form-control-static"> {{datosAdicionales?.entregaOperacion  | currency}}</p>
         </div>
         <div class="form-group col-md-3">
             <label>Otras entregas:</label>
-            <p class="form-control-static"> {{datosAdicionales?.otrasEntOperacion}}</p>
+            <p class="form-control-static"> {{datosAdicionales?.otrasEntOperacion  | currency}}</p>
         </div>
     </div>
 
     <div class="form-group">
         <label>Financiado/a en cuotas de $</label>
-        <p class="form-control-static"> {{datosAdicionales?.valorCuota}}</p>
+        <p class="form-control-static"> {{datosAdicionales?.valorCuota  | currency}}</p>
     </div>
     <div class="row">
         <div class="form-group">

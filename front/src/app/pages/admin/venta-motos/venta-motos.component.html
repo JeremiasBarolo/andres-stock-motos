@@ -3,6 +3,16 @@
     <p-button icon="pi pi-plus" label="Agregar Venta" [text]="true" (click)="openCrearVentaDialog()" styleClass="ml-auto"></p-button>
 </div>
 
+<div class="dropdown-container">
+    <p-dropdown 
+      [options]="tipoMovimientoChoise" 
+      optionLabel="TipoMovimiento" 
+      placeholder="Seleccionar Tipo Movimiento"
+      [(ngModel)]="selectedTipo"
+      (onChange)="onClientChange($event)">
+    </p-dropdown>
+  </div>
+
 <app-tablang
     [data]="products"
     [columns]="columns"
@@ -97,3 +107,28 @@
     <p>{{ errorMessage }}</p>
     <button pButton [text]="true" label="Asignar Informacion" type="button" (click)="redirectToCreate(id)" icon="pi pi-send"></button>
 </p-dialog>
+
+
+<p-dialog header="Historial por Fecha" [(visible)]="DataModalVisible" [modal]="true" [style]="{width: '75vw'}" (onHide)="cerrarData()" >
+    <p-table [value]="filteredProducts" [paginator]="true" [rows]="10" [responsive]="true" [styleClass]="'table shop-table'">
+      <ng-template pTemplate="header">
+        <tr>
+          <th>Moto</th>
+          <th>Fecha de Realizacion</th>
+          <th>Cliente</th>
+          <th>Recepcionista</th>
+          <th>Subtotal</th>
+          <th></th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-item let-i="rowIndex">
+        <tr>
+          <td (click)="modalOpen(item)">{{ item.nombreMoto }}</td>
+          <td (click)="modalOpen(item)">{{ item.createdAt}}</td>
+          <td (click)="modalOpen(item)">{{ item.cliente}}</td>
+          <td (click)="modalOpen(item)">{{ item.usuario}}</td>
+          <td (click)="modalOpen(item)">{{ item.subtotal | currency}}</td>
+          <td><p-button icon="pi pi-file-pdf" [text]="true" severity="warning" (click)="pdfOpen(item)" pTooltip="Ver PDF"></p-button></td>
+        </tr>
+      </ng-template>
+    </p-table>

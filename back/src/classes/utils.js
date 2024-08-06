@@ -279,6 +279,21 @@ class UtilsService {
       throw error;
     }
   }
+
+  async EstadoMoto(tipo) {
+    try {
+      if(tipo === 1){
+        return 'Nueva'
+      }else if(tipo === 2){
+        return 'Usada'
+      }else if(tipo === 3){
+        return 'En Consignacion'
+      }
+    } catch (error) {
+      console.error('Error al verificar datos adicionales del cliente:', error);
+      throw error;
+    }
+  }
     
 
   async updateDatosServicioLogica(oldStock, newStock, DatosServicio_id){

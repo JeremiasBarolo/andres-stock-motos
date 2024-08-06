@@ -105,7 +105,7 @@ export class AsignarAdicionalesComponent {
             try {
               this.adicionalesClientesService.update(this.editId, {...this.tipo, clienteId: this.id}).pipe(takeUntil(this.destroy$)).subscribe(() => {
                 setTimeout(() => {
-                  this.location.back();  // Vuelve a la pantalla anterior sin recargar la página
+                  this.location.back();  
                 }, 600);
               });
 
@@ -117,7 +117,7 @@ export class AsignarAdicionalesComponent {
         try {
           this.adicionalesClientesService.create({...this.tipo, clienteId: this.id}).pipe(takeUntil(this.destroy$)).subscribe(() => {
             setTimeout(() => {
-              this.location.back();  // Vuelve a la pantalla anterior sin recargar la página
+              this.location.back();  
             }, 600);
           });
           
@@ -190,12 +190,15 @@ export class AsignarAdicionalesComponent {
   cargarDatos(){
     this.adicionalesClientesService.getDatosAdicionales(this.id).pipe(takeUntil(this.destroy$)).subscribe((data: any) => {
       this.editId = data.id
-      this.insumoForm.patchValue({...data,
-        fechaIngreso: this.datePipe.transform(data.fechaIngreso, 'yyyy-MM-dd'),
-        fechaRealizacion: this.datePipe.transform(data.fechaRealizacion, 'yyyy-MM-dd'),
+      let dataReal = {...data, 
+        fechaIngreso: this.datePipe.transform(data.fechaIngreso, 'yyyy-MM-dd' || null),
+        fechaRealizacion: this.datePipe.transform(data.fechaRealizacion, 'yyyy-MM-dd'|| null),
+        seniaOperacion: data.señaOperacion,
         
-
-      });
+      }
+      
+      
+      this.insumoForm.patchValue(dataReal);
       this.isEditMode = true
     });
   }

@@ -25,6 +25,7 @@ export class VentaMotosComponent implements OnDestroy, OnInit {
   editEliminar: boolean = false;
   crearVisible: boolean = false;
   detailModal: boolean = false;
+  DataModalVisible : boolean = false;
   form: FormGroup;
   tipo: any;
   cardData: any;
@@ -38,6 +39,10 @@ export class VentaMotosComponent implements OnDestroy, OnInit {
   usuarioIdEdit: any;
   errorModalVisible: boolean = false;
   errorMessage: any;
+  tipoMovimientoChoise: any[] = []
+  selectedTipo: any;
+  filteredProducts: any[]= []
+  
 
   constructor(
     private usuariosService: UsuariosService,
@@ -74,6 +79,9 @@ export class VentaMotosComponent implements OnDestroy, OnInit {
       this.usuarioId = data.userId;
     });
 
+    const uniqueClientes = new Set();
+    this.tipoMovimientoChoise = [];
+
     this.movimientosService.getAllVentasMoto().pipe(takeUntil(this.destroy$)).subscribe((data: any[]) => {
       this.columns = [
         { field: 'id', header: 'ID' },
@@ -81,23 +89,34 @@ export class VentaMotosComponent implements OnDestroy, OnInit {
         { field: 'createdAt', header: 'Fecha de Realizacion' },
         { field: 'cliente', header: 'Cliente' },
         { field: 'usuario', header: 'Recepcionista' },
+        { field: 'TipoMovimiento', header: 'Tipo Movimiento' },
         { field: 'subtotal', header: 'Subtotal' }
       ];
-      this.products = data.map(item => ({
-        id: item.id,
-        createdAt: this.datePipe.transform(item.createdAt, 'dd/MM/yy'),
-        cliente: item.cliente,
-        usuario: item.usuario,
-        subtotal: item.subtotal,
-        usuarioId: item.usuarioId,
-        clienteId: item.clienteId,
-        personaId: item.personaId,
-        Moto: item.Moto,
-        motoId: item.Moto.id,
-        tipoMovimientoId: item.tipoMovimientoId,
-        ClienteHasInfo: item.ClienteHasInfo,
-        nombreMoto: `${item.Moto.marca} ${item.Moto.modelo}`
-      }));
+      this.products = data.map(item => {
+        const product = {
+          id: item.id,
+          createdAt: this.datePipe.transform(item.createdAt, 'dd/MM/yy'),
+          cliente: item.cliente,
+          usuario: item.usuario,
+          subtotal: item.subtotal,
+          usuarioId: item.usuarioId,
+          clienteId: item.clienteId,
+          personaId: item.personaId,
+          Moto: item.Moto,
+          motoId: item.Moto.id,
+          tipoMovimientoId: item.tipoMovimientoId,
+          TipoMovimiento: item.TipoMovimiento,
+          ClienteHasInfo: item.ClienteHasInfo,
+          nombreMoto: `${item.Moto.marca} ${item.Moto.modelo}`
+        };
+  
+        if (!uniqueClientes.has(item.TipoMovimiento)) {
+          uniqueClientes.add(item.TipoMovimiento);
+          this.tipoMovimientoChoise.push({TipoMovimiento: item.TipoMovimiento });
+        }
+  
+        return product;
+      });
     });
 
     this.usuariosService.getAll().pipe(takeUntil(this.destroy$)).subscribe(data => {
@@ -192,6 +211,24 @@ export class VentaMotosComponent implements OnDestroy, OnInit {
 
   redirectToCreate(id: any) {
     this.router.navigate(['admin/adicionales', 'crear', id]);
+  }
+  searchClientMovements() {
+    this.filteredProducts = this.products.filter(movement => movement.TipoMovimiento === this.selectedTipo.TipoMovimiento);
+    this.DataModalVisible = true;
+  }
+
+  onClientChange(event: any) {
+    this.selectedTipo = event.value;
+    this.searchClientMovements();
+  }
+
+  cerrarData() {
+    this.DataModalVisible = false;
+    this.filteredProducts = [];
+    this.selectedTipo = null;
+    setTimeout(() => {
+      this.selectedTipo = undefined;
+    });
   }
 }
 

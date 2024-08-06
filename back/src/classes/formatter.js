@@ -424,6 +424,7 @@ class Formatter {
       const ventas = await Promise.all(
         data.map(async venta => {
           const ClienteHasInfo = await utilsService.ClienteHasInfo(venta.Persona.id)
+          const EstadoMoto = await utilsService.EstadoMoto(venta.Moto.tipoMotoId)
           return {
             id: venta.id,
             createdAt: venta.createdAt,
@@ -433,7 +434,7 @@ class Formatter {
             usuario:venta.Usuario.user,
             usuarioId: venta.Usuario.id,
             personaId: venta.Persona.id,
-            TipoMovimiento: venta.TipoMovimiento.descripcion,
+            TipoMovimiento: `${venta.TipoMovimiento.descripcion} ${EstadoMoto}`,
             tipoMovimientoId: venta.TipoMovimiento.id,
             subtotal: venta.subtotal,
             ClienteHasInfo: ClienteHasInfo,
@@ -442,6 +443,7 @@ class Formatter {
               marcaId: venta.Moto.marcaId,
               marca: venta.Moto.Marca.descripcion,
               modelo: venta.Moto.modelo,
+              estado: venta.Moto.tipoId,
               year: venta.Moto.year,
               color: venta.Moto.color,
               num_motor: venta.Moto.num_motor,

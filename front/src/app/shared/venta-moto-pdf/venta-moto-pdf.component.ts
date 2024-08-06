@@ -37,7 +37,7 @@ constructor(
 
       if (this.cardData.personaId) {
         this.datosAdicionalesService.getDatosAdicionales(this.cardData.personaId).subscribe((res: any) => {
-          this.datosAdicionales = res;
+          this.datosAdicionales = {...res, seniaOperacion: res.señaOperacion, precioOperacion: this.cardData.subtotal };
           this.setCheckboxes(res.pago)
         });
 
