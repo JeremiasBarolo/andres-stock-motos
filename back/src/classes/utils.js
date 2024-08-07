@@ -270,10 +270,34 @@ class UtilsService {
       if (!Cliente) {
         throw new Error('Cliente no encontrado');
       }
-  
-      
+
       const hasIt = !!Cliente.DatosAdicionalesCliente;
       return hasIt;
+    } catch (error) {
+      console.error('Error al verificar datos adicionales del cliente:', error);
+      throw error;
+    }
+  }
+
+  async OperacionesHasInfo(id) {
+    try {
+      const venta = await models.Movimientos.findByPk(id, {
+        include: { all: true }
+      });
+  
+      if (!venta) {
+        throw new Error('Operacion no encontrado');
+      }
+  
+      
+      const hasIt = !!venta.OperacionVentaMoto;
+      if(hasIt){
+        return venta.OperacionVentaMoto
+      }else{
+        return hasIt
+      }
+      
+     
     } catch (error) {
       console.error('Error al verificar datos adicionales del cliente:', error);
       throw error;
@@ -283,9 +307,9 @@ class UtilsService {
   async EstadoMoto(tipo) {
     try {
       if(tipo === 1){
-        return 'Nueva'
-      }else if(tipo === 2){
         return 'Usada'
+      }else if(tipo === 2){
+        return 'Nueva'
       }else if(tipo === 3){
         return 'En Consignacion'
       }

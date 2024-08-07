@@ -68,27 +68,6 @@ class DatosAdicionalesClienteService {
         casaPropiaAlquilada: DataDatosAdicionalesCliente.casaPropiaAlquilada || null,
         edadGarante: DataDatosAdicionalesCliente.edadGarante || null,
         estadoCivilGarante: DataDatosAdicionalesCliente.estadoCivilGarante || null,
-        precioOperacion: DataDatosAdicionalesCliente.precioOperacion || null,
-        señaOperacion: DataDatosAdicionalesCliente.señaOperacion || null,
-        entregaOperacion: DataDatosAdicionalesCliente.entregaOperacion || null,
-        otrasEntOperacion: DataDatosAdicionalesCliente.otrasEntOperacion || null,
-        observacionOperacion: DataDatosAdicionalesCliente.observacionOperacion || null,
-        cuotas: DataDatosAdicionalesCliente.cuotas || null,
-        valorCuota: DataDatosAdicionalesCliente.valorCuota || null,
-        diaVencimientoCuota: DataDatosAdicionalesCliente.diaVencimientoCuota || null,
-        diaInicioCuota: DataDatosAdicionalesCliente.diaInicioCuota || null,
-        mesInicioCuota: DataDatosAdicionalesCliente.mesInicioCuota || null,
-        anioInicioCuota: DataDatosAdicionalesCliente.anioInicioCuota || null,
-        diaFinalCuota: DataDatosAdicionalesCliente.diaFinalCuota || null,
-        mesFinalCuota: DataDatosAdicionalesCliente.mesFinalCuota || null,
-        anioFinalCuota: DataDatosAdicionalesCliente.anioFinalCuota || null,
-        lugarPago: DataDatosAdicionalesCliente.lugarPago || null,
-        gastosPap: DataDatosAdicionalesCliente.gastosPap || null,
-        prenda: DataDatosAdicionalesCliente.prenda || null,
-        inscripcion: DataDatosAdicionalesCliente.inscripcion || null,
-        pago: DataDatosAdicionalesCliente.pago || null,
-        fechaRealizacion: DataDatosAdicionalesCliente.fechaRealizacion || null,
-        conceptoFinal: DataDatosAdicionalesCliente.conceptoFinal || null
       };
   
       if (DataDatosAdicionalesCliente.clienteId) {

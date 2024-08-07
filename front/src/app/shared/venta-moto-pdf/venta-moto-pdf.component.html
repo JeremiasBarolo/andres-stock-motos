@@ -13,7 +13,7 @@
         </div>
     </div>
     <div class="text-right">
-        <h6>General Deheza, {{cardData.createdAt}}</h6>
+        <h6>General Deheza, {{cardData?.createdAt}}</h6>
     </div>
     
    
@@ -230,38 +230,38 @@
     <div class="row">
         <div class="form-group col-md-3">
             <label>Precio:</label>
-            <p class="form-control-static"> {{datosAdicionales?.precioOperacion | currency}}</p>
+            <p class="form-control-static"> {{operacion?.precioOperacion | currency}}</p>
         </div>
         <div class="form-group col-md-3">
             <label>Seña:</label>
-            <p class="form-control-static"> {{datosAdicionales?.seniaOperacion  | currency}}</p>
+            <p class="form-control-static"> {{operacion?.seniaOperacion  | currency}}</p>
         </div>
         <div class="form-group col-md-3">
             <label>Entrega inicial:</label>
-            <p class="form-control-static"> {{datosAdicionales?.entregaOperacion  | currency}}</p>
+            <p class="form-control-static"> {{operacion?.entregaOperacion  | currency}}</p>
         </div>
         <div class="form-group col-md-3">
             <label>Otras entregas:</label>
-            <p class="form-control-static"> {{datosAdicionales?.otrasEntOperacion  | currency}}</p>
+            <p class="form-control-static"> {{operacion?.otrasEntOperacion  | currency}}</p>
         </div>
     </div>
 
     <div class="form-group">
-        <label>Financiado/a en cuotas de $</label>
-        <p class="form-control-static"> {{datosAdicionales?.valorCuota  | currency}}</p>
+        <label>Financiado/a en {{operacion?.cuotas}} cuotas de $</label>
+        <p class="form-control-static"> {{operacion?.valorCuota  | currency}}</p>
     </div>
     <div class="row">
         <div class="form-group">
             <label>Fecha de la 1º cuota</label>
-            <p class="form-control-static"> {{datosAdicionales?.diaInicioCuota}} de {{datosAdicionales?.mesInicioCuota}} del año {{datosAdicionales?.anioInicioCuota}}</p>
+            <p class="form-control-static"> {{operacion?.diaInicioCuota}} de {{operacion?.mesInicioCuota}} del año {{operacion?.anioInicioCuota}}</p>
         </div>
         <div class="form-group">
             <label>Fecha de la ultima cuota</label>
-            <p class="form-control-static"> {{datosAdicionales?.diaInicioCuota}} de {{datosAdicionales?.mesInicioCuota}} del año {{datosAdicionales?.anioFinalCuota}}</p>
+            <p class="form-control-static"> {{operacion?.diaInicioCuota}} de {{operacion?.mesInicioCuota}} del año {{operacion?.anioFinalCuota}}</p>
         </div>
         <div class="form-group">
             <label>Observaciones</label>
-            <p class="form-control-static"> {{datosAdicionales?.observacionOperacion}}</p>
+            <p class="form-control-static"> {{operacion?.observacionOperacion}}</p>
         </div>
     </div>
 
@@ -269,15 +269,15 @@
     <div class="row">
         <div class="form-group col-md-4">
             <label>Gastos Pap.</label>
-            <p class="form-control-static"> {{datosAdicionales?.gastosPap | currency}} </p>
+            <p class="form-control-static"> {{operacion?.gastosPap | currency}} </p>
         </div>
         <div class="form-group col-md-4">
             <label>Prenda</label>
-            <p class="form-control-static"> {{datosAdicionales?.prenda | currency}} </p>
+            <p class="form-control-static"> {{operacion?.prenda | currency}} </p>
         </div>
         <div class="form-group col-md-4">
             <label>Inscripción</label>
-            <p class="form-control-static"> {{datosAdicionales?.inscripcion | currency}} </p>
+            <p class="form-control-static"> {{operacion?.inscripcion | currency}} </p>
         </div>
     </div>
 

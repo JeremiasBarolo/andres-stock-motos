@@ -41,6 +41,12 @@ module.exports = (sequelize, DataTypes) => {
         foreignKey: 'datosServiciosId',
         onUpdate: 'CASCADE',
       });
+
+      Movimientos.hasOne(models.OperacionVentaMotos, {
+        foreignKey: 'movimientoId',
+        onUpdate: 'CASCADE',
+        onDelete: 'CASCADE',
+      });
     }
   }
   Movimientos.init({

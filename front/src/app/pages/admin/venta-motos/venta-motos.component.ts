@@ -37,8 +37,9 @@ export class VentaMotosComponent implements OnDestroy, OnInit {
   private destroy$ = new Subject<void>();
   usuarioId: any;
   usuarioIdEdit: any;
-  errorModalVisible: boolean = false;
-  errorMessage: any;
+  comprobarDatosAdicionales: boolean = false; 
+  clientHasInfo:boolean = false
+  operacionHasInfo:boolean = false
   tipoMovimientoChoise: any[] = []
   selectedTipo: any;
   filteredProducts: any[]= []
@@ -107,6 +108,7 @@ export class VentaMotosComponent implements OnDestroy, OnInit {
           tipoMovimientoId: item.tipoMovimientoId,
           TipoMovimiento: item.TipoMovimiento,
           ClienteHasInfo: item.ClienteHasInfo,
+          OperacionHasInfo: item.OperacionHasInfo,
           nombreMoto: `${item.Moto.marca} ${item.Moto.modelo}`
         };
   
@@ -193,25 +195,43 @@ export class VentaMotosComponent implements OnDestroy, OnInit {
 
   redirectToPDF(cardData: any) {
     const MotoData = JSON.stringify(cardData.Moto);
-    const queryParams = { ...cardData, Moto: MotoData };
+    const OperacionesData = JSON.stringify(cardData.OperacionHasInfo);
+    const queryParams = { ...cardData, Moto: MotoData,  OperacionesData: OperacionesData  };
     this.router.navigate(['admin/pdfVenta'], { queryParams });
   }
 
-  pdfOpen(data: any) {
-    console.log('redirect' ,data);
+  
+
+  openComprobarModal(data:any){
+    console.log(data);
     
-    if(data.ClienteHasInfo){
-      this.redirectToPDF(data)
+    data.OperacionHasInfo ? this.operacionHasInfo = true : this.operacionHasInfo = false;
+    data.ClienteHasInfo ? this.clientHasInfo = true : this.clientHasInfo = false;
+    this.cardData = data;
+    this.comprobarDatosAdicionales = true
+    
+  }
+
+  redirectOperaciones(data:any, accion?:any){
+    console.log(data);
+    
+    this.comprobarDatosAdicionales = false
+    if(accion == 'OPERACION' && data.OperacionHasInfo){
+      this.router.navigate(['admin/operacion','editar', data.subtotal, data.id]);
+
+    }else if(accion == 'OPERACION' && !data.OperacionHasInfo){
+      this.router.navigate(['admin/operacion','crear', data.subtotal, data.id]);
+
+    }else if(accion == 'ADICIONALES' && data.OperacionesHasInfo){
+      this.router.navigate(['admin/adicionales','editar', data.clienteId]);
+
     }else{
-      this.errorMessage = 'El cliente no tiene información registrada. Debera direccionarse a la pantalla de empleados y crearlo desde ahi.';
-      this.id = data.clienteId;  
-      this.errorModalVisible = true;
+      this.router.navigate(['admin/adicionales','crear', data.clienteId]);
     }
   }
 
-  redirectToCreate(id: any) {
-    this.router.navigate(['admin/adicionales', 'crear', id]);
-  }
+
+  
   searchClientMovements() {
     this.filteredProducts = this.products.filter(movement => movement.TipoMovimiento === this.selectedTipo.TipoMovimiento);
     this.DataModalVisible = true;

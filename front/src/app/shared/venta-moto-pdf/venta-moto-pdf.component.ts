@@ -13,6 +13,7 @@ import jsPDF from 'jspdf';
 export class VentaMotoPdfComponent implements OnInit {
   cardData: any;
   datosAdicionales: any;
+  operacion: any
   Persona: any;
   debeChecked: boolean | undefined;
   pagoChecked: boolean | undefined;
@@ -31,14 +32,16 @@ constructor(
     this.route.queryParams.subscribe(params => {
       
       
-      this.cardData = { ...params, Moto: JSON.parse(params['Moto']) };
+      this.cardData = { ...params, Moto: JSON.parse(params['Moto']), OperacionesData: JSON.parse(params['OperacionesData']) };
+      this.operacion = this.cardData.OperacionesData
       console.log(this.cardData);
+      this.setCheckboxes(this.operacion.pago)
       
 
       if (this.cardData.personaId) {
         this.datosAdicionalesService.getDatosAdicionales(this.cardData.personaId).subscribe((res: any) => {
           this.datosAdicionales = {...res, seniaOperacion: res.señaOperacion, precioOperacion: this.cardData.subtotal };
-          this.setCheckboxes(res.pago)
+          
         });
 
         this.personasService.getById(this.cardData.personaId).subscribe((res: any) => {

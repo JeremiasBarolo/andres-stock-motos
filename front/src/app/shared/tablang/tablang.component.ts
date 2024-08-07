@@ -13,19 +13,23 @@ export class TablangComponent implements OnInit, OnDestroy, OnChanges {
   @Input() accionesVisible: boolean = true;
   @Input() insumosVisible: boolean = false;
   @Input() adicionalesVisible: boolean = false;
+  @Input() operacionesVisible: boolean = false;
   @Input() pdfVisible: boolean = false;
 
   @Output() editarClick: EventEmitter<any> = new EventEmitter();
   @Output() eliminarClick: EventEmitter<any> = new EventEmitter();
   @Output() insumoClick: EventEmitter<any> = new EventEmitter();
   @Output() adicionalesClick: EventEmitter<any> = new EventEmitter();
+  @Output() operacionesClick: EventEmitter<any> = new EventEmitter();
   @Output() modalOpenClick: EventEmitter<any> = new EventEmitter();
   @Output() pdfOpenClick: EventEmitter<any> = new EventEmitter();
 
   acciones: boolean = true;
   insumos: boolean = false;
   adicionales: boolean = false;
+  operaciones: boolean = false;
   pdf: boolean = false;
+
 
   isAdmin:any
 
@@ -37,6 +41,9 @@ export class TablangComponent implements OnInit, OnDestroy, OnChanges {
   ngOnDestroy(): void {
     this.insumos = false;
     this.pdf = false;
+    this.adicionales = false;
+    this.operaciones = false;
+    
   }
 
   ngOnInit(): void {
@@ -46,6 +53,7 @@ export class TablangComponent implements OnInit, OnDestroy, OnChanges {
     this.acciones = this.accionesVisible;
     this.insumos = this.insumosVisible;
     this.adicionales = this.adicionalesVisible;
+    this.operaciones = this.operacionesVisible;
     this.pdf = this.pdfVisible;
   }
 
@@ -53,7 +61,9 @@ export class TablangComponent implements OnInit, OnDestroy, OnChanges {
     this.acciones = this.accionesVisible;
     this.insumos = this.insumosVisible;
     this.adicionales = this.adicionalesVisible;
+    this.operaciones = this.operacionesVisible;
     this.pdf = this.pdfVisible;
+
   }
 
   editar(rowData: any) {
@@ -74,6 +84,9 @@ export class TablangComponent implements OnInit, OnDestroy, OnChanges {
 
   asignarAdicionales(rowData: any) {
     this.adicionalesClick.emit(rowData);
+  }
+  asignarDatosOperacion(rowData: any) {
+    this.operacionesClick.emit(rowData);
   }
 
   pdfClick(rowData: any) {

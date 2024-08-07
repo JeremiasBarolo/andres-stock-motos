@@ -28,15 +28,23 @@
         </ng-template>
       </td>
       <td *ngIf="acciones">
+        
         <ng-container *ngIf="insumos">
           <p-button icon="pi pi-plus" [text]="true" severity="info" (click)="asignarInsumos(rowData)" pTooltip="Asignar Insumos"></p-button>
         </ng-container>
+
         <ng-container *ngIf="adicionales">
           <p-button icon="pi pi-plus" [text]="true" severity="info" (click)="asignarAdicionales(rowData)" pTooltip="Asignar Datos Adicionales"></p-button>
         </ng-container>
+        
+        <ng-container *ngIf="operaciones">
+          <p-button icon="pi pi-plus" [text]="true" severity="info" (click)="asignarDatosOperacion(rowData)" pTooltip="Asignar Datos de la Operacion"></p-button>
+        </ng-container>
+
         <ng-container *ngIf="pdf">
           <p-button icon="pi pi-file-pdf" [text]="true" severity="warning" (click)="pdfClick(rowData)" pTooltip="Ver PDF"></p-button>
         </ng-container>
+
         <p-button *ngIf="isAdmin" icon="pi pi-pencil" [text]="true" (click)="editar(rowData)"></p-button>
         <p-button *ngIf="isAdmin" icon="pi pi-trash" [text]="true" severity="danger" (click)="eliminar(rowData)"></p-button>
       </td>

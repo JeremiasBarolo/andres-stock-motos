@@ -57,28 +57,7 @@ export class AsignarAdicionalesComponent {
       direccionEmpGarante: [''],
       casaPropiaAlquilada: [''],
       edadGarante: [''],
-      estadoCivilGarante: [''],
-      precioOperacion: [''],
-      señaOperacion: [''],
-      entregaOperacion: [''],
-      otrasEntOperacion: [''],
-      observacionOperacion: [''],
-      cuotas: [''],
-      valorCuota: [''],
-      diaVencimientoCuota: [''],
-      diaInicioCuota: [''],
-      mesInicioCuota: [''],
-      anioInicioCuota: [''],
-      diaFinalCuota: [''],
-      mesFinalCuota: [''],
-      anioFinalCuota: [''],
-      lugarPago: [''],
-      gastosPap: [''],
-      prenda: [''],
-      inscripcion: [''],
-      pago: [''],
-      fechaRealizacion: [''],
-      conceptoFinal: ['']
+      estadoCivilGarante: ['']
     });
   }
 
@@ -163,27 +142,6 @@ export class AsignarAdicionalesComponent {
       casaPropiaAlquilada: faker.datatype.boolean() ? 'Propia' : 'Alquilada',
       edadGarante: faker.datatype.number({ min: 25, max: 70 }),
       estadoCivilGarante: faker.name.jobType(),
-      precioOperacion: faker.finance.amount(),
-      señaOperacion: faker.finance.amount(),
-      entregaOperacion: faker.finance.amount(),
-      otrasEntOperacion: faker.finance.amount(),
-      observacionOperacion: faker.lorem.sentence(),
-      cuotas: faker.datatype.number({ min: 1, max: 60 }),
-      valorCuota: faker.finance.amount(),
-      diaVencimientoCuota: faker.datatype.number({ min: 1, max: 28 }),
-      diaInicioCuota: faker.datatype.number({ min: 1, max: 28 }),
-      mesInicioCuota: faker.date.month(),
-      anioInicioCuota: faker.datatype.number({ min: 2021, max: 2024 }),
-      diaFinalCuota: faker.datatype.number({ min: 1, max: 28 }),
-      mesFinalCuota: faker.date.month(),
-      anioFinalCuota: faker.datatype.number({ min: 2021, max: 2024 }),
-      lugarPago: faker.address.city(),
-      gastosPap: faker.finance.amount(),
-      prenda: faker.finance.amount(),
-      inscripcion: faker.finance.amount(),
-      pago: 'SI',
-      fechaRealizacion: faker.date.past().toISOString().split('T')[0],
-      conceptoFinal: faker.lorem.paragraph()
     });
   }
 
@@ -193,7 +151,6 @@ export class AsignarAdicionalesComponent {
       let dataReal = {...data, 
         fechaIngreso: this.datePipe.transform(data.fechaIngreso, 'yyyy-MM-dd' || null),
         fechaRealizacion: this.datePipe.transform(data.fechaRealizacion, 'yyyy-MM-dd'|| null),
-        seniaOperacion: data.señaOperacion,
         
       }
       
