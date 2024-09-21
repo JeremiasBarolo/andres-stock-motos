@@ -98,7 +98,7 @@ class StockService {
             where: { tipoId: [1,2]}
           });
           console.log('✅ Stock were found');
-          let data = format.Stock(Stock);
+          let data = await format.Stock(Stock);
           return data
         } catch (err) {
           console.error('🛑 Error when fetching Stock', err);

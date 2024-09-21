@@ -1,6 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder } from '@angular/forms';
-import { Router } from '@angular/router';
+import { Router, NavigationEnd } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
 import { MessageService } from 'primeng/api';
 
@@ -9,8 +9,9 @@ import { MessageService } from 'primeng/api';
   templateUrl: './login.component.html',
   styleUrl: './login.component.css'
 })
-export class LoginComponent {
+export class LoginComponent implements OnInit {
   loginForm: FormGroup
+
 
   constructor(
     private authService: AuthService, 
@@ -24,6 +25,19 @@ export class LoginComponent {
       password: ['']
     });
    }
+  ngOnInit(): void {
+    this.router.events.subscribe(event => {
+      if (event instanceof NavigationEnd) {
+    
+        const isLoginPage = event.url.includes('login');
+        const isRootPage = event.url === '' || event.url === '/';
+        if(isLoginPage || isRootPage){
+          this.router.navigate(['login'])
+        }
+       
+      }
+    });
+  }
 
   login(): void {
 

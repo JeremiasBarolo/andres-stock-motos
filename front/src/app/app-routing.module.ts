@@ -10,7 +10,7 @@ import { AdminGuard } from './auth/admin-guard/admin-guard.component';
 
 
 const routes: Routes = [
-  { path: '', redirectTo: 'login', pathMatch: 'full' },
+  { path: '', redirectTo: '/login', pathMatch: 'full' },
   {
     path: 'admin',
     loadChildren: () => import('./pages/admin/admin.module').then(m => m.AdminModule),
@@ -27,7 +27,7 @@ const routes: Routes = [
   },
   { path: 'login', component: LoginComponent },
 
-  { path: '**', redirectTo: '/login' }, 
+  { path: '**', redirectTo: 'login' }, 
 ];
 
 @NgModule({

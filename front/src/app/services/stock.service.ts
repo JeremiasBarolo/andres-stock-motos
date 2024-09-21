@@ -36,9 +36,6 @@ export class StockService {
     return this.http.get<any[]>(`${this.apiUrl}/disponible`, { headers: this.getHeaders() }); 
   }
 
-  getAllStockVentaGeneral(): Observable<any[]> {
-    return this.http.get<any[]>(`${this.apiUrl}/venta-general`, { headers: this.getHeaders() }); 
-  }
 
   getAllRepuestos(): Observable<any[]> {
     return this.http.get<any[]>(`${this.apiUrl}/repuestos`, { headers: this.getHeaders() }); 
