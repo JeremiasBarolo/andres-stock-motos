@@ -116,12 +116,13 @@ export class VentaGeneralComponent implements OnDestroy, OnInit {
       { field: 'cliente', header: 'Cliente' },
       { field: 'usuario', header: 'Recepcionista' },
       { field: 'subtotal', header: 'Subtotal' },
-      { field: 'cantArt', header: 'Articulos Vendidos' },
-      { field: 'tipoMovimientoId', header: 'Articulos Vendidos' },
+      { field: 'cantArt', header: 'Articulos Vendidos' }
     ];
 
     let dataReal = data.sort((a, b) => b.id - a.id)
     const uniqueEmpledos = new Set();
+    console.log(dataReal);
+    
     dataReal.forEach((item) => {
       this.products.push({
         id: item.id,
@@ -133,7 +134,7 @@ export class VentaGeneralComponent implements OnDestroy, OnInit {
         usuarioId: item.usuarioId,
         personaId: item.personaId,
         stock: item.stock,
-        cantArt: item.stock.length,
+        cantArt:  item.stock.reduce((total: any, item: { cantidad: any; }) => total + item.cantidad, 0),
         tipoMovimientoId: item.tipoMovimientoId
       });
 
@@ -351,5 +352,9 @@ export class VentaGeneralComponent implements OnDestroy, OnInit {
     onClientChange(event: any) {
       this.selectedClient = event.value;
       this.searchClientMovements();
+    }
+
+    calcularCantidadArticulos(){
+
     }
 }

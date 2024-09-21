@@ -87,7 +87,9 @@ export class PedidosStockComponent {
 
     
 
-    this.stockService.getAllStockVentaGeneral().pipe(takeUntil(this.destroy$)).subscribe((data)=>{
+    this.stockService.getAllStockGeneral().pipe(takeUntil(this.destroy$)).subscribe((data)=>{
+      console.log('data:',data);
+      
       let dataReal = data.map((stock)=>{
         
           return {
@@ -136,7 +138,7 @@ export class PedidosStockComponent {
   
     
   
-    this.stockService.getAllStockVentaGeneral().subscribe(opciones => {
+    this.stockService.getAllStockGeneral().subscribe(opciones => {
       
       this.options = opciones
       

@@ -51,6 +51,7 @@ const routes: Routes = [
     canActivate: [AdminGuard], 
     
     children: [
+      { path: 'admin', component: AdminComponent },
       { path: 'tipo-articulo', component: TipoArticuloComponent },
       { path: 'tipo-personas', component: TipoPersonaComponent },
       { path: 'localidades', component: LocalidadesComponent },
