@@ -12,8 +12,8 @@ import { AdminGuard } from './auth/admin-guard/admin-guard.component';
 const routes: Routes = [
   { path: '', redirectTo: 'inicio', pathMatch: 'full' },
   {
-    path: 'admin',
-    loadChildren: () => import('./pages/admin/admin.module').then(m => m.AdminModule),
+    path: '',
+    loadChildren: () => import('./pages/admin.module').then(m => m.AdminModule),
     canActivate: [AdminGuard] 
   },
   {
