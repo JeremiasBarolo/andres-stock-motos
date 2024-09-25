@@ -89,10 +89,10 @@ export class InicioComponent implements OnInit, OnDestroy {
       this.pedidosPendientes = data
     });
 
-    this.stockService.listAllStockCount()
+    this.tareasService.getAll()
     .pipe(takeUntil(this.destroy$))
     .subscribe((data) => {
-      this.stockDisponible = data
+      this.stockDisponible = data.length
     });
 
 

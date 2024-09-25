@@ -1,4 +1,4 @@
-import { Component, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
 import { AuthService } from './services/auth.service';
 
@@ -7,51 +7,32 @@ import { AuthService } from './services/auth.service';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent implements OnChanges, OnInit {
+export class AppComponent implements OnInit {
   showSidebar = true;
   showHeader = true;
-  isLoogedIn:boolean = false
+  isLogged:boolean
 
   constructor(private router: Router, private authService: AuthService) {
-    this.isLoogedIn = this.authService.isLoggedIn()
-    if(!this.isLoogedIn){
-      this.router.navigate(['/login']);
-      
-    }
+    this.isLogged = this.authService.isLoggedIn()
 
     this.router.events.subscribe(event => {
       if (event instanceof NavigationEnd) {
-    
-        const isLoginPage = event.url.includes('login');
-        const isRootPage = event.url === '' || event.url === '/';
-    
-        this.showSidebar = !(isLoginPage || isRootPage);
-        this.showHeader = !(isLoginPage || isRootPage);
+        
+        const isLoginPage = event.url.includes('/login') 
+        this.showSidebar = !isLoginPage;
+        this.showHeader = !isLoginPage;
+
+        if(!this.isLogged){
+          this.showSidebar = this.isLogged
+          this.showHeader = this.isLogged
+          this.router.navigate(['/login'])
+        }
       }
     });
-    
   }
   ngOnInit(): void {
-    this.loginCheck();
+    
   }
 
   
-
-  ngOnChanges(changes: SimpleChanges): void {
-    this.loginCheck();
-  }
-
-
-  loginCheck(){
-    this.router.events.subscribe(event => {
-      if (event instanceof NavigationEnd) {
-    
-        const isLoginPage = event.url.includes('login');
-        const isRootPage = event.url === '' || event.url === '/';
-    
-        this.showSidebar = !(isLoginPage || isRootPage);
-        this.showHeader = !(isLoginPage || isRootPage);
-      }
-    });
-  }
 }
