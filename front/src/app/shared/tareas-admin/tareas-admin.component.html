@@ -37,9 +37,13 @@
             </td>
             <td>
               <p-button *ngIf="tarea.estado === 'En Proceso'" icon="pi pi-check" [text]="true" severity="success" (click)="finalizarTarea(tarea)" (click)="completed(tarea.id, tarea.estado)" ></p-button>
-              <p-button *ngIf="tarea.estado === 'Pendiente'" icon="pi pi-play" [text]="true" severity="primary" (click)="tareaEnProceso(tarea)"  (click)="completed(tarea.id, tarea.estado)"></p-button>
+              <p-button *ngIf="tarea.estado === 'Pendiente'" icon="pi pi-play" [text]="true" severity="primary" (click)="tareaEnProceso(tarea)" (click)="completed(tarea.id, tarea.estado)"></p-button>
               <p-button *ngIf="tarea.estado === 'Completada'" icon="pi pi-check-circle" [text]="true" severity="primary" [disabled]="tarea.estado === 'Completada'"></p-button>
+            
+              <!-- Botón para retroceder el estado -->
+              <p-button icon="pi pi-arrow-left" [text]="true" severity="warning" (click)="volverAtras(tarea)" (click)="completed(tarea.id, tarea.estado)"></p-button>
             </td>
+            
           </tr>
         </tbody>
       </table>

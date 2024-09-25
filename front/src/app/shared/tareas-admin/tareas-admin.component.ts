@@ -90,5 +90,13 @@ export class TareasAdminComponent implements OnInit, OnDestroy {
     }
 
   }
+
+  volverAtras(tarea: any) {
+    if (tarea.estado === 'Completada') {
+      tarea.estado = 'En Proceso';
+    } else if (tarea.estado === 'En Proceso') {
+      tarea.estado = 'Pendiente';
+    }
+  }
 }
 

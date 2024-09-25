@@ -132,4 +132,6 @@ export class InicioComponent implements OnInit, OnDestroy {
       return coloresOrden.indexOf(a.color) - coloresOrden.indexOf(b.color);
     });
   }
+
+  
 }
