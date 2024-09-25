@@ -3,6 +3,11 @@
     <p-button icon="pi pi-plus" label="Agregar Service" [text]="true" (click)="crearVisible = true" styleClass="ml-auto"></p-button>
 </div>
 
+<div class="filter-container">
+    <p-calendar class="ml-2" [(ngModel)]="selectedDate" placeholder="Fecha" dateFormat="dd-mm-yy"></p-calendar>
+    <p-button [text]="true" icon="pi pi-search" (click)="filterByDate()"></p-button>
+</div>
+
 <app-tablang
     [data]="products"
     [columns]="columns"
@@ -471,4 +476,32 @@
     <div class="flex justify-content-end gap-2 mt-3">
         <p-button label="Volver" icon="pi pi-times" [text]="true" severity="danger" (click)="crearVisible = false"></p-button>
     </div>
+</p-dialog>
+
+
+<p-dialog header="Historial por Fecha ({{selectedDate | date}})" [(visible)]="fechasModal" [modal]="true" [style]="{width: '75vw'}" (onHide)="cerrarFecha()">
+    <p-table [value]="filteredProducts" [paginator]="true" [rows]="10" [responsive]="true" [styleClass]="'table shop-table'">
+      <ng-template pTemplate="header">
+        <tr>
+          <th>Modelo</th>
+          <th>Patente</th>
+          <th>Cliente</th>
+          <th>Tipo de Servicio</th>
+          <th>Recepcionista</th>
+          <th>Fecha Estimada de Entrega</th>
+          <th>Hora Estimada de Entrega</th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-item let-i="rowIndex">
+        <tr>
+          <td (click)="modalOpen(item)">{{ item.modelo }}</td>
+          <td (click)="modalOpen(item)">{{ item.patente}}</td>
+          <td (click)="modalOpen(item)">{{ item.cliente}}</td>
+          <td (click)="modalOpen(item)">{{ item.tipo_servicio}}</td>
+          <td (click)="modalOpen(item)">{{ item.Recepcionista}}</td>
+          <td (click)="modalOpen(item)">{{ item.fecha_est_entrega}}</td>
+          <td (click)="modalOpen(item)">{{ item.hora_est_entrega}}</td>
+        </tr>
+      </ng-template>
+    </p-table>
 </p-dialog>

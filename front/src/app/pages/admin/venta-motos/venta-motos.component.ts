@@ -26,6 +26,7 @@ export class VentaMotosComponent implements OnDestroy, OnInit {
   crearVisible: boolean = false;
   detailModal: boolean = false;
   DataModalVisible : boolean = false;
+  
   form: FormGroup;
   tipo: any;
   cardData: any;
@@ -43,6 +44,8 @@ export class VentaMotosComponent implements OnDestroy, OnInit {
   tipoMovimientoChoise: any[] = []
   selectedTipo: any;
   filteredProducts: any[]= []
+  selectedDate: any;
+  fechasModal: boolean = false
   
 
   constructor(
@@ -249,6 +252,23 @@ export class VentaMotosComponent implements OnDestroy, OnInit {
     setTimeout(() => {
       this.selectedTipo = undefined;
     });
+  }
+
+  cerrarFecha(){
+    this.fechasModal = false
+    this.filteredProducts = []
+  }
+
+  filterByDate() {
+    if (this.selectedDate) {
+      const formattedSelectedDate = this.datePipe.transform(this.selectedDate, 'dd/MM/yy');
+      this.filteredProducts = this.products.filter(product => {
+        const formattedProductDate = product.createdAt
+        return formattedProductDate === formattedSelectedDate;
+      });
+
+      this.fechasModal = true
+    }
   }
 }
 

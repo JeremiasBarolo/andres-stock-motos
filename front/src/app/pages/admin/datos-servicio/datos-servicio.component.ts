@@ -12,6 +12,7 @@ import { MovimientosService } from '../../../services/movimientos.service';
 import { TipoServicioService } from '../../../services/tipo-servicio.service';
 import { ChecklistService } from '../../../services/checklist.service';
 import { AuthService } from '../../../services/auth.service';
+import { DateFormatterService } from '../../../services/date-formatter.service';
 
 @Component({
   selector: 'app-datos-servicio',
@@ -45,6 +46,9 @@ export class DatosServicioComponent implements OnInit, OnDestroy {
   usuarioIdEdit:any
   recepcionistaId:any
   recepcionistaIdEdit:any
+  selectedDate: any;
+  fechasModal: boolean = false
+  filteredProducts: any[] = []
 
   constructor(
     private datosServicioService: DatosServicioService,
@@ -58,6 +62,7 @@ export class DatosServicioComponent implements OnInit, OnDestroy {
     private fb: FormBuilder,
     private router: Router,
     private datePipe: DatePipe,
+    private dateFormatterService: DateFormatterService
     
   ) {
     this.form = this.fb.group({
@@ -118,8 +123,8 @@ export class DatosServicioComponent implements OnInit, OnDestroy {
         estado_general: item.DatosServicio.estado_general,
         observaciones: item.DatosServicio.observaciones,
         Recepcionista: item.Recepcionista,
-        fecha_recepcion: this.datePipe.transform(item.DatosServicio.fecha_recepcion, 'dd/MM/yy'),
-        fecha_est_entrega: this.datePipe.transform(item.DatosServicio.fecha_est_entrega, 'dd/MM/yy'),
+        fecha_recepcion: this.dateFormatterService.formatDateToDDMMYY(item.DatosServicio.fecha_recepcion),
+        fecha_est_entrega: this.dateFormatterService.formatDateToDDMMYY(item.DatosServicio.fecha_est_entrega),
         hora_est_entrega: item.DatosServicio.hora_est_entrega,
         recepcionistaId: item.DatosServicio.recepcionistaId,
         DatosServicio: item.DatosServicio,
@@ -265,14 +270,15 @@ export class DatosServicioComponent implements OnInit, OnDestroy {
     if (this.id > 0) {
       this.tipo.checklist = formData.selectedServicios
       // Es editar
-      this.datosServicioService.update(this.id, {...this.tipo, usuarioId: this.usuarioIdEdit , recepcionistaId: this.recepcionistaIdEdit}).pipe(takeUntil(this.destroy$)).subscribe(() => {
-        setTimeout(() => {
-          window.location.reload();
-        }, 600);
-      }, error => {
-        console.error('Error al actualizar:', error);
-      });
-
+      // this.datosServicioService.update(this.id, {...this.tipo, usuarioId: this.usuarioIdEdit , recepcionistaId: this.recepcionistaIdEdit}).pipe(takeUntil(this.destroy$)).subscribe(() => {
+      //   setTimeout(() => {
+      //     window.location.reload();
+      //   }, 600);
+      // }, error => {
+      //   console.error('Error al actualizar:', error);
+      // });
+      console.log(this.tipo);
+      
     } else {
       // Es crear
       this.datosServicioService.create({...this.tipo, usuarioId: this.usuarioId, recepcionistaId:this.recepcionistaId}).pipe(takeUntil(this.destroy$)).subscribe(() => {
@@ -427,6 +433,28 @@ pdfOpen(data: any) {
 
   this.redirectToPDF(data)
  
+}
+
+cerrarFecha(){
+  this.fechasModal = false
+  this.filteredProducts = []
+}
+
+filterByDate() {
+  if (this.selectedDate) {
+
+    const formattedSelectedDate = this.dateFormatterService.formatDateToDDMMYY(this.selectedDate)
+    this.filteredProducts = this.products.filter(product => {
+      console.log(product.DatosServicio.fecha_recepcion);
+      
+      const formattedProductDate = this.dateFormatterService.formatDateToDDMMYY(product.DatosServicio.fecha_recepcion)
+      console.log(formattedProductDate);
+      return formattedProductDate === formattedSelectedDate;
+    });
+    console.log(this.filteredProducts);
+    
+    this.fechasModal = true
+  }
 }
 
 

@@ -2,13 +2,15 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Subject, takeUntil } from 'rxjs';
-
 import { MovimientosService } from '../../../services/movimientos.service';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-historial-clientes',
   templateUrl: './historial-clientes.component.html',
-  styleUrl: './historial-clientes.component.css'
+  styleUrl: './historial-clientes.component.css',
+  providers: [DatePipe]
+  
 })
 export class HistorialClientesComponent implements OnInit, OnDestroy {
 
@@ -20,14 +22,18 @@ export class HistorialClientesComponent implements OnInit, OnDestroy {
   clientes: any[] = [];
   selectedClient: any;
   clienteChoice:any[] = []
-
+  selectedDate: any;
+  fechasModal: boolean = false
   private destroy$ = new Subject<void>();
+  filteredProducts: any[] = []
+
 
   constructor( 
     private movimientosService: MovimientosService,
     private fb: FormBuilder,
     private router: Router,
     private aRoute: ActivatedRoute,
+    private datePipe: DatePipe,
   ){
 
   }
@@ -98,7 +104,23 @@ export class HistorialClientesComponent implements OnInit, OnDestroy {
   }
  
 
-  
+  cerrarFecha(){
+    this.fechasModal = false
+    this.filteredProducts = []
+  }
+
+  filterByDate() {
+    if (this.selectedDate) {
+      const formattedSelectedDate = this.datePipe.transform(this.selectedDate, 'dd/MM/yy');
+      this.filteredProducts = this.products.filter(product => {
+        const formattedProductDate = this.datePipe.transform(product.createdAt, 'dd/MM/yy');
+        return formattedProductDate === formattedSelectedDate;
+      });
+      console.log(this.filteredProducts);
+      
+      this.fechasModal = true
+    }
+  }
   
   
 
