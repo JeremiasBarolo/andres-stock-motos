@@ -14,6 +14,10 @@
             return await TareasProvider.listOneTareas(Tareas_id);
         };
 
+        const countHome = async () => {
+            return await TareasProvider.countHome();
+        };
+
         const createTareas = async (TareasData) => {
             return await TareasProvider.createTareas(TareasData);
         };
@@ -34,6 +38,7 @@
         createTareas, 
         updateTareas, 
         deleteTareas,
-        listTareasEmpleado 
+        listTareasEmpleado,
+        countHome
         };
 

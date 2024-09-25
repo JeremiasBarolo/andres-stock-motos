@@ -27,7 +27,7 @@ export class InicioComponent implements OnInit, OnDestroy {
   clientes:any[] = []
   ventasData:any[] = []
   cardData:any
-  tareas:any[] = []
+  tareas:any
 
 
   private destroy$ = new Subject<void>();
@@ -89,10 +89,10 @@ export class InicioComponent implements OnInit, OnDestroy {
       this.pedidosPendientes = data
     });
 
-    this.tareasService.getAll()
+    this.tareasService.getPendientesCount()
     .pipe(takeUntil(this.destroy$))
     .subscribe((data) => {
-      this.stockDisponible = data.length
+      this.tareas = data
     });
 
 

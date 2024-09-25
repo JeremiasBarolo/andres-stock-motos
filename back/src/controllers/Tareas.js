@@ -36,6 +36,17 @@ const listTareasEmpleado = async (req, res) => {
 
 };
 
+const countHome = async (req, res) => {
+  try {
+    const Tareas = await TareasService.countHome();
+    res.json(Tareas);
+
+  } catch (err) {
+    res.status(500).json({ action: "listOneTareas", error: err.message });
+  }
+
+};
+
 const createTareas = async (req, res) => {
 
   try {
@@ -75,5 +86,6 @@ module.exports = {
   createTareas, 
   updateTareas, 
   deleteTareas,
-  listTareasEmpleado 
+  listTareasEmpleado,
+  countHome 
 };

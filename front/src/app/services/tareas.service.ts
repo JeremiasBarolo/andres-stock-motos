@@ -40,6 +40,12 @@ export class TareasService {
     );
   }
 
+  getPendientesCount(): Observable<any> {
+    return this.http.get<any>(`${this.apiUrl}/countHome`, { headers: this.getHeaders() }).pipe(
+      catchError(this.handleError<any>('countHome'))
+    );
+  }
+
   // Crear
   create(Entity: any): Observable<any> {
     return this.http.post<any>(`${this.apiUrl}`, Entity, { headers: this.getHeaders() }).pipe(

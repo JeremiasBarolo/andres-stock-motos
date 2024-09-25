@@ -2,6 +2,8 @@ var models = require('../models');
 const bcrypt = require('bcrypt');
 const Formatter = require('./formatter');
 const format = new Formatter();
+const { Op } = require('sequelize');
+
 
 
 class TareasService {
@@ -24,6 +26,24 @@ class TareasService {
       console.log('✅ Tareas were found');
       let data = format.Tareas(Tareas);
       return data
+    } catch (err) {
+      console.error('🛑 Error when fetching Tareas', err);
+      throw err;
+    }
+  }
+
+  async countHome() {
+    try {
+      const Tareas = await models.Tareas.findAll({
+        where: {
+          estado: {
+            [Op.ne]: 'Completada'  
+          }
+        }
+      });
+      console.log('✅ Tareas were found');
+      
+      return Tareas.length
     } catch (err) {
       console.error('🛑 Error when fetching Tareas', err);
       throw err;

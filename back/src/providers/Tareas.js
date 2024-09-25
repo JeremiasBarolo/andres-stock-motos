@@ -13,6 +13,10 @@ const listOneTareas = async (Tareas_id) => {
   return await tareasService.listOneTareas(Tareas_id);
 };
 
+const countHome = async () => {
+  return await tareasService.countHome();
+};
+
 const createTareas = async (TareasData) => {
   return await tareasService.createTareas(TareasData);
 };
@@ -32,4 +36,5 @@ module.exports = {
   updateTareas,
   deleteTareas,
   listTareasEmpleado,
+  countHome
 };
