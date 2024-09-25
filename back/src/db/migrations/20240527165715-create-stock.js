@@ -18,6 +18,9 @@ module.exports = {
       costo: {
         type: Sequelize.INTEGER
       },
+      cantidad: {
+        type: Sequelize.INTEGER
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE

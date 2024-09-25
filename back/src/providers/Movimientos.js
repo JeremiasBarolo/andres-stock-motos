@@ -1,92 +1,97 @@
+const MovimientosService = require('../classes/movimientos');
+const movimientosService = new MovimientosService();
+
+const listHistorial = async () => {
+  return await movimientosService.listHistorial();
+};
+
+const listPrecios = async () => {
+  return await movimientosService.listPrecios();
+};
+
+const listAllRecaudacion = async () => {
+  return await movimientosService.listAllRecaudacion();
+};
+
+const listAllVentasPorCategoria = async () => {
+  return await movimientosService.listAllVentasPorCategoria();
+};
+
+const listAllMovimientos = async () => {
+  return await movimientosService.listAllMovimientos();
+};
+
+const listAllServices = async () => {
+  return await movimientosService.listAllServices();
+};
+
+const listAllVentasRepuestos = async () => {
+  return await movimientosService.listAllVentasRepuestos();
+};
+
+const listAllVentasAccesesorios = async () => {
+  return await movimientosService.listAllVentasAccesesorios();
+};
+
+const listAllMotosMovimientos = async () => {
+  return await movimientosService.listAllMotosMovimientos();
+};
 
 
-    var models = require('../models');
+const listOneMovimientos = async (Movimientos_id) => {
+  return await movimientosService.listOneMovimientos(Movimientos_id);
+};
 
-    const listAllMovimientos= async () => {
-    try {
-        const Movimientos = await models.Movimientos.findAll(
-        {
-                include: [
-                    {all:true}
-                ]
-            });
-        console.log('✅ Movimientos were found');
-        return Movimientos;
-    } catch (err) {
-        console.error('🛑 Error when fetching Movimientos', err);
-        throw err;
-    }
-    };
+const listAllRelaciones = async (Movimientos_id) => {
+  return await movimientosService.listAllRelaciones(Movimientos_id);
+};
 
-    const listOneMovimientos= async (Movimientos_id) => {
-    try {
-        const oneMovimientos= await models.Movimientos.findByPk(Movimientos_id, 
-        );
-        if (!oneMovimientos) {
-        
-        return null;
-        }
-        return oneMovimientos;
-    } catch (err) {
-        
-        throw err;
-    }
-    };
+const createMovimientos = async (MovimientosData) => {
+  return await movimientosService.createMovimientos(MovimientosData);
+};
 
-    const createMovimientos= async (DataMovimientos) => {
-    
+const createVentaMoto = async (MovimientosData) => {
+  return await movimientosService.createVentaMoto(MovimientosData);
+};
 
-    try {
-        
-        const newMovimientos= await models.Movimientos.create(DataMovimientos);
-        
-        return newMovimientos;
-        
-    } catch (err) {
-        console.error('🛑 Error when creating Movimientos', err);
-        throw err;
-    }
-    };
+const updateMovimientos = async (Movimientos_id, dataUpdated) => {
+  return await movimientosService.updateMovimientos(Movimientos_id, dataUpdated);
+};
 
-    const updateMovimientos= async (Movimientos_id, dataUpdated) => {
-    
+const updateVentaMotos = async (Movimientos_id, dataUpdated) => {
+  return await movimientosService.updateVentaMotos(Movimientos_id, dataUpdated);
+};
 
-    try {
+const updateVentaRepuestos = async (Movimientos_id, dataUpdated) => {
+  return await movimientosService.updateVentaRepuestos(Movimientos_id, dataUpdated);
+};
 
-        const oldMovimientos= await models.Movimientos.findByPk(Movimientos_id);
-        
-        let newMovimientos = await oldMovimientos.update(dataUpdated);
+const deleteMovimientos = async (Movimientos_id) => {
+  return await movimientosService.deleteMovimientos(Movimientos_id);
+};
 
-        return newMovimientos;
-    } catch (err) {
-        console.error('🛑 Error when updating Movimientos', err);
-        throw err;
-    }
-    
-    };
+const deleteVentaRespuestos = async (Movimientos_id) => {
+  return await movimientosService.deleteVentaRespuestos(Movimientos_id);
+};
 
-
-    const deleteMovimientos = async (Movimientos_id) => {
-    try {
-        const deletedMovimientos = await models.Movimientos.findByPk(Movimientos_id, 
-        );
-
-        if (!deletedMovimientos) {
-        return null;
-        }
-        
-        await models.Movimientos.destroy({ where: { id: Movimientos_id } });
-
-
-        return deletedMovimientos;
-    } catch (err) {
-        console.error('🛑 Error when deleting Movimientos', err);
-        throw err;
-    }
-    };
-
-
-    module.exports = {
-    listAllMovimientos, listOneMovimientos, createMovimientos, updateMovimientos, deleteMovimientos,
-    };
-
+module.exports = {
+  listAllMovimientos,
+  listOneMovimientos,
+  createMovimientos,
+  updateMovimientos,
+  deleteMovimientos,
+  updateVentaRepuestos,
+  listAllMotosMovimientos,
+  createVentaMoto,
+  updateVentaMotos,
+  listHistorial,
+  deleteVentaRespuestos,
+  listAllServices,
+  listPrecios,
+  listAllRelaciones,
+  listAllRecaudacion,
+  listAllVentasPorCategoria,
+  listAllVentasRepuestos,
+  listAllVentasAccesesorios
+  
+};

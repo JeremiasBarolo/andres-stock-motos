@@ -9,9 +9,6 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      tipo_serivio: {
-        type: Sequelize.STRING
-      },
       fecha_recepcion: {
         type: Sequelize.DATE
       },
@@ -19,13 +16,18 @@ module.exports = {
         type: Sequelize.DATE
       },
       hora_est_entrega: {
-        type: Sequelize.INTEGER
+        type: Sequelize.TIME,
+        allowNull: true,
       },
+      
       modelo: {
         type: Sequelize.STRING
       },
       num_motor: {
-        type: Sequelize.BIGINT(100)
+        type: Sequelize.STRING(100)
+      },
+      num_chasis: {
+        type: Sequelize.STRING(100)
       },
       color: {
         type: Sequelize.STRING

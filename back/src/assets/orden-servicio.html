@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Orden de Servicio</title>
+  <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    body {
+        width: 21cm;
+        min-height: 29.7cm;
+        padding: 1cm;
+        margin: auto;
+        background-color: #ffffff;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+    .bordered {
+      border: 1px solid black;
+    }
+    .no-border {
+      border: none;
+    }
+    .table td, .table th {
+      border: 1px solid black;
+    }
+  </style>
+</head>
+<body>
+  <div class="container my-4">
+    <div class="row mb-2">
+      <div class="col-6">
+        <img src="logo-sg-motos.png" alt="Logo" style="max-height: 10vw;">
+      </div>
+      <div class="col-6 text-right">
+        <h5>ORDEN DE SERVICIO</h5>
+        <p>Nº <span id="ordenNumeroLabel"></span></p>
+      </div>
+    </div>
+    <div class="bordered p-3 mb-2">
+      <h6>DATOS DEL CLIENTE</h6>
+      <div class="row">
+        <div class="col-6 bordered p-1">Nombre y Apellido: <span id="nombreApellido"></span></div>
+        <div class="col-6 bordered p-1">DNI: <span id="dni"></span></div>
+        <div class="col-6 bordered p-1">Dirección: <span id="direccion"></span></div>
+        <div class="col-3 bordered p-1">C.P.: <span id="cp"></span></div>
+        <div class="col-3 bordered p-1">Localidad: <span id="localidad"></span></div>
+        <div class="col-6 bordered p-1">Tel.: <span id="telefono"></span></div>
+        <div class="col-6 bordered p-1">E-mail: <span id="email"></span></div>
+      </div>
+    </div>
+    <div class="bordered p-1 mb-2">
+      <h6>TIPO DE SERVICIO</h6>
+      <div class="row">
+        <div class="col-6">
+            <div class="bordered pl-1">
+              <input type="checkbox" id="servicioGarantia" disabled>
+              <label for="servicioGarantia" id="servicioGarantiaLabel">Servicio Garantia</label>
+            </div>
+            <div class="bordered pl-1">
+              <input type="checkbox" id="reparacionGral" disabled>
+              <label for="reparacionGral" id="reparacionGralLabel">Reparacion General</label>
+            </div>
+            <div class="bordered pl-1">
+              <input type="checkbox" id="mantenimientoPeriodico" disabled>
+              <label for="mantenimientoPeriodico" id="mantenimientoPeriodicoLabel">mantenimiento Periodico</label>
+            </div>
+            <div class="bordered pl-1">
+              <input type="checkbox" id="puestaMarcha" disabled>
+              <label for="puestaMarcha" id="puestaMarchaLabel">Puesta Marcha</label>
+            </div>
+            <div class="bordered pl-1">
+              <input type="checkbox" id="otroServicio" disabled>
+              <label for="otroServicio" id="otroServicioLabel">Otro Servicio</label>
+            </div>
+          </div>
+        <div class="col-6">
+          <div class="bordered p-1">Fecha Recep.: <span id="fechaRecepcion"></span></div>
+          <div class="bordered p-1">Hora: <span id="horaRecepcion"></span></div>
+          <div class="bordered p-1">Recepcionista: <span id="recepcionista"></span></div>
+          <div class="bordered p-1">Fecha Est. Entrega: <span id="fechaEntrega"></span></div>
+          <div class="bordered p-1">Hora Est. Entrega: <span id="horaEntrega"></span></div>
+        </div>
+      </div>
+    </div>
+    <div class="bordered p-3 mb-2">
+      <h6>DATOS DEL VEHÍCULO</h6>
+      <div class="row">
+        <div class="col-3 bordered p-1">Modelo: <span id="modelo"></span></div>
+        <div class="col-3 bordered p-1">Color: <span id="color"></span></div>
+        <div class="col-3 bordered p-1">Patente: <span id="patente"></span></div>
+        <div class="col-3 bordered p-1">Kms: <span id="kms"></span></div>
+        <div class="col-6 bordered p-1">Nº de Motor: <span id="numeroMotor"></span></div>
+        <div class="col-6 bordered p-1">Nº Chasis: <span id="numeroChasis"></span></div>
+      </div>
+    </div>
+    <div class="bordered p-2 mb-2">
+      <h6>ESTADO GENERAL</h6>
+      <div class="bordered p-1" style="height: 50px;"><span id="estadoGeneral"></span></div>
+    </div>
+    <div class="bordered p-2 mb-2">
+      <h6>DESCRIPCIÓN DEL TRABAJO</h6>
+      <table class="table table-bordered">
+        <thead>
+          <tr>
+            <th>CÓDIGO</th>
+            <th>DESCRIPCIÓN TRABAJO REALIZADO</th>
+            <th>COSTO M.O.</th>
+            <th>CÓDIGO Y DESCRIP. REPUESTOS</th>
+            <th>CANT.</th>
+            <th>COSTO REP.</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td style="height: 25px;"><span id="codigo1"></span></td>
+            <td><span id="descripcionTrabajo1"></span></td>
+            <td><span id="costoMO1"></span></td>
+            <td><span id="codigoRepuestos1"></span></td>
+            <td><span id="cantidad1"></span></td>
+            <td><span id="costoRep1"></span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="bordered pr-3 mb-2">
+      <div class="row">
+        <div class="col-6">Total M.O.:<span id="totalMOLabel"></span></div>
+        <div class="col-6 bordered p-1"><span id="totalMO"></span></div>
+        <div class="col-6">Total Repuestos: <span id="totalRepuestosLabel"></span></div>
+        <div class="col-6 bordered p-1"><span id="totalRepuestos"></span></div>
+        <div class="col-6">Total: <span id="totalLabel"></span></div>
+        <div class="col-6 bordered p-1"><span id="total"></span></div>
+      </div>
+    </div>
+    <div class="bordered p-2">
+      <h6>Observaciones:</h6>
+      <div class="bordered p-1" style="height: 50px;"><span id="observaciones"></span></div>
+    </div>
+    <div class="bordered p-2 mb-2">
+      <h6>CHECK LIST EGRESO SERVICIO</h6>
+      <div class="row">
+        <div class="col-6">
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" id="noAplica">
+            <label class="form-check-label" for="noAplica">NO APLICA</label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" id="cambioAceiteMotor">
+            <label class="form-check-label" for="cambioAceiteMotor">Cambio de aceite de motor</label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" id="cambioFiltroAceite">
+            <label class="form-check-label" for="cambioFiltroAceite">Cambio de filtro de aceite</label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" id="limpiezaReemplazoFiltroAceite">
+            <label class="form-check-label" for="limpiezaReemplazoFiltroAceite">Limpieza / Reemplazo de filtro de aceite</label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" id="limpiezaCarburador">
+            <label class="form-check-label" for="limpiezaCarburador">Limpieza de carburador / Carburación</label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" id="controlValvulas">
+            <label class="form-check-label" for="controlValvulas">Control / Registro de válvulas</label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" id="lubricacionGeneral">
+            <label class="form-check-label" for="lubricacionGeneral">Lubricación general</label>
+          </div>
+        </div>
+        <div class="col-6">
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" id="ajusteFrenos">
+            <label class="form-check-label" for="ajusteFrenos">Ajuste de frenos</label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" id="cambioFiltroAire">
+            <label class="form-check-label" for="cambioFiltroAire">Cambio de filtro de aire</label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" id="ajusteCadena">
+            <label class="form-check-label" for="ajusteCadena">Ajuste de cadena</label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" id="verificacionLuces">
+            <label class="form-check-label" for="verificacionLuces">Verificación de luces</label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" id="verificacionNeumaticos">
+            <label class="form-check-label" for="verificacionNeumaticos">Verificación de neumáticos</label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" id="otros">
+            <label class="form-check-label" for="otros">Otros</label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" id="pruebaManejo">
+            <label class="form-check-label" for="pruebaManejo">Prueba de manejo</label>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="bordered pr-3 mb-2">
+      <div class="row">
+        <div class="col-6">Fecha de Retiro: <span id="fechaRetiroLabel"></span></div>
+        <div class="col-6 bordered p-1"><span id="fechaRetiro"></span></div>
+        <div class="col-6">Hora de Retiro: <span id="horaRetiroLabel"></span></div>
+        <div class="col-6 bordered p-1"><span id="horaRetiro"></span></div>
+        <div class="col-6">Firma del Cliente:</div>
+        <div class="col-6 bordered p-1" style="height: 50px;"><span id="firmaCliente"></span></div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

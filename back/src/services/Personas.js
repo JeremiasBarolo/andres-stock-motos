@@ -6,6 +6,26 @@
             return await PersonasProvider.listAllPersonas();
         };
 
+        const mejoresEmpleados = async () => {
+            return await PersonasProvider.mejoresEmpleados();
+        };
+
+        const mejoresClientes = async () => {
+            return await PersonasProvider.mejoresClientes();
+        };
+
+        const listAllEmpleados = async () => {
+            return await PersonasProvider.listAllEmpleados();
+        };
+
+        const listAllProveedores = async () => {
+            return await PersonasProvider.listAllProveedores();
+        };
+
+        const listAllClientes = async () => {
+            return await PersonasProvider.listAllClientes();
+        };
+
         const listOnePersonas = async (Personas_id) => {
             return await PersonasProvider.listOnePersonas(Personas_id);
         };
@@ -25,6 +45,15 @@
 
 
         module.exports = {
-        listAllPersonas, listOnePersonas, createPersonas, updatePersonas, deletePersonas, 
+        listAllPersonas, 
+        listOnePersonas, 
+        createPersonas, 
+        updatePersonas, 
+        deletePersonas, 
+        listAllEmpleados, 
+        listAllProveedores,
+        listAllClientes,
+        mejoresEmpleados,
+        mejoresClientes
         };
 

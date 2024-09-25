@@ -2,6 +2,9 @@
     const express = require('express');
     const router = express.Router();
     const {TipoArticuloController }= require('../controllers');
+    const { authMiddleware } = require('../middleware');
+
+    router.use(authMiddleware)
 
     router.get('/', TipoArticuloController.listAllTipoArticulo);
     router.get('/:TipoArticulo_id', TipoArticuloController.listOneTipoArticulo);

@@ -1,92 +1,70 @@
+const stockService = require('../classes/stock');
+const StockService = new stockService();
 
+const listAllStock = async () => {
+  return await StockService.listAllStock();
+};
 
-    var models = require('../models');
+const listAllStockGeneral = async () => {
+  return await StockService.listAllStockGeneral();
+};
 
-    const listAllStock= async () => {
-    try {
-        const Stock = await models.Stock.findAll(
-        {
-                include: [
-                    {all:true}
-                ]
-            });
-        console.log('✅ Stock were found');
-        return Stock;
-    } catch (err) {
-        console.error('🛑 Error when fetching Stock', err);
-        throw err;
-    }
-    };
+const listAllVentasAccesesorios = async () => {
+  return await StockService.listAllVentasAccesesorios();
+};
 
-    const listOneStock= async (Stock_id) => {
-    try {
-        const oneStock= await models.Stock.findByPk(Stock_id, 
-        );
-        if (!oneStock) {
-        
-        return null;
-        }
-        return oneStock;
-    } catch (err) {
-        
-        throw err;
-    }
-    };
+const listAllVentasRepuestos = async () => {
+  return await StockService.listAllVentasRepuestos();
+};
 
-    const createStock= async (DataStock) => {
-    
+const listAllDisponible = async () => {
+  return await StockService.listAllStockCount();
+};
 
-    try {
-        
-        const newStock= await models.Stock.create(DataStock);
-        
-        return newStock;
-        
-    } catch (err) {
-        console.error('🛑 Error when creating Stock', err);
-        throw err;
-    }
-    };
+const listAllInsumos = async () => {
+  return await StockService.listAllInsumos();
+};
 
-    const updateStock= async (Stock_id, dataUpdated) => {
-    
+const listAllRepuestos = async () => {
+  return await StockService.listAllRepuestos();
+};
 
-    try {
+const listAllStockVentaGeneral = async () => {
+  return await StockService.listAllStockVentaGeneral();
+};
 
-        const oldStock= await models.Stock.findByPk(Stock_id);
-        
-        let newStock = await oldStock.update(dataUpdated);
+const listAllServicios = async () => {
+  return await StockService.listAllServicios();
+};
 
-        return newStock;
-    } catch (err) {
-        console.error('🛑 Error when updating Stock', err);
-        throw err;
-    }
-    
-    };
+const listOneStock = async (Stock_id) => {
+  return await StockService.listOneStock(Stock_id);
+};
 
+const createStock = async (StockData) => {
+  return await StockService.createStock(StockData);
+};
 
-    const deleteStock = async (Stock_id) => {
-    try {
-        const deletedStock = await models.Stock.findByPk(Stock_id, 
-        );
+const updateStock = async (Stock_id, dataUpdated) => {
+  return await StockService.updateStock(Stock_id, dataUpdated);
+};
 
-        if (!deletedStock) {
-        return null;
-        }
-        
-        await models.Stock.destroy({ where: { id: Stock_id } });
+const deleteStock = async (Stock_id) => {
+  return await StockService.deleteStock(Stock_id);
+};
 
-
-        return deletedStock;
-    } catch (err) {
-        console.error('🛑 Error when deleting Stock', err);
-        throw err;
-    }
-    };
-
-
-    module.exports = {
-    listAllStock, listOneStock, createStock, updateStock, deleteStock,
-    };
-
+module.exports = {
+  listAllStock,
+  listOneStock,
+  createStock,
+  updateStock,
+  deleteStock,
+  listAllRepuestos,
+  listAllServicios,
+  listAllStockVentaGeneral,
+  listAllInsumos,
+  listAllDisponible,
+  listAllVentasAccesesorios,
+  listAllVentasRepuestos,
+  listAllStockGeneral
+};

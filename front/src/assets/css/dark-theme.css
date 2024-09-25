@@ -402,16 +402,16 @@ html.dark-theme .chip {
 
 html.dark-theme .card {
   
-    background-color: #212121;
-    border: 1px solid rgb(255 255 255 / 12%);
+    background-color: #323232;
+    border: 1px solid #11161a;
 
 }
 
 html.dark-theme .card-header,
 html.dark-theme .card-footer {
 
-    background-color: #212121;
-    border-bottom: 1px solid rgb(255 255 255 / 12%);
+    background-color: #323232;
+    border-bottom: 1px solid #11161a;
 
 }
 

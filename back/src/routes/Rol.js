@@ -2,6 +2,9 @@
     const express = require('express');
     const router = express.Router();
     const {RolController }= require('../controllers');
+    const { authMiddleware } = require('../middleware');
+
+    router.use(authMiddleware)
 
     router.get('/', RolController.listAllRol);
     router.get('/:Rol_id', RolController.listOneRol);

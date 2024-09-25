@@ -12,6 +12,35 @@ const listAllMotos = async (req, res) => {
   }
 };
 
+
+
+const listAllMotosUsadas = async (req, res) => {
+  try {
+    const Motos = await MotosService.listAllMotosUsadas();
+    res.json(Motos);
+  } catch (err) {
+    res.status(500).json({ action: "listAll", error: err.message });
+  }
+};
+
+const listAllMotosConsignacion = async (req, res) => {
+  try {
+    const Motos = await MotosService.listAllMotosConsignacion();
+    res.json(Motos);
+  } catch (err) {
+    res.status(500).json({ action: "listAll", error: err.message });
+  }
+};
+
+const listAllMotosNuevas = async (req, res) => {
+  try {
+    const Motos = await MotosService.listAllMotosNuevas();
+    res.json(Motos);
+  } catch (err) {
+    res.status(500).json({ action: "listAll", error: err.message });
+  }
+};
+
 const listOneMotos = async (req, res) => {
   try {
     const id = req.params.Motos_id;
@@ -58,5 +87,12 @@ const deleteMotos = async (req, res) => {
 
 
 module.exports = {
-  listAllMotos, listOneMotos, createMotos, updateMotos, deleteMotos, 
+  listAllMotos, 
+  listOneMotos, 
+  createMotos, 
+  updateMotos, 
+  deleteMotos,
+  listAllMotosUsadas,
+  listAllMotosNuevas,
+  listAllMotosConsignacion
 };

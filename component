@@ -1,0 +1,774 @@
+<mat-card class="filtros-container">
+  <mat-card-header>
+    <mat-card-title fxLayout="row" fxLayoutAlign="none center">
+      <h3>BÚSQUEDA DE ADHERENTE</h3>
+    </mat-card-title>
+  </mat-card-header>
+  
+  <div class="filtros-container" fxLayout="row" fxLayoutGap="10px" fxLayoutAlign="start" fxLayoutWrap>
+    <mat-form-field class="filtro" appearance="outline">
+      <mat-label>CUIT</mat-label>
+      <input matInput maxlength="11" pattern="\d*" [(ngModel)]="filtros.cuil" placeholder="Ingrese el CUIT para buscar empresas" />
+    </mat-form-field>
+    
+    <div class="domicilio-container"> 
+      <mat-form-field appearance="outline" id="departamento" class="filtro-select">
+        <mat-label>Departamento</mat-label>
+        <mat-select [(ngModel)]="filtros.departamento" (selectionChange)="getLocalidadByDepartamento($event.value)">
+          <mat-option *ngFor="let departamento of departamentos" [value]="departamento.id">
+            {{departamento.nombre}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      
+      <mat-form-field appearance="outline" id="localidad" class="filtro-select">
+        <mat-label>Localidad</mat-label>
+        <mat-select [(ngModel)]="filtros.localidad">
+          <mat-option *ngFor="let localidad of localidades" [value]="localidad.id">
+            {{localidad.nombre}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <div class="datos-general">
+        <div class="perfil-laboral">
+            <div class="puestos-container">
+                <div class="puestos-agregados" *ngIf="puestosEmpleosSeleccionados.length > 0">
+                    <div>
+                        <p class="item-buttons puesto-seleccionado" *ngFor="let puesto of puestosEmpleosSeleccionados"
+                            (click)="quitarPuestoBusqueda(puesto)">
+                            {{puesto.nPuestoEmpleo}}
+                        </p>
+                    </div>
+                </div>
+                <div class="puestos-agregados-msg" (click)="openPuestoDialog()" *ngIf="puestosEmpleosSeleccionados.length === 0">
+                    Aún no tiene ningún puesto seleccionado para la búsqueda.
+                </div>
+               
+                <button mat-fab color="primary" (click)="openPuestoDialog()">
+                    <mat-icon>search</mat-icon>
+                </button> 
+            </div>
+        </div>
+    </div>
+    </div>
+    
+    <div class="filtros-botones">
+      <button mat-raised-button color="primary" (click)="buscarPersonas()">
+        <mat-icon>search</mat-icon>
+        <span>Buscar</span>
+      </button>
+      
+      <button mat-raised-button color="warn" (click)="limpiarFiltros()">
+        <mat-icon>clear</mat-icon>
+        <span>Limpiar Filtros</span>
+      </button>
+    </div>
+  </div>
+  
+  <mat-card *ngIf="adherentes.length === 0 && primeraBusqueda">
+    <mat-card-content>No se encontraron resultados para la búsqueda.</mat-card-content>
+  </mat-card>
+
+  <div class="card-container">
+    <mat-card *ngFor="let adherente of adherentes" class="empresa-card">
+      <mat-card-header>
+        <mat-card-title class="adherente-title">{{ adherente.nombre }} {{ adherente.apellido }}</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <p>CUIT: {{ adherente.cuil }}</p>
+        <p>Localidad: {{ getLocalidadById(adherente.idLocalidad) }}</p>
+        <ng-container *ngFor="let puesto of adherente.puestosArray; let i=index">
+          <p class="puesto-estilo" *ngIf="i<3">             
+              {{ puesto }}              
+          </p>
+          <p *ngIf="i==3" style="margin-left: 6px !important;font-size: larger !important; ">
+              ...
+          </p>
+          </ng-container>
+      </mat-card-content>
+      <mat-card-actions class="txt-detalle">
+        <button mat-button color="primary" (click)="openDetallesModal(adherente)">Ver Detalle</button>
+      </mat-card-actions>
+    </mat-card>
+  </div>
+
+  <div class="div-button-ver-mas">
+    <p>Mostrando {{adherentes.length}} Resultados</p>
+    <button mat-raised-button color="primary" (click)="cargarMas()">Ver Más</button>
+  </div>
+</mat-card>
+
+
+// ::ng-deep  {
+    //     mat-tab-body-content ng-tns-c281-17 ng-trigger ng-trigger-translateTab{
+    //             transform: none;
+    //             display: flex !important;
+    //             flex-direction: row;
+    //             align-items: center;
+    //             justify-content: space-evenly;
+    //     }
+    //     button.mat-paginator-navigation-last .mat-icon-button .mat-button-base .ng-star-inserted{
+    //             display: none !important;
+    //     }
+    
+    
+    
+    // }
+    
+    
+    .container-margin{
+        margin-top: 20px !important;
+    }
+    
+    
+    
+    .perfil-laboral {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+    }
+    
+    
+    .puestos-agregados {
+      margin: 0px 10px;
+      border: solid 1px #c9c9c9;
+      border-radius: 5px;
+      min-height: 80px;
+      padding: 3px;
+    }
+    
+    .puestos-agregados-msg {
+      margin: 0px 10px;
+      border: solid 1px #c9c9c9;
+      border-radius: 5px;
+      min-height: 80px;
+      display: flex;
+      flex-direction: column;
+      align-content: center;
+      align-items: center;
+      justify-content: center;
+      font-size: 17px;
+      color: #a6a6a6;
+    }
+    
+    cdk-virtual-scroll-viewport {
+      margin-top: -18px;
+    }
+    
+    .puestos-viewport {
+      width: 90vw!important;
+      height: 200px;
+      border: 1px solid #e0e0e0;
+    }
+    
+    .puesto-item {
+      display: block;
+      height: 26px;
+    }
+    
+    .item-buttons {
+      font-size: small;
+      border: 1px solid #2196f3;
+      width: fit-content;
+      background-color: #2196f3;
+      border-radius: 5px;
+      padding: 1px 6px;
+      margin-bottom: 4px;
+      color: white;
+    
+    }
+    
+    .item-buttons, .puesto-seleccionado :hover { 
+      cursor: pointer;
+    }
+    
+    .puesto-seleccionado {
+      background-color: #ffda24;
+      border: solid 1px #ffda24;
+      color: #000000;
+      width: fit-content !important;
+    }
+    
+    .container-puestoempleo{
+    padding-top: 6px;
+    padding-left: 6px;
+    }
+    
+    .button-div {
+      margin-top: 18px;
+      display: flex;
+      -webkit-box-orient: vertical;
+      -webkit-box-direction: normal;
+      flex-direction: row;
+      -webkit-box-pack: center;
+      justify-content: flex-end;
+      -webkit-box-align: center;
+      align-items: center;
+      flex-wrap: nowrap;
+    }
+    
+    .button-div button {
+      color: white!important;
+      background-color: #2196f3;
+      border: solid 1px #2196f3;
+      border-radius: 4px;
+      font-size: 14px;
+      font-weight: 500;
+      font-family: Roboto, "Helvetica Neue", sans-serif;
+    }
+    
+    
+    @media only screen and (max-width: 560px) {
+        mat-form-field {
+          width: 100% !important;
+        }
+        .container-mat2{
+          width: 100% !important;
+    
+        }
+        .btn-buscar{
+          width: 100%;
+        }
+        
+      }
+    
+    
+      .filtros-container {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        width: 100%;
+        margin-bottom: 20px;
+        flex-direction: column !important;
+      }
+    
+      .filtros-container {
+        display: flex;
+        flex-wrap: wrap; /* Permite que los filtros se ajusten en varias líneas si es necesario */
+        margin-bottom: 20px; /* Espacio entre los filtros y la tabla */
+        align-items: stretch;
+        margin-top: 30px;
+      }
+    
+      .filtro {
+        flex: 1; /* Permite que los filtros se estiren para llenar el espacio disponible */
+        min-width: 200px; /* Establece un ancho mínimo para cada filtro */
+        max-width: 100%;
+      }
+      .filtro-select{
+        max-width: 98%;
+      }
+    
+      .domicilio-container {
+        display: flex;
+        flex-direction: column;
+        padding: 0px 20px;
+        gap: 9px;
+        margin: 0px 0 6px 0;
+    }
+    
+    .datos-general {
+      display: flex;
+      -webkit-box-orient: vertical;
+      -webkit-box-direction: normal;
+      flex-direction: column;
+      margin-top: 4px;
+      align-items: center;
+      justify-content: flex-start;
+    }
+    
+    .perfil-laboral {
+      width:  90vw;
+      display: flex;
+      flex-direction: column;
+      padding-right: 18px;
+      padding-left: 11px;
+    }
+    
+    .puestos-container {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px;
+      flex-direction: row-reverse;
+    }
+    
+    .puestos-agregados, 
+    .puestos-agregados-msg {
+        flex-grow: 1;
+    }
+    
+    
+    .puestos-agregados {
+      margin-left: 5px;
+      border: solid 1px #c9c9c9;
+      border-radius: 5px;
+      min-height: 80px;
+      max-height: 160px;
+      padding: 3px;
+      overflow-y: scroll;
+      flex-grow: 1; 
+    }
+    
+    .puestos-agregados-msg {
+      border: solid 1px #c9c9c9;
+      border-radius: 5px;
+      min-height: 80px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 17px;
+      color: #a6a6a6;
+      margin-bottom: 10px;
+      margin-left: 19px;
+      margin-right: 16px;
+      padding: 10px;
+      flex-grow: 1;
+      margin-left: 5px;
+    }
+    
+    .item-buttons {
+      font-size: small;
+      border: 1px solid #2196f3;
+      width: fit-content;
+      background-color: #2196f3;
+      border-radius: 5px;
+      padding: 1px 6px;
+      margin-bottom: 4px;
+      color: white;
+      cursor: pointer;
+    }
+    
+    .item-buttons :hover{
+    background-color: #329df5;
+    }
+    
+    .puesto-seleccionado {
+      font-size: small;
+      border: 1px solid #ffda24;
+      width: fit-content;
+      background-color: #ffda24;
+      border-radius: 5px;
+      padding: 1px 6px;
+      margin-bottom: 4px;
+      color: black;
+    }
+    
+    .filtros-botones button {
+      width: 320px;
+    }
+    
+    /* Contenedor de los botones de búsqueda */
+    .filtros-botones {
+      display: flex;
+      justify-content: center;
+      gap: 10px; /* Espacio entre los botones */
+      margin: 20px 0; /* Añade margen superior e inferior para separar de otros elementos */
+      align-items: center;
+    }
+    
+    .card-container {
+      width: 100%;
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 16px;
+      padding: 30px;
+    }
+    
+    .empresa-card {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 16px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+      height: 100%; /* Asegura que la tarjeta tome toda la altura del contenedor */
+    }
+    
+    .empresa-title {
+      text-transform: capitalize;
+    }
+    
+    .container-data-puesto{
+      padding-left: 16px !important;
+    }
+    
+    .txt-localidad{
+      text-transform: capitalize;
+    
+    }
+    
+    .puesto-estilo {
+      border: 1px solid #007bff !important;
+      background-color: #007bff !important;
+      color: white !important;
+      border-radius: 40px !important;
+      padding: 1px 12px !important;
+      margin: 2px !important;
+      text-transform: capitalize !important;
+      width: fit-content !important;
+      font-size: small;
+    }
+    
+    .txt-detalle {
+      text-align: end; /* Alinea el botón a la derecha */
+      margin-top: auto; /* Empuja el botón al fondo de la tarjeta */
+    }
+    
+    .div-button-ver-mas {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin: 15px 2px;
+    }
+    
+    .div-button-ver-mas p {
+      font-size: 18px;
+      color: #8f8f8f;
+    }
+    
+    
+    @media (min-width: 800px) {
+      
+      .domicilio-container {
+          flex-direction: column;
+          justify-content: space-around;
+          margin: 0 0px 5px 0px;
+          padding: 0px 30px
+      }
+    }
+    
+    
+      /* Ajustes en pantallas grandes */
+      @media (min-width: 600px) {
+        .filtros-container {
+          flex-direction: row; /* Filtros en una fila */
+          align-items: center; /* Alinea los filtros verticalmente */
+        }
+    
+        .filtro {
+          margin-bottom: 0; /* Elimina el espacio inferior en pantallas grandes */
+        }
+        .filtros-botones {
+          display: flex;
+          flex-direction: column !important; /* Los botones están en fila */
+          gap: 8px; /* Espacio entre los botones */
+        }
+      
+        .filtros-botones button {
+          width: 100%; /* Ocupa todo el ancho disponible */
+          display: flex;
+          justify-content: center; /* Centra el texto dentro del botón */
+          width: 364px;
+        }
+    
+      }
+    
+      
+    
+    
+      /* Ajustes en pantallas pequeñas */
+      @media (max-width: 600px) {
+        .filtros-container {
+          flex-direction: column; /* Apila los filtros verticalmente en pantallas pequeñas */
+        }
+    
+        .filtro {
+          width: 100%; /* Ocupa todo el ancho disponible */
+          padding-left: 20px;
+          padding-right: 20px;
+        }
+        .filtros-botones {
+          display: flex;
+          flex-direction: column !important; /* Los botones están en fila */
+          gap: 10px; /* Espacio entre los botones */
+        }
+        .card-container {
+          gap: 48px !important;
+          grid-template-columns: 1fr;
+        }
+      }
+    
+      @media (max-width: 599px) {
+        ::ng-deep mat-card {
+          padding: 5px !important;
+        }
+      
+        .puestos-agregados-msg{
+          margin-right: 5px;
+          margin-left: 5px;
+        }
+      }
+    
+      @media (max-width: 800px) {
+        
+        .txt-detalle {
+          margin-top: auto;
+        }
+        .div-button-ver-mas p {
+          font-size: 16px;
+          color: #8f8f8f;
+        }
+      }
+
+      import { Component, OnInit } from '@angular/core';
+import { FormBuilder } from '@angular/forms';
+import { FichaService } from 'src/app/shared/services/ficha.service';
+import { Persona } from 'src/app/shared/models/persona.model';
+import { adherenteParams } from 'src/app/shared/models/adherentes-params.model';
+import { puestoEmpleo } from 'src/app/shared/models/puesto-empleo.model';
+import { puestoEmpleoService } from 'src/app/shared/services/puestosEmpleo.service';
+import { Resultado } from 'src/app/shared/models/resultado.model';
+import { ComunService } from 'src/app/shared/services/comun.service';
+import { DetallePuestosComponent } from '../../postulante/detalle/detalle-puestos/detalle-puestos.component';
+import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
+import { AlertComponent, AlertType } from 'src/app/shared/notificaciones/alert/alert.component';
+import { DetalleEmpresaComponent } from '../../postulante/detalle/detalle-empresas/detalle-empresa.component';
+
+@Component({
+  selector: 'app-buscador-adherente',
+  templateUrl: './buscador-adherente.component.html',
+  styleUrls: ['./buscador-adherente.component.scss']
+})
+export class BuscadorAdherenteComponent implements OnInit {
+  constructor(private fichaService: FichaService,
+              private formBuilder: FormBuilder,
+              private puestoEmpleoService: puestoEmpleoService,
+              private comunService: ComunService,
+              private dialog: MatDialog,
+            ) { }
+
+  adherentes: Persona[] = [];
+  puestosEmpleoOriginal: puestoEmpleo[] = []; 
+  puestosEmpleoFiltrados: puestoEmpleo[] = []; 
+  filtros: any = { razonSocial: '',cuit: '', localidad: '',puestoEmpleo :'', departamento: '' };
+  puestosEmpleosSeleccionados: puestoEmpleo[] = []; 
+  public UrlReconsideracion: string;
+  public UrlApoderado: string;
+  public UrlDenuncia: string;
+  public UrlBajaPorRenuncia: string;
+  public UrlCambioEmpresa: string;
+  currentPage: number = 0;
+  pageSize: number = 20;
+  primeraBusqueda:boolean = false
+
+  mostrarVirtualScroll: boolean = false;
+
+  public localidades: Resultado[] = [];
+  public departamentos: Resultado[] = [];
+  
+  ngOnInit(): void {
+    this.obtenerPuestosEmpleo();
+    this.obtenerDepartamentos();
+    this.obtenerLocalidades();
+    
+  }
+
+
+  getLocalidadById(idLocalidad) {
+    for (let i = 0; i < this.localidades.length; i++) {
+      const localidad = this.localidades[i];
+      if (localidad.id == idLocalidad) {
+        return localidad.nombre;
+        
+      }
+    }
+    return ''
+  }
+
+  buscarPersonas(permitirPasarLocalidad?:any): void {
+    // Validación de CUIT
+    console.log(this.filtros);
+    
+
+    if (this.filtros.cuit && !this.validarCuit(this.filtros.cuit)) {
+      this.dialog.open(AlertComponent, {
+        data: {
+          title: 'CUIT no válido',
+          content: ['El CUIT ingresado no es válido. Debe contener exactamente 11 dígitos.'],
+          alertType: AlertType.WARNING,
+          closeButtonLabel: 'Aceptar'
+        }
+      });
+      return;
+    }
+    
+    if (this.filtros.departamento != '' && this.filtros.localidad == '') {
+      this.dialog.open(AlertComponent, {
+        data: {
+          title: 'Debe elegir una localidad.',
+          content: ['Debe elegir una localidad para filtrar satisfactoriamente'],
+          alertType: AlertType.WARNING,
+          closeButtonLabel: 'Aceptar'
+        }
+      });
+      return;
+    }
+
+    
+    console.log('lo que estoy pasando', this.puestosEmpleosSeleccionados);
+    
+    
+    const puestosEmpleos = this.puestosEmpleosSeleccionados
+    .map(puesto => `'${puesto.nPuestoEmpleo  }'`)  
+    .join(',');                   
+  
+  this.filtros.puestoEmpleo  = puestosEmpleos;
+  console.log("PUESTOSEMPLEO", puestosEmpleos)
+  this.getAdherentes()
+ 
+  
+   }
+
+  getAdherentes(page: number = 1, pageSize: number = 10) {
+    console.log('Filtrando adherentes con:', this.filtros);
+    console.log("DATAFILTROS:", this.filtros)
+    this.fichaService.obtenerAdherentes(page, pageSize, this.filtros)
+      .subscribe((adherentes: Persona[]) => {
+        console.log('Adherentes llegados:', adherentes);
+        if (adherentes.length > 0) {
+         this.adherentes = []
+        }
+        this.primeraBusqueda= true
+        this.adherentes = adherentes.map(adherente => {
+          if (adherente.puestosEmpleo) {
+            adherente.puestosArray = adherente.puestosEmpleo.split(',').map(puesto => puesto.trim());
+          } else {
+            adherente.puestosArray = [];
+          }
+          return adherente;
+        });
+        
+        console.log('Adherentes filtrados:', this.adherentes);
+      }, error => {
+        console.error('Error al obtener los adherentes:', error);
+      });
+      
+  }
+
+  validarCuit(cuit: number): boolean {
+    return /^\d{11}$/.test(cuit.toString());
+  }
+
+  limpiarFiltros() {
+    this.filtros = {
+      razonSocial: '',
+      cuit: '',
+      localidad: '',
+      puestoEmpleo: '',
+      departamento: ''
+    };
+    this.puestosEmpleosSeleccionados = [];  
+  }
+  
+  obtenerLocalidades() { 
+    this.comunService.getLocalidades().subscribe((res: any) => {
+      this.localidades = res
+    })
+  }
+
+   obtenerDepartamentos(): void {
+    this.comunService.getDepartamentos().subscribe(
+      (departamentos) => {
+        this.departamentos = departamentos;
+      }
+    );
+  }
+
+  public getLocalidadByDepartamento(idDepartamento: number) {
+    this.filtros.departamento = idDepartamento;
+    this.comunService.getLocalidadesByDepartamentoanym(idDepartamento).subscribe(
+      (localidades) => {
+        this.localidades = localidades;
+      }
+    );
+  }
+
+  quitarPuestoBusqueda(puesto: any) {
+    this.puestosEmpleosSeleccionados = this.puestosEmpleosSeleccionados.filter(p => p !== puesto);
+  }
+
+  
+
+  obtenerPuestosEmpleo() {
+    this.puestoEmpleoService.obtenerPuestosEmpleo().subscribe((res: puestoEmpleo[]) => {
+      this.puestosEmpleoOriginal = res;
+      this.puestosEmpleoFiltrados = [...this.puestosEmpleoOriginal]
+      console.log(this.puestosEmpleoOriginal);  
+    }, error => {
+      console.error('Error al obtener los puestos de empleo:', error);
+    });
+  }
+
+
+  
+  filtrarPuesto(event: any) {
+    const filterValue = event.target.value.toLocaleLowerCase();
+    this.puestosEmpleoFiltrados = this.puestosEmpleoOriginal.filter((puesto: puestoEmpleo) => 
+      puesto.nPuestoEmpleo.toLocaleLowerCase().includes(filterValue)
+    );
+  }
+
+  seleccionarPuesto(puesto: puestoEmpleo) {
+
+    this.mostrarVirtualScroll = true
+    if (this.filtros.puestosEmpleo.filter((el: puestoEmpleo) => el.idPuestoEmpleo == puesto.idPuestoEmpleo).length == 0) {
+      this.filtros.puestosEmpleo.push(puesto)
+    }    
+  }
+
+  quitarPuesto(puesto: puestoEmpleo) {
+    if (this.filtros.puestoEmpleo.filter((el: puestoEmpleo) => el.idPuestoEmpleo == puesto.idPuestoEmpleo).length > 0) {
+      this.filtros.puestoEmpleo = this.filtros.puestoEmpleo.filter(p => p !== puesto);
+    }    
+  }
+
+  estaSeleccionado(puesto: puestoEmpleo) {
+    return this.filtros.puestosEmpleo.filter((el: puestoEmpleo) => el.idPuestoEmpleo == puesto.idPuestoEmpleo).length > 0
+  }
+
+  onFocus() {
+    this.mostrarVirtualScroll = true;
+    
+  }
+
+  onBlur() {
+    this.mostrarVirtualScroll = false;
+  }
+  
+  
+  openPuestoDialog(): void {
+
+    this.dialog.open(DetallePuestosComponent, {
+      width: '600px',
+      data: {
+        puestosEmpleoOriginal: this.puestosEmpleoOriginal,
+        puestosEmpleosSeleccionados: [...this.puestosEmpleosSeleccionados]
+      }
+    }).afterClosed()
+      .subscribe((r) => {
+       if(r.message){
+        this.puestosEmpleosSeleccionados = r.seleccionados
+       }
+       
+      });
+  }
+
+  openDetallesModal(adherente: any) {
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.autoFocus = false;
+    dialogConfig.data = {
+      razonSocial: `${adherente.nombre} ${adherente.apellido}` , //titulo
+      cuit: adherente.cuil, //subtitulo
+      puestosEmpleo: adherente.puestosEmpleo || 'SIN PUESTOS CARGADOS',
+      tipoModal: 'ADHERENTE'
+    };
+    this.dialog.open(DetalleEmpresaComponent, dialogConfig);
+  }
+
+  cargarMas() {
+    // this.currentPage += 1;
+    this.getAdherentes(this.currentPage + 1, this.pageSize )
+  }
+  
+}

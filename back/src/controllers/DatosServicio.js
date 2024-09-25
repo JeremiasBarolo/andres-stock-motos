@@ -35,6 +35,16 @@ const createDatosServicio = async (req, res) => {
   }
 };
 
+const updateInsumos = async (req, res) => {
+
+  try {
+    const DatosServicioUpdate = await DatosServicioService.updateInsumos(req.params.DatosServicio_id, req.body);
+    res.json(DatosServicioUpdate);
+  } catch (err) {
+    res.status(500).json({ action: 'updateDatosServicio', error: err.message });
+  }
+};
+
 const updateDatosServicio = async (req, res) => {
 
   try {
@@ -58,5 +68,10 @@ const deleteDatosServicio = async (req, res) => {
 
 
 module.exports = {
-  listAllDatosServicio, listOneDatosServicio, createDatosServicio, updateDatosServicio, deleteDatosServicio, 
+  listAllDatosServicio, 
+  listOneDatosServicio, 
+  createDatosServicio, 
+  updateDatosServicio, 
+  deleteDatosServicio, 
+  updateInsumos,
 };

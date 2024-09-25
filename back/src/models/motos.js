@@ -11,7 +11,8 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       Motos.hasMany(models.Movimientos, {
-        foreignKey: 'motoId'
+        foreignKey: 'motoId',
+        onUpdate: 'CASCADE',
       })
 
       Motos.belongsTo(models.Marca, {
@@ -29,12 +30,14 @@ module.exports = (sequelize, DataTypes) => {
   }
   Motos.init({
     modelo: DataTypes.INTEGER,
+    color: DataTypes.STRING,
     year: DataTypes.INTEGER,
     num_motor: DataTypes.INTEGER,
     num_cuadro: DataTypes.INTEGER,
     cilindrada: DataTypes.INTEGER,
     cert_num_fabrica: DataTypes.INTEGER,
-    precio: DataTypes.INTEGER
+    precio: DataTypes.INTEGER,
+    kilometros: DataTypes.INTEGER
   }, {
     sequelize,
     modelName: 'Motos',

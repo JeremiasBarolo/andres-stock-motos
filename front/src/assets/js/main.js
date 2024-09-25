@@ -1,7 +1,7 @@
 $(document).ready(function() {
   function activateDarkMode() {
-      $(".mode-icon ion-icon").attr("name", "moon-outline");
-      $("html").addClass("dark-theme");
+    $(".mode-icon ion-icon").attr("name", "sunny-outline");
+    $("html").addClass("dark-theme");
   }
   activateDarkMode();
 
@@ -77,16 +77,14 @@ $(document).ready(function() {
 
 
   $(".dark-mode-icon").on("click", function() {
-
-    if($(".mode-icon ion-icon").attr("name") == 'sunny-outline') {
-        $(".mode-icon ion-icon").attr("name", "moon-outline");
-        $("html").attr("class", "light-theme")
+    if ($("html").hasClass("dark-theme")) {
+      $(".mode-icon ion-icon").attr("name", "moon-outline");
+      $("html").removeClass("dark-theme").addClass("light-theme");
     } else {
-        $(".mode-icon ion-icon").attr("name", "sunny-outline");
-        $("html").attr("class", "dark-theme")
+      $(".mode-icon ion-icon").attr("name", "sunny-outline");
+      $("html").removeClass("light-theme").addClass("dark-theme");
     }
-
-  }), 
+  });
 
 
 
@@ -176,13 +174,13 @@ function theme8() {
 
 
 
-  new PerfectScrollbar(".header-notifications-list")
+  // new PerfectScrollbar(".header-notifications-list")
 
 
-    // Tooltops
-    $(function () {
-      $('[data-bs-toggle="tooltip"]').tooltip();
-    })
+  //   // Tooltops
+  //   $(function () {
+  //     $('[data-bs-toggle="tooltip"]').tooltip();
+  //   })
 
 
   

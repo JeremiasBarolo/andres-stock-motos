@@ -10,7 +10,7 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       modelo: {
-        type: Sequelize.INTEGER
+        type: Sequelize.STRING
       },
       year: {
         type: Sequelize.INTEGER
@@ -21,6 +21,9 @@ module.exports = {
       num_cuadro: {
         type: Sequelize.BIGINT(100)
       },
+      color: {
+        type: Sequelize.STRING(100)
+      },
       cilindrada: {
         type: Sequelize.BIGINT(100)
       },
@@ -28,6 +31,9 @@ module.exports = {
         type: Sequelize.BIGINT(100)
       },
       precio: {
+        type: Sequelize.BIGINT(100)
+      },
+      kilometros: {
         type: Sequelize.BIGINT(100)
       },
       createdAt: {

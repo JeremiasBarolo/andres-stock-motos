@@ -7,7 +7,7 @@ const {
 const { initializeDB } = require('./db/initializeDB');
 require('dotenv').config();
 const cors = require("cors");
-const {checkAdmin} = require('./db/createAdminEntity');
+
 const { 
     TipoArticuloRouter,
     StockRouter,
@@ -21,7 +21,14 @@ const {
     MotosRouter,
     DatosServicioRouter,
     MarcaRouter,
-    TipoMotoRouter
+    TipoMotoRouter,
+    PedidosRouter,
+    ChecklistRouter,
+    TipoServicioRouter,
+    loginRouter,
+    tareasRouter,
+    datosAdicionalesClienteRouter,
+    operacionVentaMotosRouter
     
  } = require('./routes')
 
@@ -34,6 +41,7 @@ const PORT = process.env.PORT || 3001;
 // Aplication Middlewares
 app.use(express.json()) 
 app.use(cors());
+
 
 // Routes
 app.use("/tipo_articulo", TipoArticuloRouter)
@@ -49,6 +57,13 @@ app.use("/motos", MotosRouter)
 app.use("/datos_servicio", DatosServicioRouter)
 app.use("/marca", MarcaRouter)
 app.use("/tipo_moto", TipoMotoRouter)
+app.use("/pedidos", PedidosRouter)
+app.use("/checklist", ChecklistRouter)
+app.use("/tipo-servicio", TipoServicioRouter)
+app.use("/login", loginRouter)
+app.use("/tareas", tareasRouter)
+app.use("/datosAdicionales", datosAdicionalesClienteRouter)
+app.use("/operacion", operacionVentaMotosRouter)
 
 
 
@@ -60,7 +75,6 @@ app.use("/tipo_moto", TipoMotoRouter)
 app.listen(PORT, 
     async () => {
         await initializeDB();
-        // await checkAdmin();
         console.log(` >>>>> 🚀 Server started at http://localhost:${PORT}`);
 })
 
