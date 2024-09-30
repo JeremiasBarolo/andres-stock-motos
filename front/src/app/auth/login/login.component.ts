@@ -47,7 +47,7 @@ export class LoginComponent implements OnInit {
       (data) => {
         localStorage.setItem('token', data.token);
         if (this.authService.isAdmin()) {
-          this.router.navigate(['/admin/inicio']);
+          this.router.navigate(['admin/inicio']);
           setTimeout(() => {
             window.location.reload();
           }, 1100);
