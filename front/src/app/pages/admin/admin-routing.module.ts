@@ -30,7 +30,6 @@ import { AsignarInsumosComponent } from './asignar-insumos/asignar-insumos.compo
 import { InicioComponent } from './inicio/inicio.component';
 import { ServiciosComponent } from './servicios/servicios.component';
 import { InsumosComponent } from './insumos/insumos.component';
-import { AdminGuard } from '../../auth/admin-guard/admin-guard.component';
 import { TareasComponent } from './tareas/tareas.component';
 import { MotosConsignacionComponent } from './motos-consignacion/motos-consignacion.component';
 import { VentaGeneralComponent } from './venta-general/venta-general.component';
@@ -48,7 +47,6 @@ import { OperacionesDetailsComponent } from './operaciones-details/operaciones-d
 const routes: Routes = [
   {
     path: '', component: AdminComponent,
-    canActivate: [AdminGuard], 
     
     children: [
       { path: 'admin', component: AdminComponent },
@@ -84,7 +82,7 @@ const routes: Routes = [
       { path: 'asignar-insumos/:id', component: AsignarInsumosComponent },
       { path: 'asignar-insumos/editar/:id', component: AsignarInsumosComponent },
       { path: 'tareas', component: TareasComponent },
-      { path: 'inicio', component: InicioComponent, canActivate: [AdminGuard],  },
+      { path: 'inicio', component: InicioComponent },
       { path: '**', redirectTo: 'inicio' }, 
     ]
   },

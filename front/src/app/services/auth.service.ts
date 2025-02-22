@@ -9,7 +9,7 @@ import { Router } from '@angular/router';
 })
 export class AuthService {
   private apiUrl = 'http://localhost:8081';
-  private tokenKey: string = 'token';
+  private tokenKey: string = 'access_token';
 
   constructor(private http: HttpClient) { }
 
@@ -54,8 +54,8 @@ export class AuthService {
   }
 
   logout(): void {
-    localStorage.removeItem(this.tokenKey);
-    console.log('nashe');
+    localStorage.removeItem('access_token');
+    console.log(localStorage.getItem('access_token'));
     
   }
 

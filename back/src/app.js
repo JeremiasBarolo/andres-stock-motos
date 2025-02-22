@@ -33,7 +33,7 @@ const {
  } = require('./routes')
 
 
-
+const  {validateToken} = require('./middleware/authToken')
 // App Creation
 const app = express();
 const PORT = process.env.PORT || 3001;
@@ -41,6 +41,7 @@ const PORT = process.env.PORT || 3001;
 // Aplication Middlewares
 app.use(express.json()) 
 app.use(cors());
+app.use(validateToken)
 
 
 // Routes

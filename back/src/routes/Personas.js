@@ -2,9 +2,7 @@
     const express = require('express');
     const router = express.Router();
     const {PersonasController }= require('../controllers');
-    const { authMiddleware } = require('../middleware');
 
-    router.use(authMiddleware)
 
     router.get('/', PersonasController.listAllPersonas);
     router.get('/proveedores', PersonasController.listAllProveedores);

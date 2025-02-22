@@ -45,12 +45,17 @@ export class LoginComponent implements OnInit {
 
     this.authService.login(userData).subscribe(
       (data) => {
-        localStorage.setItem('token', data.token);
+
+        localStorage.setItem("access_token", data.token)
+
         if (this.authService.isAdmin()) {
+            console.log('pase aca');
+      
           this.router.navigate(['/admin/inicio']);
           setTimeout(() => {
             window.location.reload();
           }, 1100);
+          
         } else {
           this.router.navigate(['/empleados']);
           setTimeout(() => {

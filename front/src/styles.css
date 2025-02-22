@@ -1,6 +1,16 @@
 @import 'assets/css/style.css';
 @import "primeng/resources/themes/viva-dark/theme.css";
 @import "primeng/resources/primeng.css";
+@import './assets/css/pace.min.css';
+@import './assets/plugins/simplebar/css/simplebar.css';
+@import './assets/plugins/metismenu/css/metisMenu.min.css';
+@import './assets/css/bootstrap.min.css';
+@import './assets/css/bootstrap-extended.css';
+@import './assets/css/style.css';
+@import 'https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap';
+@import './assets/css/dark-theme.css';
+@import './assets/css/semi-dark.css';
+@import './assets/css/header-colors.css';
 
 body, a{
     text-decoration: none;

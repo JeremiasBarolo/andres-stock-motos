@@ -3,7 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { AuthRoutingModule } from './auth/auth-routing.module';
 import { CommonModule } from '@angular/common';
 import { LoginComponent } from './auth/login/login.component';
-import { AdminGuard } from './auth/admin-guard/admin-guard.component';
+
 
 
 
@@ -13,8 +13,7 @@ const routes: Routes = [
   { path: '', redirectTo: 'inicio', pathMatch: 'full' },
   {
     path: 'admin',
-    loadChildren: () => import('./pages/admin/admin.module').then(m => m.AdminModule),
-    canActivate: [AdminGuard] 
+    loadChildren: () => import('./pages/admin/admin.module').then(m => m.AdminModule)
   },
   {
     path: 'auth',

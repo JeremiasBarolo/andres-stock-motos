@@ -2,9 +2,7 @@
     const express = require('express');
     const router = express.Router();
     const {PedidosController }= require('../controllers');
-    const { authMiddleware } = require('../middleware');
 
-    router.use(authMiddleware)
 
     router.get('/', PedidosController.listAllPedidos);
     router.get('/pendientes', PedidosController.listAllPedidosPendientes);

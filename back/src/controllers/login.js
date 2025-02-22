@@ -1,6 +1,11 @@
 const models = require('../models');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
+const fs = require("fs")
+const path = require('path');
+
+const keyPath = path.resolve(__dirname, '../key'); // Resuelve la ruta correctamente
+const privateKey = fs.readFileSync(keyPath, 'utf8').trim();
 
 const login = async (req, res) => {
   try {
@@ -35,12 +40,20 @@ const login = async (req, res) => {
     const isAdmin = usuario.Rol.isAdmin;
     isAdmin === 0 ? rol = 'EMPLEADO' : rol = 'ADMIN';
 
-    const token = jwt.sign({ username: username, userId: usuario.id, rol: rol, nombre: `${usuario.Persona.nombre} ${usuario.Persona.apellido}`, personaId:usuario.Persona.id }, process.env.SECRET, { expiresIn: '24h' });
+      const token = jwt.sign(
+        { username: username, userId: usuario.id, rol: rol, nombre: `${usuario.Persona.nombre} ${usuario.Persona.apellido}`, 
+          personaId:usuario.Persona.id },
+          privateKey
+    );
+
+    
     res.status(200).json({ token:token});
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: 'Error en el servidor' });
   }
 };
+
+
 
 module.exports = { login };
