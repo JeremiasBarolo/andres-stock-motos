@@ -20,23 +20,15 @@ export class LoginComponent implements OnInit {
     private messageService: MessageService
   ) {
 
+    sessionStorage.setItem('reloaded', 'false')
+
     this.loginForm = this.fb.group({
       username: [''],
       password: ['']
     });
    }
   ngOnInit(): void {
-    this.router.events.subscribe(event => {
-      if (event instanceof NavigationEnd) {
-    
-        const isLoginPage = event.url.includes('login');
-        const isRootPage = event.url === '' || event.url === '/';
-        if(isLoginPage || isRootPage){
-          this.router.navigate(['login'])
-        }
-       
-      }
-    });
+   
   }
 
   login(): void {
@@ -46,22 +38,15 @@ export class LoginComponent implements OnInit {
     this.authService.login(userData).subscribe(
       (data) => {
 
-        localStorage.setItem("access_token", data.token)
+        localStorage.setItem('access_token', data.token)
+        this.router.navigate(['/admin/inicio'], { queryParams: { login: true } });
+        
+        
+        
 
-        if (this.authService.isAdmin()) {
-            console.log('pase aca');
-      
-          this.router.navigate(['/admin/inicio']);
-          setTimeout(() => {
-            window.location.reload();
-          }, 1100);
-          
-        } else {
-          this.router.navigate(['/empleados']);
-          setTimeout(() => {
-            window.location.reload();
-          }, 1100);
-        }
+        
+  
+        
 
         this.messageService.add({
           severity: 'success',

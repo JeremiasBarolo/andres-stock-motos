@@ -6,6 +6,7 @@ import { MovimientosService } from '../../../services/movimientos.service';
 import { PedidosService } from '../../../services/pedidos.service';
 import { StockService } from '../../../services/stock.service';
 import { TareasService } from '../../../services/tareas.service';
+import { ActivatedRoute, Router } from '@angular/router';
 
 
 @Component({
@@ -31,6 +32,7 @@ export class InicioComponent implements OnInit, OnDestroy {
 
 
   private destroy$ = new Subject<void>();
+  reload: boolean = false
 
   constructor(
     private authService: AuthService,
@@ -39,11 +41,32 @@ export class InicioComponent implements OnInit, OnDestroy {
     private pedidosService: PedidosService,
     private stockService: StockService,
     private tareasService: TareasService,
+    private route: ActivatedRoute, 
+    private router: Router
     
   ) {
     
   }
   ngOnInit(): void {
+
+    this.route.queryParams.subscribe(params => {
+
+      const alreadyReloaded = sessionStorage.getItem('reloaded') === 'true';
+      console.log('reload es:', alreadyReloaded);
+      console.log('login es:', params['login'] === 'true');
+
+      if (params['login'] === 'true' && !alreadyReloaded ) {
+        sessionStorage.setItem('reloaded', 'true'); 
+  
+        setTimeout(() => {
+          console.log('pase');
+          
+          
+          window.location.reload(); 
+        }, 500);
+      }
+    });
+   
     this.isAdmin = this.authService.isAllowed();
     this.authService.getUserData().subscribe((data: any) => {
       if(data.nombre === 'Admin Admin'){
@@ -118,6 +141,7 @@ export class InicioComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     this.destroy$.next();
     this.destroy$.complete();
+    sessionStorage.setItem('reloaded', 'false')
   }
 
   modalOpen(data:any){
